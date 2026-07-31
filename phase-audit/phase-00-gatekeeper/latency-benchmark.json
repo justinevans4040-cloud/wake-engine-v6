@@ -1,0 +1,173 @@
+{
+  "ok": true,
+  "measures": [
+    {
+      "name": "agent-chat-fast-draft",
+      "durationMs": 729,
+      "budgetMs": 900,
+      "ok": true,
+      "passed": true
+    },
+    {
+      "name": "tier-zero-run",
+      "durationMs": 511,
+      "budgetMs": 1800,
+      "ok": true,
+      "passed": true
+    }
+  ],
+  "tierZeroQuality": {
+    "overall": 98,
+    "score": 98,
+    "passed": true,
+    "rubric": {
+      "sourceFidelity": {
+        "score": 100,
+        "minimum": 85,
+        "passed": true,
+        "findings": []
+      },
+      "claimSupport": {
+        "score": 100,
+        "minimum": 100,
+        "passed": true,
+        "findings": [],
+        "supported": 6,
+        "unsupported": 0,
+        "factualClaims": 5
+      },
+      "specificity": {
+        "score": 100,
+        "minimum": 75,
+        "passed": true,
+        "findings": [],
+        "sourceTerms": [
+          "content",
+          "export",
+          "must",
+          "packet",
+          "action",
+          "agents",
+          "archivist",
+          "block",
+          "capabilities",
+          "claims"
+        ],
+        "termHits": [
+          "content",
+          "export",
+          "must",
+          "packet",
+          "action",
+          "agents",
+          "archivist",
+          "block",
+          "capabilities",
+          "claims"
+        ]
+      },
+      "audienceFit": {
+        "score": 95,
+        "minimum": 75,
+        "passed": true,
+        "findings": [],
+        "audience": "local runtime must stay honest about verified capabi"
+      },
+      "platformFit": {
+        "score": 100,
+        "minimum": 90,
+        "passed": true,
+        "findings": [],
+        "platformCoverage": 3,
+        "completeVariants": 3
+      },
+      "hookStrength": {
+        "score": 100,
+        "minimum": 75,
+        "passed": true,
+        "findings": [],
+        "evidenceBacked": 4,
+        "strongLength": 4
+      },
+      "ctaFit": {
+        "score": 100,
+        "minimum": 80,
+        "passed": true,
+        "findings": [],
+        "actionable": 3,
+        "total": 3
+      },
+      "nonGenericWording": {
+        "score": 100,
+        "minimum": 85,
+        "passed": true,
+        "findings": [],
+        "matches": []
+      },
+      "repetitionTitleEcho": {
+        "score": 80,
+        "minimum": 75,
+        "passed": true,
+        "findings": [],
+        "duplicateCoreLines": 5,
+        "duplicateTitles": 0,
+        "titleEchoes": 0
+      },
+      "packageCompleteness": {
+        "score": 100,
+        "minimum": 100,
+        "passed": true,
+        "findings": [],
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "hallucinationRisk": {
+        "score": 100,
+        "minimum": 90,
+        "passed": true,
+        "findings": [],
+        "level": "low"
+      }
+    },
+    "failedDimensions": [],
+    "blockers": [],
+    "repairSuggestions": [
+      "add the intended audience to the source."
+    ],
+    "nextBestStep": "Export the approved packet or run a deliberate polish pass.",
+    "thresholds": {
+      "minimumOverall": 82,
+      "zeroUnsupportedClaims": true,
+      "sourceMustBeSufficient": true,
+      "noGenericPhrases": true,
+      "dimensions": {
+        "sourceFidelity": 85,
+        "claimSupport": 100,
+        "specificity": 75,
+        "audienceFit": 75,
+        "platformFit": 90,
+        "hookStrength": 75,
+        "ctaFit": 80,
+        "nonGenericWording": 85,
+        "repetitionTitleEcho": 75,
+        "packageCompleteness": 100,
+        "hallucinationRisk": 90
+      }
+    },
+    "evidenceQuotes": [
+      "wake turns rough source material into a content creation packet.",
+      "the packet must include evidence, platform variants, script structure, export readiness, and a next action.",
+      "the local runtime must stay honest about verified capabilities and block unsupported claims.",
+      "tier zero content agents hand work from archivist to strategist to scriptwriter to creative director to qa to export."
+    ]
+  }
+}

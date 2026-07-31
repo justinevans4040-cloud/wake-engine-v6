@@ -1,0 +1,574 @@
+{
+  "savedAt": "2026-07-10T16:36:06.138Z",
+  "source": "Desktop shortcut packaged WAKE V6 verification: frame, agent pack, cluster, export, snapshot.",
+  "output": {
+    "ok": true,
+    "generatedAt": "2026-07-10T16:36:06.106Z",
+    "engine": "WAKE V6 local deterministic agent",
+    "frame": {
+      "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+      "duration": "60s",
+      "format": "vertical",
+      "role": "WAKE Content Agent",
+      "objective": "Turn source material into a short-form content packet with hooks, scenes, captions, and CTA.",
+      "scenes": 6,
+      "hooks": 1,
+      "cta": "Watch the full breakdown on WAKE.",
+      "constraints": [
+        "No fake capability claims.",
+        "Mark external operators as not wired until verified.",
+        "Keep output inspectable and copyable."
+      ],
+      "sourceCharacterCount": 93
+    },
+    "hooks": [
+      "Desktop shortcut packaged WAKE V6 verification: frame, agent p: the part most people miss.",
+      "Stop guessing. Structure the source before you ship it.",
+      "One source in. Many usable outputs out."
+    ],
+    "titles": [
+      "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+      "Desktop shortcut packaged WAKE V6 verification: frame, agent p - WAKE Breakdown",
+      "The WAKE Frame For Short Form"
+    ],
+    "captions": [
+      "Built from the current source in WAKE Command Console V6.",
+      "Marked local until external operators are verified.",
+      "No hidden wiring. No fake completion."
+    ],
+    "platformBlocks": {
+      "youtubeShorts": "Use hook 1, scene list, and CTA.",
+      "tiktok": "Use hook 2 with a fast opening caption.",
+      "linkedin": "Use title 2 with the constraints as credibility proof."
+    },
+    "generation": {
+      "id": "gen-mrf5qmhm-gmzf0b",
+      "projectId": "proj-mrf5qmgv-hv1m9i",
+      "sourceId": "src-mrf5qmh5-sp9edg",
+      "kind": "agent-pack",
+      "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+      "output": {
+        "ok": true,
+        "generatedAt": "2026-07-10T16:36:06.106Z",
+        "engine": "WAKE V6 local deterministic agent",
+        "frame": {
+          "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+          "duration": "60s",
+          "format": "vertical",
+          "role": "WAKE Content Agent",
+          "objective": "Turn source material into a short-form content packet with hooks, scenes, captions, and CTA.",
+          "scenes": 6,
+          "hooks": 1,
+          "cta": "Watch the full breakdown on WAKE.",
+          "constraints": [
+            "No fake capability claims.",
+            "Mark external operators as not wired until verified.",
+            "Keep output inspectable and copyable."
+          ],
+          "sourceCharacterCount": 93
+        },
+        "hooks": [
+          "Desktop shortcut packaged WAKE V6 verification: frame, agent p: the part most people miss.",
+          "Stop guessing. Structure the source before you ship it.",
+          "One source in. Many usable outputs out."
+        ],
+        "titles": [
+          "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+          "Desktop shortcut packaged WAKE V6 verification: frame, agent p - WAKE Breakdown",
+          "The WAKE Frame For Short Form"
+        ],
+        "captions": [
+          "Built from the current source in WAKE Command Console V6.",
+          "Marked local until external operators are verified.",
+          "No hidden wiring. No fake completion."
+        ],
+        "platformBlocks": {
+          "youtubeShorts": "Use hook 1, scene list, and CTA.",
+          "tiktok": "Use hook 2 with a fast opening caption.",
+          "linkedin": "Use title 2 with the constraints as credibility proof."
+        }
+      },
+      "createdAt": "2026-07-10T16:36:06.106Z"
+    }
+  },
+  "state": {
+    "ok": true,
+    "product": "Wake Engine",
+    "console": "WAKE Command Console V6",
+    "version": "V6",
+    "status": "active",
+    "url": "http://127.0.0.1:8786/",
+    "tasks": [
+      {
+        "id": "WAKE-001",
+        "title": "Source prompt builder",
+        "owner": "Console",
+        "status": "running",
+        "updated": "2m ago",
+        "detail": "Turns pasted source into a structured WAKE frame with role, objective, scenes, hooks, constraints, and output contract."
+      },
+      {
+        "id": "WAKE-002",
+        "title": "Local rule content agent",
+        "owner": "Agent",
+        "status": "running",
+        "updated": "4m ago",
+        "detail": "Generates deterministic hooks, captions, titles, and platform blocks locally. This is not a cloud LLM claim."
+      },
+      {
+        "id": "WAKE-003",
+        "title": "Snapshot storage",
+        "owner": "Runtime",
+        "status": "done",
+        "updated": "12m ago",
+        "detail": "Saves the current source, output, runtime status, and capability map to server/data/snapshots."
+      },
+      {
+        "id": "WAKE-004",
+        "title": "Task monitor scaling",
+        "owner": "Console",
+        "status": "done",
+        "updated": "20m ago",
+        "detail": "Bounded, searchable, filterable task surface so the list does not grow forever."
+      },
+      {
+        "id": "WAKE-005",
+        "title": "Content Cluster organizer",
+        "owner": "Cluster",
+        "status": "running",
+        "updated": "now",
+        "detail": "Builds local source themes, output lanes, proof notes, and operator-ready handoff drafts without dispatching externally."
+      },
+      {
+        "id": "WAKE-006",
+        "title": "RUNE validation attach",
+        "owner": "RUNE",
+        "status": "next",
+        "updated": "external",
+        "detail": "RUNE is recognized as an external/Drive-linked operator lane. It is not wired into this V6 runtime yet."
+      },
+      {
+        "id": "WAKE-007",
+        "title": "LOOM orchestration attach",
+        "owner": "LOOM",
+        "status": "next",
+        "updated": "external",
+        "detail": "LOOM is recognized as an external/Drive-linked operator lane. It is not wired into this V6 runtime yet."
+      },
+      {
+        "id": "WAKE-008",
+        "title": "ECHO memory attach",
+        "owner": "ECHO",
+        "status": "blocked",
+        "updated": "external",
+        "detail": "Blocked until a real memory/vector database connection is selected and verified."
+      },
+      {
+        "id": "WAKE-009",
+        "title": "Viral Brothers bridge",
+        "owner": "Viral Forge",
+        "status": "next",
+        "updated": "external",
+        "detail": "ViralForge Brothers live in Viral Forge. V6 does not call that app until an explicit bridge contract exists."
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "ingest",
+        "label": "Ingest & Parse",
+        "status": "live",
+        "detail": "Accepts pasted source text and turns it into structured frame fields."
+      },
+      {
+        "id": "local-agent",
+        "label": "Local Content Agent",
+        "status": "live",
+        "detail": "Deterministic local pack generation. No fake AI provider claim."
+      },
+      {
+        "id": "content-cluster",
+        "label": "Content Cluster",
+        "status": "live",
+        "detail": "Locally groups source into content pillars, output lanes, proof notes, and operator-ready handoff drafts."
+      },
+      {
+        "id": "snapshot",
+        "label": "Snapshot Storage",
+        "status": "live",
+        "detail": "Writes auditable JSON snapshots to the local repo runtime folder."
+      },
+      {
+        "id": "script",
+        "label": "Script & Structure",
+        "status": "partial",
+        "detail": "Frames scenes, hooks, captions, and CTAs. Long-form timing is not attached."
+      },
+      {
+        "id": "distribution",
+        "label": "Distribution",
+        "status": "next",
+        "detail": "Platform exports require a Viral Forge or hosted publishing bridge."
+      },
+      {
+        "id": "memory",
+        "label": "Learning Memory",
+        "status": "blocked",
+        "detail": "Requires a verified database/vector-store connection before it can be called live."
+      }
+    ],
+    "externalOperators": [
+      {
+        "id": "rune",
+        "label": "RUNE",
+        "status": "external",
+        "detail": "Drive/app lane known, not wired to V6."
+      },
+      {
+        "id": "loom",
+        "label": "LOOM",
+        "status": "external",
+        "detail": "Drive/app lane known, not wired to V6."
+      },
+      {
+        "id": "echo",
+        "label": "ECHO",
+        "status": "external",
+        "detail": "Drive/app lane known, not wired to V6."
+      },
+      {
+        "id": "viral-brothers",
+        "label": "ViralForge Brothers",
+        "status": "separate-app",
+        "detail": "Real in Viral Forge, not merged into V6."
+      }
+    ],
+    "projects": [
+      {
+        "id": "proj-mrf5qmgv-hv1m9i",
+        "name": "Shortcut Verification",
+        "status": "active",
+        "createdAt": "2026-07-10T16:36:06.079Z",
+        "updatedAt": "2026-07-10T16:36:06.079Z"
+      },
+      {
+        "id": "wake-v6-main",
+        "name": "WAKE Engine V6",
+        "status": "active",
+        "createdAt": "2026-07-05T00:00:00.000Z",
+        "updatedAt": "2026-07-05T00:00:00.000Z"
+      }
+    ],
+    "recentSources": [
+      {
+        "id": "src-mrf5qmh5-sp9edg",
+        "projectId": "proj-mrf5qmgv-hv1m9i",
+        "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "source": "Desktop shortcut packaged WAKE V6 verification: frame, agent pack, cluster, export, snapshot.",
+        "characterCount": 93,
+        "createdAt": "2026-07-10T16:36:06.089Z",
+        "updatedAt": "2026-07-10T16:36:06.089Z"
+      }
+    ],
+    "recentGenerations": [
+      {
+        "id": "gen-mrf5qmi3-ipi592",
+        "projectId": "proj-mrf5qmgv-hv1m9i",
+        "sourceId": "src-mrf5qmh5-sp9edg",
+        "kind": "content-cluster",
+        "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "output": {
+          "ok": true,
+          "generatedAt": "2026-07-10T16:36:06.123Z",
+          "engine": "WAKE V6 local content cluster",
+          "sourceInbox": {
+            "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+            "characters": 93,
+            "terms": [
+              {
+                "term": "agent",
+                "count": 1
+              },
+              {
+                "term": "cluster",
+                "count": 1
+              },
+              {
+                "term": "desktop",
+                "count": 1
+              },
+              {
+                "term": "export",
+                "count": 1
+              },
+              {
+                "term": "frame",
+                "count": 1
+              },
+              {
+                "term": "pack",
+                "count": 1
+              },
+              {
+                "term": "packaged",
+                "count": 1
+              },
+              {
+                "term": "shortcut",
+                "count": 1
+              }
+            ],
+            "proofStatus": "local-only"
+          },
+          "pillars": [
+            {
+              "id": "cluster-proof",
+              "label": "Proof / Trust",
+              "theme": "Show what is real about agent.",
+              "angle": "Lead with verified capability, limits, and next action."
+            },
+            {
+              "id": "cluster-system",
+              "label": "System / Process",
+              "theme": "Turn cluster into repeatable steps.",
+              "angle": "Make the invisible workflow legible enough to hand off."
+            },
+            {
+              "id": "cluster-output",
+              "label": "Output / Distribution",
+              "theme": "Package desktop into reusable assets.",
+              "angle": "Separate shorts, captions, titles, hooks, prompts, and dispatch notes."
+            }
+          ],
+          "outputMatrix": [
+            {
+              "lane": "Shorts",
+              "count": 3,
+              "status": "ready-local",
+              "detail": "Use frame objective, hooks, and scene list."
+            },
+            {
+              "lane": "Captions",
+              "count": 5,
+              "status": "ready-local",
+              "detail": "Use proof-first captions with no fake operator claims."
+            },
+            {
+              "lane": "Titles",
+              "count": 5,
+              "status": "ready-local",
+              "detail": "Use source title plus cluster pillar angles."
+            },
+            {
+              "lane": "Quote Pack",
+              "count": 4,
+              "status": "draft-local",
+              "detail": "Pull crisp statements from the pasted source only."
+            },
+            {
+              "lane": "Thumbnail Directions",
+              "count": 3,
+              "status": "draft-local",
+              "detail": "Describe visual direction; no image rendering is attached yet."
+            },
+            {
+              "lane": "Prompt Pack",
+              "count": 4,
+              "status": "ready-local",
+              "detail": "Create prompts for follow-up agents and manual review."
+            }
+          ],
+          "dispatchQueue": [
+            {
+              "operator": "RUNE",
+              "status": "contract-needed",
+              "action": "Prepare validation brief",
+              "detail": "Needs a real RUNE intake contract before V6 can send work."
+            },
+            {
+              "operator": "LOOM",
+              "status": "contract-needed",
+              "action": "Prepare orchestration brief",
+              "detail": "Needs a real LOOM orchestration contract before V6 can send work."
+            },
+            {
+              "operator": "ECHO",
+              "status": "blocked",
+              "action": "Prepare memory brief",
+              "detail": "Blocked until memory/vector storage is selected and verified."
+            },
+            {
+              "operator": "Viral Forge",
+              "status": "separate-app",
+              "action": "Prepare growth handoff",
+              "detail": "Keep Viral Forge separate until an explicit bridge contract exists."
+            }
+          ],
+          "auditNotes": [
+            "Cluster generation is deterministic and local.",
+            "Dispatch cards do not send data outside V6.",
+            "External operators stay marked as not wired until verified."
+          ]
+        },
+        "createdAt": "2026-07-10T16:36:06.123Z"
+      },
+      {
+        "id": "gen-mrf5qmhm-gmzf0b",
+        "projectId": "proj-mrf5qmgv-hv1m9i",
+        "sourceId": "src-mrf5qmh5-sp9edg",
+        "kind": "agent-pack",
+        "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "output": {
+          "ok": true,
+          "generatedAt": "2026-07-10T16:36:06.106Z",
+          "engine": "WAKE V6 local deterministic agent",
+          "frame": {
+            "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+            "duration": "60s",
+            "format": "vertical",
+            "role": "WAKE Content Agent",
+            "objective": "Turn source material into a short-form content packet with hooks, scenes, captions, and CTA.",
+            "scenes": 6,
+            "hooks": 1,
+            "cta": "Watch the full breakdown on WAKE.",
+            "constraints": [
+              "No fake capability claims.",
+              "Mark external operators as not wired until verified.",
+              "Keep output inspectable and copyable."
+            ],
+            "sourceCharacterCount": 93
+          },
+          "hooks": [
+            "Desktop shortcut packaged WAKE V6 verification: frame, agent p: the part most people miss.",
+            "Stop guessing. Structure the source before you ship it.",
+            "One source in. Many usable outputs out."
+          ],
+          "titles": [
+            "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+            "Desktop shortcut packaged WAKE V6 verification: frame, agent p - WAKE Breakdown",
+            "The WAKE Frame For Short Form"
+          ],
+          "captions": [
+            "Built from the current source in WAKE Command Console V6.",
+            "Marked local until external operators are verified.",
+            "No hidden wiring. No fake completion."
+          ],
+          "platformBlocks": {
+            "youtubeShorts": "Use hook 1, scene list, and CTA.",
+            "tiktok": "Use hook 2 with a fast opening caption.",
+            "linkedin": "Use title 2 with the constraints as credibility proof."
+          }
+        },
+        "createdAt": "2026-07-10T16:36:06.106Z"
+      },
+      {
+        "id": "gen-mrf5qmhe-hy7y1c",
+        "projectId": "proj-mrf5qmgv-hv1m9i",
+        "sourceId": "src-mrf5qmh5-sp9edg",
+        "kind": "frame",
+        "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "output": {
+          "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+          "duration": "60s",
+          "format": "vertical",
+          "role": "WAKE Content Agent",
+          "objective": "Turn source material into a short-form content packet with hooks, scenes, captions, and CTA.",
+          "scenes": 6,
+          "hooks": 1,
+          "cta": "Watch the full breakdown on WAKE.",
+          "constraints": [
+            "No fake capability claims.",
+            "Mark external operators as not wired until verified.",
+            "Keep output inspectable and copyable."
+          ],
+          "sourceCharacterCount": 93
+        },
+        "createdAt": "2026-07-10T16:36:06.098Z"
+      }
+    ],
+    "recentExports": [
+      {
+        "id": "exp-mrf5qmie-hd77kb",
+        "projectId": "proj-mrf5qmgv-hv1m9i",
+        "sourceId": "src-mrf5qmh5-sp9edg",
+        "generationId": "gen-mrf5qmhm-gmzf0b",
+        "title": "Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "jsonPath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\server\\data\\exports\\2026-07-10T16-36-06-132Z_Desktop-shortcut-packaged-WAKE-V6-verification-f.json",
+        "mdPath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\server\\data\\exports\\2026-07-10T16-36-06-132Z_Desktop-shortcut-packaged-WAKE-V6-verification-f.md",
+        "relativeJsonPath": "server/data/exports/2026-07-10T16-36-06-132Z_Desktop-shortcut-packaged-WAKE-V6-verification-f.json",
+        "relativeMdPath": "server/data/exports/2026-07-10T16-36-06-132Z_Desktop-shortcut-packaged-WAKE-V6-verification-f.md",
+        "createdAt": "2026-07-10T16:36:06.134Z"
+      }
+    ],
+    "recentHistory": [
+      {
+        "id": "hist-mrf5qmie-om9iju",
+        "type": "export.saved",
+        "detail": "Saved export: Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "payload": {
+          "exportId": "exp-mrf5qmie-hd77kb"
+        },
+        "createdAt": "2026-07-10T16:36:06.134Z"
+      },
+      {
+        "id": "hist-mrf5qmi3-jiihwx",
+        "type": "content-cluster.generated",
+        "detail": "Generated content-cluster: Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "payload": {
+          "generationId": "gen-mrf5qmi3-ipi592",
+          "projectId": "proj-mrf5qmgv-hv1m9i",
+          "sourceId": "src-mrf5qmh5-sp9edg"
+        },
+        "createdAt": "2026-07-10T16:36:06.123Z"
+      },
+      {
+        "id": "hist-mrf5qmhm-5r6v2w",
+        "type": "agent-pack.generated",
+        "detail": "Generated agent-pack: Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "payload": {
+          "generationId": "gen-mrf5qmhm-gmzf0b",
+          "projectId": "proj-mrf5qmgv-hv1m9i",
+          "sourceId": "src-mrf5qmh5-sp9edg"
+        },
+        "createdAt": "2026-07-10T16:36:06.106Z"
+      },
+      {
+        "id": "hist-mrf5qmhe-913kjy",
+        "type": "frame.generated",
+        "detail": "Generated frame: Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "payload": {
+          "generationId": "gen-mrf5qmhe-hy7y1c",
+          "projectId": "proj-mrf5qmgv-hv1m9i",
+          "sourceId": "src-mrf5qmh5-sp9edg"
+        },
+        "createdAt": "2026-07-10T16:36:06.098Z"
+      },
+      {
+        "id": "hist-mrf5qmh5-iedkzj",
+        "type": "source.saved",
+        "detail": "Saved source: Desktop shortcut packaged WAKE V6 verification: frame, agent p",
+        "payload": {
+          "sourceId": "src-mrf5qmh5-sp9edg",
+          "projectId": "proj-mrf5qmgv-hv1m9i"
+        },
+        "createdAt": "2026-07-10T16:36:06.089Z"
+      },
+      {
+        "id": "hist-mrf5qmgv-kmzufw",
+        "type": "project.created",
+        "detail": "Created project: Shortcut Verification",
+        "payload": {
+          "projectId": "proj-mrf5qmgv-hv1m9i"
+        },
+        "createdAt": "2026-07-10T16:36:06.079Z"
+      }
+    ],
+    "runtime": {
+      "cpuLabel": "local",
+      "queue": 6,
+      "snapshots": 3,
+      "exports": 1,
+      "sources": 1,
+      "generations": 3
+    }
+  }
+}

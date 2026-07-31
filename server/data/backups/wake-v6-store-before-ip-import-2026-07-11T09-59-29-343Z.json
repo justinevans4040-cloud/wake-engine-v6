@@ -1,0 +1,458 @@
+{
+  "projects": [
+    {
+      "id": "proj-mrg3xmbz-kb0zhr",
+      "name": "WAKE Engine V6",
+      "status": "active",
+      "createdAt": "2026-07-11T08:33:19.439Z",
+      "updatedAt": "2026-07-11T09:11:38.727Z"
+    },
+    {
+      "id": "wake-v6-main",
+      "name": "WAKE Engine V6",
+      "status": "active",
+      "createdAt": "2026-07-10T00:00:00.000Z",
+      "updatedAt": "2026-07-10T16:50:23.431Z"
+    }
+  ],
+  "sources": [],
+  "generations": [
+    {
+      "id": "gen-mrg3xufj-lbm30g",
+      "projectId": "proj-mrg3xmbz-kb0zhr",
+      "sourceId": null,
+      "kind": "frame",
+      "title": "WAKE Turns Messy Source Material into a Structured Content Packet",
+      "output": {
+        "title": "WAKE Turns Messy Source Material into a Structured Content Packet",
+        "duration": "60s",
+        "format": "vertical",
+        "role": "WAKE Content Agent",
+        "objective": "Turn \"WAKE Turns Messy Source Material into a Structured Content Packet\" into a short-form content packet with hooks, scenes, captions, and CTA.",
+        "scenes": 6,
+        "hooks": 1,
+        "cta": "Watch the full breakdown on WAKE.",
+        "constraints": [
+          "No fake capability claims.",
+          "Keep local outputs auditable.",
+          "Keep output inspectable and copyable."
+        ],
+        "focusTerms": [
+          "content",
+          "material",
+          "messy",
+          "operators"
+        ],
+        "sourceCharacterCount": 189
+      },
+      "createdAt": "2026-07-11T08:33:29.935Z"
+    },
+    {
+      "id": "gen-mrf6ygeh-yxt6kp",
+      "projectId": "wake-v6-main",
+      "sourceId": null,
+      "kind": "agent-pack",
+      "title": "WAKE Turns Messy Source Material into a Structured Content Packet",
+      "output": {
+        "ok": true,
+        "generatedAt": "2026-07-10T17:10:11.081Z",
+        "engine": "WAKE V6 local deterministic agent",
+        "frame": {
+          "title": "WAKE Turns Messy Source Material into a Structured Content Packet",
+          "duration": "60s",
+          "format": "vertical",
+          "role": "WAKE Content Agent",
+          "objective": "Turn \"WAKE Turns Messy Source Material into a Structured Content Packet\" into a short-form content packet with hooks, scenes, captions, and CTA.",
+          "scenes": 6,
+          "hooks": 1,
+          "cta": "Watch the full breakdown on WAKE.",
+          "constraints": [
+            "No fake capability claims.",
+            "Keep local outputs auditable.",
+            "Keep output inspectable and copyable."
+          ],
+          "focusTerms": [
+            "content",
+            "material",
+            "messy",
+            "operators"
+          ],
+          "sourceCharacterCount": 189
+        },
+        "hooks": [
+          "WAKE Turns Messy Source Material into a Structured Content Packet: the system behind the result.",
+          "Messy content becomes a shippable content packet.",
+          "What is live, what is saved, and what is ready to export."
+        ],
+        "titles": [
+          "WAKE Turns Messy Source Material into a Structured Content Packet",
+          "WAKE Turns Messy Source Material into a Structured Content Packet - WAKE Breakdown",
+          "The WAKE Frame For Content Material"
+        ],
+        "captions": [
+          "WAKE Turns Messy Source Material into a Structured Content Packet is structured into hooks, scenes, captions, and export-ready files.",
+          "WAKE V6 keeps the packet local, auditable, and saved to the ledger.",
+          "No hidden wiring. Every visible capability is backed by a local function."
+        ],
+        "platformBlocks": {
+          "youtubeShorts": "Open with \"WAKE Turns Messy Source Material into a Structured Content Packet\" and cut through 6 quick scenes.",
+          "tiktok": "Lead with hook 2, then show content, material, messy as fast proof beats.",
+          "linkedin": "Use \"WAKE Turns Messy Source Material into a Structured Content Packet - WAKE Breakdown\" with the audit constraints as credibility proof."
+        },
+        "scriptBeats": [
+          {
+            "beat": "Open",
+            "direction": "Name the problem: content without structure does not ship."
+          },
+          {
+            "beat": "Proof",
+            "direction": "Show how WAKE turns content and material into a usable packet."
+          },
+          {
+            "beat": "Close",
+            "direction": "Point to the saved export and local ledger."
+          }
+        ],
+        "qualityFlags": {
+          "wrapperRemoved": true,
+          "titleSource": "cleaned source",
+          "localOnly": true
+        }
+      },
+      "createdAt": "2026-07-10T17:10:11.081Z"
+    },
+    {
+      "id": "gen-mrf6tet3-82wq99",
+      "projectId": "wake-v6-main",
+      "sourceId": null,
+      "kind": "agent-pack",
+      "title": "Build a 60-second short form video from these talking points: ",
+      "output": {
+        "ok": true,
+        "generatedAt": "2026-07-10T17:06:15.735Z",
+        "engine": "WAKE V6 local deterministic agent",
+        "frame": {
+          "title": "Build a 60-second short form video from these talking points: ",
+          "duration": "60s",
+          "format": "vertical",
+          "role": "WAKE Content Agent",
+          "objective": "Turn source material into a short-form content packet with hooks, scenes, captions, and CTA.",
+          "scenes": 6,
+          "hooks": 2,
+          "cta": "Watch the full breakdown on WAKE.",
+          "constraints": [
+            "No fake capability claims.",
+            "Keep local outputs auditable.",
+            "Keep output inspectable and copyable."
+          ],
+          "sourceCharacterCount": 189
+        },
+        "hooks": [
+          "Build a 60-second short form video from these talking points: : the part most people miss.",
+          "Stop guessing. Structure the source before you ship it.",
+          "One source in. Many usable outputs out."
+        ],
+        "titles": [
+          "Build a 60-second short form video from these talking points: ",
+          "Build a 60-second short form video from these talking points:  - WAKE Breakdown",
+          "The WAKE Frame For Short Form"
+        ],
+        "captions": [
+          "Built from the current source in WAKE Command Console V6.",
+          "Saved to the local WAKE V6 ledger.",
+          "No hidden wiring. No fake completion."
+        ],
+        "platformBlocks": {
+          "youtubeShorts": "Use hook 1, scene list, and CTA.",
+          "tiktok": "Use hook 2 with a fast opening caption.",
+          "linkedin": "Use title 2 with the constraints as credibility proof."
+        }
+      },
+      "createdAt": "2026-07-10T17:06:15.735Z"
+    },
+    {
+      "id": "gen-mrf6q62z-kqnwyh",
+      "projectId": "wake-v6-main",
+      "sourceId": null,
+      "kind": "agent-pack",
+      "title": "Build a 60-second short form video from these talking points: ",
+      "output": {
+        "ok": true,
+        "generatedAt": "2026-07-10T17:03:44.459Z",
+        "engine": "WAKE V6 local deterministic agent",
+        "frame": {
+          "title": "Build a 60-second short form video from these talking points: ",
+          "duration": "60s",
+          "format": "vertical",
+          "role": "WAKE Content Agent",
+          "objective": "Turn source material into a short-form content packet with hooks, scenes, captions, and CTA.",
+          "scenes": 6,
+          "hooks": 2,
+          "cta": "Watch the full breakdown on WAKE.",
+          "constraints": [
+            "No fake capability claims.",
+            "Keep local outputs auditable.",
+            "Keep output inspectable and copyable."
+          ],
+          "sourceCharacterCount": 189
+        },
+        "hooks": [
+          "Build a 60-second short form video from these talking points: : the part most people miss.",
+          "Stop guessing. Structure the source before you ship it.",
+          "One source in. Many usable outputs out."
+        ],
+        "titles": [
+          "Build a 60-second short form video from these talking points: ",
+          "Build a 60-second short form video from these talking points:  - WAKE Breakdown",
+          "The WAKE Frame For Short Form"
+        ],
+        "captions": [
+          "Built from the current source in WAKE Command Console V6.",
+          "Saved to the local WAKE V6 ledger.",
+          "No hidden wiring. No fake completion."
+        ],
+        "platformBlocks": {
+          "youtubeShorts": "Use hook 1, scene list, and CTA.",
+          "tiktok": "Use hook 2 with a fast opening caption.",
+          "linkedin": "Use title 2 with the constraints as credibility proof."
+        }
+      },
+      "createdAt": "2026-07-10T17:03:44.459Z"
+    },
+    {
+      "id": "gen-mrf6p127-7cf1cf",
+      "projectId": "wake-v6-main",
+      "sourceId": null,
+      "kind": "content-cluster",
+      "title": "Build a 60-second short form video from these talking points: ",
+      "output": {
+        "ok": true,
+        "generatedAt": "2026-07-10T17:02:51.294Z",
+        "engine": "WAKE V6 local content cluster",
+        "sourceInbox": {
+          "title": "Build a 60-second short form video from these talking points: ",
+          "characters": 189,
+          "terms": [
+            {
+              "term": "60-second",
+              "count": 1
+            },
+            {
+              "term": "build",
+              "count": 1
+            },
+            {
+              "term": "content",
+              "count": 1
+            },
+            {
+              "term": "form",
+              "count": 1
+            },
+            {
+              "term": "honestly",
+              "count": 1
+            },
+            {
+              "term": "live",
+              "count": 1
+            },
+            {
+              "term": "marks",
+              "count": 1
+            },
+            {
+              "term": "material",
+              "count": 1
+            }
+          ],
+          "proofStatus": "local-only"
+        },
+        "pillars": [
+          {
+            "id": "cluster-proof",
+            "label": "Proof / Trust",
+            "theme": "Show what is real about 60-second.",
+            "angle": "Lead with verified capability, limits, and next action."
+          },
+          {
+            "id": "cluster-system",
+            "label": "System / Process",
+            "theme": "Turn build into repeatable steps.",
+            "angle": "Make the invisible workflow legible enough to hand off."
+          },
+          {
+            "id": "cluster-output",
+            "label": "Output / Distribution",
+            "theme": "Package content into reusable assets.",
+            "angle": "Separate shorts, captions, titles, hooks, prompts, and dispatch notes."
+          }
+        ],
+        "outputMatrix": [
+          {
+            "lane": "Shorts",
+            "count": 3,
+            "status": "ready-local",
+            "detail": "Use frame objective, hooks, and scene list."
+          },
+          {
+            "lane": "Captions",
+            "count": 5,
+            "status": "ready-local",
+            "detail": "Use proof-first captions with no fake operator claims."
+          },
+          {
+            "lane": "Titles",
+            "count": 5,
+            "status": "ready-local",
+            "detail": "Use source title plus cluster pillar angles."
+          },
+          {
+            "lane": "Quote Pack",
+            "count": 4,
+            "status": "ready-local",
+            "detail": "Pull crisp statements from the pasted source only."
+          },
+          {
+            "lane": "Thumbnail Directions",
+            "count": 3,
+            "status": "ready-local",
+            "detail": "Describe visual direction prompts from the pasted source."
+          },
+          {
+            "lane": "Prompt Pack",
+            "count": 4,
+            "status": "ready-local",
+            "detail": "Create prompts for follow-up agents and manual review."
+          }
+        ],
+        "dispatchQueue": [
+          {
+            "operator": "Proof Pack",
+            "status": "ready-local",
+            "action": "Review claims",
+            "detail": "Packages proof notes and constraints for human review."
+          },
+          {
+            "operator": "Script Pack",
+            "status": "ready-local",
+            "action": "Shape scripts",
+            "detail": "Packages hooks, scenes, captions, and CTAs for production."
+          },
+          {
+            "operator": "Memory Pack",
+            "status": "ready-local",
+            "action": "Save learning",
+            "detail": "Persists source, output, export, and history records locally."
+          },
+          {
+            "operator": "Export Pack",
+            "status": "ready-local",
+            "action": "Ship files",
+            "detail": "Writes markdown and JSON deliverables to the local export folder."
+          }
+        ],
+        "auditNotes": [
+          "Cluster generation is deterministic and local.",
+          "Dispatch cards create local handoff packages.",
+          "No outside app is claimed as active inside V6."
+        ]
+      },
+      "createdAt": "2026-07-10T17:02:51.295Z"
+    }
+  ],
+  "exports": [],
+  "history": [
+    {
+      "id": "hist-mrg5awh3-bvbz0l",
+      "type": "project.updated",
+      "detail": "Updated project: WAKE Engine V6",
+      "payload": {
+        "projectId": "proj-mrg3xmbz-kb0zhr"
+      },
+      "createdAt": "2026-07-11T09:11:38.727Z"
+    },
+    {
+      "id": "hist-mrg5auhm-j84xjf",
+      "type": "project.updated",
+      "detail": "Updated project: WAKE Engine V6",
+      "payload": {
+        "projectId": "proj-mrg3xmbz-kb0zhr"
+      },
+      "createdAt": "2026-07-11T09:11:36.154Z"
+    },
+    {
+      "id": "hist-mrg3xufj-l061hi",
+      "type": "frame.generated",
+      "detail": "Generated frame: WAKE Turns Messy Source Material into a Structured Content Packet",
+      "payload": {
+        "generationId": "gen-mrg3xufj-lbm30g",
+        "projectId": "proj-mrg3xmbz-kb0zhr",
+        "sourceId": null
+      },
+      "createdAt": "2026-07-11T08:33:29.935Z"
+    },
+    {
+      "id": "hist-mrg3xmbz-v69r5m",
+      "type": "project.created",
+      "detail": "Created project: We are only who we are",
+      "payload": {
+        "projectId": "proj-mrg3xmbz-kb0zhr"
+      },
+      "createdAt": "2026-07-11T08:33:19.439Z"
+    },
+    {
+      "id": "hist-mrf6ygeh-okb0pp",
+      "type": "agent-pack.generated",
+      "detail": "Generated agent-pack: WAKE Turns Messy Source Material into a Structured Content Packet",
+      "payload": {
+        "generationId": "gen-mrf6ygeh-yxt6kp",
+        "projectId": "wake-v6-main",
+        "sourceId": null
+      },
+      "createdAt": "2026-07-10T17:10:11.081Z"
+    },
+    {
+      "id": "hist-mrf6tet3-5jrckz",
+      "type": "agent-pack.generated",
+      "detail": "Generated agent-pack: Build a 60-second short form video from these talking points: ",
+      "payload": {
+        "generationId": "gen-mrf6tet3-82wq99",
+        "projectId": "wake-v6-main",
+        "sourceId": null
+      },
+      "createdAt": "2026-07-10T17:06:15.735Z"
+    },
+    {
+      "id": "hist-mrf6q62z-yl10p8",
+      "type": "agent-pack.generated",
+      "detail": "Generated agent-pack: Build a 60-second short form video from these talking points: ",
+      "payload": {
+        "generationId": "gen-mrf6q62z-kqnwyh",
+        "projectId": "wake-v6-main",
+        "sourceId": null
+      },
+      "createdAt": "2026-07-10T17:03:44.459Z"
+    },
+    {
+      "id": "hist-mrf6p127-b6uh2s",
+      "type": "content-cluster.generated",
+      "detail": "Generated content-cluster: Build a 60-second short form video from these talking points: ",
+      "payload": {
+        "generationId": "gen-mrf6p127-7cf1cf",
+        "projectId": "wake-v6-main",
+        "sourceId": null
+      },
+      "createdAt": "2026-07-10T17:02:51.295Z"
+    },
+    {
+      "id": "hist-mrf69008-liveclean",
+      "type": "system.live-clean",
+      "detail": "Active WAKE V6 store cleaned to live local capabilities only.",
+      "payload": {
+        "archivedPreviousData": "server/data/archive-pre-live-clean-20260710"
+      },
+      "createdAt": "2026-07-10T16:50:23.432Z"
+    }
+  ]
+}

@@ -1,0 +1,827 @@
+{
+  "audit": "wal-crash-replay",
+  "status": "pass",
+  "generatedAt": "2026-07-18T18:01:21.857Z",
+  "writeBoundaries": 27,
+  "recoveryBoundaries": 17,
+  "rollbackBoundaries": 17,
+  "totalBoundaries": 61,
+  "passed": 61,
+  "failed": [],
+  "results": [
+    {
+      "kind": "write-boundary",
+      "boundary": "stage:after-temp-write",
+      "acceptedRevisions": [
+        1
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": null,
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "stage:after-temp-fsync",
+      "acceptedRevisions": [
+        1
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": null,
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "stage:after-final-rename",
+      "acceptedRevisions": [
+        1
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": null,
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "stage:after-final-fsync",
+      "acceptedRevisions": [
+        1
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": null,
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "backup:after-temp-write",
+      "acceptedRevisions": [
+        1
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": null,
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "backup:after-temp-fsync",
+      "acceptedRevisions": [
+        1
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": null,
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "backup:after-final-rename",
+      "acceptedRevisions": [
+        1
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": null,
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "backup:after-final-fsync",
+      "acceptedRevisions": [
+        1
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": null,
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "journal-pending:after-write",
+      "acceptedRevisions": [
+        1,
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "journal-pending:after-fsync",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "primary:after-temp-write",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "primary:after-temp-fsync",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "primary:after-previous-rename",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "primary:after-final-rename",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "primary:after-final-fsync",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "hash:after-temp-write",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "hash:after-temp-fsync",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "hash:after-previous-rename",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "hash:after-final-rename",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "hash:after-final-fsync",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "metadata:after-temp-write",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "metadata:after-temp-fsync",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "metadata:after-previous-rename",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "metadata:after-final-rename",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "metadata:after-final-fsync",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "journal-committed:after-write",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "committed",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "write-boundary",
+      "boundary": "journal-committed:after-fsync",
+      "acceptedRevisions": [
+        2
+      ],
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "committed",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-primary:after-temp-write",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-primary:after-temp-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-primary:after-previous-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-primary:after-final-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-primary:after-final-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-hash:after-temp-write",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-hash:after-temp-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-hash:after-previous-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-hash:after-final-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-hash:after-final-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-metadata:after-temp-write",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-metadata:after-temp-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-metadata:after-previous-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-metadata:after-final-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "recovery-metadata:after-final-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "journal-recovered-commit:after-write",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "recovery-boundary",
+      "boundary": "journal-recovered-commit:after-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 2,
+      "terminalStatus": "recovered-commit",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-primary:after-temp-write",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-primary:after-temp-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-primary:after-previous-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-primary:after-final-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-primary:after-final-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-hash:after-temp-write",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-hash:after-temp-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-hash:after-previous-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-hash:after-final-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-hash:after-final-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-metadata:after-temp-write",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-metadata:after-temp-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-metadata:after-previous-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-metadata:after-final-rename",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "rollback-metadata:after-final-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "journal-rolled-back:after-write",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    },
+    {
+      "kind": "rollback-boundary",
+      "boundary": "journal-rolled-back:after-fsync",
+      "crashExit": 86,
+      "recoveryExit": 0,
+      "recoveredRevision": 1,
+      "terminalStatus": "rolled-back",
+      "integrity": true,
+      "pendingTransactions": 0,
+      "transactionFiles": [],
+      "passed": true
+    }
+  ]
+}

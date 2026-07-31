@@ -1,0 +1,214 @@
+$ npm run audit:phase9
+
+STDOUT:
+
+> wake-engine@0.6.0 audit:phase9
+> npm run guard:local && node scripts/phase9-durability-security.mjs && node scripts/wal-crash-audit.mjs && node scripts/wal-elite-audit.mjs
+
+
+> wake-engine@0.6.0 guard:local
+> node scripts/guard-local-workspace.mjs
+
+LOCAL-ONLY GATE PASSED: C:\Users\justi\Documents\repos\wake-engine
+WAKE Command Console V6 -> http://127.0.0.1:9330/
+PASS versioned-atomic-journaled-store
+PASS crash-recovery-and-automatic-retention
+PASS manual-backup-restore-export-contract
+PASS all-production-json-artifacts-are-wal-backed
+PASS artifact-tree-startup-recovery-replays-pending-json
+PASS user-data-migration-and-rollback
+PASS electron-safe-storage-provider-vault
+PASS package-excludes-live-and-audit-data
+PASS loopback-bind-and-origin-session-guards
+PASS credentials-never-env-json-log-export
+PASS packaged-launch-has-no-dev-runtime-path
+PASS installer-shortcut-contract
+PASS production-json-writes-use-durable-wal-contract
+PASS api-bound-exclusively-to-ipv4-loopback
+PASS unauthorized-and-invalid-origin-rejected
+PASS salted-login-http-only-expiring-session-csrf
+PASS serialized-api-mutations
+PASS backup-restore-export-cleanup-api
+PASS disk-full-preserves-existing-data
+Phase 9: pass (19/19)
+PASS write-boundary stage:after-temp-write
+PASS write-boundary stage:after-temp-fsync
+PASS write-boundary stage:after-final-rename
+PASS write-boundary stage:after-final-fsync
+PASS write-boundary backup:after-temp-write
+PASS write-boundary backup:after-temp-fsync
+PASS write-boundary backup:after-final-rename
+PASS write-boundary backup:after-final-fsync
+PASS write-boundary journal-pending:after-write
+PASS write-boundary journal-pending:after-fsync
+PASS write-boundary primary:after-temp-write
+PASS write-boundary primary:after-temp-fsync
+PASS write-boundary primary:after-previous-rename
+PASS write-boundary primary:after-final-rename
+PASS write-boundary primary:after-final-fsync
+PASS write-boundary hash:after-temp-write
+PASS write-boundary hash:after-temp-fsync
+PASS write-boundary hash:after-previous-rename
+PASS write-boundary hash:after-final-rename
+PASS write-boundary hash:after-final-fsync
+PASS write-boundary metadata:after-temp-write
+PASS write-boundary metadata:after-temp-fsync
+PASS write-boundary metadata:after-previous-rename
+PASS write-boundary metadata:after-final-rename
+PASS write-boundary metadata:after-final-fsync
+PASS write-boundary journal-committed:after-write
+PASS write-boundary journal-committed:after-fsync
+PASS recovery-boundary recovery-primary:after-temp-write
+PASS recovery-boundary recovery-primary:after-temp-fsync
+PASS recovery-boundary recovery-primary:after-previous-rename
+PASS recovery-boundary recovery-primary:after-final-rename
+PASS recovery-boundary recovery-primary:after-final-fsync
+PASS recovery-boundary recovery-hash:after-temp-write
+PASS recovery-boundary recovery-hash:after-temp-fsync
+PASS recovery-boundary recovery-hash:after-previous-rename
+PASS recovery-boundary recovery-hash:after-final-rename
+PASS recovery-boundary recovery-hash:after-final-fsync
+PASS recovery-boundary recovery-metadata:after-temp-write
+PASS recovery-boundary recovery-metadata:after-temp-fsync
+PASS recovery-boundary recovery-metadata:after-previous-rename
+PASS recovery-boundary recovery-metadata:after-final-rename
+PASS recovery-boundary recovery-metadata:after-final-fsync
+PASS recovery-boundary journal-recovered-commit:after-write
+PASS recovery-boundary journal-recovered-commit:after-fsync
+PASS rollback-boundary rollback-primary:after-temp-write
+PASS rollback-boundary rollback-primary:after-temp-fsync
+PASS rollback-boundary rollback-primary:after-previous-rename
+PASS rollback-boundary rollback-primary:after-final-rename
+PASS rollback-boundary rollback-primary:after-final-fsync
+PASS rollback-boundary rollback-hash:after-temp-write
+PASS rollback-boundary rollback-hash:after-temp-fsync
+PASS rollback-boundary rollback-hash:after-previous-rename
+PASS rollback-boundary rollback-hash:after-final-rename
+PASS rollback-boundary rollback-hash:after-final-fsync
+PASS rollback-boundary rollback-metadata:after-temp-write
+PASS rollback-boundary rollback-metadata:after-temp-fsync
+PASS rollback-boundary rollback-metadata:after-previous-rename
+PASS rollback-boundary rollback-metadata:after-final-rename
+PASS rollback-boundary rollback-metadata:after-final-fsync
+PASS rollback-boundary journal-rolled-back:after-write
+PASS rollback-boundary journal-rolled-back:after-fsync
+WAL crash audit: pass (61/61)
+PASS external-write:stage:after-temp-write
+PASS external-write:stage:after-temp-fsync
+PASS external-write:stage:after-final-rename
+PASS external-write:stage:after-final-fsync
+PASS external-write:backup:after-temp-write
+PASS external-write:backup:after-temp-fsync
+PASS external-write:backup:after-final-rename
+PASS external-write:backup:after-final-fsync
+PASS external-write:journal-pending:after-write
+PASS external-write:journal-pending:after-fsync
+PASS external-write:primary:after-temp-write
+PASS external-write:primary:after-temp-fsync
+PASS external-write:primary:after-previous-rename
+PASS external-write:primary:after-final-rename
+PASS external-write:primary:after-final-fsync
+PASS external-write:hash:after-temp-write
+PASS external-write:hash:after-temp-fsync
+PASS external-write:hash:after-previous-rename
+PASS external-write:hash:after-final-rename
+PASS external-write:hash:after-final-fsync
+PASS external-write:metadata:after-temp-write
+PASS external-write:metadata:after-temp-fsync
+PASS external-write:metadata:after-previous-rename
+PASS external-write:metadata:after-final-rename
+PASS external-write:metadata:after-final-fsync
+PASS external-write:journal-committed:after-write
+PASS external-write:journal-committed:after-fsync
+PASS external-replay:recovery-primary:after-temp-write
+PASS external-replay:recovery-primary:after-temp-fsync
+PASS external-replay:recovery-primary:after-previous-rename
+PASS external-replay:recovery-primary:after-final-rename
+PASS external-replay:recovery-primary:after-final-fsync
+PASS external-replay:recovery-hash:after-temp-write
+PASS external-replay:recovery-hash:after-temp-fsync
+PASS external-replay:recovery-hash:after-previous-rename
+PASS external-replay:recovery-hash:after-final-rename
+PASS external-replay:recovery-hash:after-final-fsync
+PASS external-replay:recovery-metadata:after-temp-write
+PASS external-replay:recovery-metadata:after-temp-fsync
+PASS external-replay:recovery-metadata:after-previous-rename
+PASS external-replay:recovery-metadata:after-final-rename
+PASS external-replay:recovery-metadata:after-final-fsync
+PASS external-replay:journal-recovered-commit:after-write
+PASS external-replay:journal-recovered-commit:after-fsync
+PASS external-rollback:rollback-primary:after-temp-write
+PASS external-rollback:rollback-primary:after-temp-fsync
+PASS external-rollback:rollback-primary:after-previous-rename
+PASS external-rollback:rollback-primary:after-final-rename
+PASS external-rollback:rollback-primary:after-final-fsync
+PASS external-rollback:rollback-hash:after-temp-write
+PASS external-rollback:rollback-hash:after-temp-fsync
+PASS external-rollback:rollback-hash:after-previous-rename
+PASS external-rollback:rollback-hash:after-final-rename
+PASS external-rollback:rollback-hash:after-final-fsync
+PASS external-rollback:rollback-metadata:after-temp-write
+PASS external-rollback:rollback-metadata:after-temp-fsync
+PASS external-rollback:rollback-metadata:after-previous-rename
+PASS external-rollback:rollback-metadata:after-final-rename
+PASS external-rollback:rollback-metadata:after-final-fsync
+PASS external-rollback:journal-rolled-back:after-write
+PASS external-rollback:journal-rolled-back:after-fsync
+PASS compaction-crash:journal-compaction:after-temp-write
+PASS compaction-crash:journal-compaction:after-temp-fsync
+PASS compaction-crash:journal-compaction:after-previous-rename
+PASS compaction-crash:journal-compaction:after-final-rename
+PASS compaction-crash:journal-compaction:after-final-fsync
+PASS tail-repair-crash:journal-tail-repair:after-temp-write
+PASS tail-repair-crash:journal-tail-repair:after-temp-fsync
+PASS tail-repair-crash:journal-tail-repair:after-previous-rename
+PASS tail-repair-crash:journal-tail-repair:after-final-rename
+PASS tail-repair-crash:journal-tail-repair:after-final-fsync
+PASS io-disk-full:stage:before-write
+PASS io-disk-full:backup:before-write
+PASS io-disk-full:journal-pending:before-write
+PASS io-disk-full:primary:before-write
+PASS io-disk-full:hash:before-write
+PASS io-disk-full:metadata:before-write
+PASS io-disk-full:journal-committed:before-write
+PASS io-disk-full:recovery-primary:before-write
+PASS io-disk-full:recovery-hash:before-write
+PASS io-disk-full:recovery-metadata:before-write
+PASS io-disk-full:journal-recovered-commit:before-write
+PASS io-disk-full:rollback-primary:before-write
+PASS io-disk-full:rollback-hash:before-write
+PASS io-disk-full:rollback-metadata:before-write
+PASS io-disk-full:journal-rolled-back:before-write
+PASS io-disk-full:journal-compaction:before-write
+PASS io-disk-full:journal-tail-repair:before-write
+PASS io-permission:stage:before-write
+PASS io-permission:backup:before-write
+PASS io-permission:journal-pending:before-write
+PASS io-permission:primary:before-write
+PASS io-permission:hash:before-write
+PASS io-permission:metadata:before-write
+PASS io-permission:journal-committed:before-write
+PASS io-permission:recovery-primary:before-write
+PASS io-permission:recovery-hash:before-write
+PASS io-permission:recovery-metadata:before-write
+PASS io-permission:journal-recovered-commit:before-write
+PASS io-permission:rollback-primary:before-write
+PASS io-permission:rollback-hash:before-write
+PASS io-permission:rollback-metadata:before-write
+PASS io-permission:journal-rolled-back:before-write
+PASS io-permission:journal-compaction:before-write
+PASS io-permission:journal-tail-repair:before-write
+PASS hash-chain-middle-corruption-blocked
+PASS hash-chain-downgrade-blocked
+PASS torn-tail-repaired
+PASS short-stage-write-rolls-back
+PASS unrecoverable-wal-blocks-fallback
+PASS checkpoint-compaction-stress
+PASS stale-process-lock-recovered
+PASS multi-process-thousand-mutation-stress
+PASS production-scale-large-state-replay
+PASS durable-json-artifact-tree-replay
+WAL elite audit: pass (115/115)
+
+
+STDERR:

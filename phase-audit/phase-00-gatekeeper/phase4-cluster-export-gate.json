@@ -1,0 +1,48 @@
+{
+  "ok": true,
+  "failures": [],
+  "clusterInspection": {
+    "id": "clui-mrqogk5j-zschro",
+    "ok": true,
+    "requiredFields": [
+      "campaignPacket",
+      "platformLanes",
+      "hooks",
+      "titles",
+      "captions",
+      "scripts",
+      "shortsReelsTikTok",
+      "youtube",
+      "linkedin",
+      "carousel",
+      "thumbnailPrompts",
+      "visualPrompts",
+      "quoteEvidencePack",
+      "distributionPlan",
+      "qaVerdict",
+      "nextAction",
+      "a2aTrace",
+      "toolTrace"
+    ],
+    "missing": [],
+    "laneMissing": [],
+    "qa": {
+      "present": true,
+      "passed": true,
+      "verdict": "pass",
+      "blockers": [],
+      "repairSuggestions": [],
+      "nextBestStep": "Export the approved packet or run a deliberate polish pass."
+    },
+    "counts": {
+      "hooks": 4,
+      "titles": 3,
+      "captions": 3,
+      "scripts": 6,
+      "variants": 3,
+      "a2aMessages": 13,
+      "toolReceipts": 49
+    },
+    "inspectedAt": "2026-07-18T18:05:37.159Z"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "name": "wake-engine",
+  "version": "0.6.0",
+  "author": "ForgeFront Systems",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.js",
+  "description": "Wake Engine local command console V6",
+  "scripts": {
+    "guard:local": "node scripts/guard-local-workspace.mjs",
+    "dev": "npm run guard:local && concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm run guard:local && node server/index.js",
+    "dev:client": "npm run guard:local && vite --host 127.0.0.1 --port 5177",
+    "build": "npm run guard:local && vite build",
+    "desktop": "npm run build && electron .",
+    "package:win": "npm run build && electron-builder --win dir --x64",
+    "package:installer": "npm run build && electron-builder --win nsis --x64",
+    "install:local": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-wake-v6-local.ps1",
+    "start": "npm run guard:local && node server/index.js",
+    "benchmark": "npm run guard:local && node scripts/benchmark-wake-v6.mjs",
+    "audit:phase8": "npm run guard:local && node scripts/phase8-truth-baseline.mjs",
+    "audit:wal": "npm run guard:local && node scripts/wal-crash-audit.mjs && node scripts/wal-elite-audit.mjs",
+    "audit:phase9": "npm run guard:local && node scripts/phase9-durability-security.mjs && node scripts/wal-crash-audit.mjs && node scripts/wal-elite-audit.mjs",
+    "smoke": "npm run guard:local && node scripts/smoke-wake-v6.mjs",
+    "audit:ui": "npm run guard:local && node scripts/ui-button-audit.mjs",
+    "gate": "npm run guard:local && node scripts/wake-gatekeeper.mjs phase-00-gatekeeper"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.1.2",
+    "electron": "^43.1.0",
+    "electron-builder": "^26.15.3",
+    "playwright": "^1.61.1",
+    "vite": "^6.0.3"
+  },
+  "build": {
+    "appId": "com.wake.engine.v6",
+    "productName": "WAKE Engine V6",
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/*.js",
+      "server/*.js",
+      "scripts/benchmark-wake-v6.mjs",
+      "build/icon.ico",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "checks": {
+    "benchmarkScript": true,
+    "benchmarkWiredIntoGate": true,
+    "allBudgets": true,
+    "canonicalContract": true,
+    "uiPacketContract": true,
+    "publicInterfaces": true,
+    "autonomousCampaignInterface": true,
+    "originalImageInterface": true,
+    "externalImageConsent": true,
+    "nativePlatformPreviews": true,
+    "persistedTraces": true,
+    "chatTarget": true,
+    "exportInspection": true,
+    "tierZeroSpecDisclaimer": true,
+    "universalFixtures": true
+  },
+  "requiredBudgets": [
+    "desktopBoot",
+    "stateLoad",
+    "saveSource",
+    "frameGeneration",
+    "agentRun",
+    "clusterGeneration",
+    "autonomousCampaign",
+    "chatFirstVisibleResponse",
+    "modelWarmup",
+    "streamedFirstToken",
+    "export",
+    "coreUiInteraction"
+  ],
+  "interfaces": [
+    "/api/run-agent",
+    "/api/tier-zero/run",
+    "/api/content-cluster",
+    "/api/export",
+    "/api/history",
+    "/api/state"
+  ]
+}

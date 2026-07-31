@@ -1,0 +1,27 @@
+$ npm run audit:phase8
+
+STDOUT:
+
+> wake-engine@0.6.0 audit:phase8
+> npm run guard:local && node scripts/phase8-truth-baseline.mjs
+
+
+> wake-engine@0.6.0 guard:local
+> node scripts/guard-local-workspace.mjs
+
+LOCAL-ONLY GATE PASSED: C:\Users\justi\Documents\repos\wake-engine
+PASS authorized-local-repo
+PASS dependency-lock-alignment
+PASS old-school-login-contract
+PASS current-run-visual-baselines
+PASS versioned-content-baselines
+PASS required-connectors-used
+PASS live-data-contamination
+PASS aurora-name-lock
+PASS project-reference-integrity
+PASS source-content-not-path-only
+PASS forbidden-runtime-drift-gate-present
+Phase 8: pass (11/11)
+
+
+STDERR:

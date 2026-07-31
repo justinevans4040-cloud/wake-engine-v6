@@ -1,0 +1,188 @@
+{
+  "savedAt": "2026-07-05T18:05:30.755Z",
+  "source": "Build a 60-second short form video from these talking points: WAKE turns messy source material into a structured content packet, shows what is live, and marks unverified operators honestly.",
+  "output": {
+    "ok": true,
+    "generatedAt": "2026-07-05T18:05:30.354Z",
+    "engine": "WAKE V6 local deterministic agent",
+    "frame": {
+      "title": "Build a 60-second short form video from these talking points: ",
+      "duration": "60s",
+      "format": "vertical",
+      "role": "WAKE Content Agent",
+      "objective": "Turn source material into a short-form content packet with hooks, scenes, captions, and CTA.",
+      "scenes": 6,
+      "hooks": 2,
+      "cta": "Watch the full breakdown on WAKE.",
+      "constraints": [
+        "No fake capability claims.",
+        "Mark external operators as not wired until verified.",
+        "Keep output inspectable and copyable."
+      ],
+      "sourceCharacterCount": 189
+    },
+    "hooks": [
+      "Build a 60-second short form video from these talking points: : the part most people miss.",
+      "Stop guessing. Structure the source before you ship it.",
+      "One source in. Many usable outputs out."
+    ],
+    "titles": [
+      "Build a 60-second short form video from these talking points: ",
+      "Build a 60-second short form video from these talking points:  - WAKE Breakdown",
+      "The WAKE Frame For Short Form"
+    ],
+    "captions": [
+      "Built from the current source in WAKE Command Console V6.",
+      "Marked local until external operators are verified.",
+      "No hidden wiring. No fake completion."
+    ],
+    "platformBlocks": {
+      "youtubeShorts": "Use hook 1, scene list, and CTA.",
+      "tiktok": "Use hook 2 with a fast opening caption.",
+      "linkedin": "Use title 2 with the constraints as credibility proof."
+    }
+  },
+  "state": {
+    "ok": true,
+    "product": "Wake Engine",
+    "console": "WAKE Command Console V6",
+    "version": "V6",
+    "status": "active",
+    "url": "http://127.0.0.1:8786/",
+    "tasks": [
+      {
+        "id": "WAKE-001",
+        "title": "Source prompt builder",
+        "owner": "Console",
+        "status": "running",
+        "updated": "2m ago",
+        "detail": "Turns pasted source into a structured WAKE frame with role, objective, scenes, hooks, constraints, and output contract."
+      },
+      {
+        "id": "WAKE-002",
+        "title": "Local rule content agent",
+        "owner": "Agent",
+        "status": "running",
+        "updated": "4m ago",
+        "detail": "Generates deterministic hooks, captions, titles, and platform blocks locally. This is not a cloud LLM claim."
+      },
+      {
+        "id": "WAKE-003",
+        "title": "Snapshot storage",
+        "owner": "Runtime",
+        "status": "done",
+        "updated": "12m ago",
+        "detail": "Saves the current source, output, runtime status, and capability map to server/data/snapshots."
+      },
+      {
+        "id": "WAKE-004",
+        "title": "Task monitor scaling",
+        "owner": "Console",
+        "status": "done",
+        "updated": "20m ago",
+        "detail": "Bounded, searchable, filterable task surface so the list does not grow forever."
+      },
+      {
+        "id": "WAKE-005",
+        "title": "RUNE validation attach",
+        "owner": "RUNE",
+        "status": "next",
+        "updated": "external",
+        "detail": "RUNE is recognized as an external/Drive-linked operator lane. It is not wired into this V6 runtime yet."
+      },
+      {
+        "id": "WAKE-006",
+        "title": "LOOM orchestration attach",
+        "owner": "LOOM",
+        "status": "next",
+        "updated": "external",
+        "detail": "LOOM is recognized as an external/Drive-linked operator lane. It is not wired into this V6 runtime yet."
+      },
+      {
+        "id": "WAKE-007",
+        "title": "ECHO memory attach",
+        "owner": "ECHO",
+        "status": "blocked",
+        "updated": "external",
+        "detail": "Blocked until a real memory/vector database connection is selected and verified."
+      },
+      {
+        "id": "WAKE-008",
+        "title": "Viral Brothers bridge",
+        "owner": "Viral Forge",
+        "status": "next",
+        "updated": "external",
+        "detail": "ViralForge Brothers live in Viral Forge. V6 does not call that app until an explicit bridge contract exists."
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "ingest",
+        "label": "Ingest & Parse",
+        "status": "live",
+        "detail": "Accepts pasted source text and turns it into structured frame fields."
+      },
+      {
+        "id": "local-agent",
+        "label": "Local Content Agent",
+        "status": "live",
+        "detail": "Deterministic local pack generation. No fake AI provider claim."
+      },
+      {
+        "id": "snapshot",
+        "label": "Snapshot Storage",
+        "status": "live",
+        "detail": "Writes auditable JSON snapshots to the local repo runtime folder."
+      },
+      {
+        "id": "script",
+        "label": "Script & Structure",
+        "status": "partial",
+        "detail": "Frames scenes, hooks, captions, and CTAs. Long-form timing is not attached."
+      },
+      {
+        "id": "distribution",
+        "label": "Distribution",
+        "status": "next",
+        "detail": "Platform exports require a Viral Forge or hosted publishing bridge."
+      },
+      {
+        "id": "memory",
+        "label": "Learning Memory",
+        "status": "blocked",
+        "detail": "Requires a verified database/vector-store connection before it can be called live."
+      }
+    ],
+    "externalOperators": [
+      {
+        "id": "rune",
+        "label": "RUNE",
+        "status": "external",
+        "detail": "Drive/app lane known, not wired to V6."
+      },
+      {
+        "id": "loom",
+        "label": "LOOM",
+        "status": "external",
+        "detail": "Drive/app lane known, not wired to V6."
+      },
+      {
+        "id": "echo",
+        "label": "ECHO",
+        "status": "external",
+        "detail": "Drive/app lane known, not wired to V6."
+      },
+      {
+        "id": "viral-brothers",
+        "label": "ViralForge Brothers",
+        "status": "separate-app",
+        "detail": "Real in Viral Forge, not merged into V6."
+      }
+    ],
+    "runtime": {
+      "cpuLabel": "local",
+      "queue": 5,
+      "snapshots": 0
+    }
+  }
+}

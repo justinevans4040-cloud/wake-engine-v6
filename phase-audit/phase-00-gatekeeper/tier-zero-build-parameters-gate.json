@@ -1,0 +1,4143 @@
+{
+  "ok": true,
+  "failures": [],
+  "agentTrace": [
+    {
+      "agentId": "archivist",
+      "label": "Archivist",
+      "tier": "tier-zero",
+      "promoted": true,
+      "status": "done",
+      "requiredTools": [
+        "send_a2a",
+        "write_memory",
+        "read_source",
+        "extract_evidence",
+        "assess_source",
+        "classify_source",
+        "build_citation_map"
+      ],
+      "tools": [
+        "read_source",
+        "extract_evidence",
+        "assess_source",
+        "build_citation_map",
+        "classify_source",
+        "write_memory",
+        "send_a2a",
+        "send_a2a"
+      ],
+      "missingTools": [],
+      "inputReceipts": {
+        "inbox": [
+          {
+            "id": "a2a-export-archivist-mrqogk09-ekl4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "export",
+            "consumer": "archivist",
+            "intent": "export-to-archivist-handoff",
+            "payloadSummary": [
+              "manifest",
+              "runId",
+              "archive"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.969Z",
+            "consumedAt": "2026-07-18T18:05:36.969Z",
+            "blocker": null
+          }
+        ],
+        "memoryReads": []
+      },
+      "outputReceipts": {
+        "outbox": [
+          {
+            "id": "a2a-archivist-strategist-mrqogk05-kj9w",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "archivist",
+            "consumer": "strategist",
+            "intent": "archivist-to-strategist-handoff",
+            "payloadSummary": [
+              "sourceProfile",
+              "evidenceMap",
+              "classification"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.965Z",
+            "consumedAt": "2026-07-18T18:05:36.965Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-archivist-qa-mrqogk05-rfz4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "archivist",
+            "consumer": "qa",
+            "intent": "archivist-to-qa-handoff",
+            "payloadSummary": [
+              "evidenceMap"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.965Z",
+            "consumedAt": "2026-07-18T18:05:36.965Z",
+            "blocker": null
+          }
+        ],
+        "replayableHandoffs": [
+          {
+            "id": "replay-a2a-archivist-strategist-mrqogk05-kj9w",
+            "messageId": "a2a-archivist-strategist-mrqogk05-kj9w",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "archivist",
+            "consumer": "strategist",
+            "intent": "archivist-to-strategist-handoff",
+            "payload": {
+              "sourceProfile": {
+                "title": "A local home organizer offers a two-week kitchen reset with",
+                "characters": 153,
+                "sourceText": "A local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                "words": 23,
+                "terms": [
+                  {
+                    "term": "busy",
+                    "count": 1
+                  },
+                  {
+                    "term": "coordination",
+                    "count": 1
+                  },
+                  {
+                    "term": "donation",
+                    "count": 1
+                  },
+                  {
+                    "term": "families",
+                    "count": 1
+                  },
+                  {
+                    "term": "home",
+                    "count": 1
+                  },
+                  {
+                    "term": "kitchen",
+                    "count": 1
+                  },
+                  {
+                    "term": "labeled",
+                    "count": 1
+                  },
+                  {
+                    "term": "local",
+                    "count": 1
+                  }
+                ],
+                "sentences": [
+                  "A local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families."
+                ]
+              },
+              "evidenceMap": [
+                {
+                  "id": "evidence-1",
+                  "quote": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "use": "primary proof",
+                  "status": "verified-source-excerpt",
+                  "exactSource": true
+                },
+                {
+                  "id": "evidence-2",
+                  "quote": "a local home organizer offers a two-week kitchen reset",
+                  "use": "tension",
+                  "status": "verified-source-excerpt",
+                  "exactSource": true
+                },
+                {
+                  "id": "evidence-3",
+                  "quote": "labeled zones",
+                  "use": "specific detail",
+                  "status": "verified-source-excerpt",
+                  "exactSource": true
+                },
+                {
+                  "id": "evidence-4",
+                  "quote": "donation pickup coordination",
+                  "use": "supporting detail",
+                  "status": "verified-source-excerpt",
+                  "exactSource": true
+                }
+              ],
+              "classification": {
+                "format": "universal-source",
+                "lane": "General Content"
+              }
+            },
+            "payloadSummary": [
+              "sourceProfile",
+              "evidenceMap",
+              "classification"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.965Z"
+          },
+          {
+            "id": "replay-a2a-archivist-qa-mrqogk05-rfz4",
+            "messageId": "a2a-archivist-qa-mrqogk05-rfz4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "archivist",
+            "consumer": "qa",
+            "intent": "archivist-to-qa-handoff",
+            "payload": {
+              "evidenceMap": [
+                {
+                  "id": "evidence-1",
+                  "quote": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "use": "primary proof",
+                  "status": "verified-source-excerpt",
+                  "exactSource": true
+                },
+                {
+                  "id": "evidence-2",
+                  "quote": "a local home organizer offers a two-week kitchen reset",
+                  "use": "tension",
+                  "status": "verified-source-excerpt",
+                  "exactSource": true
+                },
+                {
+                  "id": "evidence-3",
+                  "quote": "labeled zones",
+                  "use": "specific detail",
+                  "status": "verified-source-excerpt",
+                  "exactSource": true
+                },
+                {
+                  "id": "evidence-4",
+                  "quote": "donation pickup coordination",
+                  "use": "supporting detail",
+                  "status": "verified-source-excerpt",
+                  "exactSource": true
+                }
+              ]
+            },
+            "payloadSummary": [
+              "evidenceMap"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.965Z"
+          }
+        ],
+        "memoryWrites": [
+          {
+            "agentId": "archivist",
+            "outputKeys": [
+              "sourceProfile",
+              "sourceAssessment",
+              "evidenceMap",
+              "citationMap",
+              "classification",
+              "retrievalContext"
+            ],
+            "wroteAt": "2026-07-18T18:05:36.965Z",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "status": "written"
+          }
+        ],
+        "toolCalls": [
+          {
+            "id": "tool-1",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "archivist",
+            "tool": "read_source",
+            "status": "ok",
+            "inputSummary": [
+              "string"
+            ],
+            "outputSummary": "object:6",
+            "calledAt": "2026-07-18T18:05:36.964Z"
+          },
+          {
+            "id": "tool-2",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "archivist",
+            "tool": "extract_evidence",
+            "status": "ok",
+            "inputSummary": [
+              "string"
+            ],
+            "outputSummary": "array:4",
+            "calledAt": "2026-07-18T18:05:36.964Z"
+          },
+          {
+            "id": "tool-3",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "archivist",
+            "tool": "assess_source",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "array:4"
+            ],
+            "outputSummary": "object:11",
+            "calledAt": "2026-07-18T18:05:36.965Z"
+          },
+          {
+            "id": "tool-4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "archivist",
+            "tool": "build_citation_map",
+            "status": "ok",
+            "inputSummary": [
+              "array:4"
+            ],
+            "outputSummary": "array:4",
+            "calledAt": "2026-07-18T18:05:36.965Z"
+          },
+          {
+            "id": "tool-5",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "archivist",
+            "tool": "classify_source",
+            "status": "ok",
+            "inputSummary": [
+              "object:6"
+            ],
+            "outputSummary": "object:2",
+            "calledAt": "2026-07-18T18:05:36.965Z"
+          },
+          {
+            "id": "tool-6",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "archivist",
+            "tool": "write_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "object:6"
+            ],
+            "outputSummary": "object:3",
+            "calledAt": "2026-07-18T18:05:36.965Z"
+          },
+          {
+            "id": "tool-7",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "archivist",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:3"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.965Z"
+          },
+          {
+            "id": "tool-8",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "archivist",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:1"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.965Z"
+          }
+        ]
+      },
+      "memory": true,
+      "memoryReads": [],
+      "inboundA2A": [
+        "a2a-export-archivist-mrqogk09-ekl4"
+      ],
+      "outboundA2A": [
+        "strategist",
+        "qa"
+      ],
+      "doneGate": {
+        "required": [
+          "all required tools executed",
+          "tool receipts persisted",
+          "memory write persisted",
+          "source profile emitted",
+          "outbound A2A acknowledged",
+          "agent output included in packet trace"
+        ],
+        "passed": true,
+        "checkedAt": "2026-07-18T18:05:36.970Z"
+      },
+      "blockers": [],
+      "recoveryAttempts": []
+    },
+    {
+      "agentId": "strategist",
+      "label": "Strategist",
+      "tier": "tier-zero",
+      "promoted": true,
+      "status": "done",
+      "requiredTools": [
+        "send_a2a",
+        "write_memory",
+        "read_memory",
+        "position_offer",
+        "rank_angles",
+        "select_next_action"
+      ],
+      "tools": [
+        "read_memory",
+        "position_offer",
+        "rank_angles",
+        "select_next_action",
+        "write_memory",
+        "send_a2a",
+        "send_a2a",
+        "send_a2a"
+      ],
+      "missingTools": [],
+      "inputReceipts": {
+        "inbox": [
+          {
+            "id": "a2a-archivist-strategist-mrqogk05-kj9w",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "archivist",
+            "consumer": "strategist",
+            "intent": "archivist-to-strategist-handoff",
+            "payloadSummary": [
+              "sourceProfile",
+              "evidenceMap",
+              "classification"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.965Z",
+            "consumedAt": "2026-07-18T18:05:36.965Z",
+            "blocker": null
+          }
+        ],
+        "memoryReads": [
+          {
+            "agentId": "strategist",
+            "fromAgentId": "archivist",
+            "status": "read",
+            "readAt": "2026-07-18T18:05:36.965Z",
+            "runId": "tz-run-mrqogk04-7pz6xw"
+          }
+        ]
+      },
+      "outputReceipts": {
+        "outbox": [
+          {
+            "id": "a2a-strategist-scriptwriter-mrqogk06-lqr3",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "scriptwriter",
+            "intent": "strategist-to-scriptwriter-handoff",
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.966Z",
+            "consumedAt": "2026-07-18T18:05:36.966Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-strategist-creative-director-mrqogk06-5c57",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "creative-director",
+            "intent": "strategist-to-creative-director-handoff",
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.966Z",
+            "consumedAt": "2026-07-18T18:05:36.966Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-strategist-qa-mrqogk06-el7l",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "qa",
+            "intent": "strategist-to-qa-handoff",
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.966Z",
+            "consumedAt": "2026-07-18T18:05:36.966Z",
+            "blocker": null
+          }
+        ],
+        "replayableHandoffs": [
+          {
+            "id": "replay-a2a-strategist-scriptwriter-mrqogk06-lqr3",
+            "messageId": "a2a-strategist-scriptwriter-mrqogk06-lqr3",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "scriptwriter",
+            "intent": "strategist-to-scriptwriter-handoff",
+            "payload": {
+              "strategy": {
+                "audience": "busy families",
+                "promise": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                "tension": "a local home organizer offers a two-week kitchen reset",
+                "transformation": "labeled zones",
+                "operatorTakeaway": "donation pickup coordination",
+                "angle": "A local home organizer offers a two-week kitchen reset with for busy families",
+                "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "nextAction": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+              },
+              "rankedAngles": [
+                {
+                  "rank": 1,
+                  "angle": "A local home organizer offers a two-week kitchen reset with for busy families",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "rank": 2,
+                  "angle": "source proof into system output",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "rank": 3,
+                  "angle": "operator next action",
+                  "evidenceId": "strategy-next-action"
+                }
+              ],
+              "selectedNextAction": {
+                "action": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "owner": "operator",
+                "reason": "best next step after strategy pass"
+              },
+              "angleStack": [
+                "A local home organizer offers a two-week kitchen reset with for busy families",
+                "source proof into system output",
+                "operator next action"
+              ]
+            },
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "replay-a2a-strategist-creative-director-mrqogk06-5c57",
+            "messageId": "a2a-strategist-creative-director-mrqogk06-5c57",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "creative-director",
+            "intent": "strategist-to-creative-director-handoff",
+            "payload": {
+              "strategy": {
+                "audience": "busy families",
+                "promise": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                "tension": "a local home organizer offers a two-week kitchen reset",
+                "transformation": "labeled zones",
+                "operatorTakeaway": "donation pickup coordination",
+                "angle": "A local home organizer offers a two-week kitchen reset with for busy families",
+                "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "nextAction": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+              },
+              "rankedAngles": [
+                {
+                  "rank": 1,
+                  "angle": "A local home organizer offers a two-week kitchen reset with for busy families",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "rank": 2,
+                  "angle": "source proof into system output",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "rank": 3,
+                  "angle": "operator next action",
+                  "evidenceId": "strategy-next-action"
+                }
+              ],
+              "selectedNextAction": {
+                "action": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "owner": "operator",
+                "reason": "best next step after strategy pass"
+              },
+              "angleStack": [
+                "A local home organizer offers a two-week kitchen reset with for busy families",
+                "source proof into system output",
+                "operator next action"
+              ]
+            },
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "replay-a2a-strategist-qa-mrqogk06-el7l",
+            "messageId": "a2a-strategist-qa-mrqogk06-el7l",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "qa",
+            "intent": "strategist-to-qa-handoff",
+            "payload": {
+              "strategy": {
+                "audience": "busy families",
+                "promise": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                "tension": "a local home organizer offers a two-week kitchen reset",
+                "transformation": "labeled zones",
+                "operatorTakeaway": "donation pickup coordination",
+                "angle": "A local home organizer offers a two-week kitchen reset with for busy families",
+                "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "nextAction": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+              },
+              "rankedAngles": [
+                {
+                  "rank": 1,
+                  "angle": "A local home organizer offers a two-week kitchen reset with for busy families",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "rank": 2,
+                  "angle": "source proof into system output",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "rank": 3,
+                  "angle": "operator next action",
+                  "evidenceId": "strategy-next-action"
+                }
+              ],
+              "selectedNextAction": {
+                "action": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "owner": "operator",
+                "reason": "best next step after strategy pass"
+              },
+              "angleStack": [
+                "A local home organizer offers a two-week kitchen reset with for busy families",
+                "source proof into system output",
+                "operator next action"
+              ]
+            },
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.966Z"
+          }
+        ],
+        "memoryWrites": [
+          {
+            "agentId": "strategist",
+            "outputKeys": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "wroteAt": "2026-07-18T18:05:36.966Z",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "status": "written"
+          }
+        ],
+        "toolCalls": [
+          {
+            "id": "tool-9",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "strategist",
+            "tool": "read_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string"
+            ],
+            "outputSummary": "object:4",
+            "calledAt": "2026-07-18T18:05:36.965Z"
+          },
+          {
+            "id": "tool-10",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "strategist",
+            "tool": "position_offer",
+            "status": "ok",
+            "inputSummary": [
+              "object:6",
+              "array:4"
+            ],
+            "outputSummary": "object:8",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-11",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "strategist",
+            "tool": "rank_angles",
+            "status": "ok",
+            "inputSummary": [
+              "object:8",
+              "array:4"
+            ],
+            "outputSummary": "array:3",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-12",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "strategist",
+            "tool": "select_next_action",
+            "status": "ok",
+            "inputSummary": [
+              "object:8"
+            ],
+            "outputSummary": "object:3",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-13",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "strategist",
+            "tool": "write_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "object:4"
+            ],
+            "outputSummary": "object:3",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-14",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "strategist",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:4"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-15",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "strategist",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:4"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-16",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "strategist",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:4"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          }
+        ]
+      },
+      "memory": true,
+      "memoryReads": [
+        {
+          "agentId": "strategist",
+          "fromAgentId": "archivist",
+          "status": "read",
+          "readAt": "2026-07-18T18:05:36.965Z",
+          "runId": "tz-run-mrqogk04-7pz6xw"
+        }
+      ],
+      "inboundA2A": [
+        "a2a-archivist-strategist-mrqogk05-kj9w"
+      ],
+      "outboundA2A": [
+        "scriptwriter",
+        "creative-director",
+        "qa"
+      ],
+      "doneGate": {
+        "required": [
+          "all required tools executed",
+          "tool receipts persisted",
+          "memory write persisted",
+          "inbox handoff consumed",
+          "outbound A2A acknowledged",
+          "agent output included in packet trace"
+        ],
+        "passed": true,
+        "checkedAt": "2026-07-18T18:05:36.970Z"
+      },
+      "blockers": [],
+      "recoveryAttempts": []
+    },
+    {
+      "agentId": "scriptwriter",
+      "label": "Scriptwriter",
+      "tier": "tier-zero",
+      "promoted": true,
+      "status": "done",
+      "requiredTools": [
+        "send_a2a",
+        "write_memory",
+        "read_memory",
+        "write_hooks",
+        "write_titles",
+        "write_captions",
+        "write_script",
+        "write_platform_variants",
+        "map_claims"
+      ],
+      "tools": [
+        "read_memory",
+        "write_hooks",
+        "write_titles",
+        "write_script",
+        "write_platform_variants",
+        "write_captions",
+        "map_claims",
+        "write_memory",
+        "send_a2a",
+        "send_a2a",
+        "send_a2a"
+      ],
+      "missingTools": [],
+      "inputReceipts": {
+        "inbox": [
+          {
+            "id": "a2a-strategist-scriptwriter-mrqogk06-lqr3",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "scriptwriter",
+            "intent": "strategist-to-scriptwriter-handoff",
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.966Z",
+            "consumedAt": "2026-07-18T18:05:36.966Z",
+            "blocker": null
+          }
+        ],
+        "memoryReads": [
+          {
+            "agentId": "scriptwriter",
+            "fromAgentId": "strategist",
+            "status": "read",
+            "readAt": "2026-07-18T18:05:36.966Z",
+            "runId": "tz-run-mrqogk04-7pz6xw"
+          }
+        ]
+      },
+      "outputReceipts": {
+        "outbox": [
+          {
+            "id": "a2a-scriptwriter-creative-director-mrqogk06-xkh4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "creative-director",
+            "intent": "scriptwriter-to-creative-director-handoff",
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.966Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-scriptwriter-qa-mrqogk07-ekqj",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "qa",
+            "intent": "scriptwriter-to-qa-handoff",
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.967Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-scriptwriter-export-mrqogk07-sqsh",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "export",
+            "intent": "scriptwriter-to-export-handoff",
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.967Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          }
+        ],
+        "replayableHandoffs": [
+          {
+            "id": "replay-a2a-scriptwriter-creative-director-mrqogk06-xkh4",
+            "messageId": "a2a-scriptwriter-creative-director-mrqogk06-xkh4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "creative-director",
+            "intent": "scriptwriter-to-creative-director-handoff",
+            "payload": {
+              "hooks": [
+                {
+                  "id": "hook-1",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple...",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "id": "hook-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "id": "hook-3",
+                  "line": "labeled zones",
+                  "evidenceId": "evidence-3"
+                },
+                {
+                  "id": "hook-4",
+                  "line": "donation pickup coordination",
+                  "evidenceId": "evidence-4"
+                }
+              ],
+              "titles": [
+                "A local home organizer offers a two-week kitchen reset with: busy families",
+                "Busy and coordination: what the source makes clear",
+                "A local home organizer offers a two-week kitchen: busy families"
+              ],
+              "captions": [
+                "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple... Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "a local home organizer offers a two-week kitchen reset Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "labeled zones Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+              ],
+              "script": [
+                {
+                  "time": "0:00-0:03",
+                  "beat": "Open",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "time": "0:03-0:12",
+                  "beat": "Tension",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "time": "0:12-0:24",
+                  "beat": "Specific Detail",
+                  "line": "labeled zones",
+                  "evidenceId": "evidence-3"
+                },
+                {
+                  "time": "0:24-0:38",
+                  "beat": "Proof",
+                  "line": "donation pickup coordination",
+                  "evidenceId": "evidence-4"
+                },
+                {
+                  "time": "0:38-0:50",
+                  "beat": "Application",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "time": "0:50-1:00",
+                  "beat": "Action",
+                  "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                  "evidenceId": "strategy-next-action"
+                }
+              ],
+              "platformVariants": [
+                {
+                  "platform": "Shorts/TikTok/Reels",
+                  "structure": "open with the strongest concrete detail, show the offer, end on the action",
+                  "hook": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple...",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                },
+                {
+                  "platform": "LinkedIn",
+                  "structure": "state the source fact, explain who it serves, close with the practical action",
+                  "hook": "a local home organizer offers a two-week kitchen reset",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                },
+                {
+                  "platform": "YouTube",
+                  "structure": "expand the source details into context, proof, application, and action",
+                  "hook": "labeled zones",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                }
+              ],
+              "claimMap": [
+                {
+                  "id": "mapped-claim-1",
+                  "beat": "Open",
+                  "evidenceId": "evidence-1",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-2",
+                  "beat": "Tension",
+                  "evidenceId": "evidence-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-3",
+                  "beat": "Specific Detail",
+                  "evidenceId": "evidence-3",
+                  "line": "labeled zones",
+                  "sourceLine": "labeled zones",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-4",
+                  "beat": "Proof",
+                  "evidenceId": "evidence-4",
+                  "line": "donation pickup coordination",
+                  "sourceLine": "donation pickup coordination",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-5",
+                  "beat": "Application",
+                  "evidenceId": "evidence-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-6",
+                  "beat": "Action",
+                  "evidenceId": "strategy-next-action",
+                  "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                  "sourceLine": null,
+                  "status": "operational-direction",
+                  "publishable": true,
+                  "blocker": null
+                }
+              ]
+            },
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "replay-a2a-scriptwriter-qa-mrqogk07-ekqj",
+            "messageId": "a2a-scriptwriter-qa-mrqogk07-ekqj",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "qa",
+            "intent": "scriptwriter-to-qa-handoff",
+            "payload": {
+              "hooks": [
+                {
+                  "id": "hook-1",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple...",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "id": "hook-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "id": "hook-3",
+                  "line": "labeled zones",
+                  "evidenceId": "evidence-3"
+                },
+                {
+                  "id": "hook-4",
+                  "line": "donation pickup coordination",
+                  "evidenceId": "evidence-4"
+                }
+              ],
+              "titles": [
+                "A local home organizer offers a two-week kitchen reset with: busy families",
+                "Busy and coordination: what the source makes clear",
+                "A local home organizer offers a two-week kitchen: busy families"
+              ],
+              "captions": [
+                "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple... Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "a local home organizer offers a two-week kitchen reset Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "labeled zones Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+              ],
+              "script": [
+                {
+                  "time": "0:00-0:03",
+                  "beat": "Open",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "time": "0:03-0:12",
+                  "beat": "Tension",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "time": "0:12-0:24",
+                  "beat": "Specific Detail",
+                  "line": "labeled zones",
+                  "evidenceId": "evidence-3"
+                },
+                {
+                  "time": "0:24-0:38",
+                  "beat": "Proof",
+                  "line": "donation pickup coordination",
+                  "evidenceId": "evidence-4"
+                },
+                {
+                  "time": "0:38-0:50",
+                  "beat": "Application",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "time": "0:50-1:00",
+                  "beat": "Action",
+                  "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                  "evidenceId": "strategy-next-action"
+                }
+              ],
+              "platformVariants": [
+                {
+                  "platform": "Shorts/TikTok/Reels",
+                  "structure": "open with the strongest concrete detail, show the offer, end on the action",
+                  "hook": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple...",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                },
+                {
+                  "platform": "LinkedIn",
+                  "structure": "state the source fact, explain who it serves, close with the practical action",
+                  "hook": "a local home organizer offers a two-week kitchen reset",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                },
+                {
+                  "platform": "YouTube",
+                  "structure": "expand the source details into context, proof, application, and action",
+                  "hook": "labeled zones",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                }
+              ],
+              "claimMap": [
+                {
+                  "id": "mapped-claim-1",
+                  "beat": "Open",
+                  "evidenceId": "evidence-1",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-2",
+                  "beat": "Tension",
+                  "evidenceId": "evidence-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-3",
+                  "beat": "Specific Detail",
+                  "evidenceId": "evidence-3",
+                  "line": "labeled zones",
+                  "sourceLine": "labeled zones",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-4",
+                  "beat": "Proof",
+                  "evidenceId": "evidence-4",
+                  "line": "donation pickup coordination",
+                  "sourceLine": "donation pickup coordination",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-5",
+                  "beat": "Application",
+                  "evidenceId": "evidence-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-6",
+                  "beat": "Action",
+                  "evidenceId": "strategy-next-action",
+                  "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                  "sourceLine": null,
+                  "status": "operational-direction",
+                  "publishable": true,
+                  "blocker": null
+                }
+              ]
+            },
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "replay-a2a-scriptwriter-export-mrqogk07-sqsh",
+            "messageId": "a2a-scriptwriter-export-mrqogk07-sqsh",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "export",
+            "intent": "scriptwriter-to-export-handoff",
+            "payload": {
+              "hooks": [
+                {
+                  "id": "hook-1",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple...",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "id": "hook-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "id": "hook-3",
+                  "line": "labeled zones",
+                  "evidenceId": "evidence-3"
+                },
+                {
+                  "id": "hook-4",
+                  "line": "donation pickup coordination",
+                  "evidenceId": "evidence-4"
+                }
+              ],
+              "titles": [
+                "A local home organizer offers a two-week kitchen reset with: busy families",
+                "Busy and coordination: what the source makes clear",
+                "A local home organizer offers a two-week kitchen: busy families"
+              ],
+              "captions": [
+                "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple... Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "a local home organizer offers a two-week kitchen reset Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                "labeled zones Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+              ],
+              "script": [
+                {
+                  "time": "0:00-0:03",
+                  "beat": "Open",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "evidenceId": "evidence-1"
+                },
+                {
+                  "time": "0:03-0:12",
+                  "beat": "Tension",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "time": "0:12-0:24",
+                  "beat": "Specific Detail",
+                  "line": "labeled zones",
+                  "evidenceId": "evidence-3"
+                },
+                {
+                  "time": "0:24-0:38",
+                  "beat": "Proof",
+                  "line": "donation pickup coordination",
+                  "evidenceId": "evidence-4"
+                },
+                {
+                  "time": "0:38-0:50",
+                  "beat": "Application",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "evidenceId": "evidence-2"
+                },
+                {
+                  "time": "0:50-1:00",
+                  "beat": "Action",
+                  "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                  "evidenceId": "strategy-next-action"
+                }
+              ],
+              "platformVariants": [
+                {
+                  "platform": "Shorts/TikTok/Reels",
+                  "structure": "open with the strongest concrete detail, show the offer, end on the action",
+                  "hook": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple...",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                },
+                {
+                  "platform": "LinkedIn",
+                  "structure": "state the source fact, explain who it serves, close with the practical action",
+                  "hook": "a local home organizer offers a two-week kitchen reset",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                },
+                {
+                  "platform": "YouTube",
+                  "structure": "expand the source details into context, proof, application, and action",
+                  "hook": "labeled zones",
+                  "cta": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                }
+              ],
+              "claimMap": [
+                {
+                  "id": "mapped-claim-1",
+                  "beat": "Open",
+                  "evidenceId": "evidence-1",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-2",
+                  "beat": "Tension",
+                  "evidenceId": "evidence-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-3",
+                  "beat": "Specific Detail",
+                  "evidenceId": "evidence-3",
+                  "line": "labeled zones",
+                  "sourceLine": "labeled zones",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-4",
+                  "beat": "Proof",
+                  "evidenceId": "evidence-4",
+                  "line": "donation pickup coordination",
+                  "sourceLine": "donation pickup coordination",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-5",
+                  "beat": "Application",
+                  "evidenceId": "evidence-2",
+                  "line": "a local home organizer offers a two-week kitchen reset",
+                  "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                  "status": "source-backed",
+                  "publishable": true,
+                  "blocker": null
+                },
+                {
+                  "id": "mapped-claim-6",
+                  "beat": "Action",
+                  "evidenceId": "strategy-next-action",
+                  "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                  "sourceLine": null,
+                  "status": "operational-direction",
+                  "publishable": true,
+                  "blocker": null
+                }
+              ]
+            },
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.967Z"
+          }
+        ],
+        "memoryWrites": [
+          {
+            "agentId": "scriptwriter",
+            "outputKeys": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "wroteAt": "2026-07-18T18:05:36.966Z",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "status": "written"
+          }
+        ],
+        "toolCalls": [
+          {
+            "id": "tool-17",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "read_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string"
+            ],
+            "outputSummary": "object:4",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-18",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "write_hooks",
+            "status": "ok",
+            "inputSummary": [
+              "array:4"
+            ],
+            "outputSummary": "array:4",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-19",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "write_titles",
+            "status": "ok",
+            "inputSummary": [
+              "object:6",
+              "array:4",
+              "object:8"
+            ],
+            "outputSummary": "array:3",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-20",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "write_script",
+            "status": "ok",
+            "inputSummary": [
+              "object:6",
+              "array:4",
+              "object:8"
+            ],
+            "outputSummary": "array:6",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-21",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "write_platform_variants",
+            "status": "ok",
+            "inputSummary": [
+              "object:6",
+              "array:4",
+              "object:8"
+            ],
+            "outputSummary": "array:3",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-22",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "write_captions",
+            "status": "ok",
+            "inputSummary": [
+              "array:3"
+            ],
+            "outputSummary": "array:3",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-23",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "map_claims",
+            "status": "ok",
+            "inputSummary": [
+              "array:6",
+              "array:4"
+            ],
+            "outputSummary": "array:6",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-24",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "write_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "object:6"
+            ],
+            "outputSummary": "object:3",
+            "calledAt": "2026-07-18T18:05:36.966Z"
+          },
+          {
+            "id": "tool-25",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:6"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-26",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:6"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-27",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "scriptwriter",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:6"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          }
+        ]
+      },
+      "memory": true,
+      "memoryReads": [
+        {
+          "agentId": "scriptwriter",
+          "fromAgentId": "strategist",
+          "status": "read",
+          "readAt": "2026-07-18T18:05:36.966Z",
+          "runId": "tz-run-mrqogk04-7pz6xw"
+        }
+      ],
+      "inboundA2A": [
+        "a2a-strategist-scriptwriter-mrqogk06-lqr3"
+      ],
+      "outboundA2A": [
+        "creative-director",
+        "qa",
+        "export"
+      ],
+      "doneGate": {
+        "required": [
+          "all required tools executed",
+          "tool receipts persisted",
+          "memory write persisted",
+          "inbox handoff consumed",
+          "outbound A2A acknowledged",
+          "agent output included in packet trace"
+        ],
+        "passed": true,
+        "checkedAt": "2026-07-18T18:05:36.970Z"
+      },
+      "blockers": [],
+      "recoveryAttempts": []
+    },
+    {
+      "agentId": "creative-director",
+      "label": "Creative Director",
+      "tier": "tier-zero",
+      "promoted": true,
+      "status": "done",
+      "requiredTools": [
+        "send_a2a",
+        "write_memory",
+        "read_memory",
+        "design_visual_system",
+        "write_asset_prompts",
+        "write_edit_rules"
+      ],
+      "tools": [
+        "read_memory",
+        "design_visual_system",
+        "write_asset_prompts",
+        "write_edit_rules",
+        "write_memory",
+        "send_a2a",
+        "send_a2a"
+      ],
+      "missingTools": [],
+      "inputReceipts": {
+        "inbox": [
+          {
+            "id": "a2a-strategist-creative-director-mrqogk06-5c57",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "creative-director",
+            "intent": "strategist-to-creative-director-handoff",
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.966Z",
+            "consumedAt": "2026-07-18T18:05:36.966Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-scriptwriter-creative-director-mrqogk06-xkh4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "creative-director",
+            "intent": "scriptwriter-to-creative-director-handoff",
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.966Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          }
+        ],
+        "memoryReads": [
+          {
+            "agentId": "creative-director",
+            "fromAgentId": "scriptwriter",
+            "status": "read",
+            "readAt": "2026-07-18T18:05:36.967Z",
+            "runId": "tz-run-mrqogk04-7pz6xw"
+          }
+        ]
+      },
+      "outputReceipts": {
+        "outbox": [
+          {
+            "id": "a2a-creative-director-qa-mrqogk07-n8kj",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "creative-director",
+            "consumer": "qa",
+            "intent": "creative-director-to-qa-handoff",
+            "payloadSummary": [
+              "visualSystem",
+              "assetPrompts",
+              "editRuleReceipts",
+              "shotList"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.967Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-creative-director-export-mrqogk07-i2ll",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "creative-director",
+            "consumer": "export",
+            "intent": "creative-director-to-export-handoff",
+            "payloadSummary": [
+              "visualSystem",
+              "assetPrompts",
+              "editRuleReceipts",
+              "shotList"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.967Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          }
+        ],
+        "replayableHandoffs": [
+          {
+            "id": "replay-a2a-creative-director-qa-mrqogk07-n8kj",
+            "messageId": "a2a-creative-director-qa-mrqogk07-n8kj",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "creative-director",
+            "consumer": "qa",
+            "intent": "creative-director-to-qa-handoff",
+            "payload": {
+              "visualSystem": {
+                "visualDirection": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                "editRules": [
+                  "Every text overlay must map to evidenceMap or strategy output.",
+                  "Use motion to reveal system steps, not to hide weak source material.",
+                  "Keep the CTA tied to the next action."
+                ],
+                "sound": "Clear narration with pacing and music chosen for the audience and offer described in the source."
+              },
+              "assetPrompts": [
+                "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.; hero frame for A local home organizer offers a two-week kitchen reset with",
+                "source evidence card stack; premium content treatment; readable proof markers",
+                "final export-ready packet scene; polished handoff layout"
+              ],
+              "editRuleReceipts": [
+                {
+                  "id": "edit-rule-1",
+                  "rule": "Every text overlay must map to evidenceMap or strategy output."
+                },
+                {
+                  "id": "edit-rule-2",
+                  "rule": "Use motion to reveal system steps, not to hide weak source material."
+                },
+                {
+                  "id": "edit-rule-3",
+                  "rule": "Keep the CTA tied to the next action."
+                }
+              ],
+              "shotList": [
+                {
+                  "beat": "Open",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families."
+                },
+                {
+                  "beat": "Tension",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "a local home organizer offers a two-week kitchen reset"
+                },
+                {
+                  "beat": "Specific Detail",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "labeled zones"
+                },
+                {
+                  "beat": "Proof",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "donation pickup coordination"
+                },
+                {
+                  "beat": "Application",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "a local home organizer offers a two-week kitchen reset"
+                },
+                {
+                  "beat": "Action",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                }
+              ]
+            },
+            "payloadSummary": [
+              "visualSystem",
+              "assetPrompts",
+              "editRuleReceipts",
+              "shotList"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "replay-a2a-creative-director-export-mrqogk07-i2ll",
+            "messageId": "a2a-creative-director-export-mrqogk07-i2ll",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "creative-director",
+            "consumer": "export",
+            "intent": "creative-director-to-export-handoff",
+            "payload": {
+              "visualSystem": {
+                "visualDirection": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                "editRules": [
+                  "Every text overlay must map to evidenceMap or strategy output.",
+                  "Use motion to reveal system steps, not to hide weak source material.",
+                  "Keep the CTA tied to the next action."
+                ],
+                "sound": "Clear narration with pacing and music chosen for the audience and offer described in the source."
+              },
+              "assetPrompts": [
+                "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.; hero frame for A local home organizer offers a two-week kitchen reset with",
+                "source evidence card stack; premium content treatment; readable proof markers",
+                "final export-ready packet scene; polished handoff layout"
+              ],
+              "editRuleReceipts": [
+                {
+                  "id": "edit-rule-1",
+                  "rule": "Every text overlay must map to evidenceMap or strategy output."
+                },
+                {
+                  "id": "edit-rule-2",
+                  "rule": "Use motion to reveal system steps, not to hide weak source material."
+                },
+                {
+                  "id": "edit-rule-3",
+                  "rule": "Keep the CTA tied to the next action."
+                }
+              ],
+              "shotList": [
+                {
+                  "beat": "Open",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families."
+                },
+                {
+                  "beat": "Tension",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "a local home organizer offers a two-week kitchen reset"
+                },
+                {
+                  "beat": "Specific Detail",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "labeled zones"
+                },
+                {
+                  "beat": "Proof",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "donation pickup coordination"
+                },
+                {
+                  "beat": "Application",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "a local home organizer offers a two-week kitchen reset"
+                },
+                {
+                  "beat": "Action",
+                  "visual": "Use visible details from busy, coordination, donation, readable source excerpts, restrained hierarchy, and scenes that show the stated offer or outcome.",
+                  "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with."
+                }
+              ]
+            },
+            "payloadSummary": [
+              "visualSystem",
+              "assetPrompts",
+              "editRuleReceipts",
+              "shotList"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.967Z"
+          }
+        ],
+        "memoryWrites": [
+          {
+            "agentId": "creative-director",
+            "outputKeys": [
+              "visualSystem",
+              "assetPrompts",
+              "editRuleReceipts",
+              "shotList"
+            ],
+            "wroteAt": "2026-07-18T18:05:36.967Z",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "status": "written"
+          }
+        ],
+        "toolCalls": [
+          {
+            "id": "tool-28",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "creative-director",
+            "tool": "read_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string"
+            ],
+            "outputSummary": "object:4",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-29",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "creative-director",
+            "tool": "design_visual_system",
+            "status": "ok",
+            "inputSummary": [
+              "object:6",
+              "object:8"
+            ],
+            "outputSummary": "object:3",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-30",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "creative-director",
+            "tool": "write_asset_prompts",
+            "status": "ok",
+            "inputSummary": [
+              "object:6",
+              "object:3"
+            ],
+            "outputSummary": "array:3",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-31",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "creative-director",
+            "tool": "write_edit_rules",
+            "status": "ok",
+            "inputSummary": [
+              "object:3"
+            ],
+            "outputSummary": "array:3",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-32",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "creative-director",
+            "tool": "write_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "object:4"
+            ],
+            "outputSummary": "object:3",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-33",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "creative-director",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:4"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-34",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "creative-director",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:4"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          }
+        ]
+      },
+      "memory": true,
+      "memoryReads": [
+        {
+          "agentId": "creative-director",
+          "fromAgentId": "scriptwriter",
+          "status": "read",
+          "readAt": "2026-07-18T18:05:36.967Z",
+          "runId": "tz-run-mrqogk04-7pz6xw"
+        }
+      ],
+      "inboundA2A": [
+        "a2a-strategist-creative-director-mrqogk06-5c57",
+        "a2a-scriptwriter-creative-director-mrqogk06-xkh4"
+      ],
+      "outboundA2A": [
+        "qa",
+        "export"
+      ],
+      "doneGate": {
+        "required": [
+          "all required tools executed",
+          "tool receipts persisted",
+          "memory write persisted",
+          "inbox handoff consumed",
+          "outbound A2A acknowledged",
+          "agent output included in packet trace"
+        ],
+        "passed": true,
+        "checkedAt": "2026-07-18T18:05:36.970Z"
+      },
+      "blockers": [],
+      "recoveryAttempts": []
+    },
+    {
+      "agentId": "qa",
+      "label": "QA",
+      "tier": "tier-zero",
+      "promoted": true,
+      "status": "done",
+      "requiredTools": [
+        "send_a2a",
+        "write_memory",
+        "read_memory",
+        "validate_claims",
+        "validate_a2a",
+        "validate_artifacts",
+        "score_quality"
+      ],
+      "tools": [
+        "read_memory",
+        "read_memory",
+        "validate_claims",
+        "validate_a2a",
+        "validate_artifacts",
+        "score_quality",
+        "write_memory",
+        "send_a2a"
+      ],
+      "missingTools": [],
+      "inputReceipts": {
+        "inbox": [
+          {
+            "id": "a2a-archivist-qa-mrqogk05-rfz4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "archivist",
+            "consumer": "qa",
+            "intent": "archivist-to-qa-handoff",
+            "payloadSummary": [
+              "evidenceMap"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.965Z",
+            "consumedAt": "2026-07-18T18:05:36.965Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-strategist-qa-mrqogk06-el7l",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "strategist",
+            "consumer": "qa",
+            "intent": "strategist-to-qa-handoff",
+            "payloadSummary": [
+              "strategy",
+              "rankedAngles",
+              "selectedNextAction",
+              "angleStack"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.966Z",
+            "consumedAt": "2026-07-18T18:05:36.966Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-scriptwriter-qa-mrqogk07-ekqj",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "qa",
+            "intent": "scriptwriter-to-qa-handoff",
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.967Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-creative-director-qa-mrqogk07-n8kj",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "creative-director",
+            "consumer": "qa",
+            "intent": "creative-director-to-qa-handoff",
+            "payloadSummary": [
+              "visualSystem",
+              "assetPrompts",
+              "editRuleReceipts",
+              "shotList"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.967Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-export-qa-mrqogk09-1ks3",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "export",
+            "consumer": "qa",
+            "intent": "export-to-qa-handoff",
+            "payloadSummary": [
+              "manifest"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.969Z",
+            "consumedAt": "2026-07-18T18:05:36.969Z",
+            "blocker": null
+          }
+        ],
+        "memoryReads": [
+          {
+            "agentId": "qa",
+            "fromAgentId": "scriptwriter",
+            "status": "read",
+            "readAt": "2026-07-18T18:05:36.967Z",
+            "runId": "tz-run-mrqogk04-7pz6xw"
+          },
+          {
+            "agentId": "qa",
+            "fromAgentId": "creative-director",
+            "status": "read",
+            "readAt": "2026-07-18T18:05:36.967Z",
+            "runId": "tz-run-mrqogk04-7pz6xw"
+          }
+        ]
+      },
+      "outputReceipts": {
+        "outbox": [
+          {
+            "id": "a2a-qa-export-mrqogk09-fgvw",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "qa",
+            "consumer": "export",
+            "intent": "qa-to-export-handoff",
+            "payloadSummary": [
+              "verdict",
+              "passed",
+              "claimValidation",
+              "a2aValidation",
+              "artifactValidation",
+              "score",
+              "rubric",
+              "unknownClaims",
+              "blockers",
+              "repairSuggestions",
+              "nextBestStep",
+              "nextAction"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.969Z",
+            "consumedAt": "2026-07-18T18:05:36.969Z",
+            "blocker": null
+          }
+        ],
+        "replayableHandoffs": [
+          {
+            "id": "replay-a2a-qa-export-mrqogk09-fgvw",
+            "messageId": "a2a-qa-export-mrqogk09-fgvw",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "qa",
+            "consumer": "export",
+            "intent": "qa-to-export-handoff",
+            "payload": {
+              "verdict": "pass",
+              "passed": true,
+              "claimValidation": {
+                "passed": true,
+                "supported": [
+                  {
+                    "id": "mapped-claim-1",
+                    "beat": "Open",
+                    "evidenceId": "evidence-1",
+                    "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                    "sourceLine": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-2",
+                    "beat": "Tension",
+                    "evidenceId": "evidence-2",
+                    "line": "a local home organizer offers a two-week kitchen reset",
+                    "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-3",
+                    "beat": "Specific Detail",
+                    "evidenceId": "evidence-3",
+                    "line": "labeled zones",
+                    "sourceLine": "labeled zones",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-4",
+                    "beat": "Proof",
+                    "evidenceId": "evidence-4",
+                    "line": "donation pickup coordination",
+                    "sourceLine": "donation pickup coordination",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-5",
+                    "beat": "Application",
+                    "evidenceId": "evidence-2",
+                    "line": "a local home organizer offers a two-week kitchen reset",
+                    "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-6",
+                    "beat": "Action",
+                    "evidenceId": "strategy-next-action",
+                    "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                    "sourceLine": null,
+                    "status": "operational-direction",
+                    "publishable": true,
+                    "blocker": null
+                  }
+                ],
+                "unsupported": [],
+                "claims": [
+                  {
+                    "id": "mapped-claim-1",
+                    "beat": "Open",
+                    "evidenceId": "evidence-1",
+                    "line": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                    "sourceLine": "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-2",
+                    "beat": "Tension",
+                    "evidenceId": "evidence-2",
+                    "line": "a local home organizer offers a two-week kitchen reset",
+                    "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-3",
+                    "beat": "Specific Detail",
+                    "evidenceId": "evidence-3",
+                    "line": "labeled zones",
+                    "sourceLine": "labeled zones",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-4",
+                    "beat": "Proof",
+                    "evidenceId": "evidence-4",
+                    "line": "donation pickup coordination",
+                    "sourceLine": "donation pickup coordination",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-5",
+                    "beat": "Application",
+                    "evidenceId": "evidence-2",
+                    "line": "a local home organizer offers a two-week kitchen reset",
+                    "sourceLine": "a local home organizer offers a two-week kitchen reset",
+                    "status": "source-backed",
+                    "publishable": true,
+                    "blocker": null
+                  },
+                  {
+                    "id": "mapped-claim-6",
+                    "beat": "Action",
+                    "evidenceId": "strategy-next-action",
+                    "line": "Take the next source-supported step for A local home organizer offers a two-week kitchen reset with.",
+                    "sourceLine": null,
+                    "status": "operational-direction",
+                    "publishable": true,
+                    "blocker": null
+                  }
+                ]
+              },
+              "a2aValidation": {
+                "passed": true,
+                "routes": [
+                  "archivist->strategist",
+                  "archivist->qa",
+                  "strategist->scriptwriter",
+                  "strategist->creative-director",
+                  "strategist->qa",
+                  "scriptwriter->creative-director",
+                  "scriptwriter->qa",
+                  "scriptwriter->export",
+                  "creative-director->qa",
+                  "creative-director->export"
+                ]
+              },
+              "artifactValidation": {
+                "passed": true,
+                "count": 6
+              },
+              "score": {
+                "overall": 96,
+                "score": 96,
+                "passed": true,
+                "rubric": {
+                  "sourceFidelity": {
+                    "score": 100,
+                    "minimum": 85,
+                    "passed": true,
+                    "findings": []
+                  },
+                  "claimSupport": {
+                    "score": 100,
+                    "minimum": 100,
+                    "passed": true,
+                    "findings": [],
+                    "supported": 6,
+                    "unsupported": 0,
+                    "factualClaims": 5
+                  },
+                  "specificity": {
+                    "score": 100,
+                    "minimum": 75,
+                    "passed": true,
+                    "findings": [],
+                    "sourceTerms": [
+                      "busy",
+                      "coordination",
+                      "donation",
+                      "families",
+                      "home",
+                      "kitchen",
+                      "labeled",
+                      "local",
+                      "maintenance",
+                      "offers"
+                    ],
+                    "termHits": [
+                      "busy",
+                      "coordination",
+                      "donation",
+                      "families",
+                      "home",
+                      "kitchen",
+                      "labeled",
+                      "local",
+                      "maintenance",
+                      "offers"
+                    ]
+                  },
+                  "audienceFit": {
+                    "score": 95,
+                    "minimum": 75,
+                    "passed": true,
+                    "findings": [],
+                    "audience": "busy families"
+                  },
+                  "platformFit": {
+                    "score": 100,
+                    "minimum": 90,
+                    "passed": true,
+                    "findings": [],
+                    "platformCoverage": 3,
+                    "completeVariants": 3
+                  },
+                  "hookStrength": {
+                    "score": 78,
+                    "minimum": 75,
+                    "passed": true,
+                    "findings": [],
+                    "evidenceBacked": 4,
+                    "strongLength": 2
+                  },
+                  "ctaFit": {
+                    "score": 100,
+                    "minimum": 80,
+                    "passed": true,
+                    "findings": [],
+                    "actionable": 3,
+                    "total": 3
+                  },
+                  "nonGenericWording": {
+                    "score": 100,
+                    "minimum": 85,
+                    "passed": true,
+                    "findings": [],
+                    "matches": []
+                  },
+                  "repetitionTitleEcho": {
+                    "score": 80,
+                    "minimum": 75,
+                    "passed": true,
+                    "findings": [],
+                    "duplicateCoreLines": 4,
+                    "duplicateTitles": 0,
+                    "titleEchoes": 0
+                  },
+                  "packageCompleteness": {
+                    "score": 100,
+                    "minimum": 100,
+                    "passed": true,
+                    "findings": [],
+                    "checks": [
+                      true,
+                      true,
+                      true,
+                      true,
+                      true,
+                      true,
+                      true,
+                      true,
+                      true
+                    ]
+                  },
+                  "hallucinationRisk": {
+                    "score": 100,
+                    "minimum": 90,
+                    "passed": true,
+                    "findings": [],
+                    "level": "low"
+                  }
+                },
+                "failedDimensions": [],
+                "blockers": [],
+                "repairSuggestions": [
+                  "add the outcome, offer, or action the content should support to the source."
+                ],
+                "nextBestStep": "Export the approved packet or run a deliberate polish pass.",
+                "thresholds": {
+                  "minimumOverall": 82,
+                  "zeroUnsupportedClaims": true,
+                  "sourceMustBeSufficient": true,
+                  "noGenericPhrases": true,
+                  "dimensions": {
+                    "sourceFidelity": 85,
+                    "claimSupport": 100,
+                    "specificity": 75,
+                    "audienceFit": 75,
+                    "platformFit": 90,
+                    "hookStrength": 75,
+                    "ctaFit": 80,
+                    "nonGenericWording": 85,
+                    "repetitionTitleEcho": 75,
+                    "packageCompleteness": 100,
+                    "hallucinationRisk": 90
+                  }
+                },
+                "evidenceQuotes": [
+                  "a local home organizer offers a two-week kitchen reset with labeled zones, donation pickup coordination, and a simple maintenance plan for busy families.",
+                  "a local home organizer offers a two-week kitchen reset",
+                  "labeled zones",
+                  "donation pickup coordination"
+                ]
+              },
+              "rubric": {
+                "sourceFidelity": {
+                  "score": 100,
+                  "minimum": 85,
+                  "passed": true,
+                  "findings": []
+                },
+                "claimSupport": {
+                  "score": 100,
+                  "minimum": 100,
+                  "passed": true,
+                  "findings": [],
+                  "supported": 6,
+                  "unsupported": 0,
+                  "factualClaims": 5
+                },
+                "specificity": {
+                  "score": 100,
+                  "minimum": 75,
+                  "passed": true,
+                  "findings": [],
+                  "sourceTerms": [
+                    "busy",
+                    "coordination",
+                    "donation",
+                    "families",
+                    "home",
+                    "kitchen",
+                    "labeled",
+                    "local",
+                    "maintenance",
+                    "offers"
+                  ],
+                  "termHits": [
+                    "busy",
+                    "coordination",
+                    "donation",
+                    "families",
+                    "home",
+                    "kitchen",
+                    "labeled",
+                    "local",
+                    "maintenance",
+                    "offers"
+                  ]
+                },
+                "audienceFit": {
+                  "score": 95,
+                  "minimum": 75,
+                  "passed": true,
+                  "findings": [],
+                  "audience": "busy families"
+                },
+                "platformFit": {
+                  "score": 100,
+                  "minimum": 90,
+                  "passed": true,
+                  "findings": [],
+                  "platformCoverage": 3,
+                  "completeVariants": 3
+                },
+                "hookStrength": {
+                  "score": 78,
+                  "minimum": 75,
+                  "passed": true,
+                  "findings": [],
+                  "evidenceBacked": 4,
+                  "strongLength": 2
+                },
+                "ctaFit": {
+                  "score": 100,
+                  "minimum": 80,
+                  "passed": true,
+                  "findings": [],
+                  "actionable": 3,
+                  "total": 3
+                },
+                "nonGenericWording": {
+                  "score": 100,
+                  "minimum": 85,
+                  "passed": true,
+                  "findings": [],
+                  "matches": []
+                },
+                "repetitionTitleEcho": {
+                  "score": 80,
+                  "minimum": 75,
+                  "passed": true,
+                  "findings": [],
+                  "duplicateCoreLines": 4,
+                  "duplicateTitles": 0,
+                  "titleEchoes": 0
+                },
+                "packageCompleteness": {
+                  "score": 100,
+                  "minimum": 100,
+                  "passed": true,
+                  "findings": [],
+                  "checks": [
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                  ]
+                },
+                "hallucinationRisk": {
+                  "score": 100,
+                  "minimum": 90,
+                  "passed": true,
+                  "findings": [],
+                  "level": "low"
+                }
+              },
+              "unknownClaims": [],
+              "blockers": [],
+              "repairSuggestions": [
+                "add the outcome, offer, or action the content should support to the source."
+              ],
+              "nextBestStep": "Export the approved packet or run a deliberate polish pass.",
+              "nextAction": "Export the approved packet or run a deliberate polish pass."
+            },
+            "payloadSummary": [
+              "verdict",
+              "passed",
+              "claimValidation",
+              "a2aValidation",
+              "artifactValidation",
+              "score",
+              "rubric",
+              "unknownClaims",
+              "blockers",
+              "repairSuggestions",
+              "nextBestStep",
+              "nextAction"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.969Z"
+          }
+        ],
+        "memoryWrites": [
+          {
+            "agentId": "qa",
+            "outputKeys": [
+              "verdict",
+              "passed",
+              "claimValidation",
+              "a2aValidation",
+              "artifactValidation",
+              "score",
+              "rubric",
+              "unknownClaims",
+              "blockers",
+              "repairSuggestions",
+              "nextBestStep",
+              "nextAction"
+            ],
+            "wroteAt": "2026-07-18T18:05:36.969Z",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "status": "written"
+          }
+        ],
+        "toolCalls": [
+          {
+            "id": "tool-35",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "qa",
+            "tool": "read_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string"
+            ],
+            "outputSummary": "object:4",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-36",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "qa",
+            "tool": "read_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string"
+            ],
+            "outputSummary": "object:4",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-37",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "qa",
+            "tool": "validate_claims",
+            "status": "ok",
+            "inputSummary": [
+              "array:4",
+              "array:6"
+            ],
+            "outputSummary": "object:4",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-38",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "qa",
+            "tool": "validate_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "array:10"
+            ],
+            "outputSummary": "object:2",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-39",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "qa",
+            "tool": "validate_artifacts",
+            "status": "ok",
+            "inputSummary": [
+              "array:6"
+            ],
+            "outputSummary": "object:2",
+            "calledAt": "2026-07-18T18:05:36.967Z"
+          },
+          {
+            "id": "tool-40",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "qa",
+            "tool": "score_quality",
+            "status": "ok",
+            "inputSummary": [
+              "object:13"
+            ],
+            "outputSummary": "object:10",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "tool-41",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "qa",
+            "tool": "write_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "object:12"
+            ],
+            "outputSummary": "object:3",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "tool-42",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "qa",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:12"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          }
+        ]
+      },
+      "memory": true,
+      "memoryReads": [
+        {
+          "agentId": "qa",
+          "fromAgentId": "scriptwriter",
+          "status": "read",
+          "readAt": "2026-07-18T18:05:36.967Z",
+          "runId": "tz-run-mrqogk04-7pz6xw"
+        },
+        {
+          "agentId": "qa",
+          "fromAgentId": "creative-director",
+          "status": "read",
+          "readAt": "2026-07-18T18:05:36.967Z",
+          "runId": "tz-run-mrqogk04-7pz6xw"
+        }
+      ],
+      "inboundA2A": [
+        "a2a-archivist-qa-mrqogk05-rfz4",
+        "a2a-strategist-qa-mrqogk06-el7l",
+        "a2a-scriptwriter-qa-mrqogk07-ekqj",
+        "a2a-creative-director-qa-mrqogk07-n8kj",
+        "a2a-export-qa-mrqogk09-1ks3"
+      ],
+      "outboundA2A": [
+        "export"
+      ],
+      "doneGate": {
+        "required": [
+          "all required tools executed",
+          "tool receipts persisted",
+          "memory write persisted",
+          "inbox handoff consumed",
+          "outbound A2A acknowledged",
+          "agent output included in packet trace"
+        ],
+        "passed": true,
+        "checkedAt": "2026-07-18T18:05:36.970Z"
+      },
+      "blockers": [],
+      "recoveryAttempts": []
+    },
+    {
+      "agentId": "export",
+      "label": "Export",
+      "tier": "tier-zero",
+      "promoted": true,
+      "status": "done",
+      "requiredTools": [
+        "send_a2a",
+        "write_memory",
+        "read_memory",
+        "build_manifest",
+        "package_markdown",
+        "package_json"
+      ],
+      "tools": [
+        "read_memory",
+        "build_manifest",
+        "package_markdown",
+        "package_json",
+        "write_memory",
+        "send_a2a",
+        "send_a2a"
+      ],
+      "missingTools": [],
+      "inputReceipts": {
+        "inbox": [
+          {
+            "id": "a2a-scriptwriter-export-mrqogk07-sqsh",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "scriptwriter",
+            "consumer": "export",
+            "intent": "scriptwriter-to-export-handoff",
+            "payloadSummary": [
+              "hooks",
+              "titles",
+              "captions",
+              "script",
+              "platformVariants",
+              "claimMap"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.967Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-creative-director-export-mrqogk07-i2ll",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "creative-director",
+            "consumer": "export",
+            "intent": "creative-director-to-export-handoff",
+            "payloadSummary": [
+              "visualSystem",
+              "assetPrompts",
+              "editRuleReceipts",
+              "shotList"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.967Z",
+            "consumedAt": "2026-07-18T18:05:36.967Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-qa-export-mrqogk09-fgvw",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "qa",
+            "consumer": "export",
+            "intent": "qa-to-export-handoff",
+            "payloadSummary": [
+              "verdict",
+              "passed",
+              "claimValidation",
+              "a2aValidation",
+              "artifactValidation",
+              "score",
+              "rubric",
+              "unknownClaims",
+              "blockers",
+              "repairSuggestions",
+              "nextBestStep",
+              "nextAction"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.969Z",
+            "consumedAt": "2026-07-18T18:05:36.969Z",
+            "blocker": null
+          }
+        ],
+        "memoryReads": [
+          {
+            "agentId": "export",
+            "fromAgentId": "qa",
+            "status": "read",
+            "readAt": "2026-07-18T18:05:36.969Z",
+            "runId": "tz-run-mrqogk04-7pz6xw"
+          }
+        ]
+      },
+      "outputReceipts": {
+        "outbox": [
+          {
+            "id": "a2a-export-qa-mrqogk09-1ks3",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "export",
+            "consumer": "qa",
+            "intent": "export-to-qa-handoff",
+            "payloadSummary": [
+              "manifest"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.969Z",
+            "consumedAt": "2026-07-18T18:05:36.969Z",
+            "blocker": null
+          },
+          {
+            "id": "a2a-export-archivist-mrqogk09-ekl4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "export",
+            "consumer": "archivist",
+            "intent": "export-to-archivist-handoff",
+            "payloadSummary": [
+              "manifest",
+              "runId",
+              "archive"
+            ],
+            "requiredAck": true,
+            "status": "acknowledged",
+            "createdAt": "2026-07-18T18:05:36.969Z",
+            "consumedAt": "2026-07-18T18:05:36.969Z",
+            "blocker": null
+          }
+        ],
+        "replayableHandoffs": [
+          {
+            "id": "replay-a2a-export-qa-mrqogk09-1ks3",
+            "messageId": "a2a-export-qa-mrqogk09-1ks3",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "export",
+            "consumer": "qa",
+            "intent": "export-to-qa-handoff",
+            "payload": {
+              "manifest": {
+                "title": "A local home organizer offers a two-week kitchen reset with",
+                "status": "pass",
+                "artifactCount": 6,
+                "nextAction": "Export the approved packet or run a deliberate polish pass.",
+                "requiredSections": [
+                  "sourceProfile",
+                  "evidenceMap",
+                  "citationMap",
+                  "claimMap",
+                  "hooks",
+                  "titles",
+                  "captions",
+                  "scripts",
+                  "platformVariants",
+                  "creativeDirection",
+                  "visualPrompts",
+                  "qaVerdict",
+                  "nextAction",
+                  "a2aTrace",
+                  "agentInbox",
+                  "agentOutbox",
+                  "replayableHandoffs",
+                  "toolTrace",
+                  "exportManifest"
+                ],
+                "traceSections": [
+                  "a2aTrace",
+                  "toolTrace",
+                  "memoryWrites",
+                  "memoryReads",
+                  "agentTrace"
+                ],
+                "agentNetwork": [
+                  "archivist",
+                  "strategist",
+                  "scriptwriter",
+                  "creative-director",
+                  "qa",
+                  "export"
+                ],
+                "localOnly": true,
+                "tierZeroPromoted": true,
+                "qaRequired": true,
+                "generatedAt": "2026-07-18T18:05:36.969Z"
+              }
+            },
+            "payloadSummary": [
+              "manifest"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "replay-a2a-export-archivist-mrqogk09-ekl4",
+            "messageId": "a2a-export-archivist-mrqogk09-ekl4",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "producer": "export",
+            "consumer": "archivist",
+            "intent": "export-to-archivist-handoff",
+            "payload": {
+              "manifest": {
+                "title": "A local home organizer offers a two-week kitchen reset with",
+                "status": "pass",
+                "artifactCount": 6,
+                "nextAction": "Export the approved packet or run a deliberate polish pass.",
+                "requiredSections": [
+                  "sourceProfile",
+                  "evidenceMap",
+                  "citationMap",
+                  "claimMap",
+                  "hooks",
+                  "titles",
+                  "captions",
+                  "scripts",
+                  "platformVariants",
+                  "creativeDirection",
+                  "visualPrompts",
+                  "qaVerdict",
+                  "nextAction",
+                  "a2aTrace",
+                  "agentInbox",
+                  "agentOutbox",
+                  "replayableHandoffs",
+                  "toolTrace",
+                  "exportManifest"
+                ],
+                "traceSections": [
+                  "a2aTrace",
+                  "toolTrace",
+                  "memoryWrites",
+                  "memoryReads",
+                  "agentTrace"
+                ],
+                "agentNetwork": [
+                  "archivist",
+                  "strategist",
+                  "scriptwriter",
+                  "creative-director",
+                  "qa",
+                  "export"
+                ],
+                "localOnly": true,
+                "tierZeroPromoted": true,
+                "qaRequired": true,
+                "generatedAt": "2026-07-18T18:05:36.969Z"
+              },
+              "runId": "tz-run-mrqogk04-7pz6xw",
+              "archive": "final-export-manifest"
+            },
+            "payloadSummary": [
+              "manifest",
+              "runId",
+              "archive"
+            ],
+            "status": "recorded",
+            "createdAt": "2026-07-18T18:05:36.969Z"
+          }
+        ],
+        "memoryWrites": [
+          {
+            "agentId": "export",
+            "outputKeys": [
+              "manifest",
+              "markdown",
+              "json"
+            ],
+            "wroteAt": "2026-07-18T18:05:36.969Z",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "status": "written"
+          }
+        ],
+        "toolCalls": [
+          {
+            "id": "tool-43",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "export",
+            "tool": "read_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string"
+            ],
+            "outputSummary": "object:4",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "tool-44",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "export",
+            "tool": "build_manifest",
+            "status": "ok",
+            "inputSummary": [
+              "object:6",
+              "object:12",
+              "array:6"
+            ],
+            "outputSummary": "object:11",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "tool-45",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "export",
+            "tool": "package_markdown",
+            "status": "ok",
+            "inputSummary": [
+              "object:11"
+            ],
+            "outputSummary": "string",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "tool-46",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "export",
+            "tool": "package_json",
+            "status": "ok",
+            "inputSummary": [
+              "object:6"
+            ],
+            "outputSummary": "object:2",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "tool-47",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "export",
+            "tool": "write_memory",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "object:3"
+            ],
+            "outputSummary": "object:3",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "tool-48",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "export",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:1"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          },
+          {
+            "id": "tool-49",
+            "runId": "tz-run-mrqogk04-7pz6xw",
+            "agentId": "export",
+            "tool": "send_a2a",
+            "status": "ok",
+            "inputSummary": [
+              "string",
+              "string",
+              "object:3"
+            ],
+            "outputSummary": "object:5",
+            "calledAt": "2026-07-18T18:05:36.969Z"
+          }
+        ]
+      },
+      "memory": true,
+      "memoryReads": [
+        {
+          "agentId": "export",
+          "fromAgentId": "qa",
+          "status": "read",
+          "readAt": "2026-07-18T18:05:36.969Z",
+          "runId": "tz-run-mrqogk04-7pz6xw"
+        }
+      ],
+      "inboundA2A": [
+        "a2a-scriptwriter-export-mrqogk07-sqsh",
+        "a2a-creative-director-export-mrqogk07-i2ll",
+        "a2a-qa-export-mrqogk09-fgvw"
+      ],
+      "outboundA2A": [
+        "qa",
+        "archivist"
+      ],
+      "doneGate": {
+        "required": [
+          "all required tools executed",
+          "tool receipts persisted",
+          "memory write persisted",
+          "inbox handoff consumed",
+          "outbound A2A acknowledged",
+          "agent output included in packet trace"
+        ],
+        "passed": true,
+        "checkedAt": "2026-07-18T18:05:36.970Z"
+      },
+      "blockers": [],
+      "recoveryAttempts": []
+    }
+  ],
+  "a2aTrace": [
+    {
+      "id": "a2a-archivist-strategist-mrqogk05-kj9w",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "archivist",
+      "consumer": "strategist",
+      "intent": "archivist-to-strategist-handoff",
+      "payloadSummary": [
+        "sourceProfile",
+        "evidenceMap",
+        "classification"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.965Z",
+      "consumedAt": "2026-07-18T18:05:36.965Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-archivist-qa-mrqogk05-rfz4",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "archivist",
+      "consumer": "qa",
+      "intent": "archivist-to-qa-handoff",
+      "payloadSummary": [
+        "evidenceMap"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.965Z",
+      "consumedAt": "2026-07-18T18:05:36.965Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-strategist-scriptwriter-mrqogk06-lqr3",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "strategist",
+      "consumer": "scriptwriter",
+      "intent": "strategist-to-scriptwriter-handoff",
+      "payloadSummary": [
+        "strategy",
+        "rankedAngles",
+        "selectedNextAction",
+        "angleStack"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.966Z",
+      "consumedAt": "2026-07-18T18:05:36.966Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-strategist-creative-director-mrqogk06-5c57",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "strategist",
+      "consumer": "creative-director",
+      "intent": "strategist-to-creative-director-handoff",
+      "payloadSummary": [
+        "strategy",
+        "rankedAngles",
+        "selectedNextAction",
+        "angleStack"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.966Z",
+      "consumedAt": "2026-07-18T18:05:36.966Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-strategist-qa-mrqogk06-el7l",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "strategist",
+      "consumer": "qa",
+      "intent": "strategist-to-qa-handoff",
+      "payloadSummary": [
+        "strategy",
+        "rankedAngles",
+        "selectedNextAction",
+        "angleStack"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.966Z",
+      "consumedAt": "2026-07-18T18:05:36.966Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-scriptwriter-creative-director-mrqogk06-xkh4",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "scriptwriter",
+      "consumer": "creative-director",
+      "intent": "scriptwriter-to-creative-director-handoff",
+      "payloadSummary": [
+        "hooks",
+        "titles",
+        "captions",
+        "script",
+        "platformVariants",
+        "claimMap"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.966Z",
+      "consumedAt": "2026-07-18T18:05:36.967Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-scriptwriter-qa-mrqogk07-ekqj",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "scriptwriter",
+      "consumer": "qa",
+      "intent": "scriptwriter-to-qa-handoff",
+      "payloadSummary": [
+        "hooks",
+        "titles",
+        "captions",
+        "script",
+        "platformVariants",
+        "claimMap"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.967Z",
+      "consumedAt": "2026-07-18T18:05:36.967Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-scriptwriter-export-mrqogk07-sqsh",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "scriptwriter",
+      "consumer": "export",
+      "intent": "scriptwriter-to-export-handoff",
+      "payloadSummary": [
+        "hooks",
+        "titles",
+        "captions",
+        "script",
+        "platformVariants",
+        "claimMap"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.967Z",
+      "consumedAt": "2026-07-18T18:05:36.967Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-creative-director-qa-mrqogk07-n8kj",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "creative-director",
+      "consumer": "qa",
+      "intent": "creative-director-to-qa-handoff",
+      "payloadSummary": [
+        "visualSystem",
+        "assetPrompts",
+        "editRuleReceipts",
+        "shotList"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.967Z",
+      "consumedAt": "2026-07-18T18:05:36.967Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-creative-director-export-mrqogk07-i2ll",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "creative-director",
+      "consumer": "export",
+      "intent": "creative-director-to-export-handoff",
+      "payloadSummary": [
+        "visualSystem",
+        "assetPrompts",
+        "editRuleReceipts",
+        "shotList"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.967Z",
+      "consumedAt": "2026-07-18T18:05:36.967Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-qa-export-mrqogk09-fgvw",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "qa",
+      "consumer": "export",
+      "intent": "qa-to-export-handoff",
+      "payloadSummary": [
+        "verdict",
+        "passed",
+        "claimValidation",
+        "a2aValidation",
+        "artifactValidation",
+        "score",
+        "rubric",
+        "unknownClaims",
+        "blockers",
+        "repairSuggestions",
+        "nextBestStep",
+        "nextAction"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.969Z",
+      "consumedAt": "2026-07-18T18:05:36.969Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-export-qa-mrqogk09-1ks3",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "export",
+      "consumer": "qa",
+      "intent": "export-to-qa-handoff",
+      "payloadSummary": [
+        "manifest"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.969Z",
+      "consumedAt": "2026-07-18T18:05:36.969Z",
+      "blocker": null
+    },
+    {
+      "id": "a2a-export-archivist-mrqogk09-ekl4",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "producer": "export",
+      "consumer": "archivist",
+      "intent": "export-to-archivist-handoff",
+      "payloadSummary": [
+        "manifest",
+        "runId",
+        "archive"
+      ],
+      "requiredAck": true,
+      "status": "acknowledged",
+      "createdAt": "2026-07-18T18:05:36.969Z",
+      "consumedAt": "2026-07-18T18:05:36.969Z",
+      "blocker": null
+    }
+  ],
+  "toolTrace": [
+    {
+      "id": "tool-1",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "archivist",
+      "tool": "read_source",
+      "status": "ok",
+      "inputSummary": [
+        "string"
+      ],
+      "outputSummary": "object:6",
+      "calledAt": "2026-07-18T18:05:36.964Z"
+    },
+    {
+      "id": "tool-2",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "archivist",
+      "tool": "extract_evidence",
+      "status": "ok",
+      "inputSummary": [
+        "string"
+      ],
+      "outputSummary": "array:4",
+      "calledAt": "2026-07-18T18:05:36.964Z"
+    },
+    {
+      "id": "tool-3",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "archivist",
+      "tool": "assess_source",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "array:4"
+      ],
+      "outputSummary": "object:11",
+      "calledAt": "2026-07-18T18:05:36.965Z"
+    },
+    {
+      "id": "tool-4",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "archivist",
+      "tool": "build_citation_map",
+      "status": "ok",
+      "inputSummary": [
+        "array:4"
+      ],
+      "outputSummary": "array:4",
+      "calledAt": "2026-07-18T18:05:36.965Z"
+    },
+    {
+      "id": "tool-5",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "archivist",
+      "tool": "classify_source",
+      "status": "ok",
+      "inputSummary": [
+        "object:6"
+      ],
+      "outputSummary": "object:2",
+      "calledAt": "2026-07-18T18:05:36.965Z"
+    },
+    {
+      "id": "tool-6",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "archivist",
+      "tool": "write_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "object:6"
+      ],
+      "outputSummary": "object:3",
+      "calledAt": "2026-07-18T18:05:36.965Z"
+    },
+    {
+      "id": "tool-7",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "archivist",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:3"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.965Z"
+    },
+    {
+      "id": "tool-8",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "archivist",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:1"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.965Z"
+    },
+    {
+      "id": "tool-9",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "strategist",
+      "tool": "read_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string"
+      ],
+      "outputSummary": "object:4",
+      "calledAt": "2026-07-18T18:05:36.965Z"
+    },
+    {
+      "id": "tool-10",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "strategist",
+      "tool": "position_offer",
+      "status": "ok",
+      "inputSummary": [
+        "object:6",
+        "array:4"
+      ],
+      "outputSummary": "object:8",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-11",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "strategist",
+      "tool": "rank_angles",
+      "status": "ok",
+      "inputSummary": [
+        "object:8",
+        "array:4"
+      ],
+      "outputSummary": "array:3",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-12",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "strategist",
+      "tool": "select_next_action",
+      "status": "ok",
+      "inputSummary": [
+        "object:8"
+      ],
+      "outputSummary": "object:3",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-13",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "strategist",
+      "tool": "write_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "object:4"
+      ],
+      "outputSummary": "object:3",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-14",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "strategist",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:4"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-15",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "strategist",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:4"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-16",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "strategist",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:4"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-17",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "read_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string"
+      ],
+      "outputSummary": "object:4",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-18",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "write_hooks",
+      "status": "ok",
+      "inputSummary": [
+        "array:4"
+      ],
+      "outputSummary": "array:4",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-19",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "write_titles",
+      "status": "ok",
+      "inputSummary": [
+        "object:6",
+        "array:4",
+        "object:8"
+      ],
+      "outputSummary": "array:3",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-20",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "write_script",
+      "status": "ok",
+      "inputSummary": [
+        "object:6",
+        "array:4",
+        "object:8"
+      ],
+      "outputSummary": "array:6",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-21",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "write_platform_variants",
+      "status": "ok",
+      "inputSummary": [
+        "object:6",
+        "array:4",
+        "object:8"
+      ],
+      "outputSummary": "array:3",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-22",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "write_captions",
+      "status": "ok",
+      "inputSummary": [
+        "array:3"
+      ],
+      "outputSummary": "array:3",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-23",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "map_claims",
+      "status": "ok",
+      "inputSummary": [
+        "array:6",
+        "array:4"
+      ],
+      "outputSummary": "array:6",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-24",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "write_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "object:6"
+      ],
+      "outputSummary": "object:3",
+      "calledAt": "2026-07-18T18:05:36.966Z"
+    },
+    {
+      "id": "tool-25",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:6"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-26",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:6"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-27",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "scriptwriter",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:6"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-28",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "creative-director",
+      "tool": "read_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string"
+      ],
+      "outputSummary": "object:4",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-29",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "creative-director",
+      "tool": "design_visual_system",
+      "status": "ok",
+      "inputSummary": [
+        "object:6",
+        "object:8"
+      ],
+      "outputSummary": "object:3",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-30",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "creative-director",
+      "tool": "write_asset_prompts",
+      "status": "ok",
+      "inputSummary": [
+        "object:6",
+        "object:3"
+      ],
+      "outputSummary": "array:3",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-31",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "creative-director",
+      "tool": "write_edit_rules",
+      "status": "ok",
+      "inputSummary": [
+        "object:3"
+      ],
+      "outputSummary": "array:3",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-32",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "creative-director",
+      "tool": "write_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "object:4"
+      ],
+      "outputSummary": "object:3",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-33",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "creative-director",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:4"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-34",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "creative-director",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:4"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-35",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "qa",
+      "tool": "read_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string"
+      ],
+      "outputSummary": "object:4",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-36",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "qa",
+      "tool": "read_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string"
+      ],
+      "outputSummary": "object:4",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-37",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "qa",
+      "tool": "validate_claims",
+      "status": "ok",
+      "inputSummary": [
+        "array:4",
+        "array:6"
+      ],
+      "outputSummary": "object:4",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-38",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "qa",
+      "tool": "validate_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "array:10"
+      ],
+      "outputSummary": "object:2",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-39",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "qa",
+      "tool": "validate_artifacts",
+      "status": "ok",
+      "inputSummary": [
+        "array:6"
+      ],
+      "outputSummary": "object:2",
+      "calledAt": "2026-07-18T18:05:36.967Z"
+    },
+    {
+      "id": "tool-40",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "qa",
+      "tool": "score_quality",
+      "status": "ok",
+      "inputSummary": [
+        "object:13"
+      ],
+      "outputSummary": "object:10",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-41",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "qa",
+      "tool": "write_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "object:12"
+      ],
+      "outputSummary": "object:3",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-42",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "qa",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:12"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-43",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "export",
+      "tool": "read_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string"
+      ],
+      "outputSummary": "object:4",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-44",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "export",
+      "tool": "build_manifest",
+      "status": "ok",
+      "inputSummary": [
+        "object:6",
+        "object:12",
+        "array:6"
+      ],
+      "outputSummary": "object:11",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-45",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "export",
+      "tool": "package_markdown",
+      "status": "ok",
+      "inputSummary": [
+        "object:11"
+      ],
+      "outputSummary": "string",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-46",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "export",
+      "tool": "package_json",
+      "status": "ok",
+      "inputSummary": [
+        "object:6"
+      ],
+      "outputSummary": "object:2",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-47",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "export",
+      "tool": "write_memory",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "object:3"
+      ],
+      "outputSummary": "object:3",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-48",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "export",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:1"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    },
+    {
+      "id": "tool-49",
+      "runId": "tz-run-mrqogk04-7pz6xw",
+      "agentId": "export",
+      "tool": "send_a2a",
+      "status": "ok",
+      "inputSummary": [
+        "string",
+        "string",
+        "object:3"
+      ],
+      "outputSummary": "object:5",
+      "calledAt": "2026-07-18T18:05:36.969Z"
+    }
+  ]
+}

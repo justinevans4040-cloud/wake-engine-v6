@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "status": "complete",
+  "migratedAt": "2026-07-18T16:17:22.312Z",
+  "legacyDataDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\server\\data",
+  "dataDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.diagnose-electron-profile\\data",
+  "rollbackPath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.diagnose-electron-profile\\data\\backups\\migration\\legacy-wake-v6-store-1784391441770.json",
+  "rollbackSha256": "d2fd47b6f3e59f39e1e68c37532682404547379db760d7790d146770ce337981",
+  "files": [
+    {
+      "path": "exports/2026-07-16T17-41-16-090Z_Aurora-Storytime.json",
+      "bytes": 535669,
+      "sha256": "3b8a3b92f738f6400b950eea5d95224bd68bb85cd0b59b062c16bede222ad08f"
+    },
+    {
+      "path": "exports/2026-07-16T17-41-16-090Z_Aurora-Storytime.md",
+      "bytes": 677626,
+      "sha256": "6b89d261c1dbddfc55e1a36170b3dee4724943a08afaf71bc5a27fd32d7cf064"
+    },
+    {
+      "path": "wake-v6-store.json",
+      "bytes": 1270783,
+      "sha256": "d2fd47b6f3e59f39e1e68c37532682404547379db760d7790d146770ce337981"
+    }
+  ]
+}

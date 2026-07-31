@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "version": 1,
+  "transactionId": "1784391442204-1e5205900738",
+  "sha256": "d2fd47b6f3e59f39e1e68c37532682404547379db760d7790d146770ce337981",
+  "reason": "legacy-runtime-migration",
+  "updatedAt": "2026-07-18T16:17:22.281Z"
+}

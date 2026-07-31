@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "version": 3,
+  "transactionId": "1784397622146-5d4d5b9eb69d",
+  "sha256": "0d96016940e74a994693a75e62967ebcc8077c6ebdf3e3af50ff45bc6c66fcac",
+  "reason": "crash-audit",
+  "recovered": true,
+  "updatedAt": "2026-07-18T18:00:22.374Z"
+}

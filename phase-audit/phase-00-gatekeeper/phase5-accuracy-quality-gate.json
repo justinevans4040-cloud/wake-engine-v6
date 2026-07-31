@@ -1,0 +1,714 @@
+{
+  "ok": true,
+  "failures": [],
+  "unsupportedClaim": {
+    "id": "unsupported-claim",
+    "beat": "Proof",
+    "line": "Every appointment is guaranteed to cut healthcare costs in half.",
+    "evidenceId": "evidence-1",
+    "status": "unknown/not enough source",
+    "sourceLine": "a neighborhood clinic offers saturday vaccine appointments for working parents with online scheduling, transparent pricing, and a nurse callback before each visit.",
+    "publishable": false,
+    "blocker": "Claim wording exceeds the cited source evidence."
+  },
+  "genericQuality": {
+    "overall": 90,
+    "score": 90,
+    "passed": false,
+    "rubric": {
+      "sourceFidelity": {
+        "score": 100,
+        "minimum": 85,
+        "passed": true,
+        "findings": []
+      },
+      "claimSupport": {
+        "score": 100,
+        "minimum": 100,
+        "passed": true,
+        "findings": [],
+        "supported": 6,
+        "unsupported": 0,
+        "factualClaims": 5
+      },
+      "specificity": {
+        "score": 100,
+        "minimum": 75,
+        "passed": true,
+        "findings": [],
+        "sourceTerms": [
+          "appointments",
+          "callback",
+          "clinic",
+          "each",
+          "neighborhood",
+          "nurse",
+          "offers",
+          "online",
+          "parents",
+          "pricing"
+        ],
+        "termHits": [
+          "appointments",
+          "callback",
+          "clinic",
+          "each",
+          "neighborhood",
+          "nurse",
+          "offers",
+          "online",
+          "parents",
+          "pricing"
+        ]
+      },
+      "audienceFit": {
+        "score": 95,
+        "minimum": 75,
+        "passed": true,
+        "findings": [],
+        "audience": "working parents"
+      },
+      "platformFit": {
+        "score": 100,
+        "minimum": 90,
+        "passed": true,
+        "findings": [],
+        "platformCoverage": 3,
+        "completeVariants": 3
+      },
+      "hookStrength": {
+        "score": 100,
+        "minimum": 75,
+        "passed": true,
+        "findings": [],
+        "evidenceBacked": 1,
+        "strongLength": 1
+      },
+      "ctaFit": {
+        "score": 100,
+        "minimum": 80,
+        "passed": true,
+        "findings": [],
+        "actionable": 3,
+        "total": 3
+      },
+      "nonGenericWording": {
+        "score": 0,
+        "minimum": 85,
+        "passed": false,
+        "findings": [
+          "Replace generic phrase(s): game-changer, revolutionary, world-class, unlock your potential."
+        ],
+        "matches": [
+          "game-changer",
+          "revolutionary",
+          "world-class",
+          "unlock your potential"
+        ]
+      },
+      "repetitionTitleEcho": {
+        "score": 95,
+        "minimum": 75,
+        "passed": true,
+        "findings": [],
+        "duplicateCoreLines": 1,
+        "duplicateTitles": 0,
+        "titleEchoes": 0
+      },
+      "packageCompleteness": {
+        "score": 100,
+        "minimum": 100,
+        "passed": true,
+        "findings": [],
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "hallucinationRisk": {
+        "score": 100,
+        "minimum": 90,
+        "passed": true,
+        "findings": [],
+        "level": "low"
+      }
+    },
+    "failedDimensions": [
+      "nonGenericWording"
+    ],
+    "blockers": [
+      "generic wording detected",
+      "rubric:nonGenericWording"
+    ],
+    "repairSuggestions": [
+      "replace generic phrase(s): game-changer, revolutionary, world-class, unlock your potential."
+    ],
+    "nextBestStep": "replace generic phrase(s): game-changer, revolutionary, world-class, unlock your potential.",
+    "thresholds": {
+      "minimumOverall": 82,
+      "zeroUnsupportedClaims": true,
+      "sourceMustBeSufficient": true,
+      "noGenericPhrases": true,
+      "dimensions": {
+        "sourceFidelity": 85,
+        "claimSupport": 100,
+        "specificity": 75,
+        "audienceFit": 75,
+        "platformFit": 90,
+        "hookStrength": 75,
+        "ctaFit": 80,
+        "nonGenericWording": 85,
+        "repetitionTitleEcho": 75,
+        "packageCompleteness": 100,
+        "hallucinationRisk": 90
+      }
+    },
+    "evidenceQuotes": [
+      "a neighborhood clinic offers saturday vaccine appointments for working parents with online scheduling, transparent pricing, and a nurse callback before each visit.",
+      "a neighborhood clinic offers saturday vaccine appointments for working parents",
+      "online scheduling",
+      "transparent pricing"
+    ]
+  },
+  "weakSource": {
+    "ok": false,
+    "sourceAssessment": {
+      "sufficient": false,
+      "status": "not enough source",
+      "characters": 18,
+      "wordCount": 3,
+      "meaningfulWordCount": 3,
+      "uniqueTermCount": 3,
+      "evidenceCount": 1,
+      "signals": {
+        "hasAudience": false,
+        "hasConcreteDetail": false,
+        "hasActionOrOutcome": false
+      },
+      "missing": [
+        "a fuller description",
+        "the intended audience",
+        "at least one concrete fact, feature, example, or proof point",
+        "the outcome, offer, or action the content should support"
+      ],
+      "repairSuggestions": [
+        "Add a fuller description to the source.",
+        "Add the intended audience to the source.",
+        "Add at least one concrete fact, feature, example, or proof point to the source.",
+        "Add the outcome, offer, or action the content should support to the source."
+      ],
+      "nextBestStep": "Add source detail before generation: a fuller description, the intended audience, at least one concrete fact, feature, example, or proof point, the outcome, offer, or action the content should support."
+    },
+    "qaVerdict": {
+      "verdict": "blocked",
+      "passed": false,
+      "claimValidation": {
+        "passed": true,
+        "supported": [
+          {
+            "id": "mapped-claim-1",
+            "beat": "Open",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-2",
+            "beat": "Tension",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-3",
+            "beat": "Specific Detail",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-4",
+            "beat": "Proof",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-5",
+            "beat": "Application",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-6",
+            "beat": "Action",
+            "evidenceId": "strategy-next-action",
+            "line": "Take the next source-supported step for Make this amazing..",
+            "sourceLine": null,
+            "status": "operational-direction",
+            "publishable": true,
+            "blocker": null
+          }
+        ],
+        "unsupported": [],
+        "claims": [
+          {
+            "id": "mapped-claim-1",
+            "beat": "Open",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-2",
+            "beat": "Tension",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-3",
+            "beat": "Specific Detail",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-4",
+            "beat": "Proof",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-5",
+            "beat": "Application",
+            "evidenceId": "evidence-1",
+            "line": "make this amazing",
+            "sourceLine": "make this amazing",
+            "status": "source-backed",
+            "publishable": true,
+            "blocker": null
+          },
+          {
+            "id": "mapped-claim-6",
+            "beat": "Action",
+            "evidenceId": "strategy-next-action",
+            "line": "Take the next source-supported step for Make this amazing..",
+            "sourceLine": null,
+            "status": "operational-direction",
+            "publishable": true,
+            "blocker": null
+          }
+        ]
+      },
+      "a2aValidation": {
+        "passed": true,
+        "routes": [
+          "archivist->strategist",
+          "archivist->qa",
+          "strategist->scriptwriter",
+          "strategist->creative-director",
+          "strategist->qa",
+          "scriptwriter->creative-director",
+          "scriptwriter->qa",
+          "scriptwriter->export",
+          "creative-director->qa",
+          "creative-director->export"
+        ]
+      },
+      "artifactValidation": {
+        "passed": true,
+        "count": 6
+      },
+      "score": {
+        "overall": 68,
+        "score": 68,
+        "passed": false,
+        "rubric": {
+          "sourceFidelity": {
+            "score": 20,
+            "minimum": 85,
+            "passed": false,
+            "findings": []
+          },
+          "claimSupport": {
+            "score": 100,
+            "minimum": 100,
+            "passed": true,
+            "findings": [],
+            "supported": 6,
+            "unsupported": 0,
+            "factualClaims": 5
+          },
+          "specificity": {
+            "score": 20,
+            "minimum": 75,
+            "passed": false,
+            "findings": [],
+            "sourceTerms": [
+              "amazing"
+            ],
+            "termHits": [
+              "amazing"
+            ]
+          },
+          "audienceFit": {
+            "score": 35,
+            "minimum": 75,
+            "passed": false,
+            "findings": [],
+            "audience": "people seeking amazing"
+          },
+          "platformFit": {
+            "score": 100,
+            "minimum": 90,
+            "passed": true,
+            "findings": [],
+            "platformCoverage": 3,
+            "completeVariants": 3
+          },
+          "hookStrength": {
+            "score": 55,
+            "minimum": 75,
+            "passed": false,
+            "findings": [],
+            "evidenceBacked": 1,
+            "strongLength": 0
+          },
+          "ctaFit": {
+            "score": 100,
+            "minimum": 80,
+            "passed": true,
+            "findings": [],
+            "actionable": 3,
+            "total": 3
+          },
+          "nonGenericWording": {
+            "score": 100,
+            "minimum": 85,
+            "passed": true,
+            "findings": [],
+            "matches": []
+          },
+          "repetitionTitleEcho": {
+            "score": 80,
+            "minimum": 75,
+            "passed": true,
+            "findings": [],
+            "duplicateCoreLines": 5,
+            "duplicateTitles": 0,
+            "titleEchoes": 0
+          },
+          "packageCompleteness": {
+            "score": 100,
+            "minimum": 100,
+            "passed": true,
+            "findings": [],
+            "checks": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ]
+          },
+          "hallucinationRisk": {
+            "score": 35,
+            "minimum": 90,
+            "passed": false,
+            "findings": [
+              "Weak source coverage creates elevated hallucination risk."
+            ],
+            "level": "elevated"
+          }
+        },
+        "failedDimensions": [
+          "sourceFidelity",
+          "specificity",
+          "audienceFit",
+          "hookStrength",
+          "hallucinationRisk"
+        ],
+        "blockers": [
+          "not enough source",
+          "rubric:sourceFidelity",
+          "rubric:specificity",
+          "rubric:audienceFit",
+          "rubric:hookStrength",
+          "rubric:hallucinationRisk"
+        ],
+        "repairSuggestions": [
+          "add a fuller description to the source.",
+          "add the intended audience to the source.",
+          "add at least one concrete fact, feature, example, or proof point to the source.",
+          "add the outcome, offer, or action the content should support to the source.",
+          "weak source coverage creates elevated hallucination risk."
+        ],
+        "nextBestStep": "add a fuller description to the source.",
+        "thresholds": {
+          "minimumOverall": 82,
+          "zeroUnsupportedClaims": true,
+          "sourceMustBeSufficient": true,
+          "noGenericPhrases": true,
+          "dimensions": {
+            "sourceFidelity": 85,
+            "claimSupport": 100,
+            "specificity": 75,
+            "audienceFit": 75,
+            "platformFit": 90,
+            "hookStrength": 75,
+            "ctaFit": 80,
+            "nonGenericWording": 85,
+            "repetitionTitleEcho": 75,
+            "packageCompleteness": 100,
+            "hallucinationRisk": 90
+          }
+        },
+        "evidenceQuotes": [
+          "make this amazing"
+        ]
+      },
+      "rubric": {
+        "sourceFidelity": {
+          "score": 20,
+          "minimum": 85,
+          "passed": false,
+          "findings": []
+        },
+        "claimSupport": {
+          "score": 100,
+          "minimum": 100,
+          "passed": true,
+          "findings": [],
+          "supported": 6,
+          "unsupported": 0,
+          "factualClaims": 5
+        },
+        "specificity": {
+          "score": 20,
+          "minimum": 75,
+          "passed": false,
+          "findings": [],
+          "sourceTerms": [
+            "amazing"
+          ],
+          "termHits": [
+            "amazing"
+          ]
+        },
+        "audienceFit": {
+          "score": 35,
+          "minimum": 75,
+          "passed": false,
+          "findings": [],
+          "audience": "people seeking amazing"
+        },
+        "platformFit": {
+          "score": 100,
+          "minimum": 90,
+          "passed": true,
+          "findings": [],
+          "platformCoverage": 3,
+          "completeVariants": 3
+        },
+        "hookStrength": {
+          "score": 55,
+          "minimum": 75,
+          "passed": false,
+          "findings": [],
+          "evidenceBacked": 1,
+          "strongLength": 0
+        },
+        "ctaFit": {
+          "score": 100,
+          "minimum": 80,
+          "passed": true,
+          "findings": [],
+          "actionable": 3,
+          "total": 3
+        },
+        "nonGenericWording": {
+          "score": 100,
+          "minimum": 85,
+          "passed": true,
+          "findings": [],
+          "matches": []
+        },
+        "repetitionTitleEcho": {
+          "score": 80,
+          "minimum": 75,
+          "passed": true,
+          "findings": [],
+          "duplicateCoreLines": 5,
+          "duplicateTitles": 0,
+          "titleEchoes": 0
+        },
+        "packageCompleteness": {
+          "score": 100,
+          "minimum": 100,
+          "passed": true,
+          "findings": [],
+          "checks": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "hallucinationRisk": {
+          "score": 35,
+          "minimum": 90,
+          "passed": false,
+          "findings": [
+            "Weak source coverage creates elevated hallucination risk."
+          ],
+          "level": "elevated"
+        }
+      },
+      "unknownClaims": [],
+      "blockers": [
+        "not enough source",
+        "rubric:sourceFidelity",
+        "rubric:specificity",
+        "rubric:audienceFit",
+        "rubric:hookStrength",
+        "rubric:hallucinationRisk"
+      ],
+      "repairSuggestions": [
+        "add a fuller description to the source.",
+        "add the intended audience to the source.",
+        "add at least one concrete fact, feature, example, or proof point to the source.",
+        "add the outcome, offer, or action the content should support to the source.",
+        "weak source coverage creates elevated hallucination risk."
+      ],
+      "nextBestStep": "add a fuller description to the source.",
+      "nextAction": "add a fuller description to the source."
+    },
+    "contentArsenal": {
+      "status": "blocked",
+      "reason": "not enough source",
+      "repairSuggestions": [
+        "add a fuller description to the source.",
+        "add the intended audience to the source.",
+        "add at least one concrete fact, feature, example, or proof point to the source.",
+        "add the outcome, offer, or action the content should support to the source.",
+        "weak source coverage creates elevated hallucination risk."
+      ]
+    }
+  },
+  "blockedExport": {
+    "ok": false,
+    "error": "Export blocked by the Tier Zero quality gate.",
+    "qa": {
+      "present": true,
+      "passed": false,
+      "verdict": "blocked",
+      "blockers": [
+        "not enough source",
+        "rubric:sourceFidelity",
+        "rubric:specificity",
+        "rubric:audienceFit",
+        "rubric:hookStrength",
+        "rubric:hallucinationRisk"
+      ],
+      "repairSuggestions": [
+        "add a fuller description to the source.",
+        "add the intended audience to the source.",
+        "add at least one concrete fact, feature, example, or proof point to the source.",
+        "add the outcome, offer, or action the content should support to the source.",
+        "weak source coverage creates elevated hallucination risk."
+      ],
+      "nextBestStep": "add a fuller description to the source."
+    },
+    "blockers": [
+      "not enough source",
+      "rubric:sourceFidelity",
+      "rubric:specificity",
+      "rubric:audienceFit",
+      "rubric:hookStrength",
+      "rubric:hallucinationRisk"
+    ],
+    "repairSuggestions": [
+      "add a fuller description to the source.",
+      "add the intended audience to the source.",
+      "add at least one concrete fact, feature, example, or proof point to the source.",
+      "add the outcome, offer, or action the content should support to the source.",
+      "weak source coverage creates elevated hallucination risk."
+    ],
+    "nextBestStep": "add a fuller description to the source.",
+    "sourceAssessment": {
+      "sufficient": false,
+      "status": "not enough source",
+      "characters": 18,
+      "wordCount": 3,
+      "meaningfulWordCount": 3,
+      "uniqueTermCount": 3,
+      "evidenceCount": 1,
+      "signals": {
+        "hasAudience": false,
+        "hasConcreteDetail": false,
+        "hasActionOrOutcome": false
+      },
+      "missing": [
+        "a fuller description",
+        "the intended audience",
+        "at least one concrete fact, feature, example, or proof point",
+        "the outcome, offer, or action the content should support"
+      ],
+      "repairSuggestions": [
+        "Add a fuller description to the source.",
+        "Add the intended audience to the source.",
+        "Add at least one concrete fact, feature, example, or proof point to the source.",
+        "Add the outcome, offer, or action the content should support to the source."
+      ],
+      "nextBestStep": "Add source detail before generation: a fuller description, the intended audience, at least one concrete fact, feature, example, or proof point, the outcome, offer, or action the content should support."
+    },
+    "sourcePreview": "Make this amazing.",
+    "unknownClaims": []
+  }
+}

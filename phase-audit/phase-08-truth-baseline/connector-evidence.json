@@ -1,0 +1,27 @@
+{
+  "capturedAt": "2026-07-16T17:38:00.000Z",
+  "productDesign": {
+    "skill": "product-design:audit",
+    "preflight": "passed",
+    "browser": "Codex in-app Browser",
+    "desktop": "Computer Use verified the native Electron window"
+  },
+  "googleDrive": {
+    "authenticated": true,
+    "profile": "Justin Evans",
+    "verifiedSources": [
+      { "id": "1ppSZegr8UlMGl-5FGJwJ9LTx2j9_yngSqq5qiuIIyM4", "title": "# AURORA STORYTIME: YOUTUBE CLONE SYSTEM", "mimeType": "application/vnd.google-apps.document" },
+      { "id": "1XBv_lncZoqU-2iDD4PZaavqgbXd259GJaXQhspllngs", "title": "WAKE_Master_Content_Engines_Guide", "mimeType": "application/vnd.google-apps.document" },
+      { "id": "1s5iuKbaqkc8I-K9w7nBKjOu4Unr2s9kL", "title": "ForgeFront Systems Strategic Overview.pdf", "mimeType": "application/pdf" },
+      { "id": "1Ey9gdjO8pOW-XVTBMFPplPrXvEx_EDkzb02AKNlpYis", "title": "WAKEFORGED The Man in the Mirror Masterclass (V2 - No Fluff)", "mimeType": "application/vnd.google-apps.document" }
+    ]
+  },
+  "huggingFace": {
+    "authenticated": true,
+    "profile": "Wake-Systems4040",
+    "baselineCandidates": [
+      { "id": "Qwen/Qwen2.5-3B-Instruct", "task": "text-generation", "purpose": "Phase 10 text-model evaluation candidate" },
+      { "id": "black-forest-labs/FLUX.1-dev", "task": "text-to-image", "purpose": "Phase 10 image-provider evaluation candidate" }
+    ]
+  }
+}

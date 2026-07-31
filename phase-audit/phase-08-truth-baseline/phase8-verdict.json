@@ -1,0 +1,266 @@
+{
+  "phase": "phase-08-truth-baseline",
+  "status": "pass",
+  "startedAt": "2026-07-18T18:00:57.889Z",
+  "finishedAt": "2026-07-18T18:00:57.914Z",
+  "checks": [
+    {
+      "id": "authorized-local-repo",
+      "passed": true,
+      "actual": "C:\\Users\\justi\\Documents\\repos\\wake-engine",
+      "expected": "C:\\Users\\justi\\Documents\\repos\\wake-engine"
+    },
+    {
+      "id": "dependency-lock-alignment",
+      "passed": true,
+      "electron": {
+        "requested": "^43.1.0",
+        "locked": "43.1.0",
+        "installed": "43.1.0"
+      },
+      "electronBuilder": {
+        "requested": "^26.15.3",
+        "locked": "26.15.3",
+        "installed": "26.15.3"
+      }
+    },
+    {
+      "id": "old-school-login-contract",
+      "passed": true,
+      "requiredTokens": [
+        "function OperatorGate",
+        "WAKE ENGINE V6",
+        "Operator Login",
+        "local session gate online",
+        "content runtime isolated",
+        "aria-label=\"Operator callsign\"",
+        "aria-label=\"Access phrase\"",
+        "aria-label=\"Enter Wake Engine\""
+      ],
+      "requiredSelectors": [
+        ".operator-gate",
+        ".operator-console",
+        ".operator-orb",
+        ".operator-runes",
+        ".operator-panel",
+        ".operator-readout",
+        ".operator-enter"
+      ]
+    },
+    {
+      "id": "current-run-visual-baselines",
+      "passed": true,
+      "lockedVisual": "screenshots/01-login-approved.png",
+      "screenshots": [
+        {
+          "file": "screenshots/01-login-approved.png",
+          "status": "approved-locked",
+          "sha256": "29513a3cf0fd9a7fc1c4b2a9b152941215ad327f1c6bf460ea70fdd7416920f5",
+          "exists": true,
+          "actualHash": "29513a3cf0fd9a7fc1c4b2a9b152941215ad327f1c6bf460ea70fdd7416920f5",
+          "matches": true
+        },
+        {
+          "file": "screenshots/02-workspace-current.png",
+          "status": "current-reference",
+          "sha256": "67a0a68e06ab9df49d315a0939d2df60770b32d6363af0b54750e0d4cf51e6dc",
+          "exists": true,
+          "actualHash": "67a0a68e06ab9df49d315a0939d2df60770b32d6363af0b54750e0d4cf51e6dc",
+          "matches": true
+        },
+        {
+          "file": "screenshots/03-aurora-creation-current.png",
+          "status": "current-reference",
+          "sha256": "876ba71441bdd022e472e97ea16059ff8b3ef48828278e7bc8d34cc899737af0",
+          "exists": true,
+          "actualHash": "876ba71441bdd022e472e97ea16059ff8b3ef48828278e7bc8d34cc899737af0",
+          "matches": true
+        },
+        {
+          "file": "screenshots/04-source-viewer-current.png",
+          "status": "current-reference",
+          "sha256": "48c54e123752b8d209719744fbd572336277e2a5cbbc4c5f824e42a65302452a",
+          "exists": true,
+          "actualHash": "48c54e123752b8d209719744fbd572336277e2a5cbbc4c5f824e42a65302452a",
+          "matches": true
+        },
+        {
+          "file": "screenshots/05-source-document-current.png",
+          "status": "current-reference",
+          "sha256": "55bddb072a5f581edac4554398a0ecc91787568b55b3a38c6ba5280a0228eeec",
+          "exists": true,
+          "actualHash": "55bddb072a5f581edac4554398a0ecc91787568b55b3a38c6ba5280a0228eeec",
+          "matches": true
+        },
+        {
+          "file": "screenshots/06-project-settings-current.png",
+          "status": "current-reference",
+          "sha256": "d92f9edbf058ec4d7e6e7d6767b91763c8ab8e925f44bc0f72fa91d75243da3c",
+          "exists": true,
+          "actualHash": "d92f9edbf058ec4d7e6e7d6767b91763c8ab8e925f44bc0f72fa91d75243da3c",
+          "matches": true
+        },
+        {
+          "file": "screenshots/07-export-preview-current.png",
+          "status": "current-reference",
+          "sha256": "a78d105e242621277f3003bf4f111bb2c4aab4c852f1ecbcc90fc0848742cfd8",
+          "exists": true,
+          "actualHash": "a78d105e242621277f3003bf4f111bb2c4aab4c852f1ecbcc90fc0848742cfd8",
+          "matches": true
+        },
+        {
+          "file": "screenshots/preview-tiktok.png",
+          "status": "current-reference",
+          "sha256": "1d0e2bf327399110c9b7e158feedbfff8785431be02193f673b70af235f0a7fb",
+          "exists": true,
+          "actualHash": "1d0e2bf327399110c9b7e158feedbfff8785431be02193f673b70af235f0a7fb",
+          "matches": true
+        },
+        {
+          "file": "screenshots/preview-instagram.png",
+          "status": "current-reference",
+          "sha256": "c58ece7d18b83b3545fc289c3b75a63e25c1467bdeba1d48d2b3998e247a31e2",
+          "exists": true,
+          "actualHash": "c58ece7d18b83b3545fc289c3b75a63e25c1467bdeba1d48d2b3998e247a31e2",
+          "matches": true
+        },
+        {
+          "file": "screenshots/preview-x.png",
+          "status": "current-reference",
+          "sha256": "7f94c9a087cbb135bcac9d05d38e7495cdbe82fb41f40e18d3471a8dc6e9d02c",
+          "exists": true,
+          "actualHash": "7f94c9a087cbb135bcac9d05d38e7495cdbe82fb41f40e18d3471a8dc6e9d02c",
+          "matches": true
+        },
+        {
+          "file": "screenshots/preview-linkedin.png",
+          "status": "current-reference",
+          "sha256": "8ecf4a5db2ba7bc2b8570c1d417a856e78b8f71ba05315475e8e0cf547c55437",
+          "exists": true,
+          "actualHash": "8ecf4a5db2ba7bc2b8570c1d417a856e78b8f71ba05315475e8e0cf547c55437",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "versioned-content-baselines",
+      "passed": true,
+      "fixtureIds": [
+        "restaurant",
+        "fitness-coach",
+        "saas-product",
+        "construction-company",
+        "childrens-book",
+        "local-service",
+        "wake-engine",
+        "aurora-storytime",
+        "weak-source"
+      ]
+    },
+    {
+      "id": "required-connectors-used",
+      "passed": true,
+      "connectorEvidence": {
+        "capturedAt": "2026-07-16T17:38:00.000Z",
+        "productDesign": {
+          "skill": "product-design:audit",
+          "preflight": "passed",
+          "browser": "Codex in-app Browser",
+          "desktop": "Computer Use verified the native Electron window"
+        },
+        "googleDrive": {
+          "authenticated": true,
+          "profile": "Justin Evans",
+          "verifiedSources": [
+            {
+              "id": "1ppSZegr8UlMGl-5FGJwJ9LTx2j9_yngSqq5qiuIIyM4",
+              "title": "# AURORA STORYTIME: YOUTUBE CLONE SYSTEM",
+              "mimeType": "application/vnd.google-apps.document"
+            },
+            {
+              "id": "1XBv_lncZoqU-2iDD4PZaavqgbXd259GJaXQhspllngs",
+              "title": "WAKE_Master_Content_Engines_Guide",
+              "mimeType": "application/vnd.google-apps.document"
+            },
+            {
+              "id": "1s5iuKbaqkc8I-K9w7nBKjOu4Unr2s9kL",
+              "title": "ForgeFront Systems Strategic Overview.pdf",
+              "mimeType": "application/pdf"
+            },
+            {
+              "id": "1Ey9gdjO8pOW-XVTBMFPplPrXvEx_EDkzb02AKNlpYis",
+              "title": "WAKEFORGED The Man in the Mirror Masterclass (V2 - No Fluff)",
+              "mimeType": "application/vnd.google-apps.document"
+            }
+          ]
+        },
+        "huggingFace": {
+          "authenticated": true,
+          "profile": "Wake-Systems4040",
+          "baselineCandidates": [
+            {
+              "id": "Qwen/Qwen2.5-3B-Instruct",
+              "task": "text-generation",
+              "purpose": "Phase 10 text-model evaluation candidate"
+            },
+            {
+              "id": "black-forest-labs/FLUX.1-dev",
+              "task": "text-to-image",
+              "purpose": "Phase 10 image-provider evaluation candidate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "live-data-contamination",
+      "passed": true,
+      "contamination": []
+    },
+    {
+      "id": "aurora-name-lock",
+      "passed": true,
+      "matches": [
+        {
+          "id": "proj-mrkj3qox-v8e2hs",
+          "name": "Aurora Storytime"
+        }
+      ]
+    },
+    {
+      "id": "project-reference-integrity",
+      "passed": true,
+      "missingProjectReferences": []
+    },
+    {
+      "id": "source-content-not-path-only",
+      "passed": true,
+      "offenders": []
+    },
+    {
+      "id": "forbidden-runtime-drift-gate-present",
+      "passed": true,
+      "scope": "agent IDs, routes, modules, runtime capabilities, and product claims"
+    }
+  ],
+  "failedChecks": [],
+  "carryForward": [
+    {
+      "id": "post-login-workspace-simplification",
+      "phase": 12,
+      "evidence": "The current first viewport is dominated by branding and diagnostics before creation."
+    },
+    {
+      "id": "real-model-evaluation-gate",
+      "phase": 14,
+      "evidence": "The current Hugging Face gate records a pass without running a real model evaluation."
+    }
+  ],
+  "evidence": [
+    "baseline-manifest.json",
+    "connector-evidence.json",
+    "PRODUCT_DESIGN_BASELINE.md",
+    "phase8-inventory.json",
+    "phase8-ledger.json"
+  ]
+}

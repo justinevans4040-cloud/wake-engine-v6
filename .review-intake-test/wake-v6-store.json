@@ -1,0 +1,174 @@
+{
+  "projects": [
+    {
+      "id": "wake-v6-main",
+      "name": "WAKE Engine V6",
+      "status": "active",
+      "createdAt": "2026-07-05T00:00:00.000Z",
+      "updatedAt": "2026-07-05T00:00:00.000Z"
+    }
+  ],
+  "sources": [],
+  "mediaAssets": [
+    {
+      "id": "asset-b32286f0f5432061",
+      "reviewId": "candidate-b32286f0f5432061",
+      "title": "image.png",
+      "name": "image.png",
+      "path": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.review-intake-test\\seed\\image.png",
+      "extension": ".png",
+      "kind": "image",
+      "lane": "General Source",
+      "tags": [],
+      "sizeBytes": 10,
+      "modifiedAt": "2026-07-18T17:36:12.037Z",
+      "excerpt": "",
+      "extractStatus": "metadata_only_media",
+      "importKey": "intake:c:\\users\\justi\\documents\\repos\\wake-engine\\.review-intake-test\\seed\\image.png",
+      "importedAt": "2026-07-18T17:36:12.440Z",
+      "eligible": true,
+      "reason": null,
+      "importAs": "media",
+      "alreadyImported": false,
+      "approved": false,
+      "projectId": "review-test"
+    }
+  ],
+  "activeTask": {
+    "id": "task-wake-v6-main",
+    "title": "Build WAKE Engine V6 into an elite operator app",
+    "objective": "Turn source, chat, agents, clusters, and exports into one coherent task-completion system.",
+    "status": "active",
+    "nextAction": "Use Console or section chat to advance the current ask.",
+    "blockers": [],
+    "completed": [],
+    "updatedAt": "2026-07-14T00:00:00.000Z"
+  },
+  "agentChats": [],
+  "intakeRuns": [
+    {
+      "id": "intake-mrqneqhk-kg62np",
+      "roots": [
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.review-intake-test\\seed"
+      ],
+      "scanned": 2,
+      "reviewed": true,
+      "reviewId": "intake-review-mrqneqdw-ptvnyq",
+      "sourceAdded": 0,
+      "mediaAdded": 1,
+      "skippedOperational": 0,
+      "projectId": "review-test",
+      "createdAt": "2026-07-18T17:36:12.440Z"
+    }
+  ],
+  "intakeReviews": [
+    {
+      "id": "intake-review-mrqneqdw-ptvnyq",
+      "status": "imported-selection",
+      "roots": [
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.review-intake-test\\seed"
+      ],
+      "projectId": "review-test",
+      "scanned": 2,
+      "visitedDirectories": 1,
+      "directoryLimitHit": false,
+      "candidateLimitHit": false,
+      "candidateLimit": 1000,
+      "eligible": 2,
+      "alreadyImported": 0,
+      "skippedOperational": 0,
+      "candidates": [
+        {
+          "id": "asset-b32286f0f5432061",
+          "reviewId": "candidate-b32286f0f5432061",
+          "title": "image.png",
+          "name": "image.png",
+          "path": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.review-intake-test\\seed\\image.png",
+          "extension": ".png",
+          "kind": "image",
+          "lane": "General Source",
+          "tags": [],
+          "sizeBytes": 10,
+          "modifiedAt": "2026-07-18T17:36:12.037Z",
+          "excerpt": "",
+          "extractStatus": "metadata_only_media",
+          "importKey": "intake:c:\\users\\justi\\documents\\repos\\wake-engine\\.review-intake-test\\seed\\image.png",
+          "importedAt": "2026-07-18T17:36:12.306Z",
+          "eligible": true,
+          "reason": null,
+          "importAs": "media",
+          "alreadyImported": false,
+          "approved": false
+        },
+        {
+          "id": "asset-5b8a2ec07ea2cd1c",
+          "reviewId": "candidate-5b8a2ec07ea2cd1c",
+          "title": "keep-me.md",
+          "name": "keep-me.md",
+          "path": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.review-intake-test\\seed\\keep-me.md",
+          "extension": ".md",
+          "kind": "text",
+          "lane": "General Source",
+          "tags": [],
+          "sizeBytes": 58,
+          "modifiedAt": "2026-07-18T17:36:12.037Z",
+          "excerpt": "# Keep Me This is approved creative source for a project.",
+          "extractStatus": "text_extracted",
+          "importKey": "intake:c:\\users\\justi\\documents\\repos\\wake-engine\\.review-intake-test\\seed\\keep-me.md",
+          "importedAt": "2026-07-18T17:36:12.307Z",
+          "eligible": true,
+          "reason": null,
+          "importAs": "source",
+          "alreadyImported": false,
+          "approved": false
+        }
+      ],
+      "createdAt": "2026-07-18T17:36:12.308Z",
+      "importedAt": "2026-07-18T17:36:12.440Z",
+      "importResult": {
+        "sourceAdded": 0,
+        "mediaAdded": 1,
+        "skipped": 0
+      }
+    }
+  ],
+  "generations": [],
+  "campaigns": [],
+  "generatedImages": [],
+  "runRecords": [],
+  "a2aMessages": [],
+  "replayableHandoffs": [],
+  "toolReceipts": [],
+  "memoryReceipts": [],
+  "exportInspections": [],
+  "exports": [],
+  "history": [
+    {
+      "id": "hist-mrqneqhk-srgxar",
+      "type": "intake.review.imported",
+      "detail": "Imported reviewed intake: 0 sources and 1 media assets.",
+      "payload": {
+        "reviewId": "intake-review-mrqneqdw-ptvnyq",
+        "projectId": "review-test"
+      },
+      "createdAt": "2026-07-18T17:36:12.440Z"
+    },
+    {
+      "id": "hist-mrqneqdw-r1g4ly",
+      "type": "intake.review.created",
+      "detail": "Review scan staged 2 eligible items from 2 scanned files.",
+      "payload": {
+        "reviewId": "intake-review-mrqneqdw-ptvnyq",
+        "projectId": "review-test"
+      },
+      "createdAt": "2026-07-18T17:36:12.308Z"
+    }
+  ],
+  "quarantine": {
+    "sources": 0,
+    "mediaAssets": 0,
+    "agentChats": 0,
+    "generations": 0,
+    "history": 0
+  }
+}

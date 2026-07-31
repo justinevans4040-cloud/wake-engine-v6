@@ -1,0 +1,652 @@
+{
+  "projects": [
+    {
+      "id": "wake-v6-main",
+      "name": "WAKE Engine V6",
+      "status": "active",
+      "createdAt": "2026-07-05T00:00:00.000Z",
+      "updatedAt": "2026-07-05T00:00:00.000Z"
+    }
+  ],
+  "sources": [],
+  "generations": [
+    {
+      "id": "gen-mrg79feb-m9xsua",
+      "projectId": "wake-v6-main",
+      "sourceId": null,
+      "kind": "agent-pack",
+      "title": "WAKEFORGED the Man in the Mirror Masterclass",
+      "output": {
+        "ok": true,
+        "generatedAt": "2026-07-11T10:06:29.171Z",
+        "engine": "WAKE V6 local deterministic agent",
+        "frame": {
+          "title": "WAKEFORGED the Man in the Mirror Masterclass",
+          "duration": "n/a",
+          "format": "structured brief",
+          "role": "WAKE Systems Agent",
+          "objective": "Turn \"WAKEFORGED the Man in the Mirror Masterclass\" into a structured, auditable WAKE operating frame.",
+          "scenes": 3,
+          "hooks": 2,
+          "cta": "Run the next verified WAKE action.",
+          "constraints": [
+            "No fake capability claims.",
+            "Keep local outputs auditable.",
+            "Keep output inspectable and copyable."
+          ],
+          "focusTerms": [
+            "effort",
+            "execution",
+            "machinery",
+            "systems"
+          ],
+          "sourceCharacterCount": 570
+        },
+        "sourceProfile": {
+          "title": "WAKEFORGED the Man in the Mirror Masterclass",
+          "lane": "Man in the Mirror",
+          "sourceType": "google_drive",
+          "extraction": "drive_text_fetched_by_connector",
+          "audience": "operators rebuilding identity, discipline, and execution after a reset",
+          "focusTerms": [
+            "effort",
+            "execution",
+            "machinery",
+            "systems"
+          ],
+          "sourceSentencesUsed": 5
+        },
+        "strategicBrief": {
+          "promise": "Identity is rebuilt through responsibility, not excuses.",
+          "tension": "Respawn is reconstruction from the wreckage.",
+          "transformation": "ForgeFront Systems is the machinery of execution.",
+          "operatorTakeaway": "Systems do not care how you feel.",
+          "contentUse": "Produce source-faithful scripts, captions, scenes, and platform variants without inventing external capability."
+        },
+        "hooks": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "The turn: Respawn is reconstruction from the wreckage.",
+          "Effort is not the topic. The proof is how it changes the next action."
+        ],
+        "titles": [
+          "WAKEFORGED the Man in the Mirror Masterclass",
+          "Effort Execution: The Operating Frame",
+          "WAKEFORGED the Man in the Mirror Masterclass: Proof, Turn, Action"
+        ],
+        "captions": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "Respawn is reconstruction from the wreckage.",
+          "Systems do not care how you feel."
+        ],
+        "platformBlocks": {
+          "youtubeShorts": "Open on: \"Identity is rebuilt through responsibility, not excuses.\" Then cut to the concrete turn: \"Respawn is reconstruction from the wreckage.\"",
+          "tiktok": "Use effort, execution, machinery as on-screen proof labels, but make the spoken line come from the source quotes.",
+          "linkedin": "Lead with the source claim, then explain the system implication: ForgeFront Systems is the machinery of execution."
+        },
+        "scriptBeats": [
+          {
+            "beat": "Open",
+            "direction": "Identity is rebuilt through responsibility, not excuses."
+          },
+          {
+            "beat": "Pressure",
+            "direction": "Respawn is reconstruction from the wreckage."
+          },
+          {
+            "beat": "Turn",
+            "direction": "ForgeFront Systems is the machinery of execution."
+          },
+          {
+            "beat": "Close",
+            "direction": "Systems do not care how you feel."
+          }
+        ],
+        "scenePlan": [
+          {
+            "time": "0:00-0:03",
+            "purpose": "Pattern break",
+            "visual": "dim mirror imagery, harsh side light, hands working, blueprint overlays, and restrained industrial motion",
+            "line": "Identity is rebuilt through responsibility, not excuses."
+          },
+          {
+            "time": "0:03-0:10",
+            "purpose": "Name the tension",
+            "visual": "Show the cost or pressure behind effort.",
+            "line": "Respawn is reconstruction from the wreckage."
+          },
+          {
+            "time": "0:10-0:22",
+            "purpose": "Proof beat",
+            "visual": "Cut to concrete evidence, workflow, artifact, or source excerpt for execution.",
+            "line": "ForgeFront Systems is the machinery of execution."
+          },
+          {
+            "time": "0:22-0:38",
+            "purpose": "System turn",
+            "visual": "Show the repeatable mechanism behind effort, execution, machinery.",
+            "line": "Workflows, automation, and repeatable processes replace random effort."
+          },
+          {
+            "time": "0:38-0:52",
+            "purpose": "Transformation",
+            "visual": "Before/after structure: raw source on one side, finished packet on the other.",
+            "line": "Systems do not care how you feel."
+          },
+          {
+            "time": "0:52-1:00",
+            "purpose": "CTA",
+            "visual": "End on saved export, source ledger, or named next action.",
+            "line": "Save the packet, review the proof, then ship the next verified output."
+          }
+        ],
+        "platformVariants": [
+          {
+            "platform": "TikTok / Shorts",
+            "hook": "Identity is rebuilt through responsibility, not excuses.",
+            "structure": "fast proof-first cutdown",
+            "caption": "Identity is rebuilt through responsibility, not excuses. effort becomes visible when the system forces a next action.",
+            "cta": "Follow the source, not the noise."
+          },
+          {
+            "platform": "Instagram",
+            "hook": "Respawn is reconstruction from the wreckage.",
+            "structure": "carousel or reel with quote overlays",
+            "caption": "WAKEFORGED the Man in the Mirror Masterclass: ForgeFront Systems is the machinery of execution.",
+            "cta": "Save this as an execution frame."
+          },
+          {
+            "platform": "LinkedIn",
+            "hook": "ForgeFront Systems is the machinery of execution.",
+            "structure": "operator note with source claim, implication, and action",
+            "caption": "Identity is rebuilt through responsibility, not excuses.\n\nImplication: ForgeFront Systems is the machinery of execution.\n\nAction: Systems do not care how you feel.",
+            "cta": "Turn the principle into one repeatable process."
+          }
+        ],
+        "claimMap": [
+          {
+            "id": "claim-1",
+            "sourceLine": "Identity is rebuilt through responsibility, not excuses.",
+            "contentUse": "opening hook",
+            "risk": "source-backed",
+            "onScreenText": "Identity is rebuilt through responsibility, not excuses."
+          },
+          {
+            "id": "claim-2",
+            "sourceLine": "Respawn is reconstruction from the wreckage.",
+            "contentUse": "tension beat",
+            "risk": "source-backed",
+            "onScreenText": "Respawn is reconstruction from the wreckage."
+          },
+          {
+            "id": "claim-3",
+            "sourceLine": "ForgeFront Systems is the machinery of execution.",
+            "contentUse": "transformation beat",
+            "risk": "source-backed",
+            "onScreenText": "ForgeFront Systems is the machinery of execution."
+          },
+          {
+            "id": "claim-4",
+            "sourceLine": "Systems do not care how you feel.",
+            "contentUse": "supporting proof",
+            "risk": "source-backed",
+            "onScreenText": "Systems do not care how you feel."
+          },
+          {
+            "id": "claim-5",
+            "sourceLine": "Workflows, automation, and repeatable processes replace random effort.",
+            "contentUse": "supporting proof",
+            "risk": "source-backed",
+            "onScreenText": "Workflows, automation, and repeatable processes replace random effort."
+          }
+        ],
+        "contentArsenal": {
+          "shortForm60": {
+            "title": "WAKEFORGED the Man in the Mirror Masterclass",
+            "runtime": "60s",
+            "voiceover": "0:00-0:03: Identity is rebuilt through responsibility, not excuses.\n0:03-0:10: Respawn is reconstruction from the wreckage.\n0:10-0:22: ForgeFront Systems is the machinery of execution.\n0:22-0:38: Workflows, automation, and repeatable processes replace random effort.\n0:38-0:52: Systems do not care how you feel.\n0:52-1:00: Save the packet, review the proof, then ship the next verified output.",
+            "editPattern": "6-beat proof arc: pattern break, tension, proof, system turn, transformation, CTA"
+          },
+          "shortForm30": {
+            "title": "WAKEFORGED the Man in the Mirror Masterclass: Fast Cut",
+            "runtime": "30s",
+            "voiceover": "Identity is rebuilt through responsibility, not excuses. ForgeFront Systems is the machinery of execution. Systems do not care how you feel.",
+            "editPattern": "3-beat cutdown: proof, implication, action"
+          },
+          "carousel": {
+            "slides": [
+              {
+                "slide": 1,
+                "headline": "Identity is rebuilt through responsibility, not excuses.",
+                "body": "Lead with the source claim."
+              },
+              {
+                "slide": 2,
+                "headline": "The pressure",
+                "body": "Respawn is reconstruction from the wreckage."
+              },
+              {
+                "slide": 3,
+                "headline": "The system turn",
+                "body": "ForgeFront Systems is the machinery of execution."
+              },
+              {
+                "slide": 4,
+                "headline": "The operator takeaway",
+                "body": "Systems do not care how you feel."
+              },
+              {
+                "slide": 5,
+                "headline": "Next action",
+                "body": "Convert the source into one repeatable workflow."
+              }
+            ]
+          },
+          "longFormOutline": [
+            {
+              "section": "Cold open",
+              "point": "Identity is rebuilt through responsibility, not excuses."
+            },
+            {
+              "section": "Why it matters",
+              "point": "Respawn is reconstruction from the wreckage."
+            },
+            {
+              "section": "The system",
+              "point": "ForgeFront Systems is the machinery of execution."
+            },
+            {
+              "section": "Execution model",
+              "point": "Systems do not care how you feel."
+            },
+            {
+              "section": "Practical handoff",
+              "point": "Save the source, generate the packet, review claims, export the final."
+            }
+          ]
+        },
+        "productionNotes": {
+          "visualDirection": "dim mirror imagery, harsh side light, hands working, blueprint overlays, and restrained industrial motion",
+          "audioDirection": "controlled industrial pulse, low noise floor, deliberate pauses, no hype-track masking weak ideas",
+          "editRules": [
+            "Every on-screen claim must map to a source sentence or saved local artifact.",
+            "Do not reuse the title as filler copy.",
+            "Cut any line that cannot be tied to the source profile, proof line, or operator takeaway."
+          ],
+          "assetPrompts": [
+            "dim mirror imagery, harsh side light, hands working, blueprint overlays, and restrained industrial motion; hero frame for WAKEFORGED the Man in the Mirror Masterclass; premium ForgeFront-grade composition",
+            "Close-up detail frame showing effort and execution as tangible system evidence",
+            "Final CTA frame with saved source ledger and export-ready packet"
+          ]
+        },
+        "executionChecklist": [
+          "Review source profile and confirm the lane is correct.",
+          "Pick one platform variant before generating final media.",
+          "Use quotePack as the only source for direct quote overlays.",
+          "Export markdown and JSON after founder review."
+        ],
+        "operatorHandoff": {
+          "creativeDirector": "Build the first cut around Identity is rebuilt through responsibility, not excuses.",
+          "editor": "Use the scene plan exactly; keep visual density highest around ForgeFront Systems is the machinery of execution.",
+          "designer": "Use this visual system: dim mirror imagery, harsh side light, hands working, blueprint overlays, and restrained industrial motion",
+          "reviewer": "Reject the packet if any claim cannot be mapped to claimMap.",
+          "publisher": "Start with TikTok / Shorts; adapt after QA passes."
+        },
+        "qaGate": {
+          "score": 100,
+          "passed": true,
+          "checks": [
+            {
+              "name": "source-backed claims",
+              "passed": true
+            },
+            {
+              "name": "non-repetitive title usage",
+              "passed": true
+            },
+            {
+              "name": "platform variants",
+              "passed": true
+            },
+            {
+              "name": "scene plan",
+              "passed": true
+            },
+            {
+              "name": "local-only honesty",
+              "passed": true
+            }
+          ]
+        },
+        "quotePack": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "Respawn is reconstruction from the wreckage.",
+          "ForgeFront Systems is the machinery of execution.",
+          "Systems do not care how you feel.",
+          "Workflows, automation, and repeatable processes replace random effort."
+        ],
+        "qualityFlags": {
+          "wrapperRemoved": true,
+          "titleSource": "source heading",
+          "sourceSentenceCount": 5,
+          "localOnly": true,
+          "avoidsTitleEcho": true,
+          "productionPacket": true
+        }
+      },
+      "createdAt": "2026-07-11T10:06:29.171Z"
+    },
+    {
+      "id": "gen-mrg77o5c-rgveqw",
+      "projectId": "wake-v6-main",
+      "sourceId": null,
+      "kind": "agent-pack",
+      "title": "WAKEFORGED the Man in the Mirror Masterclass",
+      "output": {
+        "ok": true,
+        "generatedAt": "2026-07-11T10:05:07.200Z",
+        "engine": "WAKE V6 local deterministic agent",
+        "frame": {
+          "title": "WAKEFORGED the Man in the Mirror Masterclass",
+          "duration": "n/a",
+          "format": "structured brief",
+          "role": "WAKE Systems Agent",
+          "objective": "Turn \"WAKEFORGED the Man in the Mirror Masterclass\" into a structured, auditable WAKE operating frame.",
+          "scenes": 3,
+          "hooks": 2,
+          "cta": "Run the next verified WAKE action.",
+          "constraints": [
+            "No fake capability claims.",
+            "Keep local outputs auditable.",
+            "Keep output inspectable and copyable."
+          ],
+          "focusTerms": [
+            "effort",
+            "execution",
+            "machinery",
+            "systems"
+          ],
+          "sourceCharacterCount": 570
+        },
+        "sourceProfile": {
+          "title": "WAKEFORGED the Man in the Mirror Masterclass",
+          "lane": "Man in the Mirror",
+          "sourceType": "google_drive",
+          "extraction": "drive_text_fetched_by_connector",
+          "audience": "operators rebuilding identity, discipline, and execution after a reset",
+          "focusTerms": [
+            "effort",
+            "execution",
+            "machinery",
+            "systems"
+          ],
+          "sourceSentencesUsed": 5
+        },
+        "strategicBrief": {
+          "promise": "Identity is rebuilt through responsibility, not excuses.",
+          "tension": "Respawn is reconstruction from the wreckage.",
+          "transformation": "ForgeFront Systems is the machinery of execution.",
+          "operatorTakeaway": "Systems do not care how you feel.",
+          "contentUse": "Produce source-faithful scripts, captions, scenes, and platform variants without inventing external capability."
+        },
+        "hooks": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "The turn: Respawn is reconstruction from the wreckage.",
+          "Effort is not the topic. The proof is how it changes the next action."
+        ],
+        "titles": [
+          "WAKEFORGED the Man in the Mirror Masterclass",
+          "Effort Execution: The Operating Frame",
+          "WAKEFORGED the Man in the Mirror Masterclass: Proof, Turn, Action"
+        ],
+        "captions": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "Respawn is reconstruction from the wreckage.",
+          "Systems do not care how you feel."
+        ],
+        "platformBlocks": {
+          "youtubeShorts": "Open on: \"Identity is rebuilt through responsibility, not excuses.\" Then cut to the concrete turn: \"Respawn is reconstruction from the wreckage.\"",
+          "tiktok": "Use effort, execution, machinery as on-screen proof labels, but make the spoken line come from the source quotes.",
+          "linkedin": "Lead with the source claim, then explain the system implication: ForgeFront Systems is the machinery of execution."
+        },
+        "scriptBeats": [
+          {
+            "beat": "Open",
+            "direction": "Identity is rebuilt through responsibility, not excuses."
+          },
+          {
+            "beat": "Pressure",
+            "direction": "Respawn is reconstruction from the wreckage."
+          },
+          {
+            "beat": "Turn",
+            "direction": "ForgeFront Systems is the machinery of execution."
+          },
+          {
+            "beat": "Close",
+            "direction": "Systems do not care how you feel."
+          }
+        ],
+        "scenePlan": [
+          {
+            "time": "0:00-0:03",
+            "purpose": "Pattern break",
+            "visual": "dim mirror imagery, harsh side light, hands working, blueprint overlays, and restrained industrial motion",
+            "line": "Identity is rebuilt through responsibility, not excuses."
+          },
+          {
+            "time": "0:03-0:10",
+            "purpose": "Name the tension",
+            "visual": "Show the cost or pressure behind effort.",
+            "line": "Respawn is reconstruction from the wreckage."
+          },
+          {
+            "time": "0:10-0:22",
+            "purpose": "Proof beat",
+            "visual": "Cut to concrete evidence, workflow, artifact, or source excerpt for execution.",
+            "line": "ForgeFront Systems is the machinery of execution."
+          },
+          {
+            "time": "0:22-0:38",
+            "purpose": "System turn",
+            "visual": "Show the repeatable mechanism behind effort, execution, machinery.",
+            "line": "Workflows, automation, and repeatable processes replace random effort."
+          },
+          {
+            "time": "0:38-0:52",
+            "purpose": "Transformation",
+            "visual": "Before/after structure: raw source on one side, finished packet on the other.",
+            "line": "Systems do not care how you feel."
+          },
+          {
+            "time": "0:52-1:00",
+            "purpose": "CTA",
+            "visual": "End on saved export, source ledger, or named next action.",
+            "line": "Save the packet, review the proof, then ship the next verified output."
+          }
+        ],
+        "platformVariants": [
+          {
+            "platform": "TikTok / Shorts",
+            "hook": "Identity is rebuilt through responsibility, not excuses.",
+            "structure": "fast proof-first cutdown",
+            "caption": "Identity is rebuilt through responsibility, not excuses. effort becomes visible when the system forces a next action.",
+            "cta": "Follow the source, not the noise."
+          },
+          {
+            "platform": "Instagram",
+            "hook": "Respawn is reconstruction from the wreckage.",
+            "structure": "carousel or reel with quote overlays",
+            "caption": "WAKEFORGED the Man in the Mirror Masterclass: ForgeFront Systems is the machinery of execution.",
+            "cta": "Save this as an execution frame."
+          },
+          {
+            "platform": "LinkedIn",
+            "hook": "ForgeFront Systems is the machinery of execution.",
+            "structure": "operator note with source claim, implication, and action",
+            "caption": "Identity is rebuilt through responsibility, not excuses.\n\nImplication: ForgeFront Systems is the machinery of execution.\n\nAction: Systems do not care how you feel.",
+            "cta": "Turn the principle into one repeatable process."
+          }
+        ],
+        "productionNotes": {
+          "visualDirection": "dim mirror imagery, harsh side light, hands working, blueprint overlays, and restrained industrial motion",
+          "audioDirection": "controlled industrial pulse, low noise floor, deliberate pauses, no hype-track masking weak ideas",
+          "editRules": [
+            "Every on-screen claim must map to a source sentence or saved local artifact.",
+            "Do not reuse the title as filler copy.",
+            "Cut any line that cannot be tied to the source profile, proof line, or operator takeaway."
+          ],
+          "assetPrompts": [
+            "dim mirror imagery, harsh side light, hands working, blueprint overlays, and restrained industrial motion; hero frame for WAKEFORGED the Man in the Mirror Masterclass; premium ForgeFront-grade composition",
+            "Close-up detail frame showing effort and execution as tangible system evidence",
+            "Final CTA frame with saved source ledger and export-ready packet"
+          ]
+        },
+        "executionChecklist": [
+          "Review source profile and confirm the lane is correct.",
+          "Pick one platform variant before generating final media.",
+          "Use quotePack as the only source for direct quote overlays.",
+          "Export markdown and JSON after founder review."
+        ],
+        "quotePack": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "Respawn is reconstruction from the wreckage.",
+          "ForgeFront Systems is the machinery of execution.",
+          "Systems do not care how you feel.",
+          "Workflows, automation, and repeatable processes replace random effort."
+        ],
+        "qualityFlags": {
+          "wrapperRemoved": true,
+          "titleSource": "source heading",
+          "sourceSentenceCount": 5,
+          "localOnly": true,
+          "avoidsTitleEcho": true,
+          "productionPacket": true
+        }
+      },
+      "createdAt": "2026-07-11T10:05:07.200Z"
+    },
+    {
+      "id": "gen-mrg75crd-bximhg",
+      "projectId": "wake-v6-main",
+      "sourceId": null,
+      "kind": "agent-pack",
+      "title": "WAKEFORGED the Man in the Mirror Masterclass",
+      "output": {
+        "ok": true,
+        "generatedAt": "2026-07-11T10:03:19.129Z",
+        "engine": "WAKE V6 local deterministic agent",
+        "frame": {
+          "title": "WAKEFORGED the Man in the Mirror Masterclass",
+          "duration": "n/a",
+          "format": "structured brief",
+          "role": "WAKE Systems Agent",
+          "objective": "Turn \"WAKEFORGED the Man in the Mirror Masterclass\" into a structured, auditable WAKE operating frame.",
+          "scenes": 3,
+          "hooks": 2,
+          "cta": "Run the next verified WAKE action.",
+          "constraints": [
+            "No fake capability claims.",
+            "Keep local outputs auditable.",
+            "Keep output inspectable and copyable."
+          ],
+          "focusTerms": [
+            "effort",
+            "execution",
+            "machinery",
+            "systems"
+          ],
+          "sourceCharacterCount": 461
+        },
+        "hooks": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "The turn: Respawn is reconstruction from the wreckage.",
+          "Effort is not the topic. The proof is how it changes the next action."
+        ],
+        "titles": [
+          "WAKEFORGED the Man in the Mirror Masterclass",
+          "Effort Execution: The Operating Frame",
+          "WAKEFORGED the Man in the Mirror Masterclass: Proof, Turn, Action"
+        ],
+        "captions": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "Respawn is reconstruction from the wreckage.",
+          "Systems do not care how you feel."
+        ],
+        "platformBlocks": {
+          "youtubeShorts": "Open on: \"Identity is rebuilt through responsibility, not excuses.\" Then cut to the concrete turn: \"Respawn is reconstruction from the wreckage.\"",
+          "tiktok": "Use effort, execution, machinery as on-screen proof labels, but make the spoken line come from the source quotes.",
+          "linkedin": "Lead with the source claim, then explain the system implication: ForgeFront Systems is the machinery of execution."
+        },
+        "scriptBeats": [
+          {
+            "beat": "Open",
+            "direction": "Identity is rebuilt through responsibility, not excuses."
+          },
+          {
+            "beat": "Pressure",
+            "direction": "Respawn is reconstruction from the wreckage."
+          },
+          {
+            "beat": "Turn",
+            "direction": "ForgeFront Systems is the machinery of execution."
+          },
+          {
+            "beat": "Close",
+            "direction": "Systems do not care how you feel."
+          }
+        ],
+        "quotePack": [
+          "Identity is rebuilt through responsibility, not excuses.",
+          "Respawn is reconstruction from the wreckage.",
+          "ForgeFront Systems is the machinery of execution.",
+          "Systems do not care how you feel.",
+          "Workflows, automation, and repeatable processes replace random effort."
+        ],
+        "qualityFlags": {
+          "wrapperRemoved": true,
+          "titleSource": "source heading",
+          "sourceSentenceCount": 5,
+          "localOnly": true,
+          "avoidsTitleEcho": true
+        }
+      },
+      "createdAt": "2026-07-11T10:03:19.129Z"
+    }
+  ],
+  "exports": [],
+  "history": [
+    {
+      "id": "hist-mrg79feb-pgm5hh",
+      "type": "agent-pack.generated",
+      "detail": "Generated agent-pack: WAKEFORGED the Man in the Mirror Masterclass",
+      "payload": {
+        "generationId": "gen-mrg79feb-m9xsua",
+        "projectId": "wake-v6-main",
+        "sourceId": null
+      },
+      "createdAt": "2026-07-11T10:06:29.171Z"
+    },
+    {
+      "id": "hist-mrg77o5c-sdynp8",
+      "type": "agent-pack.generated",
+      "detail": "Generated agent-pack: WAKEFORGED the Man in the Mirror Masterclass",
+      "payload": {
+        "generationId": "gen-mrg77o5c-rgveqw",
+        "projectId": "wake-v6-main",
+        "sourceId": null
+      },
+      "createdAt": "2026-07-11T10:05:07.200Z"
+    },
+    {
+      "id": "hist-mrg75crd-2bzv37",
+      "type": "agent-pack.generated",
+      "detail": "Generated agent-pack: WAKEFORGED the Man in the Mirror Masterclass",
+      "payload": {
+        "generationId": "gen-mrg75crd-bximhg",
+        "projectId": "wake-v6-main",
+        "sourceId": null
+      },
+      "createdAt": "2026-07-11T10:03:19.129Z"
+    }
+  ]
+}

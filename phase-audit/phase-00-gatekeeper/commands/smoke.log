@@ -1,0 +1,43 @@
+$ npm run smoke
+
+STDOUT:
+
+> wake-engine@0.6.0 smoke
+> npm run guard:local && node scripts/smoke-wake-v6.mjs
+
+
+> wake-engine@0.6.0 guard:local
+> node scripts/guard-local-workspace.mjs
+
+LOCAL-ONLY GATE PASSED: C:\Users\justi\Documents\repos\wake-engine
+  OK health
+  OK truth map
+  OK cloud migration preserves valid local content
+  OK Phase 5 generic and unsupported claim gates
+  OK project persistence
+  OK source persistence
+  OK original image provider consent contract
+  OK autonomous project-memory campaign
+  OK pre-consent image generation block
+  OK autonomous unsaved-source campaign isolation
+  OK source document content
+  OK frame generation
+  OK local agent
+  OK tier-zero registry
+  OK tier-zero run
+  OK ollama bridge status
+  OK agent chat with retrieval
+  OK immediate streamed chat draft and saved upgrade
+  OK ip/media intake review gate
+  OK content cluster
+  OK export
+  OK non-Wake universal fixtures
+  OK weak source repair and export block
+  OK snapshot
+  OK history
+  OK ip vault state
+
+26 passed, 0 failed
+
+
+STDERR:

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.smoke-run/
+server/data/snapshots/*.json
+server/data/exports/*.json
+server/data/exports/*.md
+server/data/wake-v6-store.json
+release/
+npm-debug.log*

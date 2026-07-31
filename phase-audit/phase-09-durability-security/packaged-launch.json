@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "executable": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\release\\win-unpacked\\WAKE Engine V6.exe",
+  "userData": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\phase-audit\\phase-09-durability-security\\packaged-user-data",
+  "dataDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\phase-audit\\phase-09-durability-security\\packaged-user-data\\data",
+  "logDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\phase-audit\\phase-09-durability-security\\packaged-user-data\\logs",
+  "secureDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\phase-audit\\phase-09-durability-security\\packaged-user-data\\secure",
+  "localAddress": "127.0.0.1",
+  "login": true,
+  "product": "Wake Engine",
+  "packagedStore": true
+}

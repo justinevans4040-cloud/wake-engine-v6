@@ -1,0 +1,689 @@
+{
+  "audit": {
+    "ok": true,
+    "checkedAt": "2026-07-18T18:05:36.846Z",
+    "summary": {
+      "agents": 6,
+      "tools": 27,
+      "a2aRoutes": 14,
+      "violations": 0
+    },
+    "violations": []
+  },
+  "agents": {
+    "ok": true,
+    "agents": [
+      {
+        "id": "archivist",
+        "label": "Archivist",
+        "status": "live",
+        "tier": "tier-zero",
+        "promoted": true,
+        "tierZeroVerified": true,
+        "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+        "action": "Ingest source, extract evidence, build citation map, and hand verified context to strategy.",
+        "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+        "persona": "Ingest source, extract evidence, build citation map, and hand verified context to strategy.",
+        "buildParameters": {
+          "localOnly": true,
+          "sourceBound": true,
+          "unrestrictedWithinTierZeroBuild": true,
+          "arbitrarySourceTermsAllowed": true,
+          "noCapabilityReduction": true,
+          "requiredToolExecution": true,
+          "requiredToolReceipts": true,
+          "requiredA2A": true,
+          "requiredAcks": true,
+          "requiredMemoryWrite": true,
+          "requiredMemoryReadForNonArchivist": false,
+          "requiredDoneGate": true,
+          "requiredBlockerOnFailure": true,
+          "requiredExportCompatibility": true
+        },
+        "contract": {
+          "accepts": [
+            "raw source",
+            "saved source",
+            "retrieval context"
+          ],
+          "emits": [
+            "source profile",
+            "evidence map",
+            "citation list"
+          ],
+          "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+          "truthGuards": [
+            "unsupported claims must be marked unknown or routed to repair",
+            "citations must map to source evidence",
+            "artifacts must be non-empty and export-compatible",
+            "handoffs must include next action and receipts"
+          ],
+          "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+        },
+        "requiredTools": [
+          "send_a2a",
+          "write_memory",
+          "read_source",
+          "extract_evidence",
+          "assess_source",
+          "classify_source",
+          "build_citation_map"
+        ],
+        "tools": [
+          "send_a2a",
+          "write_memory",
+          "read_source",
+          "extract_evidence",
+          "assess_source",
+          "classify_source",
+          "build_citation_map"
+        ],
+        "a2a": [
+          "strategist",
+          "qa"
+        ],
+        "inboxSchema": {
+          "required": []
+        },
+        "outboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "requiredAck",
+            "status",
+            "createdAt"
+          ]
+        },
+        "doneGate": {
+          "requires": [
+            "all required tools executed",
+            "tool receipts persisted",
+            "memory write persisted",
+            "source profile emitted",
+            "outbound A2A acknowledged",
+            "agent output included in packet trace"
+          ],
+          "failWhenMissing": true
+        },
+        "tests": [
+          "archivist:contract-present",
+          "archivist:tool-coverage",
+          "archivist:a2a-route",
+          "archivist:memory-receipt",
+          "archivist:done-gate",
+          "archivist:quality-gate"
+        ]
+      },
+      {
+        "id": "strategist",
+        "label": "Strategist",
+        "status": "live",
+        "tier": "tier-zero",
+        "promoted": true,
+        "tierZeroVerified": true,
+        "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+        "action": "Convert source evidence into audience, promise, offer angle, risk, and next-best action.",
+        "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+        "persona": "Convert source evidence into audience, promise, offer angle, risk, and next-best action.",
+        "buildParameters": {
+          "localOnly": true,
+          "sourceBound": true,
+          "unrestrictedWithinTierZeroBuild": true,
+          "arbitrarySourceTermsAllowed": true,
+          "noCapabilityReduction": true,
+          "requiredToolExecution": true,
+          "requiredToolReceipts": true,
+          "requiredA2A": true,
+          "requiredAcks": true,
+          "requiredMemoryWrite": true,
+          "requiredMemoryReadForNonArchivist": true,
+          "requiredDoneGate": true,
+          "requiredBlockerOnFailure": true,
+          "requiredExportCompatibility": true
+        },
+        "contract": {
+          "accepts": [
+            "source profile",
+            "evidence map",
+            "operator ask"
+          ],
+          "emits": [
+            "strategy brief",
+            "angle stack",
+            "next action"
+          ],
+          "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+          "truthGuards": [
+            "unsupported claims must be marked unknown or routed to repair",
+            "citations must map to source evidence",
+            "artifacts must be non-empty and export-compatible",
+            "handoffs must include next action and receipts"
+          ],
+          "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+        },
+        "requiredTools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "position_offer",
+          "rank_angles",
+          "select_next_action"
+        ],
+        "tools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "position_offer",
+          "rank_angles",
+          "select_next_action"
+        ],
+        "a2a": [
+          "scriptwriter",
+          "creative-director",
+          "qa"
+        ],
+        "inboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "status",
+            "consumedAt"
+          ]
+        },
+        "outboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "requiredAck",
+            "status",
+            "createdAt"
+          ]
+        },
+        "doneGate": {
+          "requires": [
+            "all required tools executed",
+            "tool receipts persisted",
+            "memory write persisted",
+            "inbox handoff consumed",
+            "outbound A2A acknowledged",
+            "agent output included in packet trace"
+          ],
+          "failWhenMissing": true
+        },
+        "tests": [
+          "strategist:contract-present",
+          "strategist:tool-coverage",
+          "strategist:a2a-route",
+          "strategist:memory-receipt",
+          "strategist:done-gate",
+          "strategist:quality-gate"
+        ]
+      },
+      {
+        "id": "scriptwriter",
+        "label": "Scriptwriter",
+        "status": "live",
+        "tier": "tier-zero",
+        "promoted": true,
+        "tierZeroVerified": true,
+        "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+        "action": "Produce source-backed scripts, hooks, captions, titles, cutdowns, and platform variants.",
+        "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+        "persona": "Produce source-backed scripts, hooks, captions, titles, cutdowns, and platform variants.",
+        "buildParameters": {
+          "localOnly": true,
+          "sourceBound": true,
+          "unrestrictedWithinTierZeroBuild": true,
+          "arbitrarySourceTermsAllowed": true,
+          "noCapabilityReduction": true,
+          "requiredToolExecution": true,
+          "requiredToolReceipts": true,
+          "requiredA2A": true,
+          "requiredAcks": true,
+          "requiredMemoryWrite": true,
+          "requiredMemoryReadForNonArchivist": true,
+          "requiredDoneGate": true,
+          "requiredBlockerOnFailure": true,
+          "requiredExportCompatibility": true
+        },
+        "contract": {
+          "accepts": [
+            "strategy brief",
+            "evidence map"
+          ],
+          "emits": [
+            "script pack",
+            "caption pack",
+            "claim map"
+          ],
+          "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+          "truthGuards": [
+            "unsupported claims must be marked unknown or routed to repair",
+            "citations must map to source evidence",
+            "artifacts must be non-empty and export-compatible",
+            "handoffs must include next action and receipts"
+          ],
+          "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+        },
+        "requiredTools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "write_hooks",
+          "write_titles",
+          "write_captions",
+          "write_script",
+          "write_platform_variants",
+          "map_claims"
+        ],
+        "tools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "write_hooks",
+          "write_titles",
+          "write_captions",
+          "write_script",
+          "write_platform_variants",
+          "map_claims"
+        ],
+        "a2a": [
+          "creative-director",
+          "qa",
+          "export"
+        ],
+        "inboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "status",
+            "consumedAt"
+          ]
+        },
+        "outboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "requiredAck",
+            "status",
+            "createdAt"
+          ]
+        },
+        "doneGate": {
+          "requires": [
+            "all required tools executed",
+            "tool receipts persisted",
+            "memory write persisted",
+            "inbox handoff consumed",
+            "outbound A2A acknowledged",
+            "agent output included in packet trace"
+          ],
+          "failWhenMissing": true
+        },
+        "tests": [
+          "scriptwriter:contract-present",
+          "scriptwriter:tool-coverage",
+          "scriptwriter:a2a-route",
+          "scriptwriter:memory-receipt",
+          "scriptwriter:done-gate",
+          "scriptwriter:quality-gate"
+        ]
+      },
+      {
+        "id": "creative-director",
+        "label": "Creative Director",
+        "status": "live",
+        "tier": "tier-zero",
+        "promoted": true,
+        "tierZeroVerified": true,
+        "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+        "action": "Produce premium visual direction, asset prompts, edit rules, sound notes, and polish passes.",
+        "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+        "persona": "Produce premium visual direction, asset prompts, edit rules, sound notes, and polish passes.",
+        "buildParameters": {
+          "localOnly": true,
+          "sourceBound": true,
+          "unrestrictedWithinTierZeroBuild": true,
+          "arbitrarySourceTermsAllowed": true,
+          "noCapabilityReduction": true,
+          "requiredToolExecution": true,
+          "requiredToolReceipts": true,
+          "requiredA2A": true,
+          "requiredAcks": true,
+          "requiredMemoryWrite": true,
+          "requiredMemoryReadForNonArchivist": true,
+          "requiredDoneGate": true,
+          "requiredBlockerOnFailure": true,
+          "requiredExportCompatibility": true
+        },
+        "contract": {
+          "accepts": [
+            "strategy brief",
+            "script pack",
+            "media context"
+          ],
+          "emits": [
+            "creative direction",
+            "shot list",
+            "asset prompt pack"
+          ],
+          "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+          "truthGuards": [
+            "unsupported claims must be marked unknown or routed to repair",
+            "citations must map to source evidence",
+            "artifacts must be non-empty and export-compatible",
+            "handoffs must include next action and receipts"
+          ],
+          "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+        },
+        "requiredTools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "design_visual_system",
+          "write_asset_prompts",
+          "write_edit_rules"
+        ],
+        "tools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "design_visual_system",
+          "write_asset_prompts",
+          "write_edit_rules"
+        ],
+        "a2a": [
+          "qa",
+          "export"
+        ],
+        "inboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "status",
+            "consumedAt"
+          ]
+        },
+        "outboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "requiredAck",
+            "status",
+            "createdAt"
+          ]
+        },
+        "doneGate": {
+          "requires": [
+            "all required tools executed",
+            "tool receipts persisted",
+            "memory write persisted",
+            "inbox handoff consumed",
+            "outbound A2A acknowledged",
+            "agent output included in packet trace"
+          ],
+          "failWhenMissing": true
+        },
+        "tests": [
+          "creative-director:contract-present",
+          "creative-director:tool-coverage",
+          "creative-director:a2a-route",
+          "creative-director:memory-receipt",
+          "creative-director:done-gate",
+          "creative-director:quality-gate"
+        ]
+      },
+      {
+        "id": "qa",
+        "label": "QA",
+        "status": "live",
+        "tier": "tier-zero",
+        "promoted": true,
+        "tierZeroVerified": true,
+        "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+        "action": "Block weak work, score evidence, validate handoffs, and name the next repair when output is not ready.",
+        "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+        "persona": "Block weak work, score evidence, validate handoffs, and name the next repair when output is not ready.",
+        "buildParameters": {
+          "localOnly": true,
+          "sourceBound": true,
+          "unrestrictedWithinTierZeroBuild": true,
+          "arbitrarySourceTermsAllowed": true,
+          "noCapabilityReduction": true,
+          "requiredToolExecution": true,
+          "requiredToolReceipts": true,
+          "requiredA2A": true,
+          "requiredAcks": true,
+          "requiredMemoryWrite": true,
+          "requiredMemoryReadForNonArchivist": true,
+          "requiredDoneGate": true,
+          "requiredBlockerOnFailure": true,
+          "requiredExportCompatibility": true
+        },
+        "contract": {
+          "accepts": [
+            "all upstream packets"
+          ],
+          "emits": [
+            "QA verdict",
+            "blockers",
+            "repair path"
+          ],
+          "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+          "truthGuards": [
+            "unsupported claims must be marked unknown or routed to repair",
+            "citations must map to source evidence",
+            "artifacts must be non-empty and export-compatible",
+            "handoffs must include next action and receipts"
+          ],
+          "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+        },
+        "requiredTools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "validate_claims",
+          "validate_a2a",
+          "validate_artifacts",
+          "score_quality"
+        ],
+        "tools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "validate_claims",
+          "validate_a2a",
+          "validate_artifacts",
+          "score_quality"
+        ],
+        "a2a": [
+          "scriptwriter",
+          "creative-director",
+          "export"
+        ],
+        "inboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "status",
+            "consumedAt"
+          ]
+        },
+        "outboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "requiredAck",
+            "status",
+            "createdAt"
+          ]
+        },
+        "doneGate": {
+          "requires": [
+            "all required tools executed",
+            "tool receipts persisted",
+            "memory write persisted",
+            "inbox handoff consumed",
+            "outbound A2A acknowledged",
+            "agent output included in packet trace"
+          ],
+          "failWhenMissing": true
+        },
+        "tests": [
+          "qa:contract-present",
+          "qa:tool-coverage",
+          "qa:a2a-route",
+          "qa:memory-receipt",
+          "qa:done-gate",
+          "qa:quality-gate"
+        ]
+      },
+      {
+        "id": "export",
+        "label": "Export",
+        "status": "live",
+        "tier": "tier-zero",
+        "promoted": true,
+        "tierZeroVerified": true,
+        "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+        "action": "Package approved work into local markdown/JSON-ready deliverables with manifest and operator handoff.",
+        "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+        "persona": "Package approved work into local markdown/JSON-ready deliverables with manifest and operator handoff.",
+        "buildParameters": {
+          "localOnly": true,
+          "sourceBound": true,
+          "unrestrictedWithinTierZeroBuild": true,
+          "arbitrarySourceTermsAllowed": true,
+          "noCapabilityReduction": true,
+          "requiredToolExecution": true,
+          "requiredToolReceipts": true,
+          "requiredA2A": true,
+          "requiredAcks": true,
+          "requiredMemoryWrite": true,
+          "requiredMemoryReadForNonArchivist": true,
+          "requiredDoneGate": true,
+          "requiredBlockerOnFailure": true,
+          "requiredExportCompatibility": true
+        },
+        "contract": {
+          "accepts": [
+            "QA verdict",
+            "final packet"
+          ],
+          "emits": [
+            "export manifest",
+            "file-ready packet",
+            "operator handoff"
+          ],
+          "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+          "truthGuards": [
+            "unsupported claims must be marked unknown or routed to repair",
+            "citations must map to source evidence",
+            "artifacts must be non-empty and export-compatible",
+            "handoffs must include next action and receipts"
+          ],
+          "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+        },
+        "requiredTools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "build_manifest",
+          "package_markdown",
+          "package_json"
+        ],
+        "tools": [
+          "send_a2a",
+          "write_memory",
+          "read_memory",
+          "build_manifest",
+          "package_markdown",
+          "package_json"
+        ],
+        "a2a": [
+          "qa"
+        ],
+        "inboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "status",
+            "consumedAt"
+          ]
+        },
+        "outboxSchema": {
+          "required": [
+            "runId",
+            "producer",
+            "consumer",
+            "intent",
+            "payloadSummary",
+            "requiredAck",
+            "status",
+            "createdAt"
+          ]
+        },
+        "doneGate": {
+          "requires": [
+            "all required tools executed",
+            "tool receipts persisted",
+            "memory write persisted",
+            "inbox handoff consumed",
+            "outbound A2A acknowledged",
+            "agent output included in packet trace"
+          ],
+          "failWhenMissing": true
+        },
+        "tests": [
+          "export:contract-present",
+          "export:tool-coverage",
+          "export:a2a-route",
+          "export:memory-receipt",
+          "export:done-gate",
+          "export:quality-gate"
+        ]
+      }
+    ],
+    "audit": {
+      "ok": true,
+      "checkedAt": "2026-07-18T18:05:36.851Z",
+      "summary": {
+        "agents": 6,
+        "tools": 27,
+        "a2aRoutes": 14,
+        "violations": 0
+      },
+      "violations": []
+    }
+  }
+}

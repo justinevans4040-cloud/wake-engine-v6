@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "before": {
+    "storeSha256": "D2FD47B6F3E59F39E1E68C37532682404547379DB760D7790D146770CE337981",
+    "verifierSha256": "CEE67C74F774A6A6495268997A5268041CDB787401A201228B6FC8808046B05A"
+  },
+  "uninstall": {
+    "exit": 0,
+    "executableRemoved": true,
+    "shortcutRemoved": true,
+    "userDataPreserved": true,
+    "storeHashPreserved": true,
+    "verifierPreserved": true
+  },
+  "reinstall": {
+    "exit": 0,
+    "executableRestored": true,
+    "shortcutRestored": true,
+    "shortcutTarget": "C:\\Users\\justi\\AppData\\Local\\Programs\\WAKE Engine V6\\WAKE Engine V6.exe",
+    "storeHashPreserved": true,
+    "verifierPreserved": true
+  }
+}

@@ -1,0 +1,689 @@
+{
+  "ok": true,
+  "events": [
+    {
+      "type": "meta",
+      "agentId": "strategist",
+      "agentLabel": "Strategist",
+      "ability": "agent",
+      "mode": "auto",
+      "profile": "balanced agent",
+      "responseBudgetMs": 6500,
+      "providerLabel": "Instant Local Draft"
+    },
+    {
+      "type": "draft",
+      "answer": "CAMPAIGN DIRECTION\nAudience: operators who need a clean source-to-output workflow\nPromise: Create a source-faithful next step from the current local context.\nTension: Create a source-faithful next step from the current local context\nAngle: Create a source-faithful next step from the current local context.\nCTA: Follow the source, not the noise.\n\nHooks:\n1. Create a source-faithful next step from the current local context.\n2. The turn: Create a source-faithful next step from the current local context\n3. Context is not the topic. The proof is how it changes the next action.\n\nDraft source: Instant Local Draft.",
+      "provider": "local-deterministic",
+      "providerLabel": "Instant Local Draft",
+      "quality": {
+        "sourceSupport": 16,
+        "clarity": 100,
+        "usefulness": 71,
+        "marketReady": false,
+        "nextMovePresent": true
+      }
+    },
+    {
+      "type": "provider-status",
+      "llmLive": true,
+      "model": "llama3.2:3b",
+      "providerLabel": "llama3.2:3b"
+    },
+    {
+      "type": "upgrade-start",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "providerLabel": "llama3.2:3b"
+    },
+    {
+      "type": "token",
+      "token": "I"
+    },
+    {
+      "type": "token",
+      "token": "'m"
+    },
+    {
+      "type": "token",
+      "token": " Strateg"
+    },
+    {
+      "type": "token",
+      "token": "ist"
+    },
+    {
+      "type": "token",
+      "token": ","
+    },
+    {
+      "type": "token",
+      "token": " your"
+    },
+    {
+      "type": "token",
+      "token": " W"
+    },
+    {
+      "type": "token",
+      "token": "AKE"
+    },
+    {
+      "type": "token",
+      "token": " Engine"
+    },
+    {
+      "type": "token",
+      "token": " V"
+    },
+    {
+      "type": "token",
+      "token": "6"
+    },
+    {
+      "type": "token",
+      "token": " local"
+    },
+    {
+      "type": "token",
+      "token": " agent"
+    },
+    {
+      "type": "token",
+      "token": "."
+    },
+    {
+      "type": "token",
+      "token": " I"
+    },
+    {
+      "type": "token",
+      "token": "'ve"
+    },
+    {
+      "type": "token",
+      "token": " analyzed"
+    },
+    {
+      "type": "token",
+      "token": " our"
+    },
+    {
+      "type": "token",
+      "token": " conversation"
+    },
+    {
+      "type": "token",
+      "token": " and"
+    },
+    {
+      "type": "token",
+      "token": " retrieved"
+    },
+    {
+      "type": "token",
+      "token": " relevant"
+    },
+    {
+      "type": "token",
+      "token": " information"
+    },
+    {
+      "type": "token",
+      "token": ".\n\n"
+    },
+    {
+      "type": "token",
+      "token": "Unfortunately"
+    },
+    {
+      "type": "token",
+      "token": ","
+    },
+    {
+      "type": "token",
+      "token": " I"
+    },
+    {
+      "type": "token",
+      "token": " couldn"
+    },
+    {
+      "type": "token",
+      "token": "'t"
+    },
+    {
+      "type": "token",
+      "token": " find"
+    },
+    {
+      "type": "token",
+      "token": " any"
+    },
+    {
+      "type": "token",
+      "token": " matching"
+    },
+    {
+      "type": "token",
+      "token": " text"
+    },
+    {
+      "type": "token",
+      "token": " source"
+    },
+    {
+      "type": "token",
+      "token": " or"
+    },
+    {
+      "type": "token",
+      "token": " media"
+    },
+    {
+      "type": "token",
+      "token": " asset"
+    },
+    {
+      "type": "token",
+      "token": " to"
+    },
+    {
+      "type": "token",
+      "token": " work"
+    },
+    {
+      "type": "token",
+      "token": " with"
+    },
+    {
+      "type": "token",
+      "token": "."
+    },
+    {
+      "type": "token",
+      "token": " However"
+    },
+    {
+      "type": "token",
+      "token": ","
+    },
+    {
+      "type": "token",
+      "token": " I"
+    },
+    {
+      "type": "token",
+      "token": " can"
+    },
+    {
+      "type": "token",
+      "token": " still"
+    },
+    {
+      "type": "token",
+      "token": " provide"
+    },
+    {
+      "type": "token",
+      "token": " a"
+    },
+    {
+      "type": "token",
+      "token": " structured"
+    },
+    {
+      "type": "token",
+      "token": " response"
+    },
+    {
+      "type": "token",
+      "token": " based"
+    },
+    {
+      "type": "token",
+      "token": " on"
+    },
+    {
+      "type": "token",
+      "token": " general"
+    },
+    {
+      "type": "token",
+      "token": " principles"
+    },
+    {
+      "type": "token",
+      "token": " of"
+    },
+    {
+      "type": "token",
+      "token": " effective"
+    },
+    {
+      "type": "token",
+      "token": " communication"
+    },
+    {
+      "type": "token",
+      "token": ".\n\n"
+    },
+    {
+      "type": "token",
+      "token": "**"
+    },
+    {
+      "type": "token",
+      "token": "Promise"
+    },
+    {
+      "type": "token",
+      "token": " Angle"
+    },
+    {
+      "type": "token",
+      "token": ":"
+    },
+    {
+      "type": "token",
+      "token": "**\n"
+    },
+    {
+      "type": "token",
+      "token": "To"
+    },
+    {
+      "type": "token",
+      "token": " create"
+    },
+    {
+      "type": "token",
+      "token": " a"
+    },
+    {
+      "type": "token",
+      "token": " sense"
+    },
+    {
+      "type": "token",
+      "token": " of"
+    },
+    {
+      "type": "token",
+      "token": " trust"
+    },
+    {
+      "type": "token",
+      "token": " and"
+    },
+    {
+      "type": "token",
+      "token": " credibility"
+    },
+    {
+      "type": "token",
+      "token": ","
+    },
+    {
+      "type": "token",
+      "token": " we"
+    },
+    {
+      "type": "token",
+      "token": " need"
+    },
+    {
+      "type": "token",
+      "token": " to"
+    },
+    {
+      "type": "token",
+      "token": " establish"
+    },
+    {
+      "type": "token",
+      "token": " a"
+    },
+    {
+      "type": "token",
+      "token": " connection"
+    },
+    {
+      "type": "token",
+      "token": " between"
+    },
+    {
+      "type": "token",
+      "token": " the"
+    },
+    {
+      "type": "token",
+      "token": " audience"
+    },
+    {
+      "type": "token",
+      "token": " and"
+    },
+    {
+      "type": "token",
+      "token": " the"
+    },
+    {
+      "type": "token",
+      "token": " message"
+    },
+    {
+      "type": "token",
+      "token": "."
+    },
+    {
+      "type": "token",
+      "token": " This"
+    },
+    {
+      "type": "token",
+      "token": " angle"
+    },
+    {
+      "type": "token",
+      "token": " focuses"
+    },
+    {
+      "type": "token",
+      "token": " on"
+    },
+    {
+      "type": "token",
+      "token": " building"
+    },
+    {
+      "type": "token",
+      "token": " rapport"
+    },
+    {
+      "type": "token",
+      "token": " and"
+    },
+    {
+      "type": "token",
+      "token": " understanding"
+    },
+    {
+      "type": "token",
+      "token": " the"
+    },
+    {
+      "type": "token",
+      "token": " audience"
+    },
+    {
+      "type": "token",
+      "token": "'s"
+    },
+    {
+      "type": "token",
+      "token": " needs"
+    },
+    {
+      "type": "token",
+      "token": " and"
+    },
+    {
+      "type": "token",
+      "token": " concerns"
+    },
+    {
+      "type": "token",
+      "token": ".\n\n"
+    },
+    {
+      "type": "token",
+      "token": "**"
+    },
+    {
+      "type": "token",
+      "token": "Offer"
+    },
+    {
+      "type": "token",
+      "token": " Angle"
+    },
+    {
+      "type": "token",
+      "token": ":"
+    },
+    {
+      "type": "token",
+      "token": "**\n"
+    },
+    {
+      "type": "token",
+      "token": "We"
+    },
+    {
+      "type": "token",
+      "token": " should"
+    },
+    {
+      "type": "token",
+      "token": " offer"
+    },
+    {
+      "type": "token",
+      "token": " a"
+    },
+    {
+      "type": "token",
+      "token": " solution"
+    },
+    {
+      "type": "token",
+      "token": " or"
+    },
+    {
+      "type": "token",
+      "token": " a"
+    },
+    {
+      "type": "token",
+      "token": " next"
+    },
+    {
+      "type": "token",
+      "token": " step"
+    },
+    {
+      "type": "token",
+      "token": " that"
+    },
+    {
+      "type": "token",
+      "token": " addresses"
+    },
+    {
+      "type": "token",
+      "token": " the"
+    },
+    {
+      "type": "token",
+      "token": " audience"
+    },
+    {
+      "type": "token",
+      "token": "'s"
+    },
+    {
+      "type": "token",
+      "token": " pain"
+    },
+    {
+      "type": "token",
+      "token": " points"
+    },
+    {
+      "type": "token",
+      "token": " or"
+    },
+    {
+      "type": "token",
+      "token": " interests"
+    },
+    {
+      "type": "token",
+      "token": "."
+    },
+    {
+      "type": "token",
+      "token": " This"
+    },
+    {
+      "type": "token",
+      "token": " angle"
+    },
+    {
+      "type": "token",
+      "token": " provides"
+    },
+    {
+      "type": "token",
+      "token": " value"
+    },
+    {
+      "type": "token",
+      "token": " and"
+    },
+    {
+      "type": "token",
+      "token": " encourages"
+    },
+    {
+      "type": "token",
+      "token": " the"
+    },
+    {
+      "type": "token",
+      "token": " audience"
+    },
+    {
+      "type": "token",
+      "token": " to"
+    },
+    {
+      "type": "token",
+      "token": " take"
+    },
+    {
+      "type": "token",
+      "token": " action"
+    },
+    {
+      "type": "token",
+      "token": ".\n\n"
+    },
+    {
+      "type": "token",
+      "token": "**"
+    },
+    {
+      "type": "token",
+      "token": "Risk"
+    },
+    {
+      "type": "token",
+      "token": ":"
+    },
+    {
+      "type": "token",
+      "token": "**\n"
+    },
+    {
+      "type": "token",
+      "token": "The"
+    },
+    {
+      "type": "token",
+      "token": " risk"
+    },
+    {
+      "type": "token",
+      "token": " of"
+    },
+    {
+      "type": "token",
+      "token": " not"
+    },
+    {
+      "type": "token",
+      "token": " taking"
+    },
+    {
+      "type": "token",
+      "token": " a"
+    },
+    {
+      "type": "token",
+      "token": " clear"
+    },
+    {
+      "type": "token",
+      "token": " next"
+    },
+    {
+      "type": "token",
+      "token": " step"
+    },
+    {
+      "type": "token",
+      "token": " is"
+    },
+    {
+      "type": "token",
+      "token": " that"
+    },
+    {
+      "type": "token",
+      "token": " the"
+    },
+    {
+      "type": "token",
+      "token": " audience"
+    },
+    {
+      "type": "token",
+      "token": " may"
+    },
+    {
+      "type": "final",
+      "chat": {
+        "id": "chat-mrqogpqu-hn0y2x",
+        "projectId": "wake-v6-main",
+        "agentId": "strategist",
+        "agentLabel": "Strategist",
+        "message": "Create a source-faithful next step from the current local context.",
+        "answer": "I'm Strategist, your WAKE Engine V6 local agent. I've analyzed our conversation and retrieved relevant information.\n\nUnfortunately, I couldn't find any matching text source or media asset to work with. However, I can still provide a structured response based on general principles of effective communication.\n\n**Promise Angle:**\nTo create a sense of trust and credibility, we need to establish a connection between the audience and the message. This angle focuses on building rapport and understanding the audience's needs and concerns.\n\n**Offer Angle:**\nWe should offer a solution or a next step that addresses the audience's pain points or interests. This angle provides value and encourages the audience to take action.\n\n**Risk:**\nThe risk of not taking a clear next step is that the audience may",
+        "provider": "ollama",
+        "providerLabel": "llama3.2:3b",
+        "model": "llama3.2:3b",
+        "llmLive": true,
+        "ability": "agent",
+        "mode": "auto",
+        "profile": "balanced agent",
+        "responseBudgetMs": 6500,
+        "quality": {
+          "sourceSupport": 16,
+          "clarity": 100,
+          "usefulness": 71,
+          "marketReady": false,
+          "nextMovePresent": true
+        },
+        "context": {
+          "sources": [],
+          "media": []
+        },
+        "historyStatus": "saved",
+        "createdAt": "2026-07-18T18:05:44.406Z"
+      }
+    }
+  ],
+  "persisted": true
+}

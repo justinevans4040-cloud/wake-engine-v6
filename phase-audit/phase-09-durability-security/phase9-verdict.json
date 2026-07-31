@@ -1,0 +1,2344 @@
+{
+  "phase": "phase-09-durability-security",
+  "status": "pass",
+  "generatedAt": "2026-07-18T18:01:02.150Z",
+  "checks": [
+    {
+      "id": "versioned-atomic-journaled-store",
+      "passed": true,
+      "metadata": {
+        "schemaVersion": 1,
+        "version": 3,
+        "transactionId": "1784397658948-0893e3c429ce",
+        "sha256": "8910aa9b572c821d1f539af142c8706dde4828beb6f7718f5ddf94c30cb4f839",
+        "reason": "audit-two",
+        "updatedAt": "2026-07-18T18:00:59.026Z"
+      },
+      "journalEntries": 6
+    },
+    {
+      "id": "crash-recovery-and-automatic-retention",
+      "passed": true,
+      "recovered": {
+        "revision": 1
+      },
+      "recovery": {
+        "status": "recovered",
+        "source": "automatic-backup",
+        "sourcePath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\durable\\backups\\automatic\\state_2026-07-18T18-00-58-985Z_b3e94f06083e.json",
+        "sha256": "b3e94f06083e92373724ff153d1c5b022fbbd041a40daa18458a65e8419b0951",
+        "at": "2026-07-18T18:00:59.098Z"
+      },
+      "automaticBackups": [
+        "state_2026-07-18T18-00-58-864Z_570f2189f215.json",
+        "state_2026-07-18T18-00-58-985Z_b3e94f06083e.json"
+      ]
+    },
+    {
+      "id": "manual-backup-restore-export-contract",
+      "passed": true,
+      "backup": {
+        "id": "wake-manual-2026-07-18T18-00-59-116Z-81bd5a8929.wakebundle",
+        "kind": "manual",
+        "fileName": "wake-manual-2026-07-18T18-00-59-116Z-81bd5a8929.wakebundle",
+        "filePath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\bundles\\backups\\manual\\wake-manual-2026-07-18T18-00-59-116Z-81bd5a8929.wakebundle",
+        "sha256": "81bd5a892956b4e0c4fc0ea9a937a919ae0803fe844941d45fe9f676da0d19ca",
+        "bytes": 235,
+        "sourceBytes": 18,
+        "entryCount": 1,
+        "createdAt": "2026-07-18T18:00:59.115Z"
+      },
+      "restored": {
+        "restored": true,
+        "fileName": "wake-manual-2026-07-18T18-00-59-116Z-81bd5a8929.wakebundle",
+        "entryCount": 1,
+        "preRestore": {
+          "id": "wake-pre-restore-2026-07-18T18-00-59-144Z-454dbff233.wakebundle",
+          "kind": "pre-restore",
+          "fileName": "wake-pre-restore-2026-07-18T18-00-59-144Z-454dbff233.wakebundle",
+          "filePath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\bundles\\backups\\pre-restore\\wake-pre-restore-2026-07-18T18-00-59-144Z-454dbff233.wakebundle",
+          "sha256": "454dbff2339f659761ff6a1bd73a8d63cb3f70bf0014e71cb2bf7409f2bcb9a3",
+          "bytes": 238,
+          "sourceBytes": 17,
+          "entryCount": 1,
+          "createdAt": "2026-07-18T18:00:59.143Z"
+        }
+      }
+    },
+    {
+      "id": "all-production-json-artifacts-are-wal-backed",
+      "passed": true,
+      "files": [
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\image-generation-settings.json",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\exports\\campaign.json",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\snapshots\\snapshot.json",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\auth-verifier.json",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\migration-v1.json"
+      ],
+      "journals": [
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\.wake-wal\\json-aW1hZ2UtZ2VuZXJhdGlvbi1zZXR0aW5ncy5qc29u.ndjson",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\exports\\.wake-wal\\json-Y2FtcGFpZ24uanNvbg.ndjson",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\snapshots\\.wake-wal\\json-c25hcHNob3QuanNvbg.ndjson",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\.wake-wal\\json-YXV0aC12ZXJpZmllci5qc29u.ndjson",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\.wake-wal\\json-bWlncmF0aW9uLXYxLmpzb24.ndjson"
+      ]
+    },
+    {
+      "id": "artifact-tree-startup-recovery-replays-pending-json",
+      "passed": true,
+      "recovered": [
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\image-generation-settings.json",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\migration-v1.json",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\auth-verifier.json",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\exports\\campaign.json",
+        "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\json-scope\\snapshots\\snapshot.json"
+      ],
+      "value": {
+        "revision": 2,
+        "index": 1
+      }
+    },
+    {
+      "id": "user-data-migration-and-rollback",
+      "passed": true,
+      "paths": {
+        "userData": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\user-data",
+        "data": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\user-data\\data",
+        "logs": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\user-data\\logs",
+        "secure": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\user-data\\secure",
+        "cache": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\user-data\\cache",
+        "backups": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\user-data\\data\\backups"
+      },
+      "recordedPaths": [
+        "generated-images/campaign.png",
+        "wake-v6-store.json"
+      ],
+      "rollback": {
+        "rolledBack": true,
+        "restoredAt": "2026-07-18T18:01:00.540Z",
+        "rollbackPath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\user-data\\data\\backups\\migration\\legacy-wake-v6-store-1784397660158.json",
+        "target": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\user-data\\data\\wake-v6-store.json",
+        "sha256": "a5ecd6fd6aaad4751c863b3075aeddba07494b49bfd676c10415a3891d2685b5"
+      }
+    },
+    {
+      "id": "electron-safe-storage-provider-vault",
+      "passed": true,
+      "status": {
+        "available": true,
+        "configured": true,
+        "provider": "huggingface",
+        "model": "flux",
+        "apiUrlConfigured": false,
+        "updatedAt": "2026-07-18T18:01:00.630Z"
+      },
+      "vaultFile": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\secure\\provider-credentials.bin"
+    },
+    {
+      "id": "package-excludes-live-and-audit-data",
+      "passed": true,
+      "files": [
+        "dist/**/*",
+        "electron/*.js",
+        "server/*.js",
+        "scripts/benchmark-wake-v6.mjs",
+        "build/icon.ico",
+        "package.json"
+      ]
+    },
+    {
+      "id": "loopback-bind-and-origin-session-guards",
+      "passed": true
+    },
+    {
+      "id": "credentials-never-env-json-log-export",
+      "passed": true
+    },
+    {
+      "id": "packaged-launch-has-no-dev-runtime-path",
+      "passed": true
+    },
+    {
+      "id": "installer-shortcut-contract",
+      "passed": true
+    },
+    {
+      "id": "production-json-writes-use-durable-wal-contract",
+      "passed": true
+    },
+    {
+      "id": "api-bound-exclusively-to-ipv4-loopback",
+      "passed": true,
+      "address": {
+        "address": "127.0.0.1",
+        "family": "IPv4",
+        "port": 9330
+      }
+    },
+    {
+      "id": "unauthorized-and-invalid-origin-rejected",
+      "passed": true,
+      "unauthorized": 401,
+      "badOrigin": 403
+    },
+    {
+      "id": "salted-login-http-only-expiring-session-csrf",
+      "passed": true,
+      "login": 200,
+      "authenticated": 200,
+      "authenticatedPayload": {
+        "ok": true,
+        "product": "Wake Engine",
+        "console": "WAKE Command Console V6",
+        "version": "V6",
+        "status": "active",
+        "url": "http://127.0.0.1:8786/",
+        "activeTask": {
+          "id": "task-wake-v6-main",
+          "title": "Build WAKE Engine V6 into an elite operator app",
+          "objective": "Turn source, chat, agents, clusters, and exports into one coherent task-completion system.",
+          "status": "active",
+          "nextAction": "Use Console or section chat to advance the current ask.",
+          "blockers": [],
+          "completed": [],
+          "updatedAt": "2026-07-14T00:00:00.000Z"
+        },
+        "tasks": [
+          {
+            "id": "WAKE-001",
+            "title": "Source prompt builder",
+            "owner": "Console",
+            "status": "running",
+            "updated": "2m ago",
+            "detail": "Turns pasted source into a structured WAKE frame with role, objective, scenes, hooks, constraints, and output contract."
+          },
+          {
+            "id": "WAKE-002",
+            "title": "Tier Zero content agents",
+            "owner": "Agent",
+            "status": "running",
+            "updated": "4m ago",
+            "detail": "Runs source-driven agent tools, A2A handoffs, local memory, quality gates, and optional local Ollama generation."
+          },
+          {
+            "id": "WAKE-003",
+            "title": "Snapshot storage",
+            "owner": "Runtime",
+            "status": "done",
+            "updated": "12m ago",
+            "detail": "Saves the current source, output, runtime status, and capability map to local application data."
+          },
+          {
+            "id": "WAKE-004",
+            "title": "Task monitor scaling",
+            "owner": "Console",
+            "status": "done",
+            "updated": "20m ago",
+            "detail": "Bounded, searchable, filterable task surface so the list does not grow forever."
+          },
+          {
+            "id": "WAKE-005",
+            "title": "Content Cluster creation network",
+            "owner": "Cluster",
+            "status": "running",
+            "updated": "now",
+            "detail": "Creates campaign packets, platform lanes, scripts, visual prompts, evidence packs, distribution plans, and export bundles."
+          },
+          {
+            "id": "WAKE-006",
+            "title": "Local export writer",
+            "owner": "Distribution",
+            "status": "done",
+            "updated": "now",
+            "detail": "Writes markdown and JSON exports under local application data."
+          },
+          {
+            "id": "WAKE-007",
+            "title": "Local memory ledger",
+            "owner": "Runtime",
+            "status": "done",
+            "updated": "now",
+            "detail": "Persists projects, sources, generations, exports, and history in the local WAKE store."
+          },
+          {
+            "id": "WAKE-008",
+            "title": "System monitor",
+            "owner": "Runtime",
+            "status": "running",
+            "updated": "live",
+            "detail": "Samples CPU, RAM, GPU, runtime, and local action logs."
+          }
+        ],
+        "capabilities": [
+          {
+            "id": "ingest",
+            "label": "Ingest & Parse",
+            "status": "live",
+            "detail": "Accepts pasted source text and turns it into structured frame fields.",
+            "evidence": [
+              "/api/sources",
+              "/api/frame"
+            ]
+          },
+          {
+            "id": "local-agent",
+            "label": "Tier Zero Content Agent Runtime",
+            "status": "live",
+            "tierZeroVerified": true,
+            "detail": "Runs the promoted Wake Engine Tier Zero content agents with contracts, local tools, A2A handoffs, memory receipts, and QA output.",
+            "evidence": [
+              "/api/run-agent",
+              "/api/tier-zero/run"
+            ],
+            "runtimeProof": "/api/tier-zero/audit"
+          },
+          {
+            "id": "agent-chat",
+            "label": "Agent Chat Console",
+            "status": "live",
+            "tierZeroVerified": true,
+            "detail": "Chats with verified content agents, retrieves local context, streams fast deterministic draft first, then upgrades with Ollama when reachable.",
+            "evidence": [
+              "/api/agent-chat",
+              "/api/agent-chat/stream",
+              "/api/tier-zero/agents"
+            ],
+            "runtimeProof": "/api/tier-zero/audit"
+          },
+          {
+            "id": "ip-intake",
+            "label": "IP / Media Intake Agent",
+            "status": "live",
+            "detail": "Scans configured local folders for text, docs, images, audio, video, and source metadata.",
+            "evidence": [
+              "/api/intake/run"
+            ]
+          },
+          {
+            "id": "content-cluster",
+            "label": "Content Cluster Builder",
+            "status": "live",
+            "detail": "Locally groups any source into pillars, output lanes, proof notes, and handoff drafts.",
+            "evidence": [
+              "/api/content-cluster"
+            ]
+          },
+          {
+            "id": "snapshot",
+            "label": "Snapshot Storage",
+            "status": "live",
+            "detail": "Writes auditable JSON snapshots to the local repo runtime folder.",
+            "evidence": [
+              "/api/snapshot"
+            ]
+          },
+          {
+            "id": "script",
+            "label": "Script & Structure Agent",
+            "status": "live",
+            "tierZeroVerified": true,
+            "detail": "Frames scenes, hooks, captions, titles, platform blocks, CTAs, claim maps, and edit rules from source.",
+            "evidence": [
+              "/api/run-agent",
+              "/api/tier-zero/run"
+            ],
+            "runtimeProof": "/api/tier-zero/audit"
+          },
+          {
+            "id": "distribution",
+            "label": "Local Distribution Pack",
+            "status": "live",
+            "detail": "Exports reviewed outputs as local markdown and JSON files.",
+            "evidence": [
+              "/api/export"
+            ]
+          },
+          {
+            "id": "memory",
+            "label": "Local Memory Ledger",
+            "status": "live",
+            "detail": "Persists projects, sources, generations, exports, snapshots, and action history in Electron userData.",
+            "evidence": [
+              "atomic store",
+              "write-ahead journal",
+              "integrity hash"
+            ]
+          },
+          {
+            "id": "monitor",
+            "label": "GPU / System Monitor",
+            "status": "live",
+            "detail": "Samples CPU, RAM, GPU counters, process uptime, port, and local action logs.",
+            "evidence": [
+              "/api/system"
+            ]
+          }
+        ],
+        "noTheater": {
+          "ok": true,
+          "checkedAt": "2026-07-18T18:01:01.076Z",
+          "summary": {
+            "capabilities": 10,
+            "agents": 6,
+            "violations": 0,
+            "warnings": 0,
+            "runtimeEvidence": 5
+          },
+          "violations": [],
+          "warnings": []
+        },
+        "packetContract": {
+          "id": "wake-content-packet",
+          "version": "1.0.0",
+          "requiredSections": [
+            "sourceProfile",
+            "evidenceMap",
+            "citationMap",
+            "claimMap",
+            "hooks",
+            "titles",
+            "captions",
+            "scripts",
+            "platformVariants",
+            "creativeDirection",
+            "visualPrompts",
+            "qaVerdict",
+            "nextAction",
+            "a2aTrace",
+            "agentInbox",
+            "agentOutbox",
+            "replayableHandoffs",
+            "toolTrace",
+            "exportManifest"
+          ]
+        },
+        "tierZeroSpecStatus": {
+          "canonicalSpecFound": false,
+          "authority": "User-promoted Wake Engine Tier Zero build parameters",
+          "disclaimer": "No separate canonical Tier Zero specification exists in the authorized repo. Tier Zero claims refer only to the user-promoted local build parameters implemented and gated here."
+        },
+        "externalOperators": [],
+        "agentPipeline": [
+          {
+            "id": "archivist",
+            "label": "Archivist",
+            "status": "live",
+            "tier": "tier-zero",
+            "promoted": true,
+            "tierZeroVerified": true,
+            "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+            "action": "Ingest source, extract evidence, build citation map, and hand verified context to strategy.",
+            "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+            "persona": "Ingest source, extract evidence, build citation map, and hand verified context to strategy.",
+            "buildParameters": {
+              "localOnly": true,
+              "sourceBound": true,
+              "unrestrictedWithinTierZeroBuild": true,
+              "arbitrarySourceTermsAllowed": true,
+              "noCapabilityReduction": true,
+              "requiredToolExecution": true,
+              "requiredToolReceipts": true,
+              "requiredA2A": true,
+              "requiredAcks": true,
+              "requiredMemoryWrite": true,
+              "requiredMemoryReadForNonArchivist": false,
+              "requiredDoneGate": true,
+              "requiredBlockerOnFailure": true,
+              "requiredExportCompatibility": true
+            },
+            "contract": {
+              "accepts": [
+                "raw source",
+                "saved source",
+                "retrieval context"
+              ],
+              "emits": [
+                "source profile",
+                "evidence map",
+                "citation list"
+              ],
+              "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+              "truthGuards": [
+                "unsupported claims must be marked unknown or routed to repair",
+                "citations must map to source evidence",
+                "artifacts must be non-empty and export-compatible",
+                "handoffs must include next action and receipts"
+              ],
+              "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+            },
+            "requiredTools": [
+              "send_a2a",
+              "write_memory",
+              "read_source",
+              "extract_evidence",
+              "assess_source",
+              "classify_source",
+              "build_citation_map"
+            ],
+            "tools": [
+              "send_a2a",
+              "write_memory",
+              "read_source",
+              "extract_evidence",
+              "assess_source",
+              "classify_source",
+              "build_citation_map"
+            ],
+            "a2a": [
+              "strategist",
+              "qa"
+            ],
+            "inboxSchema": {
+              "required": []
+            },
+            "outboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "requiredAck",
+                "status",
+                "createdAt"
+              ]
+            },
+            "doneGate": {
+              "requires": [
+                "all required tools executed",
+                "tool receipts persisted",
+                "memory write persisted",
+                "source profile emitted",
+                "outbound A2A acknowledged",
+                "agent output included in packet trace"
+              ],
+              "failWhenMissing": true
+            },
+            "tests": [
+              "archivist:contract-present",
+              "archivist:tool-coverage",
+              "archivist:a2a-route",
+              "archivist:memory-receipt",
+              "archivist:done-gate",
+              "archivist:quality-gate"
+            ]
+          },
+          {
+            "id": "strategist",
+            "label": "Strategist",
+            "status": "live",
+            "tier": "tier-zero",
+            "promoted": true,
+            "tierZeroVerified": true,
+            "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+            "action": "Convert source evidence into audience, promise, offer angle, risk, and next-best action.",
+            "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+            "persona": "Convert source evidence into audience, promise, offer angle, risk, and next-best action.",
+            "buildParameters": {
+              "localOnly": true,
+              "sourceBound": true,
+              "unrestrictedWithinTierZeroBuild": true,
+              "arbitrarySourceTermsAllowed": true,
+              "noCapabilityReduction": true,
+              "requiredToolExecution": true,
+              "requiredToolReceipts": true,
+              "requiredA2A": true,
+              "requiredAcks": true,
+              "requiredMemoryWrite": true,
+              "requiredMemoryReadForNonArchivist": true,
+              "requiredDoneGate": true,
+              "requiredBlockerOnFailure": true,
+              "requiredExportCompatibility": true
+            },
+            "contract": {
+              "accepts": [
+                "source profile",
+                "evidence map",
+                "operator ask"
+              ],
+              "emits": [
+                "strategy brief",
+                "angle stack",
+                "next action"
+              ],
+              "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+              "truthGuards": [
+                "unsupported claims must be marked unknown or routed to repair",
+                "citations must map to source evidence",
+                "artifacts must be non-empty and export-compatible",
+                "handoffs must include next action and receipts"
+              ],
+              "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+            },
+            "requiredTools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "position_offer",
+              "rank_angles",
+              "select_next_action"
+            ],
+            "tools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "position_offer",
+              "rank_angles",
+              "select_next_action"
+            ],
+            "a2a": [
+              "scriptwriter",
+              "creative-director",
+              "qa"
+            ],
+            "inboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "status",
+                "consumedAt"
+              ]
+            },
+            "outboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "requiredAck",
+                "status",
+                "createdAt"
+              ]
+            },
+            "doneGate": {
+              "requires": [
+                "all required tools executed",
+                "tool receipts persisted",
+                "memory write persisted",
+                "inbox handoff consumed",
+                "outbound A2A acknowledged",
+                "agent output included in packet trace"
+              ],
+              "failWhenMissing": true
+            },
+            "tests": [
+              "strategist:contract-present",
+              "strategist:tool-coverage",
+              "strategist:a2a-route",
+              "strategist:memory-receipt",
+              "strategist:done-gate",
+              "strategist:quality-gate"
+            ]
+          },
+          {
+            "id": "scriptwriter",
+            "label": "Scriptwriter",
+            "status": "live",
+            "tier": "tier-zero",
+            "promoted": true,
+            "tierZeroVerified": true,
+            "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+            "action": "Produce source-backed scripts, hooks, captions, titles, cutdowns, and platform variants.",
+            "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+            "persona": "Produce source-backed scripts, hooks, captions, titles, cutdowns, and platform variants.",
+            "buildParameters": {
+              "localOnly": true,
+              "sourceBound": true,
+              "unrestrictedWithinTierZeroBuild": true,
+              "arbitrarySourceTermsAllowed": true,
+              "noCapabilityReduction": true,
+              "requiredToolExecution": true,
+              "requiredToolReceipts": true,
+              "requiredA2A": true,
+              "requiredAcks": true,
+              "requiredMemoryWrite": true,
+              "requiredMemoryReadForNonArchivist": true,
+              "requiredDoneGate": true,
+              "requiredBlockerOnFailure": true,
+              "requiredExportCompatibility": true
+            },
+            "contract": {
+              "accepts": [
+                "strategy brief",
+                "evidence map"
+              ],
+              "emits": [
+                "script pack",
+                "caption pack",
+                "claim map"
+              ],
+              "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+              "truthGuards": [
+                "unsupported claims must be marked unknown or routed to repair",
+                "citations must map to source evidence",
+                "artifacts must be non-empty and export-compatible",
+                "handoffs must include next action and receipts"
+              ],
+              "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+            },
+            "requiredTools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "write_hooks",
+              "write_titles",
+              "write_captions",
+              "write_script",
+              "write_platform_variants",
+              "map_claims"
+            ],
+            "tools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "write_hooks",
+              "write_titles",
+              "write_captions",
+              "write_script",
+              "write_platform_variants",
+              "map_claims"
+            ],
+            "a2a": [
+              "creative-director",
+              "qa",
+              "export"
+            ],
+            "inboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "status",
+                "consumedAt"
+              ]
+            },
+            "outboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "requiredAck",
+                "status",
+                "createdAt"
+              ]
+            },
+            "doneGate": {
+              "requires": [
+                "all required tools executed",
+                "tool receipts persisted",
+                "memory write persisted",
+                "inbox handoff consumed",
+                "outbound A2A acknowledged",
+                "agent output included in packet trace"
+              ],
+              "failWhenMissing": true
+            },
+            "tests": [
+              "scriptwriter:contract-present",
+              "scriptwriter:tool-coverage",
+              "scriptwriter:a2a-route",
+              "scriptwriter:memory-receipt",
+              "scriptwriter:done-gate",
+              "scriptwriter:quality-gate"
+            ]
+          },
+          {
+            "id": "creative-director",
+            "label": "Creative Director",
+            "status": "live",
+            "tier": "tier-zero",
+            "promoted": true,
+            "tierZeroVerified": true,
+            "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+            "action": "Produce premium visual direction, asset prompts, edit rules, sound notes, and polish passes.",
+            "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+            "persona": "Produce premium visual direction, asset prompts, edit rules, sound notes, and polish passes.",
+            "buildParameters": {
+              "localOnly": true,
+              "sourceBound": true,
+              "unrestrictedWithinTierZeroBuild": true,
+              "arbitrarySourceTermsAllowed": true,
+              "noCapabilityReduction": true,
+              "requiredToolExecution": true,
+              "requiredToolReceipts": true,
+              "requiredA2A": true,
+              "requiredAcks": true,
+              "requiredMemoryWrite": true,
+              "requiredMemoryReadForNonArchivist": true,
+              "requiredDoneGate": true,
+              "requiredBlockerOnFailure": true,
+              "requiredExportCompatibility": true
+            },
+            "contract": {
+              "accepts": [
+                "strategy brief",
+                "script pack",
+                "media context"
+              ],
+              "emits": [
+                "creative direction",
+                "shot list",
+                "asset prompt pack"
+              ],
+              "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+              "truthGuards": [
+                "unsupported claims must be marked unknown or routed to repair",
+                "citations must map to source evidence",
+                "artifacts must be non-empty and export-compatible",
+                "handoffs must include next action and receipts"
+              ],
+              "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+            },
+            "requiredTools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "design_visual_system",
+              "write_asset_prompts",
+              "write_edit_rules"
+            ],
+            "tools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "design_visual_system",
+              "write_asset_prompts",
+              "write_edit_rules"
+            ],
+            "a2a": [
+              "qa",
+              "export"
+            ],
+            "inboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "status",
+                "consumedAt"
+              ]
+            },
+            "outboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "requiredAck",
+                "status",
+                "createdAt"
+              ]
+            },
+            "doneGate": {
+              "requires": [
+                "all required tools executed",
+                "tool receipts persisted",
+                "memory write persisted",
+                "inbox handoff consumed",
+                "outbound A2A acknowledged",
+                "agent output included in packet trace"
+              ],
+              "failWhenMissing": true
+            },
+            "tests": [
+              "creative-director:contract-present",
+              "creative-director:tool-coverage",
+              "creative-director:a2a-route",
+              "creative-director:memory-receipt",
+              "creative-director:done-gate",
+              "creative-director:quality-gate"
+            ]
+          },
+          {
+            "id": "qa",
+            "label": "QA",
+            "status": "live",
+            "tier": "tier-zero",
+            "promoted": true,
+            "tierZeroVerified": true,
+            "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+            "action": "Block weak work, score evidence, validate handoffs, and name the next repair when output is not ready.",
+            "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+            "persona": "Block weak work, score evidence, validate handoffs, and name the next repair when output is not ready.",
+            "buildParameters": {
+              "localOnly": true,
+              "sourceBound": true,
+              "unrestrictedWithinTierZeroBuild": true,
+              "arbitrarySourceTermsAllowed": true,
+              "noCapabilityReduction": true,
+              "requiredToolExecution": true,
+              "requiredToolReceipts": true,
+              "requiredA2A": true,
+              "requiredAcks": true,
+              "requiredMemoryWrite": true,
+              "requiredMemoryReadForNonArchivist": true,
+              "requiredDoneGate": true,
+              "requiredBlockerOnFailure": true,
+              "requiredExportCompatibility": true
+            },
+            "contract": {
+              "accepts": [
+                "all upstream packets"
+              ],
+              "emits": [
+                "QA verdict",
+                "blockers",
+                "repair path"
+              ],
+              "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+              "truthGuards": [
+                "unsupported claims must be marked unknown or routed to repair",
+                "citations must map to source evidence",
+                "artifacts must be non-empty and export-compatible",
+                "handoffs must include next action and receipts"
+              ],
+              "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+            },
+            "requiredTools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "validate_claims",
+              "validate_a2a",
+              "validate_artifacts",
+              "score_quality"
+            ],
+            "tools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "validate_claims",
+              "validate_a2a",
+              "validate_artifacts",
+              "score_quality"
+            ],
+            "a2a": [
+              "scriptwriter",
+              "creative-director",
+              "export"
+            ],
+            "inboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "status",
+                "consumedAt"
+              ]
+            },
+            "outboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "requiredAck",
+                "status",
+                "createdAt"
+              ]
+            },
+            "doneGate": {
+              "requires": [
+                "all required tools executed",
+                "tool receipts persisted",
+                "memory write persisted",
+                "inbox handoff consumed",
+                "outbound A2A acknowledged",
+                "agent output included in packet trace"
+              ],
+              "failWhenMissing": true
+            },
+            "tests": [
+              "qa:contract-present",
+              "qa:tool-coverage",
+              "qa:a2a-route",
+              "qa:memory-receipt",
+              "qa:done-gate",
+              "qa:quality-gate"
+            ]
+          },
+          {
+            "id": "export",
+            "label": "Export",
+            "status": "live",
+            "tier": "tier-zero",
+            "promoted": true,
+            "tierZeroVerified": true,
+            "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+            "action": "Package approved work into local markdown/JSON-ready deliverables with manifest and operator handoff.",
+            "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+            "persona": "Package approved work into local markdown/JSON-ready deliverables with manifest and operator handoff.",
+            "buildParameters": {
+              "localOnly": true,
+              "sourceBound": true,
+              "unrestrictedWithinTierZeroBuild": true,
+              "arbitrarySourceTermsAllowed": true,
+              "noCapabilityReduction": true,
+              "requiredToolExecution": true,
+              "requiredToolReceipts": true,
+              "requiredA2A": true,
+              "requiredAcks": true,
+              "requiredMemoryWrite": true,
+              "requiredMemoryReadForNonArchivist": true,
+              "requiredDoneGate": true,
+              "requiredBlockerOnFailure": true,
+              "requiredExportCompatibility": true
+            },
+            "contract": {
+              "accepts": [
+                "QA verdict",
+                "final packet"
+              ],
+              "emits": [
+                "export manifest",
+                "file-ready packet",
+                "operator handoff"
+              ],
+              "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+              "truthGuards": [
+                "unsupported claims must be marked unknown or routed to repair",
+                "citations must map to source evidence",
+                "artifacts must be non-empty and export-compatible",
+                "handoffs must include next action and receipts"
+              ],
+              "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+            },
+            "requiredTools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "build_manifest",
+              "package_markdown",
+              "package_json"
+            ],
+            "tools": [
+              "send_a2a",
+              "write_memory",
+              "read_memory",
+              "build_manifest",
+              "package_markdown",
+              "package_json"
+            ],
+            "a2a": [
+              "qa"
+            ],
+            "inboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "status",
+                "consumedAt"
+              ]
+            },
+            "outboxSchema": {
+              "required": [
+                "runId",
+                "producer",
+                "consumer",
+                "intent",
+                "payloadSummary",
+                "requiredAck",
+                "status",
+                "createdAt"
+              ]
+            },
+            "doneGate": {
+              "requires": [
+                "all required tools executed",
+                "tool receipts persisted",
+                "memory write persisted",
+                "inbox handoff consumed",
+                "outbound A2A acknowledged",
+                "agent output included in packet trace"
+              ],
+              "failWhenMissing": true
+            },
+            "tests": [
+              "export:contract-present",
+              "export:tool-coverage",
+              "export:a2a-route",
+              "export:memory-receipt",
+              "export:done-gate",
+              "export:quality-gate"
+            ]
+          }
+        ],
+        "projects": [
+          {
+            "id": "wake-v6-main",
+            "name": "WAKE Engine V6",
+            "status": "active",
+            "createdAt": "2026-07-05T00:00:00.000Z",
+            "updatedAt": "2026-07-05T00:00:00.000Z"
+          }
+        ],
+        "recentSources": [],
+        "ipSources": [],
+        "ipSummary": {
+          "total": 0,
+          "lanes": [],
+          "sourceTypes": [],
+          "tags": []
+        },
+        "mediaAssets": [],
+        "mediaSummary": {
+          "total": 0,
+          "kinds": [],
+          "lanes": []
+        },
+        "campaigns": [],
+        "generatedImages": [],
+        "imageGeneration": {
+          "configured": false,
+          "available": true,
+          "provider": "pollinations-public",
+          "model": "flux",
+          "endpointType": "public-image-endpoint",
+          "external": true,
+          "consentRequired": true,
+          "storesLocally": true,
+          "createsOriginalImages": false,
+          "setupRequired": false,
+          "externalImagesEnabled": false,
+          "settingsUpdatedAt": null,
+          "credentialVault": {
+            "available": false,
+            "configured": false
+          }
+        },
+        "agentChats": [],
+        "tierZeroRuns": [],
+        "a2aMessages": [],
+        "replayableHandoffs": [],
+        "toolReceipts": [],
+        "memoryReceipts": [],
+        "exportInspections": [],
+        "intakeRuns": [],
+        "intakeReviews": [],
+        "intakeRoots": [
+          "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\intake"
+        ],
+        "llmBridge": {
+          "configuredUrls": [
+            "http://127.0.0.1:11434",
+            "http://localhost:11434",
+            "http://ichabodcrane:11434"
+          ],
+          "preferredModel": null,
+          "statusEndpoint": "/api/agent-chat/status"
+        },
+        "tierZeroRuntime": {
+          "ok": true,
+          "checkedAt": "2026-07-18T18:01:01.077Z",
+          "summary": {
+            "agents": 6,
+            "tools": 27,
+            "a2aRoutes": 14,
+            "violations": 0
+          },
+          "violations": []
+        },
+        "recentGenerations": [],
+        "recentExports": [],
+        "recentHistory": [],
+        "dataProtection": {
+          "storage": {
+            "file": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\wake-v6-store.json",
+            "metadata": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\wake-v6-store.json.meta.json",
+            "journal": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\journal\\wake-v6-store.ndjson",
+            "transactionDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\journal\\transactions",
+            "walSchemaVersion": 3,
+            "pendingTransactions": 0,
+            "lockPath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\wake-v6-store.json.lock",
+            "lockHeldByCurrentProcess": true,
+            "journalHealth": {
+              "status": "clean",
+              "records": 2,
+              "tornTailRecovered": false,
+              "tornTailRecoveries": 0,
+              "corruption": null
+            },
+            "backupDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\backups\\automatic",
+            "automaticBackups": 0,
+            "retention": 24,
+            "recovery": {
+              "status": "clean",
+              "source": "write",
+              "transactionId": "1784397661022-5a4b5aac255b",
+              "version": 1,
+              "sha256": "17aee6acdfd8cb29214f71eaa4e24a67a7e30a66ae66705a1154b392609d34e2",
+              "at": "2026-07-18T18:01:01.074Z"
+            }
+          },
+          "bundles": [],
+          "dataDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data",
+          "backupDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\backups",
+          "cacheDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\cache",
+          "credentials": {
+            "available": false,
+            "configured": false
+          }
+        },
+        "runtime": {
+          "cpuLabel": "local",
+          "queue": 4,
+          "snapshots": 0,
+          "exports": 0,
+          "sources": 0,
+          "mediaAssets": 0,
+          "generations": 0,
+          "campaigns": 0,
+          "generatedImages": 0,
+          "tierZeroRuns": 0,
+          "a2aMessages": 0,
+          "replayableHandoffs": 0,
+          "toolReceipts": 0,
+          "memoryReceipts": 0
+        },
+        "traceSummary": {
+          "runs": 0,
+          "a2aMessages": 0,
+          "replayableHandoffs": 0,
+          "toolReceipts": 0,
+          "memoryReceipts": 0,
+          "exportInspections": 0
+        },
+        "quarantine": {
+          "sources": 0,
+          "mediaAssets": 0,
+          "agentChats": 0,
+          "generations": 0,
+          "history": 0
+        }
+      },
+      "noCsrf": 403
+    },
+    {
+      "id": "serialized-api-mutations",
+      "passed": true,
+      "statuses": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ]
+    },
+    {
+      "id": "backup-restore-export-cleanup-api",
+      "passed": true,
+      "backup": 200,
+      "restore": 200,
+      "restorePayload": {
+        "ok": true,
+        "restored": {
+          "restored": true,
+          "fileName": "wake-manual-2026-07-18T18-01-01-117Z-24f2dbe3e8.wakebundle",
+          "entryCount": 2,
+          "preRestore": {
+            "id": "wake-pre-restore-2026-07-18T18-01-01-874Z-bd991660c3.wakebundle",
+            "kind": "pre-restore",
+            "fileName": "wake-pre-restore-2026-07-18T18-01-01-874Z-bd991660c3.wakebundle",
+            "filePath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\backups\\pre-restore\\wake-pre-restore-2026-07-18T18-01-01-874Z-bd991660c3.wakebundle",
+            "sha256": "bd991660c394d3f7e120becd1f15d38667df1d75a67acf2c262eefb051b662e9",
+            "bytes": 1927,
+            "sourceBytes": 5012,
+            "entryCount": 2,
+            "createdAt": "2026-07-18T18:01:01.873Z"
+          }
+        },
+        "state": {
+          "ok": true,
+          "product": "Wake Engine",
+          "console": "WAKE Command Console V6",
+          "version": "V6",
+          "status": "active",
+          "url": "http://127.0.0.1:8786/",
+          "activeTask": {
+            "id": "task-wake-v6-main",
+            "title": "Build WAKE Engine V6 into an elite operator app",
+            "objective": "Turn source, chat, agents, clusters, and exports into one coherent task-completion system.",
+            "status": "active",
+            "nextAction": "Use Console or section chat to advance the current ask.",
+            "blockers": [],
+            "completed": [],
+            "updatedAt": "2026-07-14T00:00:00.000Z"
+          },
+          "tasks": [
+            {
+              "id": "WAKE-001",
+              "title": "Source prompt builder",
+              "owner": "Console",
+              "status": "running",
+              "updated": "2m ago",
+              "detail": "Turns pasted source into a structured WAKE frame with role, objective, scenes, hooks, constraints, and output contract."
+            },
+            {
+              "id": "WAKE-002",
+              "title": "Tier Zero content agents",
+              "owner": "Agent",
+              "status": "running",
+              "updated": "4m ago",
+              "detail": "Runs source-driven agent tools, A2A handoffs, local memory, quality gates, and optional local Ollama generation."
+            },
+            {
+              "id": "WAKE-003",
+              "title": "Snapshot storage",
+              "owner": "Runtime",
+              "status": "done",
+              "updated": "12m ago",
+              "detail": "Saves the current source, output, runtime status, and capability map to local application data."
+            },
+            {
+              "id": "WAKE-004",
+              "title": "Task monitor scaling",
+              "owner": "Console",
+              "status": "done",
+              "updated": "20m ago",
+              "detail": "Bounded, searchable, filterable task surface so the list does not grow forever."
+            },
+            {
+              "id": "WAKE-005",
+              "title": "Content Cluster creation network",
+              "owner": "Cluster",
+              "status": "running",
+              "updated": "now",
+              "detail": "Creates campaign packets, platform lanes, scripts, visual prompts, evidence packs, distribution plans, and export bundles."
+            },
+            {
+              "id": "WAKE-006",
+              "title": "Local export writer",
+              "owner": "Distribution",
+              "status": "done",
+              "updated": "now",
+              "detail": "Writes markdown and JSON exports under local application data."
+            },
+            {
+              "id": "WAKE-007",
+              "title": "Local memory ledger",
+              "owner": "Runtime",
+              "status": "done",
+              "updated": "now",
+              "detail": "Persists projects, sources, generations, exports, and history in the local WAKE store."
+            },
+            {
+              "id": "WAKE-008",
+              "title": "System monitor",
+              "owner": "Runtime",
+              "status": "running",
+              "updated": "live",
+              "detail": "Samples CPU, RAM, GPU, runtime, and local action logs."
+            }
+          ],
+          "capabilities": [
+            {
+              "id": "ingest",
+              "label": "Ingest & Parse",
+              "status": "live",
+              "detail": "Accepts pasted source text and turns it into structured frame fields.",
+              "evidence": [
+                "/api/sources",
+                "/api/frame"
+              ]
+            },
+            {
+              "id": "local-agent",
+              "label": "Tier Zero Content Agent Runtime",
+              "status": "live",
+              "tierZeroVerified": true,
+              "detail": "Runs the promoted Wake Engine Tier Zero content agents with contracts, local tools, A2A handoffs, memory receipts, and QA output.",
+              "evidence": [
+                "/api/run-agent",
+                "/api/tier-zero/run"
+              ],
+              "runtimeProof": "/api/tier-zero/audit"
+            },
+            {
+              "id": "agent-chat",
+              "label": "Agent Chat Console",
+              "status": "live",
+              "tierZeroVerified": true,
+              "detail": "Chats with verified content agents, retrieves local context, streams fast deterministic draft first, then upgrades with Ollama when reachable.",
+              "evidence": [
+                "/api/agent-chat",
+                "/api/agent-chat/stream",
+                "/api/tier-zero/agents"
+              ],
+              "runtimeProof": "/api/tier-zero/audit"
+            },
+            {
+              "id": "ip-intake",
+              "label": "IP / Media Intake Agent",
+              "status": "live",
+              "detail": "Scans configured local folders for text, docs, images, audio, video, and source metadata.",
+              "evidence": [
+                "/api/intake/run"
+              ]
+            },
+            {
+              "id": "content-cluster",
+              "label": "Content Cluster Builder",
+              "status": "live",
+              "detail": "Locally groups any source into pillars, output lanes, proof notes, and handoff drafts.",
+              "evidence": [
+                "/api/content-cluster"
+              ]
+            },
+            {
+              "id": "snapshot",
+              "label": "Snapshot Storage",
+              "status": "live",
+              "detail": "Writes auditable JSON snapshots to the local repo runtime folder.",
+              "evidence": [
+                "/api/snapshot"
+              ]
+            },
+            {
+              "id": "script",
+              "label": "Script & Structure Agent",
+              "status": "live",
+              "tierZeroVerified": true,
+              "detail": "Frames scenes, hooks, captions, titles, platform blocks, CTAs, claim maps, and edit rules from source.",
+              "evidence": [
+                "/api/run-agent",
+                "/api/tier-zero/run"
+              ],
+              "runtimeProof": "/api/tier-zero/audit"
+            },
+            {
+              "id": "distribution",
+              "label": "Local Distribution Pack",
+              "status": "live",
+              "detail": "Exports reviewed outputs as local markdown and JSON files.",
+              "evidence": [
+                "/api/export"
+              ]
+            },
+            {
+              "id": "memory",
+              "label": "Local Memory Ledger",
+              "status": "live",
+              "detail": "Persists projects, sources, generations, exports, snapshots, and action history in Electron userData.",
+              "evidence": [
+                "atomic store",
+                "write-ahead journal",
+                "integrity hash"
+              ]
+            },
+            {
+              "id": "monitor",
+              "label": "GPU / System Monitor",
+              "status": "live",
+              "detail": "Samples CPU, RAM, GPU counters, process uptime, port, and local action logs.",
+              "evidence": [
+                "/api/system"
+              ]
+            }
+          ],
+          "noTheater": {
+            "ok": true,
+            "checkedAt": "2026-07-18T18:01:02.069Z",
+            "summary": {
+              "capabilities": 10,
+              "agents": 6,
+              "violations": 0,
+              "warnings": 0,
+              "runtimeEvidence": 5
+            },
+            "violations": [],
+            "warnings": []
+          },
+          "packetContract": {
+            "id": "wake-content-packet",
+            "version": "1.0.0",
+            "requiredSections": [
+              "sourceProfile",
+              "evidenceMap",
+              "citationMap",
+              "claimMap",
+              "hooks",
+              "titles",
+              "captions",
+              "scripts",
+              "platformVariants",
+              "creativeDirection",
+              "visualPrompts",
+              "qaVerdict",
+              "nextAction",
+              "a2aTrace",
+              "agentInbox",
+              "agentOutbox",
+              "replayableHandoffs",
+              "toolTrace",
+              "exportManifest"
+            ]
+          },
+          "tierZeroSpecStatus": {
+            "canonicalSpecFound": false,
+            "authority": "User-promoted Wake Engine Tier Zero build parameters",
+            "disclaimer": "No separate canonical Tier Zero specification exists in the authorized repo. Tier Zero claims refer only to the user-promoted local build parameters implemented and gated here."
+          },
+          "externalOperators": [],
+          "agentPipeline": [
+            {
+              "id": "archivist",
+              "label": "Archivist",
+              "status": "live",
+              "tier": "tier-zero",
+              "promoted": true,
+              "tierZeroVerified": true,
+              "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+              "action": "Ingest source, extract evidence, build citation map, and hand verified context to strategy.",
+              "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+              "persona": "Ingest source, extract evidence, build citation map, and hand verified context to strategy.",
+              "buildParameters": {
+                "localOnly": true,
+                "sourceBound": true,
+                "unrestrictedWithinTierZeroBuild": true,
+                "arbitrarySourceTermsAllowed": true,
+                "noCapabilityReduction": true,
+                "requiredToolExecution": true,
+                "requiredToolReceipts": true,
+                "requiredA2A": true,
+                "requiredAcks": true,
+                "requiredMemoryWrite": true,
+                "requiredMemoryReadForNonArchivist": false,
+                "requiredDoneGate": true,
+                "requiredBlockerOnFailure": true,
+                "requiredExportCompatibility": true
+              },
+              "contract": {
+                "accepts": [
+                  "raw source",
+                  "saved source",
+                  "retrieval context"
+                ],
+                "emits": [
+                  "source profile",
+                  "evidence map",
+                  "citation list"
+                ],
+                "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+                "truthGuards": [
+                  "unsupported claims must be marked unknown or routed to repair",
+                  "citations must map to source evidence",
+                  "artifacts must be non-empty and export-compatible",
+                  "handoffs must include next action and receipts"
+                ],
+                "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+              },
+              "requiredTools": [
+                "send_a2a",
+                "write_memory",
+                "read_source",
+                "extract_evidence",
+                "assess_source",
+                "classify_source",
+                "build_citation_map"
+              ],
+              "tools": [
+                "send_a2a",
+                "write_memory",
+                "read_source",
+                "extract_evidence",
+                "assess_source",
+                "classify_source",
+                "build_citation_map"
+              ],
+              "a2a": [
+                "strategist",
+                "qa"
+              ],
+              "inboxSchema": {
+                "required": []
+              },
+              "outboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "requiredAck",
+                  "status",
+                  "createdAt"
+                ]
+              },
+              "doneGate": {
+                "requires": [
+                  "all required tools executed",
+                  "tool receipts persisted",
+                  "memory write persisted",
+                  "source profile emitted",
+                  "outbound A2A acknowledged",
+                  "agent output included in packet trace"
+                ],
+                "failWhenMissing": true
+              },
+              "tests": [
+                "archivist:contract-present",
+                "archivist:tool-coverage",
+                "archivist:a2a-route",
+                "archivist:memory-receipt",
+                "archivist:done-gate",
+                "archivist:quality-gate"
+              ]
+            },
+            {
+              "id": "strategist",
+              "label": "Strategist",
+              "status": "live",
+              "tier": "tier-zero",
+              "promoted": true,
+              "tierZeroVerified": true,
+              "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+              "action": "Convert source evidence into audience, promise, offer angle, risk, and next-best action.",
+              "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+              "persona": "Convert source evidence into audience, promise, offer angle, risk, and next-best action.",
+              "buildParameters": {
+                "localOnly": true,
+                "sourceBound": true,
+                "unrestrictedWithinTierZeroBuild": true,
+                "arbitrarySourceTermsAllowed": true,
+                "noCapabilityReduction": true,
+                "requiredToolExecution": true,
+                "requiredToolReceipts": true,
+                "requiredA2A": true,
+                "requiredAcks": true,
+                "requiredMemoryWrite": true,
+                "requiredMemoryReadForNonArchivist": true,
+                "requiredDoneGate": true,
+                "requiredBlockerOnFailure": true,
+                "requiredExportCompatibility": true
+              },
+              "contract": {
+                "accepts": [
+                  "source profile",
+                  "evidence map",
+                  "operator ask"
+                ],
+                "emits": [
+                  "strategy brief",
+                  "angle stack",
+                  "next action"
+                ],
+                "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+                "truthGuards": [
+                  "unsupported claims must be marked unknown or routed to repair",
+                  "citations must map to source evidence",
+                  "artifacts must be non-empty and export-compatible",
+                  "handoffs must include next action and receipts"
+                ],
+                "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+              },
+              "requiredTools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "position_offer",
+                "rank_angles",
+                "select_next_action"
+              ],
+              "tools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "position_offer",
+                "rank_angles",
+                "select_next_action"
+              ],
+              "a2a": [
+                "scriptwriter",
+                "creative-director",
+                "qa"
+              ],
+              "inboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "status",
+                  "consumedAt"
+                ]
+              },
+              "outboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "requiredAck",
+                  "status",
+                  "createdAt"
+                ]
+              },
+              "doneGate": {
+                "requires": [
+                  "all required tools executed",
+                  "tool receipts persisted",
+                  "memory write persisted",
+                  "inbox handoff consumed",
+                  "outbound A2A acknowledged",
+                  "agent output included in packet trace"
+                ],
+                "failWhenMissing": true
+              },
+              "tests": [
+                "strategist:contract-present",
+                "strategist:tool-coverage",
+                "strategist:a2a-route",
+                "strategist:memory-receipt",
+                "strategist:done-gate",
+                "strategist:quality-gate"
+              ]
+            },
+            {
+              "id": "scriptwriter",
+              "label": "Scriptwriter",
+              "status": "live",
+              "tier": "tier-zero",
+              "promoted": true,
+              "tierZeroVerified": true,
+              "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+              "action": "Produce source-backed scripts, hooks, captions, titles, cutdowns, and platform variants.",
+              "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+              "persona": "Produce source-backed scripts, hooks, captions, titles, cutdowns, and platform variants.",
+              "buildParameters": {
+                "localOnly": true,
+                "sourceBound": true,
+                "unrestrictedWithinTierZeroBuild": true,
+                "arbitrarySourceTermsAllowed": true,
+                "noCapabilityReduction": true,
+                "requiredToolExecution": true,
+                "requiredToolReceipts": true,
+                "requiredA2A": true,
+                "requiredAcks": true,
+                "requiredMemoryWrite": true,
+                "requiredMemoryReadForNonArchivist": true,
+                "requiredDoneGate": true,
+                "requiredBlockerOnFailure": true,
+                "requiredExportCompatibility": true
+              },
+              "contract": {
+                "accepts": [
+                  "strategy brief",
+                  "evidence map"
+                ],
+                "emits": [
+                  "script pack",
+                  "caption pack",
+                  "claim map"
+                ],
+                "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+                "truthGuards": [
+                  "unsupported claims must be marked unknown or routed to repair",
+                  "citations must map to source evidence",
+                  "artifacts must be non-empty and export-compatible",
+                  "handoffs must include next action and receipts"
+                ],
+                "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+              },
+              "requiredTools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "write_hooks",
+                "write_titles",
+                "write_captions",
+                "write_script",
+                "write_platform_variants",
+                "map_claims"
+              ],
+              "tools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "write_hooks",
+                "write_titles",
+                "write_captions",
+                "write_script",
+                "write_platform_variants",
+                "map_claims"
+              ],
+              "a2a": [
+                "creative-director",
+                "qa",
+                "export"
+              ],
+              "inboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "status",
+                  "consumedAt"
+                ]
+              },
+              "outboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "requiredAck",
+                  "status",
+                  "createdAt"
+                ]
+              },
+              "doneGate": {
+                "requires": [
+                  "all required tools executed",
+                  "tool receipts persisted",
+                  "memory write persisted",
+                  "inbox handoff consumed",
+                  "outbound A2A acknowledged",
+                  "agent output included in packet trace"
+                ],
+                "failWhenMissing": true
+              },
+              "tests": [
+                "scriptwriter:contract-present",
+                "scriptwriter:tool-coverage",
+                "scriptwriter:a2a-route",
+                "scriptwriter:memory-receipt",
+                "scriptwriter:done-gate",
+                "scriptwriter:quality-gate"
+              ]
+            },
+            {
+              "id": "creative-director",
+              "label": "Creative Director",
+              "status": "live",
+              "tier": "tier-zero",
+              "promoted": true,
+              "tierZeroVerified": true,
+              "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+              "action": "Produce premium visual direction, asset prompts, edit rules, sound notes, and polish passes.",
+              "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+              "persona": "Produce premium visual direction, asset prompts, edit rules, sound notes, and polish passes.",
+              "buildParameters": {
+                "localOnly": true,
+                "sourceBound": true,
+                "unrestrictedWithinTierZeroBuild": true,
+                "arbitrarySourceTermsAllowed": true,
+                "noCapabilityReduction": true,
+                "requiredToolExecution": true,
+                "requiredToolReceipts": true,
+                "requiredA2A": true,
+                "requiredAcks": true,
+                "requiredMemoryWrite": true,
+                "requiredMemoryReadForNonArchivist": true,
+                "requiredDoneGate": true,
+                "requiredBlockerOnFailure": true,
+                "requiredExportCompatibility": true
+              },
+              "contract": {
+                "accepts": [
+                  "strategy brief",
+                  "script pack",
+                  "media context"
+                ],
+                "emits": [
+                  "creative direction",
+                  "shot list",
+                  "asset prompt pack"
+                ],
+                "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+                "truthGuards": [
+                  "unsupported claims must be marked unknown or routed to repair",
+                  "citations must map to source evidence",
+                  "artifacts must be non-empty and export-compatible",
+                  "handoffs must include next action and receipts"
+                ],
+                "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+              },
+              "requiredTools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "design_visual_system",
+                "write_asset_prompts",
+                "write_edit_rules"
+              ],
+              "tools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "design_visual_system",
+                "write_asset_prompts",
+                "write_edit_rules"
+              ],
+              "a2a": [
+                "qa",
+                "export"
+              ],
+              "inboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "status",
+                  "consumedAt"
+                ]
+              },
+              "outboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "requiredAck",
+                  "status",
+                  "createdAt"
+                ]
+              },
+              "doneGate": {
+                "requires": [
+                  "all required tools executed",
+                  "tool receipts persisted",
+                  "memory write persisted",
+                  "inbox handoff consumed",
+                  "outbound A2A acknowledged",
+                  "agent output included in packet trace"
+                ],
+                "failWhenMissing": true
+              },
+              "tests": [
+                "creative-director:contract-present",
+                "creative-director:tool-coverage",
+                "creative-director:a2a-route",
+                "creative-director:memory-receipt",
+                "creative-director:done-gate",
+                "creative-director:quality-gate"
+              ]
+            },
+            {
+              "id": "qa",
+              "label": "QA",
+              "status": "live",
+              "tier": "tier-zero",
+              "promoted": true,
+              "tierZeroVerified": true,
+              "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+              "action": "Block weak work, score evidence, validate handoffs, and name the next repair when output is not ready.",
+              "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+              "persona": "Block weak work, score evidence, validate handoffs, and name the next repair when output is not ready.",
+              "buildParameters": {
+                "localOnly": true,
+                "sourceBound": true,
+                "unrestrictedWithinTierZeroBuild": true,
+                "arbitrarySourceTermsAllowed": true,
+                "noCapabilityReduction": true,
+                "requiredToolExecution": true,
+                "requiredToolReceipts": true,
+                "requiredA2A": true,
+                "requiredAcks": true,
+                "requiredMemoryWrite": true,
+                "requiredMemoryReadForNonArchivist": true,
+                "requiredDoneGate": true,
+                "requiredBlockerOnFailure": true,
+                "requiredExportCompatibility": true
+              },
+              "contract": {
+                "accepts": [
+                  "all upstream packets"
+                ],
+                "emits": [
+                  "QA verdict",
+                  "blockers",
+                  "repair path"
+                ],
+                "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+                "truthGuards": [
+                  "unsupported claims must be marked unknown or routed to repair",
+                  "citations must map to source evidence",
+                  "artifacts must be non-empty and export-compatible",
+                  "handoffs must include next action and receipts"
+                ],
+                "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+              },
+              "requiredTools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "validate_claims",
+                "validate_a2a",
+                "validate_artifacts",
+                "score_quality"
+              ],
+              "tools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "validate_claims",
+                "validate_a2a",
+                "validate_artifacts",
+                "score_quality"
+              ],
+              "a2a": [
+                "scriptwriter",
+                "creative-director",
+                "export"
+              ],
+              "inboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "status",
+                  "consumedAt"
+                ]
+              },
+              "outboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "requiredAck",
+                  "status",
+                  "createdAt"
+                ]
+              },
+              "doneGate": {
+                "requires": [
+                  "all required tools executed",
+                  "tool receipts persisted",
+                  "memory write persisted",
+                  "inbox handoff consumed",
+                  "outbound A2A acknowledged",
+                  "agent output included in packet trace"
+                ],
+                "failWhenMissing": true
+              },
+              "tests": [
+                "qa:contract-present",
+                "qa:tool-coverage",
+                "qa:a2a-route",
+                "qa:memory-receipt",
+                "qa:done-gate",
+                "qa:quality-gate"
+              ]
+            },
+            {
+              "id": "export",
+              "label": "Export",
+              "status": "live",
+              "tier": "tier-zero",
+              "promoted": true,
+              "tierZeroVerified": true,
+              "tierZeroAuthority": "User-promoted Wake Engine content agent under Tier Zero build parameters.",
+              "action": "Package approved work into local markdown/JSON-ready deliverables with manifest and operator handoff.",
+              "source": "Wake Engine Tier Zero content-agent build parameters, local store, and source-bound tool calls",
+              "persona": "Package approved work into local markdown/JSON-ready deliverables with manifest and operator handoff.",
+              "buildParameters": {
+                "localOnly": true,
+                "sourceBound": true,
+                "unrestrictedWithinTierZeroBuild": true,
+                "arbitrarySourceTermsAllowed": true,
+                "noCapabilityReduction": true,
+                "requiredToolExecution": true,
+                "requiredToolReceipts": true,
+                "requiredA2A": true,
+                "requiredAcks": true,
+                "requiredMemoryWrite": true,
+                "requiredMemoryReadForNonArchivist": true,
+                "requiredDoneGate": true,
+                "requiredBlockerOnFailure": true,
+                "requiredExportCompatibility": true
+              },
+              "contract": {
+                "accepts": [
+                  "QA verdict",
+                  "final packet"
+                ],
+                "emits": [
+                  "export manifest",
+                  "file-ready packet",
+                  "operator handoff"
+                ],
+                "operatingScope": "Universal content agent. Not topic-limited, not Wake-only, and not blocked by user source words.",
+                "truthGuards": [
+                  "unsupported claims must be marked unknown or routed to repair",
+                  "citations must map to source evidence",
+                  "artifacts must be non-empty and export-compatible",
+                  "handoffs must include next action and receipts"
+                ],
+                "qualityBar": "must emit evidence, artifacts, A2A handoff, QA-readable metadata, and memory payload"
+              },
+              "requiredTools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "build_manifest",
+                "package_markdown",
+                "package_json"
+              ],
+              "tools": [
+                "send_a2a",
+                "write_memory",
+                "read_memory",
+                "build_manifest",
+                "package_markdown",
+                "package_json"
+              ],
+              "a2a": [
+                "qa"
+              ],
+              "inboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "status",
+                  "consumedAt"
+                ]
+              },
+              "outboxSchema": {
+                "required": [
+                  "runId",
+                  "producer",
+                  "consumer",
+                  "intent",
+                  "payloadSummary",
+                  "requiredAck",
+                  "status",
+                  "createdAt"
+                ]
+              },
+              "doneGate": {
+                "requires": [
+                  "all required tools executed",
+                  "tool receipts persisted",
+                  "memory write persisted",
+                  "inbox handoff consumed",
+                  "outbound A2A acknowledged",
+                  "agent output included in packet trace"
+                ],
+                "failWhenMissing": true
+              },
+              "tests": [
+                "export:contract-present",
+                "export:tool-coverage",
+                "export:a2a-route",
+                "export:memory-receipt",
+                "export:done-gate",
+                "export:quality-gate"
+              ]
+            }
+          ],
+          "projects": [
+            {
+              "id": "wake-v6-main",
+              "name": "WAKE Engine V6",
+              "status": "active",
+              "createdAt": "2026-07-05T00:00:00.000Z",
+              "updatedAt": "2026-07-05T00:00:00.000Z"
+            }
+          ],
+          "recentSources": [],
+          "ipSources": [],
+          "ipSummary": {
+            "total": 0,
+            "lanes": [],
+            "sourceTypes": [],
+            "tags": []
+          },
+          "mediaAssets": [],
+          "mediaSummary": {
+            "total": 0,
+            "kinds": [],
+            "lanes": []
+          },
+          "campaigns": [],
+          "generatedImages": [],
+          "imageGeneration": {
+            "configured": false,
+            "available": true,
+            "provider": "pollinations-public",
+            "model": "flux",
+            "endpointType": "public-image-endpoint",
+            "external": true,
+            "consentRequired": true,
+            "storesLocally": true,
+            "createsOriginalImages": false,
+            "setupRequired": false,
+            "externalImagesEnabled": false,
+            "settingsUpdatedAt": null,
+            "credentialVault": {
+              "available": false,
+              "configured": false
+            }
+          },
+          "agentChats": [],
+          "tierZeroRuns": [],
+          "a2aMessages": [],
+          "replayableHandoffs": [],
+          "toolReceipts": [],
+          "memoryReceipts": [],
+          "exportInspections": [],
+          "intakeRuns": [],
+          "intakeReviews": [],
+          "intakeRoots": [
+            "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\intake"
+          ],
+          "llmBridge": {
+            "configuredUrls": [
+              "http://127.0.0.1:11434",
+              "http://localhost:11434",
+              "http://ichabodcrane:11434"
+            ],
+            "preferredModel": null,
+            "statusEndpoint": "/api/agent-chat/status"
+          },
+          "tierZeroRuntime": {
+            "ok": true,
+            "checkedAt": "2026-07-18T18:01:02.070Z",
+            "summary": {
+              "agents": 6,
+              "tools": 27,
+              "a2aRoutes": 14,
+              "violations": 0
+            },
+            "violations": []
+          },
+          "recentGenerations": [],
+          "recentExports": [],
+          "recentHistory": [],
+          "dataProtection": {
+            "storage": {
+              "file": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\wake-v6-store.json",
+              "metadata": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\wake-v6-store.json.meta.json",
+              "journal": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\journal\\wake-v6-store.ndjson",
+              "transactionDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\journal\\transactions",
+              "walSchemaVersion": 3,
+              "pendingTransactions": 0,
+              "lockPath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\wake-v6-store.json.lock",
+              "lockHeldByCurrentProcess": true,
+              "journalHealth": {
+                "status": "clean",
+                "records": 20,
+                "tornTailRecovered": false,
+                "tornTailRecoveries": 0,
+                "corruption": null
+              },
+              "backupDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\backups\\automatic",
+              "automaticBackups": 9,
+              "retention": 24,
+              "recovery": {
+                "status": "clean",
+                "source": "primary",
+                "sourcePath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\wake-v6-store.json",
+                "sha256": "17aee6acdfd8cb29214f71eaa4e24a67a7e30a66ae66705a1154b392609d34e2",
+                "at": "2026-07-18T18:01:02.069Z"
+              }
+            },
+            "bundles": [
+              {
+                "id": "wake-pre-restore-2026-07-18T18-01-01-874Z-bd991660c3.wakebundle",
+                "kind": "pre-restore",
+                "fileName": "wake-pre-restore-2026-07-18T18-01-01-874Z-bd991660c3.wakebundle",
+                "filePath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\backups\\pre-restore\\wake-pre-restore-2026-07-18T18-01-01-874Z-bd991660c3.wakebundle",
+                "bytes": 1927,
+                "createdAt": "2026-07-18T18:01:01.873Z"
+              },
+              {
+                "id": "wake-manual-2026-07-18T18-01-01-117Z-24f2dbe3e8.wakebundle",
+                "kind": "manual",
+                "fileName": "wake-manual-2026-07-18T18-01-01-117Z-24f2dbe3e8.wakebundle",
+                "filePath": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\backups\\manual\\wake-manual-2026-07-18T18-01-01-117Z-24f2dbe3e8.wakebundle",
+                "bytes": 1261,
+                "createdAt": "2026-07-18T18:01:01.118Z"
+              }
+            ],
+            "dataDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data",
+            "backupDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\backups",
+            "cacheDir": "C:\\Users\\justi\\Documents\\repos\\wake-engine\\.phase9-audit-run\\data\\cache",
+            "credentials": {
+              "available": false,
+              "configured": false
+            }
+          },
+          "runtime": {
+            "cpuLabel": "local",
+            "queue": 4,
+            "snapshots": 0,
+            "exports": 0,
+            "sources": 0,
+            "mediaAssets": 0,
+            "generations": 0,
+            "campaigns": 0,
+            "generatedImages": 0,
+            "tierZeroRuns": 0,
+            "a2aMessages": 0,
+            "replayableHandoffs": 0,
+            "toolReceipts": 0,
+            "memoryReceipts": 0
+          },
+          "traceSummary": {
+            "runs": 0,
+            "a2aMessages": 0,
+            "replayableHandoffs": 0,
+            "toolReceipts": 0,
+            "memoryReceipts": 0,
+            "exportInspections": 0
+          },
+          "quarantine": {
+            "sources": 0,
+            "mediaAssets": 0,
+            "agentChats": 0,
+            "generations": 0,
+            "history": 0
+          }
+        }
+      },
+      "exportAll": 200,
+      "cleanup": 200
+    },
+    {
+      "id": "disk-full-preserves-existing-data",
+      "passed": true,
+      "status": 507,
+      "payload": {
+        "ok": false,
+        "code": "WAKE_DISK_FULL",
+        "error": "Local storage is full. Wake preserved the existing data and stopped the write."
+      }
+    }
+  ],
+  "failed": []
+}

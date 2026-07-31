@@ -1,0 +1,99 @@
+$ npm run benchmark
+
+STDOUT:
+
+> wake-engine@0.6.0 benchmark
+> npm run guard:local && node scripts/benchmark-wake-v6.mjs
+
+
+> wake-engine@0.6.0 guard:local
+> node scripts/guard-local-workspace.mjs
+
+LOCAL-ONLY GATE PASSED: C:\Users\justi\Documents\repos\wake-engine
+WAKE Command Console V6 -> http://127.0.0.1:9297/
+{
+  "ok": true,
+  "results": [
+    {
+      "name": "serverBoot",
+      "durationMs": 6,
+      "budgetMs": 2500,
+      "passed": true
+    },
+    {
+      "name": "stateLoad",
+      "durationMs": 114,
+      "budgetMs": 900,
+      "passed": true
+    },
+    {
+      "name": "saveSource",
+      "durationMs": 88,
+      "budgetMs": 900,
+      "passed": true
+    },
+    {
+      "name": "frameGeneration",
+      "durationMs": 103,
+      "budgetMs": 1300,
+      "passed": true
+    },
+    {
+      "name": "agentRun",
+      "durationMs": 138,
+      "budgetMs": 1800,
+      "passed": true
+    },
+    {
+      "name": "clusterGeneration",
+      "durationMs": 147,
+      "budgetMs": 1600,
+      "passed": true
+    },
+    {
+      "name": "autonomousCampaign",
+      "durationMs": 368,
+      "budgetMs": 2500,
+      "passed": true
+    },
+    {
+      "name": "chatFirstVisibleResponse",
+      "durationMs": 197,
+      "budgetMs": 1600,
+      "passed": true
+    },
+    {
+      "name": "modelWarmup",
+      "durationMs": 655,
+      "budgetMs": 90000,
+      "passed": true
+    },
+    {
+      "name": "streamedFirstToken",
+      "durationMs": 676,
+      "budgetMs": 7000,
+      "passed": true
+    },
+    {
+      "name": "export",
+      "durationMs": 360,
+      "budgetMs": 1300,
+      "passed": true
+    },
+    {
+      "name": "desktopBoot",
+      "durationMs": 2335,
+      "budgetMs": 6500,
+      "passed": true
+    },
+    {
+      "name": "coreUiInteraction",
+      "durationMs": 450,
+      "budgetMs": 750,
+      "passed": true
+    }
+  ]
+}
+
+
+STDERR:

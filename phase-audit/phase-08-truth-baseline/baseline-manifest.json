@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-07-16T17:41:16.090Z",
+  "surface": "Codex in-app Browser against http://127.0.0.1:5177/",
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "devicePixelRatio": 1.3300000429153442
+  },
+  "lockedVisual": "screenshots/01-login-approved.png",
+  "screenshots": [
+    { "file": "screenshots/01-login-approved.png", "status": "approved-locked", "sha256": "29513a3cf0fd9a7fc1c4b2a9b152941215ad327f1c6bf460ea70fdd7416920f5" },
+    { "file": "screenshots/02-workspace-current.png", "status": "current-reference", "sha256": "67a0a68e06ab9df49d315a0939d2df60770b32d6363af0b54750e0d4cf51e6dc" },
+    { "file": "screenshots/03-aurora-creation-current.png", "status": "current-reference", "sha256": "876ba71441bdd022e472e97ea16059ff8b3ef48828278e7bc8d34cc899737af0" },
+    { "file": "screenshots/04-source-viewer-current.png", "status": "current-reference", "sha256": "48c54e123752b8d209719744fbd572336277e2a5cbbc4c5f824e42a65302452a" },
+    { "file": "screenshots/05-source-document-current.png", "status": "current-reference", "sha256": "55bddb072a5f581edac4554398a0ecc91787568b55b3a38c6ba5280a0228eeec" },
+    { "file": "screenshots/06-project-settings-current.png", "status": "current-reference", "sha256": "d92f9edbf058ec4d7e6e7d6767b91763c8ab8e925f44bc0f72fa91d75243da3c" },
+    { "file": "screenshots/07-export-preview-current.png", "status": "current-reference", "sha256": "a78d105e242621277f3003bf4f111bb2c4aab4c852f1ecbcc90fc0848742cfd8" },
+    { "file": "screenshots/preview-tiktok.png", "status": "current-reference", "sha256": "1d0e2bf327399110c9b7e158feedbfff8785431be02193f673b70af235f0a7fb" },
+    { "file": "screenshots/preview-instagram.png", "status": "current-reference", "sha256": "c58ece7d18b83b3545fc289c3b75a63e25c1467bdeba1d48d2b3998e247a31e2" },
+    { "file": "screenshots/preview-x.png", "status": "current-reference", "sha256": "7f94c9a087cbb135bcac9d05d38e7495cdbe82fb41f40e18d3471a8dc6e9d02c" },
+    { "file": "screenshots/preview-linkedin.png", "status": "current-reference", "sha256": "8ecf4a5db2ba7bc2b8570c1d417a856e78b8f71ba05315475e8e0cf547c55437" }
+  ]
+}

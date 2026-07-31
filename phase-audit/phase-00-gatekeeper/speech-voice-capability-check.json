@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "required": {
+    "speech-recognition": true,
+    "installed-system-tts": true,
+    "voice-preferences": true,
+    "voice-controls": true,
+    "boot-controls": true,
+    "ability-contract": true,
+    "visible-states": true,
+    "instant-draft-label": true,
+    "stream-draft-before-provider": true,
+    "stream-token-receipt": true,
+    "provider-truth-dom": true,
+    "context-section-chat": true,
+    "playwright-phase6": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "projects": [
+    {
+      "id": "wake-v6-main",
+      "name": "WAKE Engine V6",
+      "status": "active",
+      "createdAt": "2026-07-05T00:00:00.000Z",
+      "updatedAt": "2026-07-05T00:00:00.000Z"
+    }
+  ],
+  "sources": [],
+  "mediaAssets": [],
+  "activeTask": {
+    "id": "task-wake-v6-main",
+    "title": "Build WAKE Engine V6 into an elite operator app",
+    "objective": "Turn source, chat, agents, clusters, and exports into one coherent task-completion system.",
+    "status": "active",
+    "nextAction": "Use Console or section chat to advance the current ask.",
+    "blockers": [],
+    "completed": [],
+    "updatedAt": "2026-07-14T00:00:00.000Z"
+  },
+  "agentChats": [],
+  "intakeRuns": [],
+  "intakeReviews": [],
+  "generations": [],
+  "campaigns": [],
+  "generatedImages": [],
+  "runRecords": [],
+  "a2aMessages": [],
+  "replayableHandoffs": [],
+  "toolReceipts": [],
+  "memoryReceipts": [],
+  "exportInspections": [],
+  "exports": [],
+  "history": []
+}

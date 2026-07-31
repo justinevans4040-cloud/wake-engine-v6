@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "version": 1,
+  "transactionId": "1784391441846-764b907b6b01",
+  "sha256": "d2fd47b6f3e59f39e1e68c37532682404547379db760d7790d146770ce337981",
+  "reason": "migration-rollback-copy",
+  "updatedAt": "2026-07-18T16:17:21.936Z"
+}
