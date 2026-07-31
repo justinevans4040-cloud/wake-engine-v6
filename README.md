@@ -1,98 +1,56 @@
-# WAKE Engine V6
+<div align="center">
+  <h1>WAKE Engine V6</h1>
+  <p><b>The engine doesn't just build the reality. It makes sure the reality survives.</b></p>
+</div>
 
-Local Windows desktop command engine for WAKE Engine V6.
+**CURRENT (2026-07-30):** WAKE Engine V6 is the sovereign, local-first architectural layer for ForgeFront Systems. Designed for the HackerNoon Decentralized AI track, WAKE shifts power back to the local machine. It is a desktop command engine that runs **Tier Zero** operations with extreme durability, cryptographic local security, and atomic write-ahead logging (WAL).
 
-Start with [WAKE_ENGINE_MAP.md](WAKE_ENGINE_MAP.md) for the ability-page map.
+This repository is the public, **traceable** record of the WAKE Engine architecture.
 
-## Canonical Path
+---
 
-`C:\Users\justi\Documents\repos\wake-engine`
+## ⚡ Core Capabilities (The Sovereign Workbench)
 
-## Scope
+WAKE Engine operates via specific "Ability Pages" that drive an uninterrupted operational loop (the **Next-Step Rule**):
 
-This folder is WAKE Engine only.
+- **Console & Vault:** The intake layer. Paste or scan local folders for source material, briefs, and transcripts. 
+- **Agents & Clusters:** The interpreter and campaign network. Sovereign agents reason over local source to produce platform lanes, scripts, visual prompts, and evidence packs. 
+- **Monitor & Audit:** The machine room. Real-time runtime telemetry and local receipt snapshots for verifiable proof-of-work.
+- **Section Chat & System Voice:** Context-aware agent routing with Chromium-based desktop speech synthesis (`Villain`, `Sentinel`, `Calm` boot sequences).
 
-- Current advanced app: WAKE Engine V6 at the project root.
-- Runtime and product code in this repository belong only to Wake Engine.
+## 🛡️ Phase 9: Local Durability & Security
 
-## What Is Real In V6
+Decentralized AI means nothing if the local node is fragile. WAKE Engine V6 implements a hardened local storage protocol:
 
-- Electron desktop app. The installed launcher opens a native WAKE Engine V6 window, not Chrome.
-- React/Vite command-console UI inspired by the approved V6 concept.
-- Express server on `http://127.0.0.1:8786/`.
-- Real `/api/health`, `/api/state`, `/api/projects`, `/api/sources`, `/api/frame`, `/api/run-agent`, `/api/content-cluster`, `/api/export`, `/api/snapshot`, and `/api/history` endpoints.
-- Real `/api/content-cluster` endpoint for local content clustering.
-- Promoted Tier Zero content-agent network with local tools, memory, persisted A2A acknowledgements, replayable handoffs, receipts, and completion gates.
-- Local Ollama streaming with an immediate source-driven local draft.
-- Content Cluster creation packets with scripts, platform lanes, visual prompts, evidence, distribution plans, and QA verdicts.
-- Canonical `wake-content-packet` contract shared by generation, previews, history, clusters, and exports.
-- Persistent local JSON store for projects, packets, traces, exports, and history.
-- Markdown and JSON exports saved to `server/data/exports`.
-- Snapshot JSON files saved to `server/data/snapshots`.
-- Explicit truth map for live, partial, next, blocked, external, and separate-app capabilities.
+- **Idempotent Write-Ahead Logging (WAL):** Every transaction persists a hash-addressed staged payload and flushes a WAL record before primary state changes. If the agent or power crashes at any of the 61 interruption points, recovery idempotently replays or rolls back to an integrity-verified state.
+- **Provider Credential Vault:** API keys are encrypted via Electron `safeStorage`. They are never loaded into env vars, renderer state, JSON logs, or exports.
+- **Loopback API Boundary:** The API binds strictly to `127.0.0.1`. Mutating requests require a cryptographically random, timing-safe session token and CSRF verification.
 
-## Current App Shape
+---
 
-V6 is organized around ability pages:
+## 🗺️ Documentation Map
 
-- `Console`: source workspace and first frame generation.
-- `Agents`: agent conversation over current source/context.
-- `Cluster`: content pillars, output lanes, proof notes, and handoff drafts.
-- `Vault`: local source/media intake and search.
-- `Library`: saved sources, outputs, exports, and history.
-- `Monitor`: runtime telemetry, task monitor, and capability truth.
-- `Audit`: snapshot trail.
+### Current Direction
+- **[WAKE_ENGINE_MAP.md](docs/current/WAKE_ENGINE_MAP.md)** - The core architectural map and next-step rules.
+- **[PHASE_9_LOCAL_DURABILITY_SECURITY.md](docs/current/PHASE_9_LOCAL_DURABILITY_SECURITY.md)** - Deep dive into WAL, atomic writes, and local persistence logic.
+- **[TIER_ZERO_BUILD_STATUS.md](docs/current/TIER_ZERO_BUILD_STATUS.md)** - Current status of the Tier Zero environment.
 
-Each page includes a next-best-step card so the app steers toward finishing the current ask/task/code path.
+### Iteration Archive & Proof of Work
+- **[archive/iterations/](archive/iterations/)** — Dated snapshots and CODEX handoffs of every prior operational phase. Nothing is deleted.
+- **[evidence/](evidence/)** — Raw smoke logs, phase audits, crash-recovery verdicts, and test intakes (verifiable proof of work).
 
-Each ability page also carries its own mission, input/output contract, live signals, completion criteria, and command rail. The goal is not "good enough UI"; the goal is an operator surface that keeps moving the work toward completion.
+---
 
-Each ability page also includes contextual agent chat for polish and edit passes. The chat supports typed input and a speech-to-text Speak control when the desktop runtime exposes speech recognition.
+## What changed (honest status)
 
-## Boot + Voice
+| Era | What it was | Where to read it |
+|---|---|---|
+| Phases 1-8 | Initial autonomy, generation, and file mapping | [archive/iterations/](archive/iterations/) |
+| Phase 9 (2026-07-16) | Local Durability & Security. WAL crash recovery | [docs/current/PHASE_9_LOCAL_DURABILITY_SECURITY.md](docs/current/PHASE_9_LOCAL_DURABILITY_SECURITY.md) |
+| Structuring (2026-07-30) | Professionalized repository standard (Athere-aligned) | This README + [docs/current/](docs/current/) |
 
-On launch, V6 shows an old-school terminal boot sequence before the operator surface opens. After boot, the app speaks a local "system online" line using the desktop speech synthesis runtime.
+---
 
-Use the `Voice` control in the header to choose a preset, pick an installed system voice, test the line, or mute it.
+## License
 
-## Tier Zero Truth
-
-The agents are Tier Zero under the user-promoted local build parameters. No separate canonical Tier Zero specification exists in this repository. See [TIER_ZERO_BUILD_STATUS.md](TIER_ZERO_BUILD_STATUS.md).
-
-## Runtime Boundaries
-
-- Installed system speech synthesis is used for TTS; no custom voice model is claimed.
-- Browser/runtime speech recognition is used for STT.
-- Exports are local Markdown and JSON bundles. Automatic social publishing is not claimed.
-
-## Run
-
-```powershell
-npm install
-npm run build
-npm run install:local
-npm run desktop
-```
-
-The desktop shortcut is:
-
-`C:\Users\justi\Desktop\WAKE Engine V6.lnk`
-
-The shortcut targets Electron directly and does not open a browser.
-
-## Verify
-
-```powershell
-npm run build
-npm run smoke
-npm run benchmark
-npm run gate
-npm run audit:ui
-npm run install:local
-```
-
-## Visual Reference
-
-Accepted V6 concept:
-
-`references\WAKE_Command_Console_V6_concept_20260705.png`
+All rights reserved by ForgeFront Systems.
