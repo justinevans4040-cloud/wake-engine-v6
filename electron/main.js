@@ -82,21 +82,28 @@ async function createWindow() {
   await mainWindow.loadURL(APP_URL);
 }
 
+const isBackground = process.argv.includes("--background");
+
 const gotLock = app.requestSingleInstanceLock();
 if (!gotLock) app.quit();
 
-app.on("second-instance", () => {
-  if (!mainWindow) return;
-  if (mainWindow.isMinimized()) mainWindow.restore();
-  mainWindow.show();
-  mainWindow.focus();
+app.on("second-instance", async () => {
+  if (!mainWindow) {
+    await createWindow();
+  } else {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.show();
+    mainWindow.focus();
+  }
 });
 
 app.whenReady().then(async () => {
   app.setName("WAKE Engine V6");
   try {
     await ensureServer();
-    await createWindow();
+    if (!isBackground) {
+      await createWindow();
+    }
   } catch (error) {
     console.error(error);
     if (runtimeContext?.paths?.logs) {
@@ -111,7 +118,9 @@ app.on("activate", async () => {
 });
 
 app.on("window-all-closed", () => {
-  app.quit();
+  if (!isBackground) {
+    app.quit();
+  }
 });
 
 app.on("before-quit", () => {

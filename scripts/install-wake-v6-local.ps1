@@ -62,3 +62,21 @@ Write-Host "WAKE Engine V6 shortcuts installed:"
 foreach ($shortcutPath in $installedShortcuts) {
   Write-Host "  $shortcutPath"
 }
+
+try {
+  $startupShortcut = Join-Path ([Environment]::GetFolderPath("Startup")) "WAKE Engine V6 Background.lnk"
+  $shortcut = $shell.CreateShortcut($startupShortcut)
+  $shortcut.TargetPath = $target
+  $shortcut.Arguments = "--background"
+  $shortcut.WorkingDirectory = $workingDirectory
+  $shortcut.Description = "Launch WAKE Engine V6 Background Scheduler"
+  if (Test-Path -LiteralPath $icon) {
+    $shortcut.IconLocation = $icon
+  } else {
+    $shortcut.IconLocation = "$target,0"
+  }
+  $shortcut.Save()
+  Write-Host "  $startupShortcut (Background mode)"
+} catch {
+  Write-Warning "Failed to install startup shortcut."
+}

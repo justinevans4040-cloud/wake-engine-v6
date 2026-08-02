@@ -14,6 +14,7 @@ import { auditNoTheater } from "./no-theater.js";
 import { generateOriginalImage, imageGenerationStatus } from "./image-generation.js";
 import { CANONICAL_PACKET_CONTRACT, TIER_ZERO_AGENT_PIPELINE, auditTierZeroRuntime, runTierZeroNetwork } from "./tier-zero-runtime.js";
 import { TIER_ZERO_SPEC_STATUS } from "./tier-zero-spec-status.js";
+import { startScheduler } from "./scheduler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const execFileAsync = promisify(execFile);
@@ -161,7 +162,41 @@ const defaultStore = {
   memoryReceipts: [],
   exportInspections: [],
   exports: [],
-  history: []
+  history: [],
+  automations: [
+    {
+      id: "auto-tsg-weekly",
+      name: "The Sixth Gate Weekly Campaign",
+      projectId: "wake-v6-main",
+      sourceDir: "C:\\WakeSource\\TheSixthGate",
+      campaignType: "Custom Prompt",
+      operatorAsk: "You are generating a weekly content package for The Sixth Gate fantasy series. Produce: three short-video scripts (TikTok/Reels/Shorts); two image-post concepts with midjourney prompts; one excerpt post highlighting dialogue; one revision-log post for patreon; captions; and visual prompts. Ensure all claims map back to the source text provided.",
+      scheduleCron: "0 19 * * 0",
+      timeZone: "America/Los_Angeles",
+      approvalMode: "Review Required",
+      exportDir: "C:\\WakeExport\\TheSixthGate",
+      enabled: false,
+      createdAt: "2026-08-01T00:00:00.000Z",
+      updatedAt: "2026-08-01T00:00:00.000Z"
+    },
+    {
+      id: "auto-ar-weekly",
+      name: "Architects Renaissance Weekly Campaign",
+      projectId: "wake-v6-main",
+      sourceDir: "C:\\WakeSource\\ArchitectsRenaissance",
+      campaignType: "Custom Prompt",
+      operatorAsk: "You are generating a weekly content package for the Architects Renaissance series. Produce: three short-video scripts; two image-post concepts; one excerpt post; one revision-log post; captions; and visual prompts. Ensure all claims map strictly to the source text.",
+      scheduleCron: "0 20 * * 0",
+      timeZone: "America/Los_Angeles",
+      approvalMode: "Review Required",
+      exportDir: "C:\\WakeExport\\ArchitectsRenaissance",
+      enabled: false,
+      createdAt: "2026-08-01T00:00:00.000Z",
+      updatedAt: "2026-08-01T00:00:00.000Z"
+    }
+  ],
+  automationRuns: [],
+  reviewQueue: []
 };
 
 const durableStore = createWakeStateStore(STORE_FILE, {
@@ -216,6 +251,9 @@ function readStore() {
     exportInspections: Array.isArray(loaded.exportInspections) ? loaded.exportInspections : [],
     exports: Array.isArray(loaded.exports) ? loaded.exports : [],
     history: historyRecords.safe,
+    automations: Array.isArray(loaded.automations) ? loaded.automations : defaultStore.automations,
+    automationRuns: Array.isArray(loaded.automationRuns) ? loaded.automationRuns : [],
+    reviewQueue: Array.isArray(loaded.reviewQueue) ? loaded.reviewQueue : [],
     quarantine
   };
 }
@@ -3510,6 +3548,131 @@ app.post("/api/agent-chat/stream", async (req, res) => {
   }
 });
 
+app.post("/api/instructions/generate", async (req, res) => {
+  try {
+    const { message } = req.body || {};
+    if (!message) throw new Error("Instruction request message is required.");
+    const llmStatus = await ollamaStatus();
+    if (llmStatus?.live && llmStatus?.model) {
+      const prompt = `You are the WAKE Engine Operations Guide. The user says: "${message}"\nProvide a clear, step-by-step manual workflow using ONLY the existing WAKE Engine pipeline (Inbox -> Archivist -> Strategist -> Scriptwriter -> Creative Director -> QA -> Export). Tell them exactly what to click or type. Do not invent features. Format as markdown.`;
+      const response = await fetch(`${llmStatus.url}/api/generate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: llmStatus.model,
+          prompt,
+          stream: false,
+          options: { temperature: 0.2 }
+        }),
+        signal: AbortSignal.timeout(30000)
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const text = String(data.response || "").trim();
+        if (text) {
+          return res.json({ ok: true, instructions: text, generated: true });
+        }
+      }
+    }
+    // Fallback static runbook
+    const staticRunbook = `# Manual Runbook for: ${message}
+
+Here is how to run this end-to-end using the WAKE Engine manual pipeline:
+
+1. **Inbox**: Drop your approved source materials into the Inbox.
+2. **Archivist**: Run the Archivist to extract the evidence map and citation list.
+3. **Strategist**: Run the Strategist to set your audience, promise, and call to action.
+4. **Scriptwriter & Creative Director**: Run the content agents to produce your scripts, hooks, and visual prompts.
+5. **QA**: Run QA to verify all claims are backed by your source evidence.
+6. **Export**: Export the final approved packet to your local directory.`;
+    res.json({ ok: true, instructions: staticRunbook, generated: false });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+  app.post("/api/automations", (req, res) => {
+    const store = readStore();
+    const payload = req.body || {};
+    const automation = {
+      id: `auto-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      enabled: false,
+      name: payload.name || "Untitled",
+      projectId: payload.projectId || "",
+      sourceDir: payload.sourceDir || "",
+      campaignType: payload.campaignType || "",
+      operatorAsk: payload.operatorAsk || "",
+      scheduleCron: payload.scheduleCron || "",
+      timeZone: payload.timeZone || "UTC",
+      approvalMode: payload.approvalMode || "Review Required",
+      exportDir: payload.exportDir || ""
+    };
+    store.automations.push(automation);
+    writeStore(store, "created-automation");
+    res.json({ ok: true, automation });
+  });
+
+  app.put("/api/automations/:id", (req, res) => {
+    const store = readStore();
+    const index = store.automations.findIndex((a) => a.id === req.params.id);
+    if (index === -1) return res.status(404).json({ error: "Not found" });
+    const payload = req.body || {};
+    const safeUpdate = {
+      name: payload.name,
+      projectId: payload.projectId,
+      sourceDir: payload.sourceDir,
+      campaignType: payload.campaignType,
+      operatorAsk: payload.operatorAsk,
+      scheduleCron: payload.scheduleCron,
+      timeZone: payload.timeZone,
+      approvalMode: payload.approvalMode,
+      exportDir: payload.exportDir,
+      updatedAt: new Date().toISOString()
+    };
+    
+    // Remove undefined fields
+    Object.keys(safeUpdate).forEach(key => safeUpdate[key] === undefined && delete safeUpdate[key]);
+    
+    store.automations[index] = { ...store.automations[index], ...safeUpdate };
+    writeStore(store, "updated-automation");
+    res.json({ ok: true, automation: store.automations[index] });
+  });
+
+  app.delete("/api/automations/:id", (req, res) => {
+    const store = readStore();
+    store.automations = store.automations.filter((a) => a.id !== req.params.id);
+    writeStore(store, "deleted-automation");
+    res.json({ ok: true });
+  });
+
+  app.post("/api/automations/:id/toggle", (req, res) => {
+    const store = readStore();
+    const automation = store.automations.find((a) => a.id === req.params.id);
+    if (!automation) return res.status(404).json({ error: "Not found" });
+    automation.enabled = req.body.enabled;
+    writeStore(store, "toggled-automation");
+    res.json({ ok: true, enabled: automation.enabled });
+  });
+
+  app.post("/api/automations/:id/run", (req, res) => {
+    const store = readStore();
+    const automation = store.automations.find((a) => a.id === req.params.id);
+    if (!automation) return res.status(404).json({ error: "Not found" });
+    store.automationRuns = store.automationRuns || [];
+    store.automationRuns.unshift({
+      id: `run-${Date.now()}`,
+      automationId: automation.id,
+      status: "queued",
+      sourceHash: "manual-run",
+      createdAt: new Date().toISOString()
+    });
+    automation.forceRun = true;
+    writeStore(store, "manual-run-automation");
+    res.json({ ok: true });
+  });
+
 app.post("/api/active-task", (req, res) => {
   try {
     const store = readStore();
@@ -3989,6 +4152,9 @@ export { app };
 
 export function startWakeServer({ port = PORT, credentialBroker = null } = {}) {
   providerCredentialBroker = credentialBroker;
+
+  startScheduler(readStore, writeStore, ollamaStatus);
+
   return new Promise((resolve, reject) => {
     const server = app.listen(port, "127.0.0.1", () => {
       console.log(`WAKE Command Console V6 -> http://127.0.0.1:${port}/`);

@@ -5,7 +5,9 @@ import {
   Library,
   ListChecks,
   TerminalSquare,
-  Vault
+  Vault,
+  BookOpen,
+  Workflow
 } from "lucide-react";
 
 export const emblemSrc = "/assets/forgefront-systems-emblem.png";
@@ -16,6 +18,8 @@ export const tabs = [
   { id: "cluster", label: "Cluster", icon: Layers },
   { id: "vault", label: "Vault", icon: Vault },
   { id: "library", label: "Library", icon: Library },
+  { id: "instructions", label: "Instructions", icon: BookOpen },
+  { id: "automations", label: "Automations", icon: Workflow },
   { id: "tasks", label: "Monitor", icon: ListChecks },
   { id: "snapshot", label: "Audit", icon: Camera }
 ];

@@ -11,10 +11,12 @@ import {
   CircleCheck,
   Clapperboard,
   Clipboard,
+  Clock,
   Code2,
   Cpu,
   Database,
   Download,
+  Edit2,
   FileText,
   Filter,
   Gauge,
@@ -26,13 +28,15 @@ import {
   Layers,
   Library,
   ListChecks,
-  MemoryStick,
   Megaphone,
-  MessageSquare,
+  MemoryStick,
   MessageCircle,
+  MessageSquare,
   Mic,
   MicOff,
+  Pause,
   Play,
+  Plus,
   Radio,
   Repeat2,
   RotateCcw,
@@ -47,6 +51,7 @@ import {
   Target,
   TerminalSquare,
   TextQuote,
+  Trash2,
   Vault,
   Volume2,
   VolumeX,
@@ -1582,6 +1587,187 @@ function IntakePanel({
   );
 }
 
+function AutomationsPanel({ state, onRefresh, setModal, setOperationError }) {
+  const [tab, setTab] = useState("active");
+  const [busy, setBusy] = useState(false);
+  const [editor, setEditor] = useState(null);
+
+  const automations = state?.automations || [];
+  const runs = state?.automationRuns || [];
+  const reviewQueue = state?.reviewQueue || [];
+
+  const handleToggle = async (id, enabled) => {
+    setBusy(true);
+    try {
+      const response = await api(`/api/automations/${id}/toggle`, "POST", { enabled });
+      if (!response.ok) throw new Error(response.error || "Failed to toggle.");
+      await onRefresh();
+    } catch (err) {
+      setOperationError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleRun = async (id) => {
+    setBusy(true);
+    try {
+      const response = await api(`/api/automations/${id}/run`, "POST");
+      if (!response.ok) throw new Error(response.error || "Failed to run.");
+      await onRefresh();
+    } catch (err) {
+      setOperationError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Delete automation?")) return;
+    setBusy(true);
+    try {
+      const response = await api(`/api/automations/${id}`, "DELETE");
+      if (!response.ok) throw new Error(response.error || "Failed to delete.");
+      await onRefresh();
+    } catch (err) {
+      setOperationError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setBusy(true);
+    try {
+      const endpoint = editor.id ? `/api/automations/${editor.id}` : `/api/automations`;
+      const method = editor.id ? "PUT" : "POST";
+      const response = await api(endpoint, method, editor);
+      if (!response.ok) throw new Error(response.error || "Failed to save.");
+      setEditor(null);
+      await onRefresh();
+    } catch (err) {
+      setOperationError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  if (editor) {
+    return (
+      <Panel>
+        <PanelTitle icon={Clock} title={editor.id ? "Edit Automation" : "New Automation"} />
+        <form onSubmit={handleSave} className="automation-form" style={{ padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <label>Name<input required value={editor.name || ""} onChange={e => setEditor({...editor, name: e.target.value})} className="chat-input" /></label>
+          <label>Project ID<input required value={editor.projectId || "wake-v6-main"} onChange={e => setEditor({...editor, projectId: e.target.value})} className="chat-input" /></label>
+          <label>Source Directory<input required value={editor.sourceDir || ""} onChange={e => setEditor({...editor, sourceDir: e.target.value})} className="chat-input" /></label>
+          <label>Campaign Type<input required value={editor.campaignType || "Custom Prompt"} onChange={e => setEditor({...editor, campaignType: e.target.value})} className="chat-input" /></label>
+          <label>Operator Ask (Strategist context)<textarea rows={3} required value={editor.operatorAsk || ""} onChange={e => setEditor({...editor, operatorAsk: e.target.value})} className="chat-input" /></label>
+          <label>Schedule Cron<input required placeholder="0 19 * * 0" pattern="^(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)$" title="Must be a valid 5-part cron expression" value={editor.scheduleCron || ""} onChange={e => setEditor({...editor, scheduleCron: e.target.value})} className="chat-input" /></label>
+          <label>Time Zone<input required placeholder="America/Los_Angeles" value={editor.timeZone || "America/Los_Angeles"} onChange={e => setEditor({...editor, timeZone: e.target.value})} className="chat-input" /></label>
+          <label>Approval Mode
+            <select value={editor.approvalMode || "Review Required"} onChange={e => setEditor({...editor, approvalMode: e.target.value})} className="chat-input">
+              <option>Review Required</option>
+              <option>Auto Export</option>
+            </select>
+          </label>
+          <label>Export Directory<input required value={editor.exportDir || ""} onChange={e => setEditor({...editor, exportDir: e.target.value})} className="chat-input" /></label>
+          
+          <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+            <button type="submit" className="primary-action" disabled={busy}>Save Automation</button>
+            <button type="button" className="mini-action" disabled={busy} onClick={() => setEditor(null)}>Cancel</button>
+          </div>
+        </form>
+      </Panel>
+    );
+  }
+
+  return (
+    <Panel className="automations-panel">
+      <PanelTitle icon={Clock} title="Scheduler & Automations" />
+      <div className="monitor-grid" style={{ marginBottom: "1rem", padding: "1rem", borderBottom: "1px solid var(--border)" }}>
+         <button className={tab === "active" ? "primary-action" : "mini-action"} onClick={() => setTab("active")}>Active Automations</button>
+         <button className={tab === "review" ? "primary-action" : "mini-action"} onClick={() => setTab("review")}>Review Queue ({reviewQueue.length})</button>
+         <button className={tab === "history" ? "primary-action" : "mini-action"} onClick={() => setTab("history")}>Run History</button>
+      </div>
+
+      <div style={{ padding: "0 1rem 1rem 1rem" }}>
+        {tab === "active" && (
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
+               <h3>Configured Automations</h3>
+               <button className="primary-action" onClick={() => setEditor({})}>
+                 <Plus size={16} /> New Automation
+               </button>
+            </div>
+            <div className="library-list">
+              {automations.map(a => (
+                <div key={a.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1rem", border: "1px solid var(--border)", borderRadius: "var(--radius)", marginBottom: "0.5rem", background: "var(--surface)" }}>
+                  <div>
+                    <strong style={{ fontSize: "1.1rem", display: "block", marginBottom: "0.2rem" }}>{a.name}</strong>
+                    <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
+                      {a.scheduleCron} ({a.timeZone}) • {a.approvalMode} • <span style={{ color: a.enabled ? "var(--live)" : "var(--partial)" }}>{a.enabled ? "Active" : "Paused"}</span>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <button className="mini-action" onClick={() => handleToggle(a.id, !a.enabled)}>
+                      {a.enabled ? <Pause size={16} /> : <Play size={16} />} {a.enabled ? "Pause" : "Resume"}
+                    </button>
+                    <button className="mini-action" onClick={() => handleRun(a.id)}>
+                      <Zap size={16} /> Run Now
+                    </button>
+                    <button className="mini-action" onClick={() => setEditor(a)}>
+                      <Edit2 size={16} /> Edit
+                    </button>
+                    <button className="mini-action" onClick={() => handleDelete(a.id)}>
+                      <Trash2 size={16} /> Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {!automations.length && <p>No automations configured.</p>}
+            </div>
+          </div>
+        )}
+
+        {tab === "review" && (
+          <div>
+            <h3>Pending Review</h3>
+            <div className="library-list">
+              {reviewQueue.map(r => (
+                <div key={r.id} style={{ padding: "1rem", border: "1px solid var(--border)", borderRadius: "var(--radius)", marginBottom: "0.5rem", background: "var(--surface)" }}>
+                   <strong>Run: {r.runId}</strong>
+                   <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>{new Date(r.createdAt).toLocaleString()}</div>
+                   <button className="mini-action" style={{ marginTop: "0.5rem" }} onClick={() => setModal({ title: "Review Content", body: JSON.stringify(r.result, null, 2) })}>View Generated Packet</button>
+                </div>
+              ))}
+              {!reviewQueue.length && <p>No items pending review.</p>}
+            </div>
+          </div>
+        )}
+
+        {tab === "history" && (
+           <div>
+              <h3>Run History</h3>
+              <div className="library-list">
+                 {runs.map(r => (
+                    <div key={r.id} style={{ padding: "0.5rem 1rem", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between" }}>
+                       <div>
+                          <strong>{r.automationId}</strong>
+                          <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>Status: {r.status} {r.error && `- ${r.error}`}</div>
+                       </div>
+                       <small>{new Date(r.createdAt).toLocaleString()}</small>
+                    </div>
+                 ))}
+                 {!runs.length && <p>No runs recorded.</p>}
+              </div>
+           </div>
+        )}
+      </div>
+    </Panel>
+  );
+}
+
 function App() {
   const [active, setActive] = useState("console");
   const [state, setState] = useState(null);
@@ -1635,6 +1821,9 @@ function App() {
   const [speechSupported, setSpeechSupported] = useState(false);
   const [listening, setListening] = useState(false);
   const [intakeRootsText, setIntakeRootsText] = useState("");
+  const [instructionsQuery, setInstructionsQuery] = useState("");
+  const [instructionsResult, setInstructionsResult] = useState(null);
+  const [instructionsBusy, setInstructionsBusy] = useState(false);
   const [intakeIntent, setIntakeIntent] = useState("");
   const [driveTargets, setDriveTargets] = useState(null);
   const [intakeReviewSelection, setIntakeReviewSelection] = useState([]);
@@ -2375,6 +2564,22 @@ function App() {
       outputExcerpt ? `Current output excerpt:\n${outputExcerpt}` : "",
       "Answer as a polish/edit pass for the current page. Be concrete, source-backed, and steer to the next best action."
     ].filter(Boolean).join("\n\n");
+  }
+
+  async function fetchInstructions() {
+    if (!instructionsQuery.trim()) return;
+    setInstructionsBusy(true);
+    setInstructionsResult(null);
+    setOperationError(null);
+    try {
+      const response = await api("/api/instructions/generate", "POST", { message: instructionsQuery });
+      if (!response.ok) throw new Error(response.error || "Failed to generate instructions.");
+      setInstructionsResult(response.instructions);
+    } catch (error) {
+      setOperationError(error.message);
+    } finally {
+      setInstructionsBusy(false);
+    }
   }
 
   async function sendAgentMessage() {
@@ -3224,6 +3429,46 @@ function App() {
                 </div>
               </Panel>
             </div>
+          )}
+          {active === "instructions" && (
+            <Panel>
+              <PanelTitle icon={BookOpen} title="Operations Guide" />
+              <div className="instructions-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1rem' }}>
+                <p>Describe your goal to receive a step-by-step WAKE Engine manual workflow.</p>
+                <textarea
+                  className="chat-input"
+                  placeholder="What do you want to do simply?"
+                  value={instructionsQuery}
+                  onChange={(e) => setInstructionsQuery(e.target.value)}
+                  disabled={instructionsBusy}
+                  rows={3}
+                  style={{ resize: 'vertical' }}
+                />
+                <button 
+                  type="button" 
+                  className="primary-action" 
+                  disabled={instructionsBusy || !instructionsQuery.trim()} 
+                  onClick={fetchInstructions}
+                  style={{ alignSelf: 'flex-start' }}
+                >
+                  {instructionsBusy ? "Generating..." : "Get Instructions"}
+                </button>
+                {instructionsResult && (
+                  <div className="instructions-result" style={{ marginTop: '1rem', padding: '1rem', background: 'var(--surface)', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
+                    <pre className="document-content" style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}>{instructionsResult}</pre>
+                  </div>
+                )}
+              </div>
+            </Panel>
+          )}
+
+          {active === "automations" && (
+            <AutomationsPanel 
+              state={state} 
+              onRefresh={fetchState} 
+              setModal={setModal} 
+              setOperationError={setOperationError} 
+            />
           )}
 
           {active === "tasks" && (
