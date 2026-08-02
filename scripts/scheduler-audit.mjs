@@ -24,6 +24,7 @@ const now = () => new Date(fixedDate);
 
 assert.equal(isCronMatch("0 19 * * 0", { minute: 0, hour: 19, date: 2, month: 8, day: 0 }), true);
 assert.equal(isCronMatch("*/15 * * * *", { minute: 30, hour: 1, date: 2, month: 8, day: 0 }), true);
+assert.equal(isCronMatch("0 8 15 * 1", { minute: 0, hour: 8, date: 10, month: 8, day: 1 }), true);
 assert.equal(isCronMatch("61 * * * *", { minute: 1, hour: 1, date: 2, month: 8, day: 0 }), false);
 assert.equal(isCronMatch("bad cron", { minute: 0, hour: 0, date: 1, month: 1, day: 0 }), false);
 
@@ -121,6 +122,8 @@ const duplicateSummary = await runAutomationCycle({
 });
 assert.equal(duplicateSummary.skipped, 1);
 assert.equal(pipelineCalls, callsBeforeDuplicate);
+assert.equal(duplicateStore.automationRuns.length, 1);
+assert.equal(duplicateStore.automationRuns[0].id, "prior-run");
 assert.equal(duplicateStore.history[0].type, "AUTOMATION_SKIPPED");
 
 const exportStore = makeStore({
@@ -151,6 +154,33 @@ const jsonArtifact = exportStore.automationRuns[0].exportFiles.find((item) => it
 const exportedJson = JSON.parse(fs.readFileSync(jsonArtifact.path, "utf8"));
 assert.equal(exportedJson.schema, "wake-engine-automation-export");
 assert.equal(exportedJson.pack.exportManifest.title, "Neighborhood Kitchen Campaign");
+
+const blockedStore = makeStore({
+  id: "blocked-export-automation",
+  name: "Blocked Export Campaign",
+  sourceDir,
+  exportDir,
+  scheduleCron: "0 19 * * 0",
+  timeZone: "America/Los_Angeles",
+  operatorAsk: "Build a local campaign.",
+  approvalMode: "Auto Export",
+  enabled: false,
+  forceRun: true
+});
+const blockedSummary = await runAutomationCycle({
+  storeRef: () => blockedStore,
+  updateStore: () => {},
+  runPipeline: (input) => {
+    const result = runPipeline(input);
+    result.pack.qaVerdict = { verdict: "blocked", blockers: ["Unsupported claim"] };
+    return result;
+  },
+  now
+});
+assert.equal(blockedSummary.failed, 1);
+assert.equal(blockedStore.automationRuns[0].status, "failed");
+assert.match(blockedStore.automationRuns[0].error, /blocked by QA verdict/);
+assert.equal(blockedStore.automationRuns[0].exportFiles, undefined);
 
 const markdown = renderAutomationMarkdown(runPipeline({ source: bundle.text, retrievalContext: { baseAsk: "" } }).pack);
 assert.match(markdown, /Neighborhood Kitchen Campaign/);
@@ -187,8 +217,9 @@ console.log(JSON.stringify({
     "source-loading-and-hashing",
     "manual-placeholder-reuse",
     "review-queue",
-    "unchanged-source-skip",
+    "unchanged-source-skip-without-phantom-run",
     "markdown-and-json-export",
+    "qa-blocks-auto-export",
     "missing-source-failure"
   ],
   pipelineCalls
