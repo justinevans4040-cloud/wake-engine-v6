@@ -45,7 +45,6 @@
   "build": {
     "appId": "com.wake.engine.v6",
     "productName": "WAKE Engine V6",
-    "electronDist": "node_modules/electron/dist",
     "directories": {
       "output": "release"
     },

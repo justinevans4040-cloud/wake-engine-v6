@@ -1,0 +1,31 @@
+WAKE ENGINE V6 SOURCE-AVAILABLE EVALUATION LICENSE
+Version 1.0 — August 2026
+
+Copyright © 2026 ForgeFront Systems and Justin Evans. All rights reserved.
+
+1. Evaluation permission
+Permission is granted to view, clone, build, install, and run this software solely for personal evaluation, security review, educational inspection, and judging in a hackathon, competition, grant, accelerator, or similar evaluation program.
+
+2. Restrictions
+Without prior written permission from the copyright holders, you may not:
+
+- sell, license, sublicense, rent, host, or commercially exploit the software;
+- redistribute the source code, compiled application, installer, or a modified version;
+- create or distribute derivative products based substantially on this software;
+- remove or alter copyright, attribution, license, or provenance notices;
+- use the software, its interface, or its documentation to misrepresent authorship or ownership;
+- use any credentials, private data, example data, or operator material that may be included accidentally.
+
+3. Contributions
+No contribution, pull request, issue, suggestion, or other submission transfers ownership unless a separate written agreement states otherwise.
+
+4. No trademark license
+This license does not grant rights to the names WAKE, WAKE Engine, ForgeFront Systems, Athere, associated logos, product identities, or trade dress.
+
+5. No warranty
+THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. THE COPYRIGHT HOLDERS ARE NOT LIABLE FOR ANY CLAIM, DAMAGE, OR OTHER LIABILITY ARISING FROM THE SOFTWARE OR ITS USE.
+
+6. Termination
+Any permission granted by this license terminates automatically if you violate its terms. Upon termination, you must stop using and delete copies of the software in your possession, except where retention is required by law or by a competition’s audit rules.
+
+For permissions beyond this license, contact the repository owner through the official GitHub repository.
