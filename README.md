@@ -3,6 +3,9 @@
   <p><strong>A crash-resilient local workbench for evidence-linked content production.</strong></p>
 </div>
 
+[![WAKE Engine CI](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/ci.yml/badge.svg)](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/ci.yml)
+[![Windows Installer](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/release.yml/badge.svg)](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/release.yml)
+
 WAKE Engine turns approved local notes, transcripts, briefs, and documents into structured content packages while preserving source provenance, blocking unsupported claims, and recording an inspectable audit trail.
 
 ![WAKE Engine interface](docs/wake-engine/wake-ui-screenshot.png)
@@ -35,6 +38,22 @@ WAKE provides one local workflow:
 | Local security | Loopback API, session and CSRF checks, Electron `safeStorage` credential vault | Phase 9 evidence |
 | Windows desktop application | Electron application and NSIS installer configuration | `npm run package:installer` |
 
+## Judge and submission package
+
+- [Hackathon submission brief](SUBMISSION.md)
+- [Two-minute demonstration script](DEMO_SCRIPT.md)
+- [Judging evidence matrix](JUDGING_EVIDENCE.md)
+- [Architecture and trust boundaries](ARCHITECTURE.md)
+- [Known limitations](KNOWN_LIMITATIONS.md)
+- [Security policy](SECURITY.md)
+
+## Windows installer
+
+Every successful `master` build creates a Windows NSIS installer and `SHA256SUMS.txt` as GitHub Actions artifacts. Tagged versions beginning with `v` also publish those files to GitHub Releases.
+
+- [Latest CI runs and installer artifacts](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/ci.yml)
+- [Tagged releases](https://github.com/justinevans4040-cloud/wake-engine-v6/releases)
+
 ## Quick start
 
 ### Requirements
@@ -47,8 +66,8 @@ WAKE provides one local workflow:
 ### Run from source
 
 ```powershell
-git clone https://github.com/justinevans4040-cloud/wake-engine-v6-private.git
-cd wake-engine-v6-private
+git clone https://github.com/justinevans4040-cloud/wake-engine-v6.git
+cd wake-engine-v6
 npm install
 npm run build
 npm run desktop
@@ -180,4 +199,4 @@ Useful measurements include source files processed, evidence passages extracted,
 
 ## License
 
-All rights reserved by ForgeFront Systems.
+WAKE Engine V6 is source-available for evaluation under the repository's [proprietary license](LICENSE). Copyright © 2026 ForgeFront Systems and Justin Evans. All rights reserved.
