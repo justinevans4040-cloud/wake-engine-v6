@@ -85,7 +85,7 @@ export function getTimeZoneParts(timeZone = "UTC", date = new Date()) {
   if (weekday === undefined) throw new Error(`Unable to resolve weekday for timezone ${timeZone}.`);
   return {
     minute: Number(parts.minute),
-    hour: Number(parts.hour),
+    hour: Number(parts.hour) % 24,
     date: Number(parts.day),
     month: Number(parts.month),
     day: weekday
@@ -97,13 +97,19 @@ export function isCronMatch(cronExpression, parts) {
   const tokens = String(cronExpression).trim().split(/\s+/);
   if (tokens.length !== 5) return false;
   const [minute, hour, dayOfMonth, month, dayOfWeek] = tokens;
-  return (
-    matchCronField(minute, parts.minute, 0, 59) &&
-    matchCronField(hour, parts.hour, 0, 23) &&
-    matchCronField(dayOfMonth, parts.date, 1, 31) &&
-    matchCronField(month, parts.month, 1, 12) &&
-    matchCronField(dayOfWeek, parts.day, 0, 6)
-  );
+  const minuteMatches = matchCronField(minute, parts.minute, 0, 59);
+  const hourMatches = matchCronField(hour, parts.hour, 0, 23);
+  const monthMatches = matchCronField(month, parts.month, 1, 12);
+  const dayOfMonthMatches = matchCronField(dayOfMonth, parts.date, 1, 31);
+  const dayOfWeekMatches = matchCronField(dayOfWeek, parts.day, 0, 6);
+  const dayMatches = dayOfMonth === "*" && dayOfWeek === "*"
+    ? true
+    : dayOfMonth === "*"
+      ? dayOfWeekMatches
+      : dayOfWeek === "*"
+        ? dayOfMonthMatches
+        : dayOfMonthMatches || dayOfWeekMatches;
+  return minuteMatches && hourMatches && monthMatches && dayMatches;
 }
 
 export function computeHash(text) {
@@ -286,6 +292,7 @@ export async function runAutomationCycle({
       } catch (error) {
         automation.lastError = `Invalid timezone or schedule: ${error.message}`;
         automation.updatedAt = timestamp.toISOString();
+        updateStore(store, "automation-schedule-failed");
         summary.failed += 1;
         continue;
       }
@@ -293,14 +300,14 @@ export async function runAutomationCycle({
     }
 
     const placeholder = findManualPlaceholder(store, automation.id);
-    const runRecord = placeholder || createRunRecord(automation, timestamp);
-    if (!placeholder) pushBounded(store.automationRuns, runRecord, MAX_RUN_RECORDS);
 
     let bundle;
     try {
       bundle = loadSourceBundle(automation.sourceDir);
       if (!bundle) throw new Error(`Source folder is empty, missing, or unsupported: ${automation.sourceDir}`);
     } catch (error) {
+      const runRecord = placeholder || createRunRecord(automation, timestamp);
+      if (!placeholder) pushBounded(store.automationRuns, runRecord, MAX_RUN_RECORDS);
       automation.forceRun = false;
       automation.lastError = error.message;
       automation.updatedAt = timestamp.toISOString();
@@ -336,6 +343,9 @@ export async function runAutomationCycle({
       continue;
     }
 
+    const runRecord = placeholder || createRunRecord(automation, timestamp);
+    if (!placeholder) pushBounded(store.automationRuns, runRecord, MAX_RUN_RECORDS);
+
     automation.forceRun = false;
     automation.lastError = null;
     automation.updatedAt = timestamp.toISOString();
@@ -358,7 +368,7 @@ export async function runAutomationCycle({
       runRecord.pipelineRunId = result.runId || result.pack.runId || null;
       runRecord.qaVerdict = result.pack.qaVerdict?.verdict || result.pack.tierZeroQa?.verdict || "unknown";
 
-      if (automation.approvalMode === "Review Required") {
+      if (automation.approvalMode !== "Auto Export") {
         pushBounded(store.reviewQueue, {
           id: `review-${Date.now()}-${crypto.randomBytes(3).toString("hex")}`,
           automationId: automation.id,
@@ -370,6 +380,9 @@ export async function runAutomationCycle({
         runRecord.status = "awaiting-review";
         summary.awaitingReview += 1;
       } else {
+        if (runRecord.qaVerdict !== "pass") {
+          throw new Error(`Automatic export blocked by QA verdict: ${runRecord.qaVerdict}.`);
+        }
         runRecord.exportFiles = writeAutomationExport({ automation, runRecord, result });
         runRecord.status = "completed";
         summary.completed += 1;
