@@ -23,10 +23,11 @@
     "audit:phase9": "npm run guard:local && node scripts/phase9-durability-security.mjs && node scripts/wal-crash-audit.mjs && node scripts/wal-elite-audit.mjs",
     "audit:runtime": "npm run guard:local && node scripts/runtime-contract-audit.mjs",
     "audit:scheduler": "npm run guard:local && node scripts/scheduler-audit.mjs",
+    "audit:automation-api": "npm run guard:local && node scripts/automation-api-audit.mjs",
     "verify:portable": "npm run build && npm run audit:runtime && npm run audit:scheduler",
     "smoke": "npm run guard:local && node scripts/smoke-wake-v6.mjs",
     "audit:routes": "npm run build && node scripts/route-contract-audit.mjs && node scripts/route-ui-audit.mjs",
-    "audit:ui": "npm run audit:routes && node scripts/ui-button-audit.mjs",
+    "audit:ui": "npm run audit:routes && npm run audit:automation-api && node scripts/ui-button-audit.mjs",
     "gate": "npm run guard:local && node scripts/wake-gatekeeper.mjs phase-00-gatekeeper"
   },
   "dependencies": {
