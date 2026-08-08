@@ -1,0 +1,25 @@
+/*
+ * WAK-7 route guard.
+ *
+ * Instructions and Automations are real standalone surfaces, but the current
+ * shell still wraps most non-Console routes in the shared ability scaffold.
+ * Until the shell is restructured in a later issue, suppress that scaffold on
+ * these two routes so Console actions/guidance cannot leak into them.
+ */
+.content-flow:has(.instructions-container) > .active-task-spine,
+.content-flow:has(.instructions-container) > .next-step-panel,
+.content-flow:has(.instructions-container) > .ability-command,
+.content-flow:has(.instructions-container) > .ability-action-rail,
+.content-flow:has(.instructions-container) > .agent-chat-panel,
+.content-flow:has(.automations-panel) > .active-task-spine,
+.content-flow:has(.automations-panel) > .next-step-panel,
+.content-flow:has(.automations-panel) > .ability-command,
+.content-flow:has(.automations-panel) > .ability-action-rail,
+.content-flow:has(.automations-panel) > .agent-chat-panel,
+.content-flow:has(.automation-form) > .active-task-spine,
+.content-flow:has(.automation-form) > .next-step-panel,
+.content-flow:has(.automation-form) > .ability-command,
+.content-flow:has(.automation-form) > .ability-action-rail,
+.content-flow:has(.automation-form) > .agent-chat-panel {
+  display: none;
+}

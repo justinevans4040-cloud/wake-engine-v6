@@ -9,6 +9,7 @@ import {
   BookOpen,
   Workflow
 } from "lucide-react";
+import "./route-guards.css";
 
 export const emblemSrc = "/assets/forgefront-systems-emblem.png";
 
@@ -85,6 +86,30 @@ export const abilityBlueprints = {
     continueRoute: "Console or Audit",
     doneWhen: ["saved work is findable", "export paths are visible", "history is inspectable"]
   },
+  instructions: {
+    icon: BookOpen,
+    eyebrow: "Guide",
+    title: "Operations Guide",
+    mission: "Explain how to complete an operation using only capabilities that exist in the current WAKE runtime.",
+    input: "operator goal",
+    output: "step-by-step WAKE workflow",
+    primaryAction: "Get Instructions",
+    outputDestination: "Operations Guide Result",
+    continueRoute: "Requested WAKE surface",
+    doneWhen: ["goal is understood", "steps match live capabilities", "next surface is clear"]
+  },
+  automations: {
+    icon: Workflow,
+    eyebrow: "Scheduler",
+    title: "Scheduler & Automations",
+    mission: "Configure, run, pause, review, and inspect local scheduled workflows without changing the current source workspace.",
+    input: "schedule + source folder + operator ask",
+    output: "scheduled run or review item",
+    primaryAction: "New Automation",
+    outputDestination: "Automation Schedule and Run History",
+    continueRoute: "Review Queue or Run History",
+    doneWhen: ["schedule is explicit", "approval mode is explicit", "run state is visible"]
+  },
   tasks: {
     icon: ListChecks,
     eyebrow: "Ability 06",
@@ -117,6 +142,8 @@ export const abilityAgentDefaults = {
   cluster: "creative-director",
   vault: "archivist",
   library: "export",
+  instructions: "qa",
+  automations: "qa",
   tasks: "qa",
   snapshot: "qa"
 };
@@ -146,6 +173,16 @@ export const polishPrompts = {
     "Help me resume the most useful saved work.",
     "Find what should be exported or continued.",
     "Turn this saved output into the next action."
+  ],
+  instructions: [
+    "Give me the shortest valid WAKE workflow for this goal.",
+    "Tell me which current WAKE surface performs each step.",
+    "Call out any requested capability WAKE does not currently implement."
+  ],
+  automations: [
+    "Check this automation setup for missing inputs.",
+    "Explain what this schedule will do before it runs.",
+    "Tell me whether this should require review or auto export."
   ],
   tasks: [
     "Inspect the current state and tell me what is risky.",
