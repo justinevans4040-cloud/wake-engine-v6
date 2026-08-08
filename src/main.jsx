@@ -4,6 +4,7 @@ import {
   Activity,
   Archive,
   Bot,
+  BookOpen,
   Box,
   Camera,
   CheckCircle2,
