@@ -32,6 +32,10 @@ async function request(method, route, body) {
   return { response, data };
 }
 
+function normalizeMarkdown(value) {
+  return String(value || "").replace(/\*\*/g, "").toLowerCase();
+}
+
 const valid = {
   name: "API Hostile Proof",
   projectId: "wake-v6-main",
@@ -47,7 +51,19 @@ const valid = {
 try {
   server = await startWakeServer({ port: PORT });
 
-  let result = await request("POST", "/api/automations", {});
+  let result = await request("POST", "/api/instructions/generate", { message: "Show me how to inspect the local runtime." });
+  assert.equal(result.response.status, 200);
+  assert.equal(result.data.ok, true);
+  assert.match(result.data.instructions, /Monitor/);
+  assert.match(result.data.instructions, /Audit/);
+  assert.doesNotMatch(result.data.instructions, /\bInbox\b/);
+
+  result = await request("POST", "/api/instructions/generate", { message: "Publish directly to Instagram for me." });
+  assert.equal(result.response.status, 200);
+  assert.equal(result.data.ok, true);
+  assert.equal(normalizeMarkdown(result.data.instructions).includes("does not currently publish directly"), true);
+
+  result = await request("POST", "/api/automations", {});
   assert.equal(result.response.status, 400);
   assert.equal(result.data.code, "WAKE_AUTOMATION_INVALID");
 
@@ -112,6 +128,8 @@ try {
   console.log(JSON.stringify({
     status: "pass",
     checks: [
+      "instructions-runtime-guidance",
+      "instructions-unsupported-capability-refusal",
       "required-fields",
       "cron-validation",
       "timezone-validation",
