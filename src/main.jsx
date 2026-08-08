@@ -1634,6 +1634,20 @@ function AutomationsPanel({ state, projectId, onRefresh, setModal, setOperationE
   const runs = state?.automationRuns || [];
   const reviewQueue = state?.reviewQueue || [];
 
+  useEffect(() => {
+    let alive = true;
+    const timer = window.setInterval(() => {
+      if (!alive || busy || editor) return;
+      Promise.resolve(onRefresh()).catch((error) => {
+        if (alive) setOperationError(error.message);
+      });
+    }, 2500);
+    return () => {
+      alive = false;
+      window.clearInterval(timer);
+    };
+  }, [busy, editor, onRefresh, setOperationError]);
+
   const handleToggle = async (id, enabled) => {
     setBusy(true);
     try {
