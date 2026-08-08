@@ -29,7 +29,7 @@ if (!tabIds.length) throw new Error("No WAKE routes found in tabs.");
 if (new Set(tabIds).size !== tabIds.length) throw new Error(`Duplicate route IDs: ${tabIds.join(", ")}`);
 
 function hasKey(source, id) {
-  return new RegExp(`(?:^|\\n)\\s*${id}:\\s*`, "m").test(source);
+  return new RegExp(`(?:^|[,{\\n])\\s*${id}\\s*:\\s*`, "m").test(source);
 }
 
 const missing = [];
