@@ -1,0 +1,72 @@
+name: WAK-7 fallback refactor
+
+on:
+  push:
+    branches:
+      - agent/wak-7-complete-fix
+    paths:
+      - .github/workflows/wak7-fallback-refactor.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refactor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out corrective branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/wak-7-complete-fix
+          fetch-depth: 0
+
+      - name: Remove remaining silent route fallbacks
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('src/main.jsx')
+          text = path.read_text(encoding='utf-8')
+
+          def replace_once(old, new, label):
+              global text
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected exactly 1 match, found {count}')
+              text = text.replace(old, new, 1)
+
+          replace_once(
+              '''  const ability = abilityBlueprints[active] || abilityBlueprints.agent;\n  const prompts = polishPrompts[active] || polishPrompts.agent;''',
+              '''  const ability = abilityBlueprints[active];\n  if (!ability) throw new Error(`Missing chat blueprint for route: ${active}`);\n  const prompts = polishPrompts[active];\n  if (!prompts) throw new Error(`Missing polish prompts for route: ${active}`);''',
+              'agent chat route fallbacks'
+          )
+
+          replace_once(
+              '''  function contextualAgentMessage() {\n    const ability = abilityBlueprints[active] || abilityBlueprints.agent;''',
+              '''  function contextualAgentMessage() {\n    const ability = abilityBlueprints[active];\n    if (!ability) throw new Error(`Missing contextual-agent blueprint for route: ${active}`);''',
+              'contextual agent route fallback'
+          )
+
+          forbidden = [
+              'abilityBlueprints[active] ||',
+              'polishPrompts[active] ||',
+              'signals[active] ||',
+              'actionSets[active] ||'
+          ]
+          present = [item for item in forbidden if item in text]
+          if present:
+              raise SystemExit('Silent route fallbacks remain: ' + ', '.join(present))
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Self-remove and commit
+        shell: bash
+        run: |
+          rm .github/workflows/wak7-fallback-refactor.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/main.jsx .github/workflows/wak7-fallback-refactor.yml
+          git diff --cached --check
+          git commit -m "fix: remove silent WAK-7 route fallbacks"
+          git push origin HEAD:agent/wak-7-complete-fix
