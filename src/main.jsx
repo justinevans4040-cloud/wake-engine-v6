@@ -1285,8 +1285,10 @@ function AgentChatConsole({
   ttsStatus,
   chatError
 }) {
-  const ability = abilityBlueprints[active] || abilityBlueprints.agent;
-  const prompts = polishPrompts[active] || polishPrompts.agent;
+  const ability = abilityBlueprints[active];
+  if (!ability) throw new Error(`Missing chat blueprint for route: ${active}`);
+  const prompts = polishPrompts[active];
+  if (!prompts) throw new Error(`Missing polish prompts for route: ${active}`);
   const selected = (state.agentPipeline || []).find((agent) => agent.id === selectedAgent);
   const isAgentPage = active === "agent";
   const hasSource = Boolean(source?.trim());
@@ -2587,7 +2589,8 @@ function App() {
   }
 
   function contextualAgentMessage() {
-    const ability = abilityBlueprints[active] || abilityBlueprints.agent;
+    const ability = abilityBlueprints[active];
+    if (!ability) throw new Error(`Missing contextual-agent blueprint for route: ${active}`);
     const raw = chatMessage.trim();
     const sourceExcerpt = source.trim().slice(0, 900);
     const outputExcerpt = output ? jsonBlock(output).slice(0, 900) : "";
