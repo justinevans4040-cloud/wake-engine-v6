@@ -1,0 +1,48 @@
+name: WAK-7 icon import patch
+
+on:
+  push:
+    branches:
+      - agent/wak-7-complete-fix
+    paths:
+      - .github/workflows/wak7-icon-import.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/wak-7-complete-fix
+          fetch-depth: 0
+
+      - name: Add required Instructions icon import
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('src/main.jsx')
+          text = path.read_text(encoding='utf-8')
+          old = '  Bot,\n  Box,'
+          new = '  Bot,\n  BookOpen,\n  Box,'
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected one lucide import anchor, found {text.count(old)}')
+          text = text.replace(old, new, 1)
+          if text.count('  BookOpen,') != 1:
+              raise SystemExit('BookOpen import is not exactly once after patch.')
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Self-remove and commit
+        shell: bash
+        run: |
+          rm .github/workflows/wak7-icon-import.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/main.jsx .github/workflows/wak7-icon-import.yml
+          git diff --cached --check
+          git commit -m "fix: import BookOpen for WAK-7 route actions"
+          git push origin HEAD:agent/wak-7-complete-fix
