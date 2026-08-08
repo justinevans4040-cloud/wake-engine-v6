@@ -3504,7 +3504,7 @@ function App() {
           {active === "automations" && (
             <AutomationsPanel 
               state={state} 
-              onRefresh={fetchState} 
+              onRefresh={refresh}
               setModal={setModal} 
               setOperationError={setOperationError} 
             />
