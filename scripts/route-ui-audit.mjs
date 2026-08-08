@@ -139,7 +139,7 @@ async function main() {
       const selected = page.locator('nav[aria-label="WAKE V6 sections"] > button.selected');
       if (await selected.count() !== 1) throw new Error(`Route ${route.id} does not have exactly one selected navigation button.`);
       const selectedText = (await selected.innerText()).trim();
-      if (!selectedText.includes(route.label)) throw new Error(`Route ${route.id} rendered but navigation selected ${selectedText} instead of ${route.label}.`);
+      if (selectedText.toLowerCase() !== route.label.toLowerCase()) throw new Error(`Route ${route.id} rendered but navigation selected ${selectedText} instead of ${route.label}.`);
 
       if (errors.length > errorCountBefore) {
         throw new Error(`Route ${route.id} emitted runtime errors:\n- ${errors.slice(errorCountBefore).join("\n- ")}`);
