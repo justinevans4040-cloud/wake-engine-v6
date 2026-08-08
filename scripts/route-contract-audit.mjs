@@ -97,6 +97,12 @@ if (!main.includes('active !== "console" && active !== "cluster" && !standaloneR
 if (!main.includes('standaloneRoutes.has(active) ? null : sectionAgentChat')) {
   throw new Error("Standalone routes are not excluded from shared agent chat in React.");
 }
+if (main.includes("fetchState")) {
+  throw new Error("Undefined fetchState wiring remains in the WAKE renderer.");
+}
+if (!main.includes("onRefresh={refresh}")) {
+  throw new Error("Automations is not wired to the live refresh() state callback.");
+}
 if (fs.existsSync(obsoleteGuardPath)) {
   throw new Error("Obsolete route-guards.css concealment still exists.");
 }
