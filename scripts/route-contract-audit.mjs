@@ -106,6 +106,15 @@ if (!main.includes("onRefresh={refresh}")) {
 if (!main.includes('select aria-label="Approval Mode"')) {
   throw new Error("Automation Approval Mode select is missing its explicit accessible name.");
 }
+if (!main.includes('function AutomationsPanel({ state, projectId, onRefresh, setModal, setOperationError })')) {
+  throw new Error("AutomationsPanel is not receiving explicit current-project context.");
+}
+if (!main.includes('projectId={projectId}')) {
+  throw new Error("AutomationsPanel current-project prop is not wired from App.");
+}
+if (!main.includes('setEditor({ projectId: projectId || state?.projects?.[0]?.id || "wake-v6-main", campaignType: "Custom Prompt", scheduleCron: "0 19 * * 0", timeZone: "America/Los_Angeles", approvalMode: "Review Required" })')) {
+  throw new Error("New Automation visible defaults are not initialized into submitted editor state.");
+}
 if (fs.existsSync(obsoleteGuardPath)) {
   throw new Error("Obsolete route-guards.css concealment still exists.");
 }
