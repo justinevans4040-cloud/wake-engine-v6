@@ -1625,7 +1625,7 @@ function IntakePanel({
   );
 }
 
-function AutomationsPanel({ state, onRefresh, setModal, setOperationError }) {
+function AutomationsPanel({ state, projectId, onRefresh, setModal, setOperationError }) {
   const [tab, setTab] = useState("active");
   const [busy, setBusy] = useState(false);
   const [editor, setEditor] = useState(null);
@@ -1734,7 +1734,7 @@ function AutomationsPanel({ state, onRefresh, setModal, setOperationError }) {
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
                <h3>Configured Automations</h3>
-               <button className="primary-action" onClick={() => setEditor({})}>
+               <button className="primary-action" onClick={() => setEditor({ projectId: projectId || state?.projects?.[0]?.id || "wake-v6-main", campaignType: "Custom Prompt", scheduleCron: "0 19 * * 0", timeZone: "America/Los_Angeles", approvalMode: "Review Required" })}>
                  <Plus size={16} /> New Automation
                </button>
             </div>
@@ -3504,6 +3504,7 @@ function App() {
           {active === "automations" && (
             <AutomationsPanel 
               state={state} 
+              projectId={projectId}
               onRefresh={refresh}
               setModal={setModal} 
               setOperationError={setOperationError} 
