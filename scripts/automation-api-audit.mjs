@@ -62,6 +62,7 @@ try {
   assert.equal(result.response.status, 200);
   assert.equal(result.data.ok, true);
   assert.equal(normalizeMarkdown(result.data.instructions).includes("does not currently publish directly"), true);
+  assert.doesNotMatch(result.data.instructions, /Open \*\*Monitor\*\*/);
 
   result = await request("POST", "/api/automations", {});
   assert.equal(result.response.status, 400);
@@ -130,6 +131,7 @@ try {
     checks: [
       "instructions-runtime-guidance",
       "instructions-unsupported-capability-refusal",
+      "instructions-word-boundary-regression",
       "required-fields",
       "cron-validation",
       "timezone-validation",
