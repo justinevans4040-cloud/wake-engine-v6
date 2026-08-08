@@ -3108,6 +3108,9 @@ function state() {
     exportInspections: store.exportInspections.slice(0, 24),
     intakeRuns: store.intakeRuns.slice(0, 12),
     intakeReviews: store.intakeReviews.slice(0, 6),
+    automations: store.automations.slice(0, 200),
+    automationRuns: store.automationRuns.slice(0, 200),
+    reviewQueue: store.reviewQueue.slice(0, 100),
     intakeRoots: INTAKE_ROOTS,
     llmBridge: {
       configuredUrls: OLLAMA_URLS,
