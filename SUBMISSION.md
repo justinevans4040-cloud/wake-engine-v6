@@ -17,7 +17,7 @@ WAKE provides a Windows desktop workflow that:
 3. produces strategy, hooks, titles, captions, scripts, platform variants, and visual direction;
 4. maps generated claims back to source evidence;
 5. blocks unsupported wording at a QA gate;
-6. places completed packets into human review or exports Markdown and JSON;
+6. places completed packets into a pending review queue or, as a separate Auto Export disposition, writes Markdown and JSON after QA passes;
 7. records tool calls, agent handoffs, memory receipts, history, and recovery evidence.
 
 ## Why this is useful
@@ -38,7 +38,7 @@ The useful outcome is a reviewable content package with:
 
 ## Implemented workflow
 
-`Source intake → Archivist → Strategist → Scriptwriter → Creative Director → QA → Review/Export`
+`Source intake → Archivist → Strategist → Scriptwriter → Creative Director → QA → Pending Review Queue / Auto Export`
 
 The workflow is deterministic and auditable. Optional Ollama enhancement is separate and availability-dependent. WAKE does not claim that six independent language models are running.
 
@@ -70,8 +70,8 @@ The workflow is deterministic and auditable. Optional Ollama enhancement is sepa
 4. Load `examples/proof-of-usefulness-source.md` or paste its contents into Console.
 5. Run the content workflow.
 6. Inspect evidence, citations, claim mapping, output lanes, QA status, and receipts.
-7. Send the packet to Review Required.
-8. Export Markdown and JSON.
+7. Send a scheduled packet to Review Required and inspect the pending review item and generated packet.
+8. Use a separate Auto Export automation with a QA-passing packet to produce Markdown and JSON.
 9. Run the same unchanged folder again and confirm duplicate suppression.
 10. Inspect Monitor and Audit for runtime and durability evidence.
 
@@ -112,7 +112,7 @@ See [JUDGING_EVIDENCE.md](JUDGING_EVIDENCE.md) for the evidence matrix and direc
 - Scheduler input is currently limited to `.txt`, `.md`, and `.json`.
 - Initial dependency installation requires npm access unless packages are cached.
 - Ollama is optional and is not used by the deterministic scheduler path.
-- Human review remains recommended before external publication.
+- Review Required creates a pending review queue item for inspection; persisted approve/reject/return/approve-and-export decisions are not implemented yet.
 - Recovery tests cover documented interruption cases; they do not guarantee survival of every possible hardware failure.
 - The source is available for evaluation under the repository's proprietary license, not an open-source license.
 
@@ -120,11 +120,11 @@ See [JUDGING_EVIDENCE.md](JUDGING_EVIDENCE.md) for the evidence matrix and direc
 
 ### Proof of Usefulness
 
-Lead with the completed user job: private local source becomes an evidence-linked, reviewed, exportable content package with measurable receipts.
+Lead with the completed user job: private local source becomes an evidence-linked packet that can be inspected in a pending review queue or automatically exported as Markdown and JSON, with measurable receipts.
 
 ### Decentralized AI
 
-Lead with local ownership, loopback execution, optional local models, inspectable provenance, credential isolation, human approval, and reduced dependency on centralized cloud generation.
+Lead with local ownership, loopback execution, optional local models, inspectable provenance, credential isolation, a human review queue with explicit operator authority, and reduced dependency on centralized cloud generation.
 
 ## Ownership
 

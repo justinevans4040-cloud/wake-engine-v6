@@ -63,18 +63,18 @@ Narration:
 
 Do not claim a blocked item exists unless it is visibly present. If the sample produces no blocked claim, show the zero-unsupported count and then show the scheduler audit that explicitly tests QA export blocking.
 
-## 1:13–1:33 — Human review and export
+## 1:13–1:33 — Review queue and export dispositions
 
 Show:
 
-- Send the packet to Review Required.
-- Open the review item.
-- Export the approved packet.
+- Send a scheduled packet to Review Required.
+- Open the pending review item and inspect the generated packet.
+- Run a separate QA-passing automation in Auto Export mode.
 - Open the generated Markdown and JSON files.
 
 Narration:
 
-> WAKE keeps a human in control and exports both a readable handoff and a complete machine-readable packet.
+> WAKE can hold a packet as a pending review item for human inspection, or use the separate QA-gated Auto Export disposition to write a readable Markdown handoff and complete machine-readable JSON packet.
 
 ## 1:33–1:47 — Duplicate suppression
 
@@ -97,7 +97,7 @@ Show:
 
 Narration:
 
-> WAKE is a local-first, crash-resilient content workbench with evidence-linked claims, human review, durable state, and a verifiable Windows installer.
+> WAKE is a local-first, crash-resilient content workbench with evidence-linked claims, a pending human review queue, durable state, and a verifiable Windows installer.
 
 Final frame:
 

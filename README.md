@@ -21,7 +21,7 @@ WAKE provides one local workflow:
 3. Build strategy, scripts, hooks, captions, platform variants, and visual direction.
 4. Map generated claims back to source evidence.
 5. Block unsupported claims at the QA gate.
-6. Place scheduled output into human review or export Markdown and JSON.
+6. Place scheduled output into a pending review queue or, when configured for Auto Export and QA passes, write Markdown and JSON.
 7. Preserve receipts, history, snapshots, and durable local state.
 
 ## What is implemented
@@ -32,7 +32,7 @@ WAKE provides one local workflow:
 | Deterministic agent workflow | Archivist → Strategist → Scriptwriter → Creative Director → QA → Export | `npm run audit:runtime` |
 | Evidence-linked claims | Maps script claims to extracted source evidence and blocks unsupported wording | Tier Zero QA packet |
 | Scheduled processing | Runs enabled or manually forced folder workflows and skips unchanged source hashes | `npm run audit:scheduler` |
-| Human review | Stores completed scheduled packets in a review queue | Automations page |
+| Review queue | Stores Review Required packets as a pending review item and exposes the generated packet for inspection; it does not yet persist approve/reject decisions | Automations page + hostile UI audit |
 | Local export | Writes readable Markdown plus the complete JSON packet | Scheduler export audit |
 | Durable state | Atomic writes, write-ahead logging, replay, rollback, and backup bundles | `npm run audit:phase9` |
 | Local security | Loopback API, session and CSRF checks, Electron `safeStorage` credential vault | Phase 9 evidence |
@@ -168,7 +168,7 @@ The Phase 9 evidence includes atomic storage, crash recovery, backup and restore
 - Supported scheduled source files are currently `.txt`, `.md`, and `.json`.
 - WAKE is local-first, but installing dependencies initially requires access to npm unless dependencies are already cached.
 - Recovery testing proves the documented interruption cases; it is not a claim that data loss is impossible under every hardware failure.
-- Human review remains the recommended approval mode for externally published content.
+- Review Required creates a pending review item for inspection; the current queue does not yet persist approve/reject/return/approve-and-export decisions.
 
 ## Proof of Usefulness demonstration
 
@@ -179,8 +179,8 @@ A judge can evaluate WAKE with one ordinary source folder:
 3. Inspect evidence and citation maps.
 4. Review scripts and platform variants.
 5. Confirm unsupported claims are blocked.
-6. Send the packet to review.
-7. Export Markdown and JSON.
+6. Send a scheduled packet to Review Required and open the pending review item.
+7. Use a separate QA-passing Auto Export automation to produce and open Markdown and JSON.
 8. Inspect the audit receipt.
 9. Run the same unchanged source again and confirm it is skipped.
 
