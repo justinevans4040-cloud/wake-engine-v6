@@ -1,0 +1,36 @@
+name: WAK-7 Automation Default State Fix
+
+on:
+  push:
+    branches:
+      - agent/wak-7-claim-verification
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: ${{ !contains(github.event.head_commit.message, '[wak7-automation-default-state-done]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/wak-7-claim-verification
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/wak7-automation-default-state-fix.mjs
+      - name: Validate exact UI state fix
+        run: |
+          git diff --check
+          grep -Fq 'projectId={projectId}' src/main.jsx
+          grep -Fq 'campaignType: "Custom Prompt", scheduleCron: "0 19 * * 0", timeZone: "America/Los_Angeles", approvalMode: "Review Required"' src/main.jsx
+      - name: Commit fix and remove one-shot machinery
+        run: |
+          git config user.name "wake-engine-ci"
+          git config user.email "actions@users.noreply.github.com"
+          git rm scripts/wak7-automation-default-state-fix.mjs .github/workflows/wak7-automation-default-state-fix.yml
+          git add src/main.jsx
+          git commit -m "WAK-7: persist New Automation visible defaults [wak7-automation-default-state-done]"
+          git push origin HEAD:agent/wak-7-claim-verification
