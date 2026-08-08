@@ -3577,7 +3577,7 @@ app.post("/api/instructions/generate", async (req, res) => {
     const request = String(message).trim();
     const lower = request.toLowerCase();
     let steps;
-    if (/runtime|health|cpu|memory|ram|status|monitor|telemetry/.test(lower)) {
+    if (/\b(?:runtime|health|cpu|memory|ram|status|monitor|telemetry)\b/.test(lower)) {
       steps = [
         "Open **Monitor** from the WAKE navigation.",
         "Inspect the runtime truth labels, current tasks, CPU/RAM/system state, and any visible blockers.",
