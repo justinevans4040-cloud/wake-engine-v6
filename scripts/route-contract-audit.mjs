@@ -9,8 +9,12 @@ const configPath = path.join(ROOT, "src", "app-config.jsx");
 const mainPath = path.join(ROOT, "src", "main.jsx");
 const obsoleteGuardPath = path.join(ROOT, "src", "route-guards.css");
 
-const config = fs.readFileSync(configPath, "utf8");
-const main = fs.readFileSync(mainPath, "utf8");
+function readNormalized(filePath) {
+  return fs.readFileSync(filePath, "utf8").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+}
+
+const config = readNormalized(configPath);
+const main = readNormalized(mainPath);
 
 function sliceBetween(source, startMarker, endMarker, label) {
   const start = source.indexOf(startMarker);
