@@ -91,6 +91,10 @@ try {
   assert.ok(automationId);
 
   let state = (await request("GET", "/api/state")).data;
+  assert.ok(Array.isArray(state.automations));
+  assert.ok(Array.isArray(state.automationRuns));
+  assert.ok(Array.isArray(state.reviewQueue));
+  assert.ok(Array.isArray(state.recentHistory));
   assert.equal(state.automations.some((item) => item.id === automationId && item.name === valid.name), true);
   assert.equal(state.recentHistory.some((item) => item.type === "automation.created" && item.payload?.automationId === automationId), true);
 
@@ -142,6 +146,7 @@ try {
       "timezone-validation",
       "project-validation",
       "cloud-path-rejection",
+      "public-automation-state-contract",
       "create-persistence",
       "create-history-receipt",
       "update-persistence",
