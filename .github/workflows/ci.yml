@@ -38,7 +38,7 @@ jobs:
   windows-installer:
     name: Windows installer and desktop verification
     runs-on: windows-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
 
     steps:
       - name: Check out repository
@@ -52,6 +52,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Audit all UI routes and controls
+        run: npm run audit:ui
 
       - name: Build and audit portable runtime
         run: npm run verify:portable
