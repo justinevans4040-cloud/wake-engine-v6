@@ -64,6 +64,28 @@ async function assertStandaloneIsolation(page, routeId) {
   }
 }
 
+async function enterApplication(page) {
+  const appShell = page.locator(".app-shell");
+  if (await appShell.isVisible({ timeout: 3000 }).catch(() => false)) return;
+
+  const gate = page.locator(".operator-gate");
+  if (await gate.isVisible({ timeout: 3000 }).catch(() => false)) {
+    const operatorInputs = page.locator(".operator-field input");
+    try {
+      await operatorInputs.nth(0).fill("JUSTIN", { timeout: 2000 });
+      await operatorInputs.nth(1).fill("WAKE", { timeout: 2000 });
+      await page.getByRole("button", { name: /Enter Wake Engine/i }).click({ timeout: 2000 });
+    } catch (error) {
+      if (!(await appShell.isVisible({ timeout: 2000 }).catch(() => false))) throw error;
+    }
+  }
+
+  if (await page.locator(".boot").isVisible({ timeout: 3000 }).catch(() => false)) {
+    await page.getByRole("button", { name: /Skip Boot/i }).click({ timeout: 3000 });
+  }
+  await appShell.waitFor({ state: "visible", timeout: 20000 });
+}
+
 async function main() {
   fs.rmSync(DATA_DIR, { recursive: true, force: true });
   fs.rmSync(PROFILE_DIR, { recursive: true, force: true });
@@ -110,17 +132,7 @@ async function main() {
 
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.waitForLoadState("domcontentloaded");
-
-    const operatorInputs = page.locator(".operator-field input");
-    if (await operatorInputs.first().isVisible({ timeout: 5000 }).catch(() => false)) {
-      await operatorInputs.nth(0).fill("JUSTIN");
-      await operatorInputs.nth(1).fill("WAKE");
-      await page.getByRole("button", { name: /Enter Wake Engine/i }).click();
-    }
-    if (await page.locator(".boot").isVisible({ timeout: 5000 }).catch(() => false)) {
-      await page.getByRole("button", { name: /Skip Boot/i }).click();
-    }
-    await page.waitForSelector(".app-shell", { timeout: 20000 });
+    await enterApplication(page);
 
     const navButtons = page.locator('nav[aria-label="WAKE V6 sections"] > button');
     const navCount = await navButtons.count();
