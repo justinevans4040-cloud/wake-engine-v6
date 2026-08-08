@@ -92,13 +92,13 @@ try {
 
   let state = (await request("GET", "/api/state")).data;
   assert.equal(state.automations.some((item) => item.id === automationId && item.name === valid.name), true);
-  assert.equal(state.history.some((item) => item.type === "automation.created" && item.payload?.automationId === automationId), true);
+  assert.equal(state.recentHistory.some((item) => item.type === "automation.created" && item.payload?.automationId === automationId), true);
 
   result = await request("PUT", `/api/automations/${automationId}`, { ...valid, name: "API Hostile Proof Edited" });
   assert.equal(result.response.status, 200);
   assert.equal(result.data.automation.name, "API Hostile Proof Edited");
   state = (await request("GET", "/api/state")).data;
-  assert.equal(state.history.some((item) => item.type === "automation.updated" && item.payload?.automationId === automationId), true);
+  assert.equal(state.recentHistory.some((item) => item.type === "automation.updated" && item.payload?.automationId === automationId), true);
 
   result = await request("POST", `/api/automations/${automationId}/toggle`, { enabled: "true" });
   assert.equal(result.response.status, 400);
@@ -110,7 +110,7 @@ try {
 
   state = (await request("GET", "/api/state")).data;
   assert.equal(state.automations.find((item) => item.id === automationId)?.enabled, true);
-  assert.equal(state.history.some((item) => item.type === "automation.toggled" && item.payload?.automationId === automationId), true);
+  assert.equal(state.recentHistory.some((item) => item.type === "automation.toggled" && item.payload?.automationId === automationId), true);
 
   result = await request("POST", `/api/automations/${automationId}/run`);
   assert.equal(result.response.status, 200);
@@ -129,7 +129,7 @@ try {
 
   state = (await request("GET", "/api/state")).data;
   assert.equal(state.automations.some((item) => item.id === automationId), false);
-  assert.equal(state.history.some((item) => item.type === "automation.deleted" && item.payload?.automationId === automationId), true);
+  assert.equal(state.recentHistory.some((item) => item.type === "automation.deleted" && item.payload?.automationId === automationId), true);
 
   console.log(JSON.stringify({
     status: "pass",
