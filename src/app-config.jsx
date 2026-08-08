@@ -1,6 +1,7 @@
 import {
   Bot,
   Camera,
+  Download,
   Layers,
   Library,
   ListChecks,
@@ -12,19 +13,105 @@ import {
 
 export const emblemSrc = "/assets/forgefront-systems-emblem.png";
 
-export const tabs = [
-  { id: "console", label: "Console", icon: TerminalSquare },
-  { id: "agent", label: "Agents", icon: Bot },
-  { id: "cluster", label: "Cluster", icon: Layers },
-  { id: "vault", label: "Vault", icon: Vault },
+export const primaryTabs = [
+  { id: "project", label: "Project", icon: TerminalSquare },
+  { id: "sources", label: "Sources", icon: Vault },
+  { id: "create", label: "Create", icon: Workflow },
+  { id: "review", label: "Review", icon: ListChecks },
+  { id: "export", label: "Export", icon: Download }
+];
+
+export const secondaryTabs = [
   { id: "library", label: "Library", icon: Library },
+  { id: "system", label: "System", icon: Camera }
+];
+
+export const legacyTabs = [
+  { id: "console", label: "Create", icon: TerminalSquare },
+  { id: "agent", label: "Context Agents", icon: Bot },
+  { id: "cluster", label: "Content Cluster", icon: Layers },
+  { id: "vault", label: "Sources", icon: Vault },
   { id: "instructions", label: "Instructions", icon: BookOpen },
   { id: "automations", label: "Automations", icon: Workflow },
   { id: "tasks", label: "Monitor", icon: ListChecks },
   { id: "snapshot", label: "Audit", icon: Camera }
 ];
 
+export const tabs = [...primaryTabs, ...secondaryTabs, ...legacyTabs];
+
 export const abilityBlueprints = {
+  project: {
+    icon: TerminalSquare,
+    eyebrow: "Workspace",
+    title: "Project Workspace",
+    mission: "Keep the current project visible, resumable, and pointed at the next production step.",
+    input: "persisted project state",
+    output: "active workspace",
+    primaryAction: "Continue Work",
+    outputDestination: "Project Overview",
+    continueRoute: "Sources, Create, Review, or Export",
+    doneWhen: ["project is selected", "counts are visible", "next action is obvious"]
+  },
+  sources: {
+    icon: Vault,
+    eyebrow: "Workflow 02",
+    title: "Sources",
+    mission: "Import, review, browse, search, open, and load local project source material.",
+    input: "local folders + saved sources",
+    output: "selected project source",
+    primaryAction: "Review Intake",
+    outputDestination: "Searchable Source Inventory",
+    continueRoute: "Create",
+    doneWhen: ["source is imported", "source is searchable", "source can load into Create"]
+  },
+  create: {
+    icon: Workflow,
+    eyebrow: "Workflow 03",
+    title: "Create",
+    mission: "Turn selected source material and campaign direction into generated packets, agent work, images, and clusters.",
+    input: "source material + direction",
+    output: "generated packet",
+    primaryAction: "Create Output",
+    outputDestination: "Current Generated Packet",
+    continueRoute: "Review",
+    doneWhen: ["source is present", "packet is generated", "review has something inspectable"]
+  },
+  review: {
+    icon: ListChecks,
+    eyebrow: "Workflow 04",
+    title: "Review",
+    mission: "Inspect generated packets, QA status, claim/evidence information, clusters, and pending scheduler review items.",
+    input: "generated packet + queue",
+    output: "inspection-ready packet",
+    primaryAction: "Inspect Packet",
+    outputDestination: "Review Workspace",
+    continueRoute: "Export",
+    doneWhen: ["packet is visible", "QA status is visible", "queue items can be inspected"]
+  },
+  export: {
+    icon: Download,
+    eyebrow: "Workflow 05",
+    title: "Export",
+    mission: "Expose Markdown and JSON export behavior, previews, saved exports, and export inspection.",
+    input: "reviewed current packet",
+    output: "Markdown + JSON files",
+    primaryAction: "Export Packet",
+    outputDestination: "Export Bundle",
+    continueRoute: "Library",
+    doneWhen: ["preview is inspectable", "files are written", "saved exports are visible"]
+  },
+  system: {
+    icon: Camera,
+    eyebrow: "Secondary",
+    title: "System",
+    mission: "Keep scheduler, monitor, audit, instructions, voice, and data protection subordinate to the production workflow.",
+    input: "runtime state",
+    output: "system controls",
+    primaryAction: "Inspect Runtime",
+    outputDestination: "System Workspace",
+    continueRoute: "Project",
+    doneWhen: ["runtime is visible", "automation status is visible", "audit/data tools are reachable"]
+  },
   console: {
     icon: TerminalSquare,
     eyebrow: "Ability 01",
@@ -136,6 +223,12 @@ export const abilityBlueprints = {
 };
 
 export const abilityAgentDefaults = {
+  project: "strategist",
+  sources: "archivist",
+  create: "strategist",
+  review: "qa",
+  export: "export",
+  system: "qa",
   console: "strategist",
   agent: "strategist",
   cluster: "creative-director",
@@ -148,6 +241,36 @@ export const abilityAgentDefaults = {
 };
 
 export const polishPrompts = {
+  project: [
+    "Tell me the next best move for this project.",
+    "Find what is missing before this project can ship.",
+    "Summarize the current project state for continuation."
+  ],
+  sources: [
+    "Help me choose the best source for this campaign.",
+    "Tell me what source evidence is missing.",
+    "Suggest a cleaner source intake mission."
+  ],
+  create: [
+    "Strengthen this generated packet from the source.",
+    "Turn this direction into a sharper campaign.",
+    "Find the strongest creation lane and explain why."
+  ],
+  review: [
+    "Inspect this packet for unsupported claims.",
+    "Surface the QA blockers first.",
+    "Summarize claim and evidence coverage for review."
+  ],
+  export: [
+    "Check whether this packet is ready to export.",
+    "Summarize the export contents.",
+    "Turn this packet into a clean handoff note."
+  ],
+  system: [
+    "Inspect the runtime state and call out risks.",
+    "Explain what the scheduler will do.",
+    "Write a short audit note for the current state."
+  ],
   console: [
     "Polish this ask into a sharper operator brief.",
     "Find the missing assumptions before I generate.",

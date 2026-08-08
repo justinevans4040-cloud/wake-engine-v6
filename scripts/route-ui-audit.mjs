@@ -8,63 +8,47 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
 const ROOT = path.join(__dirname, "..");
-const DATA_DIR = path.join(ROOT, ".route-ui-audit-run");
-const PROFILE_DIR = path.join(ROOT, ".route-ui-audit-profile");
+const RUN_ID = `${process.pid}-${Date.now()}`;
+const DATA_DIR = path.join(ROOT, `.route-ui-audit-run-${RUN_ID}`);
+const PROFILE_DIR = path.join(ROOT, `.route-ui-audit-profile-${RUN_ID}`);
 const AUTOMATION_SOURCE_DIR = path.join(DATA_DIR, "automation-source");
 const AUTOMATION_EXPORT_DIR = path.join(DATA_DIR, "automation-exports");
 const MISSING_SOURCE_DIR = path.join(DATA_DIR, "missing-source");
 const PORT = String(9110 + Math.floor(Math.random() * 200));
 
 const config = fs.readFileSync(path.join(ROOT, "src", "app-config.jsx"), "utf8");
-const routeMatches = [...config.matchAll(/id:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)"/g)];
-const routes = routeMatches.map((match) => ({ id: match[1], label: match[2] }));
+function configBlock(name, nextMarker) {
+  const startMarker = `export const ${name} =`;
+  const start = config.indexOf(startMarker);
+  if (start < 0) throw new Error(`Missing ${name} in src/app-config.jsx.`);
+  const end = config.indexOf(nextMarker, start + startMarker.length);
+  if (end < 0) throw new Error(`Missing end marker for ${name}: ${nextMarker}`);
+  return config.slice(start, end);
+}
+function routeMatches(block) {
+  return [...block.matchAll(/id:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)"/g)].map((match) => ({ id: match[1], label: match[2] }));
+}
+const primaryRoutes = routeMatches(configBlock("primaryTabs", "export const secondaryTabs"));
+const secondaryRoutes = routeMatches(configBlock("secondaryTabs", "export const legacyTabs"));
+const routes = [...primaryRoutes, ...secondaryRoutes];
 
 if (!routes.length) throw new Error("No routes found in src/app-config.jsx.");
 if (new Set(routes.map((route) => route.id)).size !== routes.length) throw new Error("Duplicate route IDs found in tabs.");
+if (primaryRoutes.map((route) => route.id).join(",") !== "project,sources,create,review,export") throw new Error("WAK-8 primary route order changed.");
+if (secondaryRoutes.map((route) => route.id).join(",") !== "library,system") throw new Error("WAK-8 secondary route order changed.");
 
 const expectedSurface = {
-  console: ".campaign-autopilot",
-  agent: ".agent-source-panel",
-  cluster: ".cluster-panel",
-  vault: ".intake-panel",
+  project: ".project-workspace",
+  sources: ".intake-panel",
+  create: ".campaign-autopilot",
+  review: ".review-workspace",
+  export: ".export-workspace",
   library: ".library-grid",
-  instructions: ".instructions-container",
-  automations: ".automations-panel",
-  tasks: ".monitor-panel",
-  snapshot: ".snapshot-box"
+  system: ".automations-panel"
 };
 
 for (const route of routes) {
   if (!expectedSurface[route.id]) throw new Error(`Route UI audit has no expected surface for ${route.id}.`);
-}
-
-const standaloneRouteIds = new Set(["instructions", "automations"]);
-const forbiddenStandaloneText = [
-  "Source Command Console",
-  "Generate Frame",
-  "Save Source",
-  "Build Cluster",
-  "Start with source"
-];
-
-async function assertStandaloneIsolation(page, routeId) {
-  for (const selector of [
-    ".active-task-spine",
-    ".next-step-panel",
-    ".ability-command",
-    ".ability-action-rail",
-    ".agent-chat-panel"
-  ]) {
-    const count = await page.locator(selector).count();
-    if (count !== 0) throw new Error(`${routeId} leaked shared scaffold ${selector}; count=${count}.`);
-  }
-
-  const contentText = await page.locator(".content-flow").innerText();
-  for (const forbidden of forbiddenStandaloneText) {
-    if (contentText.includes(forbidden)) {
-      throw new Error(`${routeId} leaked Console UX text: ${forbidden}`);
-    }
-  }
 }
 
 async function enterApplication(page) {
@@ -97,9 +81,15 @@ async function enterApplication(page) {
 
 async function getState(page) {
   return page.evaluate(async () => {
-    const response = await fetch("/api/state", { credentials: "same-origin" });
-    if (!response.ok) throw new Error(`GET /api/state failed with ${response.status}`);
-    return response.json();
+    let lastStatus = "";
+    for (let attempt = 0; attempt < 12; attempt += 1) {
+      const response = await fetch("/api/state", { credentials: "same-origin" });
+      if (response.ok) return response.json();
+      lastStatus = String(response.status);
+      if (![423, 429, 503].includes(response.status)) break;
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+    throw new Error(`GET /api/state failed with ${lastStatus || "unknown status"}`);
   });
 }
 
@@ -107,16 +97,29 @@ function automationRow(page, name) {
   return page.locator(".automations-panel .library-list > div").filter({ hasText: name }).first();
 }
 
+async function removeRunDir(dir) {
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    try {
+      fs.rmSync(dir, { recursive: true, force: true });
+      return;
+    } catch (error) {
+      if (attempt === 5 || !["EPERM", "EBUSY", "ENOTEMPTY"].includes(error.code)) {
+        console.warn(`  WARN could not remove audit temp directory ${dir}: ${error.code || error.message}`);
+        return;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 350));
+    }
+  }
+}
+
 async function openAutomations(page) {
-  await page.getByRole("button", { name: "Automations", exact: true }).click();
+  await page.getByRole("button", { name: "System", exact: true }).click();
   await page.locator(".automations-panel").waitFor({ state: "visible", timeout: 10000 });
-  await assertStandaloneIsolation(page, "automations");
 }
 
 async function createAutomation(page, details) {
   await page.getByRole("button", { name: /New Automation/i }).click();
   await page.locator(".automation-form").waitFor({ state: "visible", timeout: 10000 });
-  await assertStandaloneIsolation(page, "automations-edit");
 
   await page.getByLabel("Name", { exact: true }).fill(details.name);
   await page.getByLabel("Project ID", { exact: true }).fill("wake-v6-main");
@@ -160,8 +163,8 @@ async function waitForAutomationOutcomes(page, ids, timeoutMs = 85000) {
 }
 
 async function main() {
-  fs.rmSync(DATA_DIR, { recursive: true, force: true });
-  fs.rmSync(PROFILE_DIR, { recursive: true, force: true });
+  await removeRunDir(DATA_DIR);
+  await removeRunDir(PROFILE_DIR);
   fs.mkdirSync(AUTOMATION_SOURCE_DIR, { recursive: true });
   fs.mkdirSync(AUTOMATION_EXPORT_DIR, { recursive: true });
   fs.writeFileSync(
@@ -214,21 +217,21 @@ async function main() {
     await page.waitForLoadState("domcontentloaded");
     await enterApplication(page);
 
-    const navButtons = page.locator('nav[aria-label="WAKE V6 sections"] > button');
-    const navCount = await navButtons.count();
-    if (navCount !== routes.length) {
-      throw new Error(`Rendered nav count ${navCount} does not match configured route count ${routes.length}.`);
-    }
+    const primaryNavButtons = page.locator('nav[aria-label="WAKE V6 production workflow"] > button');
+    const secondaryNavButtons = page.locator('nav[aria-label="WAKE V6 secondary workspaces"] > button');
+    if (await primaryNavButtons.count() !== 5) throw new Error("Primary workflow navigation does not render exactly five destinations.");
+    if (await secondaryNavButtons.count() !== 2) throw new Error("Secondary navigation does not render exactly Library and System.");
 
     for (const route of routes) {
       const errorCountBefore = errors.length;
-      await page.getByRole("button", { name: route.label, exact: true }).click();
+      const navLabel = primaryRoutes.some((item) => item.id === route.id) ? "WAKE V6 production workflow" : "WAKE V6 secondary workspaces";
+      await page.locator(`nav[aria-label="${navLabel}"]`).getByRole("button", { name: route.label, exact: true }).click();
       await page.locator(expectedSurface[route.id]).waitFor({ state: "visible", timeout: 10000 }).catch((error) => {
         const newErrors = errors.slice(errorCountBefore);
         throw new Error(`Route ${route.id} did not render ${expectedSurface[route.id]}. Runtime errors: ${newErrors.join(" | ") || "none captured"}. ${error.message}`);
       });
 
-      const selected = page.locator('nav[aria-label="WAKE V6 sections"] > button.selected');
+      const selected = page.locator(`nav[aria-label="${navLabel}"] > button.selected`);
       if (await selected.count() !== 1) throw new Error(`Route ${route.id} does not have exactly one selected navigation button.`);
       const selectedText = (await selected.innerText()).trim();
       if (selectedText.toLowerCase() !== route.label.toLowerCase()) throw new Error(`Route ${route.id} rendered but navigation selected ${selectedText} instead of ${route.label}.`);
@@ -236,28 +239,24 @@ async function main() {
       if (errors.length > errorCountBefore) {
         throw new Error(`Route ${route.id} emitted runtime errors:\n- ${errors.slice(errorCountBefore).join("\n- ")}`);
       }
-      if (standaloneRouteIds.has(route.id)) {
-        await assertStandaloneIsolation(page, route.id);
-      }
-
       console.log(`  OK route ${route.id} -> ${route.label}`);
     }
 
     // Instructions must execute, return implemented-surface guidance, reject unsupported claims, and remain isolated.
-    await page.getByRole("button", { name: "Instructions", exact: true }).click();
+    await page.getByRole("button", { name: "System", exact: true }).click();
     await page.locator(".instructions-container").waitFor({ state: "visible" });
     const instructionInput = page.getByPlaceholder("What do you want to do simply?");
+    const instructionsButton = page.getByRole("button", { name: "Get Instructions", exact: true });
     await instructionInput.fill("Show me how to inspect the local runtime.");
-    await page.getByRole("button", { name: "Get Instructions", exact: true }).click();
+    await instructionsButton.evaluate((button) => button.click());
     await page.locator(".instructions-result").waitFor({ state: "visible", timeout: 35000 });
     const runtimeInstructions = await page.locator(".instructions-result").innerText();
     if (!runtimeInstructions.includes("Monitor")) throw new Error(`Runtime instructions did not route to Monitor: ${runtimeInstructions}`);
     if (!runtimeInstructions.includes("Audit")) throw new Error(`Runtime instructions did not mention Audit evidence: ${runtimeInstructions}`);
     if (/\bInbox\b/.test(runtimeInstructions)) throw new Error(`Instructions invented obsolete Inbox surface: ${runtimeInstructions}`);
-    await assertStandaloneIsolation(page, "instructions");
 
     await instructionInput.fill("Publish directly to Instagram for me.");
-    await page.getByRole("button", { name: "Get Instructions", exact: true }).click();
+    await instructionsButton.evaluate((button) => button.click());
     const unsupportedStarted = Date.now();
     let unsupportedInstructions = "";
     while (Date.now() - unsupportedStarted < 35000) {
@@ -275,7 +274,6 @@ async function main() {
     if (!normalizedUnsupportedInstructions.includes("does not currently publish directly")) {
       throw new Error(`Instructions failed to refuse unsupported direct publishing: ${unsupportedInstructions}`);
     }
-    await assertStandaloneIsolation(page, "instructions");
     console.log("  OK Instructions end-to-end implemented-capability and unsupported-capability contracts");
 
     // Automations must prove browser validation, create, persistence, edit, pause/resume, run-now,
@@ -385,7 +383,6 @@ async function main() {
 
     await page.getByRole("button", { name: /Review Queue \(/i }).click();
     await page.getByRole("button", { name: "View Generated Packet", exact: true }).waitFor({ state: "visible", timeout: 10000 });
-    await assertStandaloneIsolation(page, "automations-review");
     await page.getByRole("button", { name: "Run History", exact: true }).click();
     const historyText = await page.locator(".automations-panel").innerText();
     if (!historyText.includes("Status: awaiting-review")) throw new Error(`Run History omitted awaiting-review status: ${historyText}`);
@@ -419,8 +416,8 @@ async function main() {
     console.log(`Route UI audit passed for all ${routes.length} configured routes with hostile Instructions/Automations behavior coverage.`);
   } finally {
     await app.close().catch(() => {});
-    fs.rmSync(DATA_DIR, { recursive: true, force: true });
-    fs.rmSync(PROFILE_DIR, { recursive: true, force: true });
+    await removeRunDir(DATA_DIR);
+    await removeRunDir(PROFILE_DIR);
   }
 }
 

@@ -299,7 +299,7 @@ h1 {
 
 .tab-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 8px;
   margin-top: 16px;
 }
@@ -333,6 +333,37 @@ h1 {
   border-color: var(--cyan);
   color: var(--cyan);
   box-shadow: inset 0 -3px 0 var(--cyan), 0 16px 34px rgba(56, 207, 255, 0.14);
+}
+
+.workflow-tabs button {
+  min-height: 74px;
+}
+
+.secondary-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.secondary-nav button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(74, 205, 255, 0.12);
+  border-radius: 7px;
+  background: rgba(4, 14, 22, 0.66);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.secondary-nav button.selected {
+  border-color: rgba(255, 159, 56, 0.58);
+  color: var(--ember);
 }
 
 .tab-grid button:active, .primary-action:active, .dock button:active {
@@ -2275,6 +2306,53 @@ pre {
   gap: 10px;
 }
 
+.seed-drop-zone {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin: 0 0 12px;
+  padding: 16px;
+  border: 1px dashed rgba(77, 205, 255, 0.5);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(4, 22, 32, 0.8), rgba(1, 9, 15, 0.9)),
+    linear-gradient(90deg, rgba(92, 230, 129, 0.11), transparent 52%, rgba(255, 159, 56, 0.1));
+}
+
+.seed-drop-zone.dragging {
+  border-color: var(--green);
+  box-shadow: inset 0 0 0 1px rgba(92, 230, 129, 0.28), 0 18px 34px rgba(92, 230, 129, 0.08);
+}
+
+.seed-drop-zone.busy {
+  opacity: 0.78;
+}
+
+.seed-drop-zone div {
+  display: grid;
+  gap: 4px;
+}
+
+.seed-drop-zone small {
+  color: var(--ember);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.seed-drop-zone strong {
+  color: var(--text);
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.seed-drop-zone span {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
 .intake-settings {
   grid-column: 1 / -1;
   min-width: min(100%, 420px);
@@ -2629,6 +2707,98 @@ pre {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+}
+
+.project-workspace,
+.review-workspace,
+.export-workspace {
+  align-items: start;
+}
+
+.project-command {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(280px, 1.15fr);
+  gap: 14px;
+  padding: 16px;
+  border-bottom: 1px solid rgba(77, 205, 255, 0.14);
+}
+
+.project-command small,
+.project-command span,
+.project-metric-grid span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.project-command h2 {
+  margin: 4px 0;
+  font-size: 24px;
+}
+
+.project-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 16px;
+}
+
+.project-metric-grid button,
+.project-metric-grid article {
+  min-height: 82px;
+  padding: 12px;
+  border: 1px solid rgba(77, 205, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(3, 12, 19, 0.72);
+  text-align: left;
+}
+
+.project-metric-grid strong {
+  display: block;
+  margin-top: 7px;
+  color: var(--cyan);
+  font-size: 28px;
+}
+
+.project-metric-grid.compact {
+  padding: 0;
+}
+
+.project-metric-grid.compact strong {
+  font-size: 20px;
+}
+
+.workflow-jump-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 16px 16px;
+}
+
+.review-queue-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid rgba(160, 215, 255, 0.1);
+  background: rgba(4, 14, 22, 0.46);
+}
+
+.review-queue-row strong,
+.review-queue-row small {
+  display: block;
+}
+
+.review-queue-row small {
+  color: var(--muted);
+}
+
+.review-inspection {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
 }
 
 .library-grid {
@@ -4284,6 +4454,9 @@ code {
   }
 
   .project-row,
+  .project-command,
+  .project-metric-grid,
+  .review-queue-row,
   .autopilot-input-row,
   .campaign-preview-layout,
   .task-spine-grid,
@@ -4305,6 +4478,7 @@ code {
   .agent-chat-grid,
   .chat-compose,
   .chat-command-stack,
+  .seed-drop-zone,
   .intake-toolbar,
   .intake-grid,
   .intake-metrics,

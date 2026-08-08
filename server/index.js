@@ -42,6 +42,9 @@ const OLLAMA_MODEL = process.env.WAKE_OLLAMA_MODEL || "";
 const INTAKE_MAX_FILES = Number(process.env.WAKE_INTAKE_MAX_FILES || 9000);
 const INTAKE_MAX_DIRECTORIES = Number(process.env.WAKE_INTAKE_MAX_DIRECTORIES || 25000);
 const INTAKE_REVIEW_MAX_CANDIDATES = Number(process.env.WAKE_INTAKE_REVIEW_MAX_CANDIDATES || 1000);
+const UPLOAD_REVIEW_MAX_FILES = Number(process.env.WAKE_UPLOAD_REVIEW_MAX_FILES || 500);
+const UPLOAD_REVIEW_MAX_BYTES = Number(process.env.WAKE_UPLOAD_REVIEW_MAX_BYTES || 25 * 1024 * 1024);
+const UPLOAD_REVIEW_MAX_TEXT_CHARS = Number(process.env.WAKE_UPLOAD_REVIEW_MAX_TEXT_CHARS || 80000);
 let ollamaStatusCache = null;
 let providerCredentialBroker = null;
 
@@ -1760,6 +1763,23 @@ function makeIntakeSource(entry) {
   ].join("\n");
 }
 
+function makeUploadedIntakeSource(entry) {
+  return [
+    `# ${entry.name}`,
+    "",
+    `Lane: ${entry.lane}`,
+    "Source type: browser_seed_upload",
+    `Seed path: ${entry.path}`,
+    `MIME type: ${entry.mimeType || "unknown"}`,
+    `Extraction: ${entry.extractStatus}`,
+    `Tags: ${(entry.tags || []).join(", ")}`,
+    "",
+    "## Extracted Content",
+    "",
+    entry.sourceText || entry.excerpt || `Metadata-only entry for ${entry.kind} file from dropped SEED folder: ${entry.path}.`
+  ].join("\n");
+}
+
 async function runLocalIntake(store, input = {}) {
   const roots = Array.isArray(input.roots) && input.roots.length ? input.roots.map((root) => path.resolve(String(root))) : INTAKE_ROOTS;
   const scan = await walkIntakeRoots(roots);
@@ -1901,6 +1921,123 @@ function intakeEntryFromFile(filePath, stat, contextText = "") {
   };
 }
 
+function intakeEntryFromUploadedFile(file, contextText = "") {
+  const relativePath = String(file?.relativePath || file?.webkitRelativePath || file?.name || "").replace(/\\/g, "/").replace(/^\/+/, "");
+  const name = path.basename(relativePath || String(file?.name || "seed-file"));
+  const ext = path.extname(name).toLowerCase();
+  if (!INTAKE_EXTENSIONS.has(ext)) return null;
+  const kind = fileKind(ext);
+  const rawText = typeof file?.text === "string" ? file.text : "";
+  const cleanedText = TEXT_EXTENSIONS.has(ext) ? rawText.trim() : "";
+  const excerpt = cleanedText.replace(/\s+/g, " ").trim().slice(0, 2400);
+  const seedPath = `seed-upload://${relativePath || name}`;
+  const laneMatch = matchLane(`${relativePath}\n${excerpt}\n${contextText}`) || { lane: { name: "General Source", category: "general_source" }, hits: [] };
+  const importKey = `seed-upload:${stableId(`${relativePath}:${Number(file?.size || 0)}:${rawText.slice(0, 256)}`)}`;
+  const entry = {
+    id: `asset-${stableId(seedPath)}`,
+    reviewId: `candidate-${stableId(seedPath)}`,
+    title: name,
+    name,
+    path: seedPath,
+    extension: ext,
+    kind,
+    lane: laneMatch.lane.name,
+    tags: [...new Set([...laneMatch.hits, "seed-upload"])],
+    sizeBytes: Number(file?.size || rawText.length || 0),
+    modifiedAt: file?.lastModified ? new Date(file.lastModified).toISOString() : now(),
+    mimeType: file?.type || "",
+    excerpt,
+    sourceText: cleanedText.slice(0, UPLOAD_REVIEW_MAX_TEXT_CHARS),
+    extractStatus: excerpt ? "text_extracted" : kind === "document" ? "metadata_only_document" : "metadata_only_media",
+    importKey,
+    importedAt: now()
+  };
+  const eligibility = creativeEligibility({ ...entry, sourcePath: seedPath, source: excerpt });
+  const decision = classifyIntakeEntry(entry, eligibility, contextText);
+  return {
+    ...entry,
+    eligible: eligibility.eligible && decision.status !== "excluded",
+    reason: decision.reason || eligibility.reason,
+    decision,
+    decisionStatus: decision.status,
+    decisionReason: decision.reason,
+    decisionConfidence: decision.confidence,
+    recommended: decision.recommended,
+    importAs: kind === "text" || (kind === "document" && excerpt) ? "source" : "media",
+    uploadSource: true
+  };
+}
+
+function buildUploadedIntakeReview(store, input = {}) {
+  const files = Array.isArray(input.files) ? input.files : [];
+  const totalBytes = files.reduce((sum, file) => sum + Number(file?.size || 0), 0);
+  if (!files.length) {
+    const error = new Error("Drop a SEED folder or choose files before review.");
+    error.status = 400;
+    throw error;
+  }
+  if (files.length > UPLOAD_REVIEW_MAX_FILES) {
+    const error = new Error(`SEED review accepts up to ${UPLOAD_REVIEW_MAX_FILES} files at a time.`);
+    error.status = 413;
+    throw error;
+  }
+  if (totalBytes > UPLOAD_REVIEW_MAX_BYTES) {
+    const error = new Error(`SEED review accepts up to ${Math.round(UPLOAD_REVIEW_MAX_BYTES / 1024 / 1024)} MB at a time.`);
+    error.status = 413;
+    throw error;
+  }
+  const projectId = String(input.projectId || store.projects[0]?.id || "wake-v6-main");
+  const contextText = intakeContextText(store, input, projectId);
+  const existingSourceKeys = new Set(store.sources.map((source) => source.importKey).filter(Boolean));
+  const existingMediaKeys = new Set(store.mediaAssets.map((asset) => asset.importKey).filter(Boolean));
+  const candidates = [];
+  let eligible = 0;
+  let alreadyImported = 0;
+  let skippedOperational = 0;
+  let recommended = 0;
+  let reviewNeeded = 0;
+  for (const file of files) {
+    const entry = intakeEntryFromUploadedFile(file, contextText);
+    if (!entry) {
+      skippedOperational += 1;
+      continue;
+    }
+    const exists = entry.importAs === "source" ? existingSourceKeys.has(entry.importKey) : existingMediaKeys.has(entry.importKey);
+    if (exists) alreadyImported += 1;
+    if (entry.decisionStatus === "excluded") skippedOperational += 1;
+    if (entry.decisionStatus === "recommended" && !exists) recommended += 1;
+    if (entry.decisionStatus === "review" && !exists) reviewNeeded += 1;
+    if (entry.eligible && !exists) eligible += 1;
+    if (candidates.length < INTAKE_REVIEW_MAX_CANDIDATES) {
+      candidates.push({
+        ...entry,
+        alreadyImported: exists,
+        excerpt: entry.excerpt ? entry.excerpt.slice(0, 600) : "",
+        approved: false
+      });
+    }
+  }
+  return {
+    id: id("intake-review"),
+    status: "awaiting-review",
+    roots: [`seed-upload:${String(input.seedName || "Dropped SEED Folder")}`],
+    projectId,
+    sourceType: "browser_seed_upload",
+    scanned: files.length,
+    visitedDirectories: 0,
+    directoryLimitHit: false,
+    candidateLimitHit: candidates.length < files.length,
+    candidateLimit: INTAKE_REVIEW_MAX_CANDIDATES,
+    eligible,
+    recommended,
+    reviewNeeded,
+    alreadyImported,
+    skippedOperational,
+    candidates,
+    createdAt: now()
+  };
+}
+
 async function buildIntakeReview(store, input = {}) {
   const roots = Array.isArray(input.roots) && input.roots.length ? input.roots.map((root) => path.resolve(String(root))) : INTAKE_ROOTS;
   const scan = await walkIntakeRoots(roots);
@@ -1979,7 +2116,7 @@ function importReviewedCandidates(store, review, candidateIds = []) {
         skipped += 1;
         continue;
       }
-      const sourceText = makeIntakeSource(candidate);
+      const sourceText = candidate.uploadSource ? makeUploadedIntakeSource(candidate) : makeIntakeSource(candidate);
       store.sources.unshift({
         id: id("src"),
         projectId: review.projectId,
@@ -1987,7 +2124,7 @@ function importReviewedCandidates(store, review, candidateIds = []) {
         source: sourceText,
         characterCount: sourceText.length,
         importKey: candidate.importKey,
-        sourceType: "local_disk",
+        sourceType: candidate.uploadSource ? "browser_seed_upload" : "local_disk",
         sourcePath: candidate.path,
         lane: candidate.lane,
         tags: candidate.tags,
@@ -2002,7 +2139,15 @@ function importReviewedCandidates(store, review, candidateIds = []) {
         skipped += 1;
         continue;
       }
-      store.mediaAssets.unshift({ ...candidate, id: `asset-${stableId(candidate.path)}`, projectId: review.projectId, importedAt: now(), intakeDecision: candidate.decision });
+      store.mediaAssets.unshift({
+        ...candidate,
+        id: `asset-${stableId(candidate.path)}`,
+        projectId: review.projectId,
+        sourceType: candidate.uploadSource ? "browser_seed_upload" : "local_disk",
+        previewAvailable: !candidate.uploadSource,
+        importedAt: now(),
+        intakeDecision: candidate.decision
+      });
       existingMediaKeys.add(candidate.importKey);
       mediaAdded += 1;
     }
@@ -3159,7 +3304,7 @@ function state() {
 
 const app = express();
 app.disable("x-powered-by");
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "32mb" }));
 app.use((req, res, next) => {
   const hostname = String(req.hostname || "").replace(/^\[|\]$/g, "");
   if (!isLoopbackAddress(req.socket.remoteAddress) || !["127.0.0.1", "localhost", "::1"].includes(hostname)) {
@@ -3555,65 +3700,44 @@ app.post("/api/instructions/generate", async (req, res) => {
   try {
     const { message } = req.body || {};
     if (!message) throw new Error("Instruction request message is required.");
-    const llmStatus = await ollamaStatus();
-    if (llmStatus?.live && llmStatus?.model) {
-      const prompt = `You are the WAKE Engine Operations Guide. The user says: "${message}"\nProvide a clear step-by-step workflow using ONLY capabilities that exist in the current WAKE Engine V6 desktop app. User-facing surfaces are Console, Agents, Cluster, Vault, Library, Instructions, Automations, Monitor, and Audit. Internal stages are Archivist, Strategist, Scriptwriter, Creative Director, QA, and Export; never present an internal stage as a clickable page. If the requested capability is not implemented, say so explicitly and give the closest supported workflow. Do not invent buttons, pages, publishing integrations, or file support. Format as markdown.`;
-      const response = await fetch(`${llmStatus.url}/api/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: llmStatus.model,
-          prompt,
-          stream: false,
-          options: { temperature: 0.2 }
-        }),
-        signal: AbortSignal.timeout(30000)
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const text = String(data.response || "").trim();
-        if (text) {
-          return res.json({ ok: true, instructions: text, generated: true });
-        }
-      }
-    }
     const request = String(message).trim();
     const lower = request.toLowerCase();
     let steps;
     if (/\b(?:runtime|health|cpu|memory|ram|status|monitor|telemetry)\b/.test(lower)) {
       steps = [
-        "Open **Monitor** from the WAKE navigation.",
+        "Open **System**, then inspect the **Monitor** panel.",
         "Inspect the runtime truth labels, current tasks, CPU/RAM/system state, and any visible blockers.",
-        "Open **Audit** when you need a durable snapshot or recovery evidence for the current state.",
-        "Use **Console** only if the runtime finding requires new source-backed work; Monitor itself is the inspection surface."
+        "Use **Audit** inside System when you need a durable snapshot or recovery evidence for the current state.",
+        "Return to **Project** when the runtime state is clear."
       ];
     } else if (/schedule|automation|recurring|cron|run now/.test(lower)) {
       steps = [
-        "Open **Automations** and choose **New Automation**.",
+        "Open **System**, then use **Automations** and choose **New Automation**.",
         "Set the source directory, five-field cron schedule, timezone, operator ask, approval mode, and export directory.",
         "Save the automation, then use **Resume/Pause** or **Run Now** as needed.",
         "Use **Review Queue** for Review Required runs and **Run History** to inspect completed, skipped, or failed executions."
       ];
     } else if (/import|folder|vault|source|document|file/.test(lower)) {
       steps = [
-        "Open **Vault** to review or import an approved local folder, or use **Console** to paste source text directly.",
+        "Open **Sources** to review or import an approved local folder, or open **Create** to paste source text directly.",
         "Review candidates before import when scanning a drive or folder.",
-        "Load the selected source, then open **Agents** to run the Tier Zero content workflow.",
-        "Inspect the resulting evidence and QA before exporting."
+        "Load the selected source into **Create**, then run the Tier Zero content workflow or contextual agents.",
+        "Inspect the resulting evidence and QA in **Review** before exporting."
       ];
     } else if (/publish|post to|social network|instagram api|tiktok api|linkedin api/.test(lower)) {
       steps = [
         "WAKE V6 does **not** currently publish directly to social networks.",
-        "Build and QA the content in **Console / Agents / Cluster**.",
-        "Export the approved local output.",
+        "Build the content in **Create** and inspect it in **Review**.",
+        "Export the local Markdown and JSON output from **Export**.",
         "Publish the exported material manually in the destination platform."
       ];
     } else {
       steps = [
-        "Start in **Console** with pasted approved source, or use **Vault** to import approved local source files.",
-        "Use **Agents** to run the Tier Zero pipeline: Archivist → Strategist → Scriptwriter → Creative Director → QA → Export.",
-        "Inspect evidence, claim support, and QA results; use **Cluster** to review the completed content packet and output lanes.",
-        "Export only after QA permits it, then use **Library** to find saved work and **Audit** for a durable snapshot when needed."
+        "Start in **Project** so the active workspace and counts are visible.",
+        "Use **Sources** to import or load local source files.",
+        "Use **Create** to run the Tier Zero pipeline and contextual content tools.",
+        "Use **Review** to inspect evidence, claim support, QA results, pending review items, and generated packets.",
+        "Use **Export** for Markdown and JSON output, then **Library** to find saved work."
       ];
     }
     const staticRunbook = [`# WAKE V6 Runbook: ${request}`, "", ...steps.map((step, index) => `${index + 1}. ${step}`)].join("\n");
@@ -3824,6 +3948,20 @@ app.post("/api/intake/review", async (req, res) => {
     res.json({ ok: true, review, state: state() });
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/intake/upload-review", (req, res) => {
+  try {
+    const store = readStore();
+    const review = buildUploadedIntakeReview(store, req.body || {});
+    store.intakeReviews.unshift(review);
+    store.intakeReviews = store.intakeReviews.slice(0, 12);
+    recordHistory(store, "intake.seed-review.created", `SEED folder staged ${review.eligible} eligible items from ${review.scanned} uploaded files.`, { reviewId: review.id, projectId: review.projectId });
+    writeStore(store);
+    res.json({ ok: true, review, state: state() });
+  } catch (error) {
+    res.status(error.status || 500).json({ ok: false, error: error.message });
   }
 });
 
