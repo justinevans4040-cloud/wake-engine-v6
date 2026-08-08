@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 const configPath = path.join(ROOT, "src", "app-config.jsx");
 const mainPath = path.join(ROOT, "src", "main.jsx");
+const serverPath = path.join(ROOT, "server", "index.js");
 const obsoleteGuardPath = path.join(ROOT, "src", "route-guards.css");
 
 function readNormalized(filePath) {
@@ -15,6 +16,7 @@ function readNormalized(filePath) {
 
 const config = readNormalized(configPath);
 const main = readNormalized(mainPath);
+const server = readNormalized(serverPath);
 
 function sliceBetween(source, startMarker, endMarker, label) {
   const start = source.indexOf(startMarker);
@@ -46,6 +48,7 @@ const signalsBlock = sliceBetween(main, "  const signals = {", "\n  };\n  const 
 const readinessBlock = sliceBetween(main, "  const readyByAbility = {", "\n  };\n  const ready =", "readyByAbility map");
 const actionSetsBlock = sliceBetween(main, "  const actionSets = {", "\n  };\n  const actions =", "actionSets map");
 const nextStepBlock = sliceBetween(main, "function NextStepPanel(", "\nfunction StudioCard(", "NextStepPanel");
+const stateBlock = sliceBetween(server, "function state() {", "\nconst app = express();", "server state projection");
 
 const missing = [];
 for (const id of tabIds) {
@@ -103,6 +106,32 @@ if (main.includes("fetchState")) {
 if (!main.includes("onRefresh={refresh}")) {
   throw new Error("Automations is not wired to the live refresh() state callback.");
 }
+if (!main.includes('select aria-label="Approval Mode"')) {
+  throw new Error("Automation Approval Mode select is missing its explicit accessible name.");
+}
+if (!main.includes('function AutomationsPanel({ state, projectId, onRefresh, setModal, setOperationError })')) {
+  throw new Error("AutomationsPanel is not receiving explicit current-project context.");
+}
+if (!main.includes('projectId={projectId}')) {
+  throw new Error("AutomationsPanel current-project prop is not wired from App.");
+}
+if (!main.includes('setEditor({ projectId: projectId || state?.projects?.[0]?.id || "wake-v6-main", campaignType: "Custom Prompt", scheduleCron: "0 19 * * 0", timeZone: "America/Los_Angeles", approvalMode: "Review Required" })')) {
+  throw new Error("New Automation visible defaults are not initialized into submitted editor state.");
+}
+if (!main.includes("Promise.resolve(onRefresh()).catch") || !main.includes("}, 2500);")) {
+  throw new Error("Automations does not continuously refresh persisted scheduler/review state while idle.");
+}
+
+const requiredAutomationStateProjection = [
+  "automations: store.automations.slice(0, 200)",
+  "automationRuns: store.automationRuns.slice(0, 200)",
+  "reviewQueue: store.reviewQueue.slice(0, 100)"
+];
+const missingAutomationStateProjection = requiredAutomationStateProjection.filter((pattern) => !stateBlock.includes(pattern));
+if (missingAutomationStateProjection.length) {
+  throw new Error(`Automation persisted state is missing from /api/state projection:\n- ${missingAutomationStateProjection.join("\n- ")}`);
+}
+
 if (fs.existsSync(obsoleteGuardPath)) {
   throw new Error("Obsolete route-guards.css concealment still exists.");
 }

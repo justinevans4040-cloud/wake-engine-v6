@@ -3108,6 +3108,9 @@ function state() {
     exportInspections: store.exportInspections.slice(0, 24),
     intakeRuns: store.intakeRuns.slice(0, 12),
     intakeReviews: store.intakeReviews.slice(0, 6),
+    automations: store.automations.slice(0, 200),
+    automationRuns: store.automationRuns.slice(0, 200),
+    reviewQueue: store.reviewQueue.slice(0, 100),
     intakeRoots: INTAKE_ROOTS,
     llmBridge: {
       configuredUrls: OLLAMA_URLS,
@@ -3554,7 +3557,7 @@ app.post("/api/instructions/generate", async (req, res) => {
     if (!message) throw new Error("Instruction request message is required.");
     const llmStatus = await ollamaStatus();
     if (llmStatus?.live && llmStatus?.model) {
-      const prompt = `You are the WAKE Engine Operations Guide. The user says: "${message}"\nProvide a clear, step-by-step manual workflow using ONLY the existing WAKE Engine pipeline (Inbox -> Archivist -> Strategist -> Scriptwriter -> Creative Director -> QA -> Export). Tell them exactly what to click or type. Do not invent features. Format as markdown.`;
+      const prompt = `You are the WAKE Engine Operations Guide. The user says: "${message}"\nProvide a clear step-by-step workflow using ONLY capabilities that exist in the current WAKE Engine V6 desktop app. User-facing surfaces are Console, Agents, Cluster, Vault, Library, Instructions, Automations, Monitor, and Audit. Internal stages are Archivist, Strategist, Scriptwriter, Creative Director, QA, and Export; never present an internal stage as a clickable page. If the requested capability is not implemented, say so explicitly and give the closest supported workflow. Do not invent buttons, pages, publishing integrations, or file support. Format as markdown.`;
       const response = await fetch(`${llmStatus.url}/api/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -3574,104 +3577,204 @@ app.post("/api/instructions/generate", async (req, res) => {
         }
       }
     }
-    // Fallback static runbook
-    const staticRunbook = `# Manual Runbook for: ${message}
-
-Here is how to run this end-to-end using the WAKE Engine manual pipeline:
-
-1. **Inbox**: Drop your approved source materials into the Inbox.
-2. **Archivist**: Run the Archivist to extract the evidence map and citation list.
-3. **Strategist**: Run the Strategist to set your audience, promise, and call to action.
-4. **Scriptwriter & Creative Director**: Run the content agents to produce your scripts, hooks, and visual prompts.
-5. **QA**: Run QA to verify all claims are backed by your source evidence.
-6. **Export**: Export the final approved packet to your local directory.`;
+    const request = String(message).trim();
+    const lower = request.toLowerCase();
+    let steps;
+    if (/\b(?:runtime|health|cpu|memory|ram|status|monitor|telemetry)\b/.test(lower)) {
+      steps = [
+        "Open **Monitor** from the WAKE navigation.",
+        "Inspect the runtime truth labels, current tasks, CPU/RAM/system state, and any visible blockers.",
+        "Open **Audit** when you need a durable snapshot or recovery evidence for the current state.",
+        "Use **Console** only if the runtime finding requires new source-backed work; Monitor itself is the inspection surface."
+      ];
+    } else if (/schedule|automation|recurring|cron|run now/.test(lower)) {
+      steps = [
+        "Open **Automations** and choose **New Automation**.",
+        "Set the source directory, five-field cron schedule, timezone, operator ask, approval mode, and export directory.",
+        "Save the automation, then use **Resume/Pause** or **Run Now** as needed.",
+        "Use **Review Queue** for Review Required runs and **Run History** to inspect completed, skipped, or failed executions."
+      ];
+    } else if (/import|folder|vault|source|document|file/.test(lower)) {
+      steps = [
+        "Open **Vault** to review or import an approved local folder, or use **Console** to paste source text directly.",
+        "Review candidates before import when scanning a drive or folder.",
+        "Load the selected source, then open **Agents** to run the Tier Zero content workflow.",
+        "Inspect the resulting evidence and QA before exporting."
+      ];
+    } else if (/publish|post to|social network|instagram api|tiktok api|linkedin api/.test(lower)) {
+      steps = [
+        "WAKE V6 does **not** currently publish directly to social networks.",
+        "Build and QA the content in **Console / Agents / Cluster**.",
+        "Export the approved local output.",
+        "Publish the exported material manually in the destination platform."
+      ];
+    } else {
+      steps = [
+        "Start in **Console** with pasted approved source, or use **Vault** to import approved local source files.",
+        "Use **Agents** to run the Tier Zero pipeline: Archivist → Strategist → Scriptwriter → Creative Director → QA → Export.",
+        "Inspect evidence, claim support, and QA results; use **Cluster** to review the completed content packet and output lanes.",
+        "Export only after QA permits it, then use **Library** to find saved work and **Audit** for a durable snapshot when needed."
+      ];
+    }
+    const staticRunbook = [`# WAKE V6 Runbook: ${request}`, "", ...steps.map((step, index) => `${index + 1}. ${step}`)].join("\n");
     res.json({ ok: true, instructions: staticRunbook, generated: false });
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
   }
 });
 
-  app.post("/api/automations", (req, res) => {
+function automationValidationError(message) {
+  const error = new Error(message);
+  error.status = 400;
+  error.code = "WAKE_AUTOMATION_INVALID";
+  return error;
+}
+
+function validCronField(field, min, max) {
+  const segments = String(field || "").split(",");
+  if (!segments.length) return false;
+  return segments.every((segment) => {
+    const parts = segment.split("/");
+    if (parts.length > 2) return false;
+    const [base, rawStep] = parts;
+    if (rawStep !== undefined && (!/^\d+$/.test(rawStep) || Number(rawStep) < 1)) return false;
+    if (base === "*") return true;
+    if (base.includes("-")) {
+      const range = base.split("-");
+      if (range.length !== 2 || !range.every((value) => /^\d+$/.test(value))) return false;
+      const [from, to] = range.map(Number);
+      return from >= min && to <= max && from <= to;
+    }
+    if (rawStep !== undefined || !/^\d+$/.test(base)) return false;
+    const value = Number(base);
+    return value >= min && value <= max;
+  });
+}
+
+function validCronExpression(value) {
+  const fields = String(value || "").trim().split(/\s+/);
+  if (fields.length !== 5) return false;
+  return validCronField(fields[0], 0, 59) &&
+    validCronField(fields[1], 0, 23) &&
+    validCronField(fields[2], 1, 31) &&
+    validCronField(fields[3], 1, 12) &&
+    validCronField(fields[4], 0, 6);
+}
+
+function validTimeZone(value) {
+  try {
+    new Intl.DateTimeFormat("en-US", { timeZone: value }).format(new Date());
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function validateAutomationPayload(store, payload = {}) {
+  const automation = {
+    name: String(payload.name || "").trim(),
+    projectId: String(payload.projectId || "").trim(),
+    sourceDir: String(payload.sourceDir || "").trim(),
+    campaignType: String(payload.campaignType || "").trim(),
+    operatorAsk: String(payload.operatorAsk || "").trim(),
+    scheduleCron: String(payload.scheduleCron || "").trim(),
+    timeZone: String(payload.timeZone || "").trim(),
+    approvalMode: String(payload.approvalMode || "").trim(),
+    exportDir: String(payload.exportDir || "").trim()
+  };
+  if (!automation.name) throw automationValidationError("Automation name is required.");
+  if (!automation.projectId || !store.projects.some((project) => project.id === automation.projectId)) {
+    throw automationValidationError("Choose an existing WAKE project before saving the automation.");
+  }
+  if (!automation.sourceDir) throw automationValidationError("Source directory is required.");
+  if (containsCloudPath(automation.sourceDir)) throw automationValidationError("Automation source directories must be local and non-cloud-synchronized.");
+  if (!automation.campaignType) throw automationValidationError("Campaign type is required.");
+  if (!automation.operatorAsk) throw automationValidationError("Operator ask is required.");
+  if (!validCronExpression(automation.scheduleCron)) throw automationValidationError("Schedule must be a valid five-field cron expression using WAKE-supported ranges, lists, or steps.");
+  if (!automation.timeZone || !validTimeZone(automation.timeZone)) throw automationValidationError("Time zone must be a valid IANA timezone.");
+  if (!["Review Required", "Auto Export"].includes(automation.approvalMode)) throw automationValidationError("Approval mode must be Review Required or Auto Export.");
+  if (!automation.exportDir) throw automationValidationError("Export directory is required.");
+  if (containsCloudPath(automation.exportDir)) throw automationValidationError("Automation export directories must be local and non-cloud-synchronized.");
+  return automation;
+}
+
+app.post("/api/automations", (req, res) => {
+  try {
     const store = readStore();
-    const payload = req.body || {};
+    const validated = validateAutomationPayload(store, req.body || {});
     const automation = {
-      id: `auto-${Date.now()}`,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      id: id("auto"),
+      createdAt: now(),
+      updatedAt: now(),
       enabled: false,
-      name: payload.name || "Untitled",
-      projectId: payload.projectId || "",
-      sourceDir: payload.sourceDir || "",
-      campaignType: payload.campaignType || "",
-      operatorAsk: payload.operatorAsk || "",
-      scheduleCron: payload.scheduleCron || "",
-      timeZone: payload.timeZone || "UTC",
-      approvalMode: payload.approvalMode || "Review Required",
-      exportDir: payload.exportDir || ""
+      ...validated
     };
     store.automations.push(automation);
+    recordHistory(store, "automation.created", `Automation created: ${automation.name}`, { automationId: automation.id });
     writeStore(store, "created-automation");
     res.json({ ok: true, automation });
-  });
+  } catch (error) {
+    res.status(error.status || 500).json({ ok: false, code: error.code || null, error: error.message });
+  }
+});
 
-  app.put("/api/automations/:id", (req, res) => {
+app.put("/api/automations/:id", (req, res) => {
+  try {
     const store = readStore();
-    const index = store.automations.findIndex((a) => a.id === req.params.id);
-    if (index === -1) return res.status(404).json({ error: "Not found" });
-    const payload = req.body || {};
-    const safeUpdate = {
-      name: payload.name,
-      projectId: payload.projectId,
-      sourceDir: payload.sourceDir,
-      campaignType: payload.campaignType,
-      operatorAsk: payload.operatorAsk,
-      scheduleCron: payload.scheduleCron,
-      timeZone: payload.timeZone,
-      approvalMode: payload.approvalMode,
-      exportDir: payload.exportDir,
-      updatedAt: new Date().toISOString()
-    };
-    
-    // Remove undefined fields
-    Object.keys(safeUpdate).forEach(key => safeUpdate[key] === undefined && delete safeUpdate[key]);
-    
-    store.automations[index] = { ...store.automations[index], ...safeUpdate };
+    const index = store.automations.findIndex((automation) => automation.id === req.params.id);
+    if (index === -1) return res.status(404).json({ ok: false, error: "Automation not found." });
+    const validated = validateAutomationPayload(store, req.body || {});
+    store.automations[index] = { ...store.automations[index], ...validated, updatedAt: now() };
+    recordHistory(store, "automation.updated", `Automation updated: ${store.automations[index].name}`, { automationId: req.params.id });
     writeStore(store, "updated-automation");
     res.json({ ok: true, automation: store.automations[index] });
-  });
+  } catch (error) {
+    res.status(error.status || 500).json({ ok: false, code: error.code || null, error: error.message });
+  }
+});
 
-  app.delete("/api/automations/:id", (req, res) => {
-    const store = readStore();
-    store.automations = store.automations.filter((a) => a.id !== req.params.id);
-    writeStore(store, "deleted-automation");
-    res.json({ ok: true });
-  });
+app.delete("/api/automations/:id", (req, res) => {
+  const store = readStore();
+  const automation = store.automations.find((item) => item.id === req.params.id);
+  if (!automation) return res.status(404).json({ ok: false, error: "Automation not found." });
+  store.automations = store.automations.filter((item) => item.id !== req.params.id);
+  recordHistory(store, "automation.deleted", `Automation deleted: ${automation.name}`, { automationId: automation.id });
+  writeStore(store, "deleted-automation");
+  res.json({ ok: true });
+});
 
-  app.post("/api/automations/:id/toggle", (req, res) => {
-    const store = readStore();
-    const automation = store.automations.find((a) => a.id === req.params.id);
-    if (!automation) return res.status(404).json({ error: "Not found" });
-    automation.enabled = req.body.enabled;
-    writeStore(store, "toggled-automation");
-    res.json({ ok: true, enabled: automation.enabled });
-  });
+app.post("/api/automations/:id/toggle", (req, res) => {
+  const store = readStore();
+  const automation = store.automations.find((item) => item.id === req.params.id);
+  if (!automation) return res.status(404).json({ ok: false, error: "Automation not found." });
+  if (typeof req.body?.enabled !== "boolean") return res.status(400).json({ ok: false, code: "WAKE_AUTOMATION_INVALID", error: "enabled must be a boolean." });
+  automation.enabled = req.body.enabled;
+  automation.updatedAt = now();
+  recordHistory(store, "automation.toggled", `Automation ${automation.enabled ? "resumed" : "paused"}: ${automation.name}`, { automationId: automation.id, enabled: automation.enabled });
+  writeStore(store, "toggled-automation");
+  res.json({ ok: true, enabled: automation.enabled });
+});
 
-  app.post("/api/automations/:id/run", (req, res) => {
-    const store = readStore();
-    const automation = store.automations.find((a) => a.id === req.params.id);
-    if (!automation) return res.status(404).json({ error: "Not found" });
-    store.automationRuns = store.automationRuns || [];
-    store.automationRuns.unshift({
-      id: `run-${Date.now()}`,
-      automationId: automation.id,
-      status: "queued",
-      sourceHash: "manual-run",
-      createdAt: new Date().toISOString()
-    });
-    automation.forceRun = true;
-    writeStore(store, "manual-run-automation");
-    res.json({ ok: true });
-  });
+app.post("/api/automations/:id/run", (req, res) => {
+  const store = readStore();
+  const automation = store.automations.find((item) => item.id === req.params.id);
+  if (!automation) return res.status(404).json({ ok: false, error: "Automation not found." });
+  const existingQueued = store.automationRuns.find((run) => run.automationId === automation.id && run.status === "queued" && run.sourceHash === "manual-run");
+  if (existingQueued) return res.status(409).json({ ok: false, error: "A manual run is already queued for this automation." });
+  const run = {
+    id: id("run"),
+    automationId: automation.id,
+    status: "queued",
+    sourceHash: "manual-run",
+    createdAt: now()
+  };
+  store.automationRuns.unshift(run);
+  automation.forceRun = true;
+  automation.updatedAt = now();
+  recordHistory(store, "automation.run.queued", `Manual automation run queued: ${automation.name}`, { automationId: automation.id, runId: run.id });
+  writeStore(store, "manual-run-automation");
+  res.json({ ok: true, run });
+});
 
 app.post("/api/active-task", (req, res) => {
   try {

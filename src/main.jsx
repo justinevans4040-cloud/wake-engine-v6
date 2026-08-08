@@ -1625,7 +1625,7 @@ function IntakePanel({
   );
 }
 
-function AutomationsPanel({ state, onRefresh, setModal, setOperationError }) {
+function AutomationsPanel({ state, projectId, onRefresh, setModal, setOperationError }) {
   const [tab, setTab] = useState("active");
   const [busy, setBusy] = useState(false);
   const [editor, setEditor] = useState(null);
@@ -1633,6 +1633,20 @@ function AutomationsPanel({ state, onRefresh, setModal, setOperationError }) {
   const automations = state?.automations || [];
   const runs = state?.automationRuns || [];
   const reviewQueue = state?.reviewQueue || [];
+
+  useEffect(() => {
+    let alive = true;
+    const timer = window.setInterval(() => {
+      if (!alive || busy || editor) return;
+      Promise.resolve(onRefresh()).catch((error) => {
+        if (alive) setOperationError(error.message);
+      });
+    }, 2500);
+    return () => {
+      alive = false;
+      window.clearInterval(timer);
+    };
+  }, [busy, editor, onRefresh, setOperationError]);
 
   const handleToggle = async (id, enabled) => {
     setBusy(true);
@@ -1704,7 +1718,7 @@ function AutomationsPanel({ state, onRefresh, setModal, setOperationError }) {
           <label>Schedule Cron<input required placeholder="0 19 * * 0" pattern="^(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)$" title="Must be a valid 5-part cron expression" value={editor.scheduleCron || ""} onChange={e => setEditor({...editor, scheduleCron: e.target.value})} className="chat-input" /></label>
           <label>Time Zone<input required placeholder="America/Los_Angeles" value={editor.timeZone || "America/Los_Angeles"} onChange={e => setEditor({...editor, timeZone: e.target.value})} className="chat-input" /></label>
           <label>Approval Mode
-            <select value={editor.approvalMode || "Review Required"} onChange={e => setEditor({...editor, approvalMode: e.target.value})} className="chat-input">
+            <select aria-label="Approval Mode" value={editor.approvalMode || "Review Required"} onChange={e => setEditor({...editor, approvalMode: e.target.value})} className="chat-input">
               <option>Review Required</option>
               <option>Auto Export</option>
             </select>
@@ -1734,7 +1748,7 @@ function AutomationsPanel({ state, onRefresh, setModal, setOperationError }) {
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
                <h3>Configured Automations</h3>
-               <button className="primary-action" onClick={() => setEditor({})}>
+               <button className="primary-action" onClick={() => setEditor({ projectId: projectId || state?.projects?.[0]?.id || "wake-v6-main", campaignType: "Custom Prompt", scheduleCron: "0 19 * * 0", timeZone: "America/Los_Angeles", approvalMode: "Review Required" })}>
                  <Plus size={16} /> New Automation
                </button>
             </div>
@@ -3504,6 +3518,7 @@ function App() {
           {active === "automations" && (
             <AutomationsPanel 
               state={state} 
+              projectId={projectId}
               onRefresh={refresh}
               setModal={setModal} 
               setOperationError={setOperationError} 

@@ -20,16 +20,43 @@ function apiError(response, data) {
   return error;
 }
 
+function normalizeApiPath(path) {
+  const value = String(path || "");
+  if (value === "/api") return "/";
+  return value.startsWith("/api/") ? value.slice(4) : value;
+}
+
+function normalizeApiCall(path, body, options) {
+  const maybeMethod = typeof body === "string" ? body.toUpperCase() : "";
+  const explicitMethod = ["GET", "POST", "PUT", "PATCH", "DELETE"].includes(maybeMethod);
+  if (explicitMethod) {
+    return {
+      path: normalizeApiPath(path),
+      method: maybeMethod,
+      payload: ["GET", "HEAD"].includes(maybeMethod) ? undefined : options,
+      options: {}
+    };
+  }
+  return {
+    path: normalizeApiPath(path),
+    method: body === undefined || body === null ? "GET" : "POST",
+    payload: body === undefined || body === null ? undefined : body,
+    options: options || {}
+  };
+}
+
 export async function api(path, body, options = {}) {
+  const request = normalizeApiCall(path, body, options);
   const controller = new AbortController();
-  const timeoutMs = options.timeoutMs || DEFAULT_TIMEOUT_MS;
+  const timeoutMs = request.options.timeoutMs || DEFAULT_TIMEOUT_MS;
   const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+  const hasPayload = request.payload !== undefined;
 
   try {
-    const response = await fetch(`/api${path}`, {
-      method: body ? "POST" : "GET",
-      headers: body ? { "Content-Type": "application/json", ...(csrfToken ? { "X-Wake-CSRF": csrfToken } : {}) } : undefined,
-      body: body ? JSON.stringify(body) : undefined,
+    const response = await fetch(`/api${request.path}`, {
+      method: request.method,
+      headers: hasPayload ? { "Content-Type": "application/json", ...(csrfToken ? { "X-Wake-CSRF": csrfToken } : {}) } : undefined,
+      body: hasPayload ? JSON.stringify(request.payload) : undefined,
       credentials: "same-origin",
       signal: controller.signal
     });
@@ -53,7 +80,7 @@ export async function apiStream(path, body, onEvent, options = {}) {
   const timer = window.setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const response = await fetch(`/api${path}`, {
+    const response = await fetch(`/api${normalizeApiPath(path)}`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...(csrfToken ? { "X-Wake-CSRF": csrfToken } : {}) },
       body: JSON.stringify(body || {}),
