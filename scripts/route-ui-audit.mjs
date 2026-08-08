@@ -10,6 +10,9 @@ const require = createRequire(import.meta.url);
 const ROOT = path.join(__dirname, "..");
 const DATA_DIR = path.join(ROOT, ".route-ui-audit-run");
 const PROFILE_DIR = path.join(ROOT, ".route-ui-audit-profile");
+const AUTOMATION_SOURCE_DIR = path.join(DATA_DIR, "automation-source");
+const AUTOMATION_EXPORT_DIR = path.join(DATA_DIR, "automation-exports");
+const MISSING_SOURCE_DIR = path.join(DATA_DIR, "missing-source");
 const PORT = String(9110 + Math.floor(Math.random() * 200));
 
 const config = fs.readFileSync(path.join(ROOT, "src", "app-config.jsx"), "utf8");
@@ -86,10 +89,70 @@ async function enterApplication(page) {
   await appShell.waitFor({ state: "visible", timeout: 20000 });
 }
 
+async function getState(page) {
+  return page.evaluate(async () => {
+    const response = await fetch("/api/state", { credentials: "same-origin" });
+    if (!response.ok) throw new Error(`GET /api/state failed with ${response.status}`);
+    return response.json();
+  });
+}
+
+function automationRow(page, name) {
+  return page.locator(".automations-panel .library-list > div").filter({ hasText: name }).first();
+}
+
+async function openAutomations(page) {
+  await page.getByRole("button", { name: "Automations", exact: true }).click();
+  await page.locator(".automations-panel").waitFor({ state: "visible", timeout: 10000 });
+  await assertStandaloneIsolation(page, "automations");
+}
+
+async function createAutomation(page, details) {
+  await page.getByRole("button", { name: /New Automation/i }).click();
+  await page.locator(".automation-form").waitFor({ state: "visible", timeout: 10000 });
+  await assertStandaloneIsolation(page, "automations-edit");
+
+  await page.getByLabel("Name", { exact: true }).fill(details.name);
+  await page.getByLabel("Project ID", { exact: true }).fill("wake-v6-main");
+  await page.getByLabel("Source Directory", { exact: true }).fill(details.sourceDir);
+  await page.getByLabel("Campaign Type", { exact: true }).fill("Custom Prompt");
+  await page.getByLabel("Operator Ask (Strategist context)", { exact: true }).fill(details.operatorAsk);
+  await page.getByLabel("Schedule Cron", { exact: true }).fill("0 0 1 1 *");
+  await page.getByLabel("Time Zone", { exact: true }).fill("UTC");
+  await page.getByLabel("Approval Mode", { exact: true }).selectOption({ label: details.approvalMode });
+  await page.getByLabel("Export Directory", { exact: true }).fill(details.exportDir);
+  await page.getByRole("button", { name: "Save Automation", exact: true }).click();
+  await page.locator(".automations-panel").waitFor({ state: "visible", timeout: 10000 });
+  await automationRow(page, details.name).waitFor({ state: "visible", timeout: 10000 });
+}
+
+async function waitForAutomationOutcomes(page, ids, timeoutMs = 85000) {
+  const started = Date.now();
+  while (Date.now() - started < timeoutMs) {
+    const state = await getState(page);
+    const byAutomation = new Map((state.automationRuns || []).map((run) => [run.automationId, run]));
+    const reviewRun = byAutomation.get(ids.review);
+    const exportRun = byAutomation.get(ids.export);
+    const failureRun = byAutomation.get(ids.failure);
+    if (reviewRun?.status === "awaiting-review" && exportRun?.status === "completed" && failureRun?.status === "failed") {
+      return { state, reviewRun, exportRun, failureRun };
+    }
+    await page.waitForTimeout(1500);
+  }
+  const state = await getState(page);
+  throw new Error(`Automation outcomes did not settle in ${timeoutMs}ms. Runs: ${JSON.stringify(state.automationRuns || [])}`);
+}
+
 async function main() {
   fs.rmSync(DATA_DIR, { recursive: true, force: true });
   fs.rmSync(PROFILE_DIR, { recursive: true, force: true });
-  fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.mkdirSync(AUTOMATION_SOURCE_DIR, { recursive: true });
+  fs.mkdirSync(AUTOMATION_EXPORT_DIR, { recursive: true });
+  fs.writeFileSync(
+    path.join(AUTOMATION_SOURCE_DIR, "brief.txt"),
+    "ForgeFront Systems is testing WAKE V6 automation. The source-backed output must mention only this local test and must remain reviewable.",
+    "utf8"
+  );
 
   let electronPath;
   try {
@@ -120,6 +183,7 @@ async function main() {
   const errors = [];
   try {
     const page = await app.firstWindow();
+    page.on("dialog", (dialog) => dialog.accept());
     page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
     page.on("console", (message) => {
       if (message.type() === "error" && !message.text().includes("400 (Bad Request)")) {
@@ -163,28 +227,169 @@ async function main() {
       console.log(`  OK route ${route.id} -> ${route.label}`);
     }
 
+    // Instructions must execute, return implemented-surface guidance, reject unsupported claims, and remain isolated.
     await page.getByRole("button", { name: "Instructions", exact: true }).click();
     await page.locator(".instructions-container").waitFor({ state: "visible" });
-    await page.getByPlaceholder("What do you want to do simply?").fill("Show me how to inspect the local runtime.");
-    await page.getByRole("button", { name: "Get Instructions", exact: true }).waitFor();
+    const instructionInput = page.getByPlaceholder("What do you want to do simply?");
+    await instructionInput.fill("Show me how to inspect the local runtime.");
+    await page.getByRole("button", { name: "Get Instructions", exact: true }).click();
+    await page.locator(".instructions-result").waitFor({ state: "visible", timeout: 35000 });
+    const runtimeInstructions = await page.locator(".instructions-result").innerText();
+    if (!runtimeInstructions.includes("Monitor")) throw new Error(`Runtime instructions did not route to Monitor: ${runtimeInstructions}`);
+    if (!runtimeInstructions.includes("Audit")) throw new Error(`Runtime instructions did not mention Audit evidence: ${runtimeInstructions}`);
+    if (/\bInbox\b/.test(runtimeInstructions)) throw new Error(`Instructions invented obsolete Inbox surface: ${runtimeInstructions}`);
     await assertStandaloneIsolation(page, "instructions");
-    console.log("  OK Instructions standalone interaction contract");
 
-    await page.getByRole("button", { name: "Automations", exact: true }).click();
-    await page.locator(".automations-panel").waitFor({ state: "visible" });
+    await instructionInput.fill("Publish directly to Instagram for me.");
+    await page.getByRole("button", { name: "Get Instructions", exact: true }).click();
+    await page.locator(".instructions-result").waitFor({ state: "visible", timeout: 35000 });
+    await page.waitForFunction(() => document.querySelector(".instructions-result")?.textContent?.includes("does not currently publish directly"), null, { timeout: 35000 });
+    const unsupportedInstructions = await page.locator(".instructions-result").innerText();
+    if (!unsupportedInstructions.includes("does not currently publish directly")) {
+      throw new Error(`Instructions failed to refuse unsupported direct publishing: ${unsupportedInstructions}`);
+    }
+    await assertStandaloneIsolation(page, "instructions");
+    console.log("  OK Instructions end-to-end implemented-capability and unsupported-capability contracts");
+
+    // Automations must prove browser validation, create, persistence, edit, pause/resume, run-now,
+    // review, auto-export, failure recording, history, delete, and persistence after reload.
+    await openAutomations(page);
+    const stateBefore = await getState(page);
+    const baselineCount = stateBefore.automations?.length || 0;
+
     await page.getByRole("button", { name: /New Automation/i }).click();
-    await page.locator(".automation-form").waitFor({ state: "visible", timeout: 10000 });
-    await assertStandaloneIsolation(page, "automations-edit");
+    await page.locator(".automation-form").waitFor({ state: "visible" });
+    await page.getByRole("button", { name: "Save Automation", exact: true }).click();
+    if (await page.locator(".automation-form input:invalid, .automation-form textarea:invalid").count() === 0) {
+      throw new Error("Automation form accepted an empty required-field submission instead of browser-validating it.");
+    }
+    const invalidSubmitState = await getState(page);
+    if ((invalidSubmitState.automations?.length || 0) !== baselineCount) throw new Error("Invalid automation submission mutated persisted state.");
     await page.getByRole("button", { name: "Cancel", exact: true }).click();
-    await page.locator(".automations-panel").waitFor({ state: "visible", timeout: 10000 });
-    await assertStandaloneIsolation(page, "automations");
-    console.log("  OK Automations standalone edit contract");
+
+    const reviewName = "WAK7 Hostile Review Proof";
+    const exportName = "WAK7 Hostile Export Proof";
+    const failureName = "WAK7 Hostile Failure Proof";
+
+    await createAutomation(page, {
+      name: reviewName,
+      sourceDir: AUTOMATION_SOURCE_DIR,
+      operatorAsk: "Build a source-backed review packet from this local proof source.",
+      approvalMode: "Review Required",
+      exportDir: AUTOMATION_EXPORT_DIR
+    });
+    await createAutomation(page, {
+      name: exportName,
+      sourceDir: AUTOMATION_SOURCE_DIR,
+      operatorAsk: "Build and automatically export a QA-passing local proof packet.",
+      approvalMode: "Auto Export",
+      exportDir: AUTOMATION_EXPORT_DIR
+    });
+    await createAutomation(page, {
+      name: failureName,
+      sourceDir: MISSING_SOURCE_DIR,
+      operatorAsk: "This run must fail because the source directory does not exist.",
+      approvalMode: "Review Required",
+      exportDir: AUTOMATION_EXPORT_DIR
+    });
+
+    let persisted = await getState(page);
+    const reviewAutomation = persisted.automations.find((item) => item.name === reviewName);
+    const exportAutomation = persisted.automations.find((item) => item.name === exportName);
+    const failureAutomation = persisted.automations.find((item) => item.name === failureName);
+    if (!reviewAutomation || !exportAutomation || !failureAutomation) throw new Error("Automation create actions did not persist all three hostile proof records.");
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await enterApplication(page);
+    await openAutomations(page);
+    await automationRow(page, reviewName).waitFor({ state: "visible" });
+    await automationRow(page, exportName).waitFor({ state: "visible" });
+    await automationRow(page, failureName).waitFor({ state: "visible" });
+
+    let row = automationRow(page, reviewName);
+    await row.getByRole("button", { name: /Resume/i }).click();
+    await row.getByText("Active", { exact: true }).waitFor({ state: "visible", timeout: 10000 });
+    persisted = await getState(page);
+    if (persisted.automations.find((item) => item.id === reviewAutomation.id)?.enabled !== true) throw new Error("Resume did not persist enabled=true.");
+
+    row = automationRow(page, reviewName);
+    await row.getByRole("button", { name: /Pause/i }).click();
+    await row.getByText("Paused", { exact: true }).waitFor({ state: "visible", timeout: 10000 });
+    persisted = await getState(page);
+    if (persisted.automations.find((item) => item.id === reviewAutomation.id)?.enabled !== false) throw new Error("Pause did not persist enabled=false.");
+
+    row = automationRow(page, reviewName);
+    await row.getByRole("button", { name: /Edit/i }).click();
+    await page.locator(".automation-form").waitFor({ state: "visible" });
+    const editedName = "WAK7 Hostile Review Proof Edited";
+    await page.getByLabel("Name", { exact: true }).fill(editedName);
+    await page.getByRole("button", { name: "Save Automation", exact: true }).click();
+    await automationRow(page, editedName).waitFor({ state: "visible", timeout: 10000 });
+    persisted = await getState(page);
+    if (persisted.automations.find((item) => item.id === reviewAutomation.id)?.name !== editedName) throw new Error("Edit did not persist the new automation name.");
+
+    await automationRow(page, editedName).getByRole("button", { name: /Run Now/i }).click();
+    await automationRow(page, exportName).getByRole("button", { name: /Run Now/i }).click();
+    await automationRow(page, failureName).getByRole("button", { name: /Run Now/i }).click();
+
+    persisted = await getState(page);
+    for (const automationId of [reviewAutomation.id, exportAutomation.id, failureAutomation.id]) {
+      const queued = persisted.automationRuns.find((run) => run.automationId === automationId && run.status === "queued");
+      if (!queued) throw new Error(`Run Now did not persist a queued run for ${automationId}.`);
+    }
+
+    const outcomes = await waitForAutomationOutcomes(page, {
+      review: reviewAutomation.id,
+      export: exportAutomation.id,
+      failure: failureAutomation.id
+    });
+    if (!outcomes.state.reviewQueue.some((item) => item.automationId === reviewAutomation.id && item.status === "pending")) {
+      throw new Error("Review Required automation did not produce a pending review item.");
+    }
+    if (!Array.isArray(outcomes.exportRun.exportFiles) || outcomes.exportRun.exportFiles.length !== 2) {
+      throw new Error(`Auto Export did not produce exactly two artifacts: ${JSON.stringify(outcomes.exportRun)}`);
+    }
+    for (const artifact of outcomes.exportRun.exportFiles) {
+      if (!fs.existsSync(artifact.path)) throw new Error(`Auto Export artifact is missing on disk: ${artifact.path}`);
+    }
+    if (!/Source folder is empty, missing, or unsupported/.test(outcomes.failureRun.error || "")) {
+      throw new Error(`Missing-source failure was not recorded clearly: ${JSON.stringify(outcomes.failureRun)}`);
+    }
+
+    await page.getByRole("button", { name: /Review Queue \(/i }).click();
+    await page.getByRole("button", { name: "View Generated Packet", exact: true }).waitFor({ state: "visible", timeout: 10000 });
+    await assertStandaloneIsolation(page, "automations-review");
+    await page.getByRole("button", { name: "Run History", exact: true }).click();
+    const historyText = await page.locator(".automations-panel").innerText();
+    if (!historyText.includes("Status: awaiting-review")) throw new Error(`Run History omitted awaiting-review status: ${historyText}`);
+    if (!historyText.includes("Status: completed")) throw new Error(`Run History omitted completed status: ${historyText}`);
+    if (!historyText.includes("Status: failed")) throw new Error(`Run History omitted failed status: ${historyText}`);
+
+    await page.getByRole("button", { name: "Active Automations", exact: true }).click();
+    for (const name of [editedName, exportName, failureName]) {
+      const deleteRow = automationRow(page, name);
+      await deleteRow.getByRole("button", { name: /Delete/i }).click();
+      await deleteRow.waitFor({ state: "detached", timeout: 10000 });
+    }
+
+    persisted = await getState(page);
+    for (const automationId of [reviewAutomation.id, exportAutomation.id, failureAutomation.id]) {
+      if (persisted.automations.some((item) => item.id === automationId)) throw new Error(`Delete did not remove persisted automation ${automationId}.`);
+    }
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await enterApplication(page);
+    await openAutomations(page);
+    for (const name of [editedName, exportName, failureName]) {
+      if (await page.getByText(name, { exact: true }).count()) throw new Error(`Deleted automation reappeared after reload: ${name}`);
+    }
+    console.log("  OK Automations end-to-end CRUD, persistence, scheduler, review, export, failure, history, and delete contracts");
 
     if (errors.length) {
       throw new Error(`Route UI audit captured runtime errors:\n- ${errors.join("\n- ")}`);
     }
 
-    console.log(`Route UI audit passed for all ${routes.length} configured routes.`);
+    console.log(`Route UI audit passed for all ${routes.length} configured routes with hostile Instructions/Automations behavior coverage.`);
   } finally {
     await app.close().catch(() => {});
     fs.rmSync(DATA_DIR, { recursive: true, force: true });
