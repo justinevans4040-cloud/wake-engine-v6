@@ -7,6 +7,8 @@ This file maps every major submission claim to executable verification or inspec
 | Renderer builds from a clean install | `npm ci` and `npm run build` | GitHub Actions: `portable-verification` |
 | Deterministic six-stage runtime contract is intact | `npm run audit:runtime` | `scripts/runtime-contract-audit.mjs` and CI logs |
 | Scheduler parses cron, reuses manual records, skips unchanged source, exports packets, and records failures | `npm run audit:scheduler` | `scripts/scheduler-audit.mjs` and CI logs |
+| Review Required creates a pending review item and exposes the generated packet for inspection | `npm run audit:ui` | `scripts/route-ui-audit.mjs` and Windows CI logs |
+| Auto Export writes two real files after a QA-passing scheduled run | `npm run audit:ui` and `npm run audit:scheduler` | Electron hostile workflow plus scheduler audit |
 | Windows installer builds | `npm run package:installer` on `windows-latest` | CI artifact `wake-engine-v6-windows-installer` |
 | Installer artifact is identifiable | SHA-256 generation in Windows CI | `SHA256SUMS.txt` inside the installer artifact |
 | Production dependencies contain no known high-severity advisory at test time | `npm audit --omit=dev --audit-level=high` | GitHub Actions: `security` |
@@ -61,6 +63,7 @@ Historical evidence is useful background, but the final submission should cite t
 - Historical evidence does not automatically prove later code.
 - A generated artifact is not trusted without its checksum.
 - A feature shown in UI text is not treated as implemented unless executable behavior or code supports it.
+- A pending review item is not evidence of a persisted approve/reject decision; those controls are not current V6 functionality.
 - An optional provider or model is not treated as available unless the demonstration visibly connects and uses it.
 - Zero detected secrets means the configured scanner found none; it is not a mathematical guarantee.
 

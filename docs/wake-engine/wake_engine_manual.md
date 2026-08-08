@@ -18,7 +18,7 @@ WAKE Engine turns approved notes, transcripts, briefs, and local source files in
 2. Source loaded: generate a frame or run the content workflow.
 3. Packet generated: inspect **Cluster** and the QA evidence.
 4. Reusable workflow: configure **Automations**.
-5. Finished work: review, export, and save an **Audit** snapshot.
+5. Finished work: inspect or queue the packet for review, use the appropriate export path, and save an **Audit** snapshot.
 
 ## The nine product surfaces
 
@@ -36,7 +36,7 @@ A Console task is complete when the source is saved, the frame is generated, and
 - Run the six-stage workflow: Archivist → Strategist → Scriptwriter → Creative Director → QA → Export.
 - Inspect evidence, citations, scripts, platform variants, visual direction, tool receipts, memory receipts, and handoffs.
 - Use agent chat for questions about the current source.
-- Promote an approved result into the saved project workflow.
+- Promote a result you have personally approved into the saved project workflow.
 
 The agent workflow is deterministic and auditable. It should not be described as six independent language models.
 
@@ -44,7 +44,7 @@ The agent workflow is deterministic and auditable. It should not be described as
 
 - Review the completed content packet.
 - Inspect hooks, scripts, captions, platform lanes, visual prompts, claim maps, evidence, and QA results.
-- Export only after the packet passes review.
+- Export only after QA passes and you have personally inspected the packet.
 
 ### 4. Vault
 
@@ -83,7 +83,7 @@ The scheduler checks once per minute and supports `.txt`, `.md`, and `.json` sou
 
 #### Review Required
 
-The completed packet is placed into the review queue. This is the recommended mode for content intended for external publication.
+The completed packet is placed into a pending review queue. The current queue is inspection-only: you can open the generated packet, but it does not currently persist approve/reject/return/approve-and-export decisions. This is the recommended holding path for content that still needs human review before external publication.
 
 #### Automatic Export
 
@@ -118,8 +118,8 @@ WAKE uses atomic writes and write-ahead logging for tested recovery scenarios. T
 3. Run the agent workflow.
 4. Inspect evidence and claim mappings.
 5. Resolve any QA blockers.
-6. Review the final packet in Cluster.
-7. Export Markdown and JSON.
+6. Inspect the final packet in Cluster yourself and confirm QA has passed.
+7. Export Markdown and JSON when you choose to proceed, or use Review Required to hold scheduled output as a pending review item.
 8. Save an Audit snapshot.
 9. For recurring work, configure an Automation using Review Required.
 
@@ -150,5 +150,5 @@ npm run audit:ui
 - Ollama is optional and availability-dependent.
 - Scheduled source intake currently supports `.txt`, `.md`, and `.json`.
 - Dependency installation may require network access to npm.
-- Human review is recommended before public distribution.
+- Human review is recommended before public distribution; the current Review Required queue is inspection-only and does not currently persist approve/reject/return/approve-and-export decisions.
 - WAKE must run from a local, non-cloud-synchronized checkout.

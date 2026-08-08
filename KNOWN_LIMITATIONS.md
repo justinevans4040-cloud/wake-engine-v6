@@ -29,7 +29,7 @@ This document defines the current boundary of the product so judges and users ca
 - Optional Ollama enhancement depends on a separately installed and available local model.
 - The scheduler currently uses the deterministic workflow and does not invoke Ollama.
 - Automatic posting to social networks is not implemented.
-- Human review is recommended before external publication.
+- Human review is recommended before external publication. The current review queue is inspection-only: it exposes the generated packet but does not persist approve/reject/return/approve-and-export decisions.
 
 ### QA and evidence
 
@@ -67,4 +67,5 @@ This document defines the current boundary of the product so judges and users ca
 - guaranteed zero data loss;
 - guaranteed zero hallucinations;
 - six independent autonomous language-model agents;
-- unattended external publication without human authority.
+- unattended external publication without human authority;
+- persisted approve/reject/return/approve-and-export review decisions (planned Review workspace functionality).

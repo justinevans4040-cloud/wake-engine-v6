@@ -2,7 +2,7 @@
 
 ## System purpose
 
-WAKE Engine is a local-first Windows desktop workbench for transforming operator-approved source material into evidence-linked content packages with human review, durable state, and inspectable receipts.
+WAKE Engine is a local-first Windows desktop workbench for transforming operator-approved source material into evidence-linked content packages with a pending human review queue, QA-gated automatic export, durable state, and inspectable receipts.
 
 ## High-level architecture
 
@@ -17,9 +17,10 @@ flowchart LR
     B --> C[Scriptwriter]
     C --> D[Creative Director]
     D --> Q[QA Gate]
-    Q -->|pass| H[Human Review]
+    Q -->|pass| D{Disposition}
     Q -->|blocked| F[Repair Guidance]
-    H --> O[Markdown + JSON Export]
+    D -->|Review Required| H[Pending Review Queue]
+    D -->|Auto Export| O[Markdown + JSON Export]
     X --> P[Atomic State + WAL]
     P --> K[Recovery + Backup + Rollback]
     X --> V[Credential Vault]
@@ -52,7 +53,7 @@ The interface exposes nine product surfaces:
 ### Express loopback service
 
 - binds locally rather than exposing a public network service;
-- handles source intake, runtime execution, state, review, export, and audit operations;
+- handles source intake, runtime execution, state, review-queue state, export, and audit operations;
 - applies session, origin, and CSRF controls to protected operations.
 
 ### Deterministic content workflow
@@ -97,7 +98,7 @@ Credentials are stored through the operating-system-backed Electron provider whe
 
 ### Boundary 4 — QA and publication
 
-Generated material is not automatically equivalent to approved content. QA controls publishability, and human review remains the recommended final authority.
+Generated material is not automatically equivalent to approved content. QA controls automatic-export eligibility. Review Required creates a Pending Review Queue item for human inspection; current V6 does not persist approve/reject/return/approve-and-export decisions in that queue.
 
 ### Boundary 5 — Optional model provider
 
