@@ -3554,7 +3554,7 @@ app.post("/api/instructions/generate", async (req, res) => {
     if (!message) throw new Error("Instruction request message is required.");
     const llmStatus = await ollamaStatus();
     if (llmStatus?.live && llmStatus?.model) {
-      const prompt = `You are the WAKE Engine Operations Guide. The user says: "${message}"\nProvide a clear, step-by-step manual workflow using ONLY the existing WAKE Engine pipeline (Inbox -> Archivist -> Strategist -> Scriptwriter -> Creative Director -> QA -> Export). Tell them exactly what to click or type. Do not invent features. Format as markdown.`;
+      const prompt = `You are the WAKE Engine Operations Guide. The user says: "${message}"\nProvide a clear step-by-step workflow using ONLY capabilities that exist in the current WAKE Engine V6 desktop app. User-facing surfaces are Console, Agents, Cluster, Vault, Library, Instructions, Automations, Monitor, and Audit. Internal stages are Archivist, Strategist, Scriptwriter, Creative Director, QA, and Export; never present an internal stage as a clickable page. If the requested capability is not implemented, say so explicitly and give the closest supported workflow. Do not invent buttons, pages, publishing integrations, or file support. Format as markdown.`;
       const response = await fetch(`${llmStatus.url}/api/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -3574,17 +3574,46 @@ app.post("/api/instructions/generate", async (req, res) => {
         }
       }
     }
-    // Fallback static runbook
-    const staticRunbook = `# Manual Runbook for: ${message}
-
-Here is how to run this end-to-end using the WAKE Engine manual pipeline:
-
-1. **Inbox**: Drop your approved source materials into the Inbox.
-2. **Archivist**: Run the Archivist to extract the evidence map and citation list.
-3. **Strategist**: Run the Strategist to set your audience, promise, and call to action.
-4. **Scriptwriter & Creative Director**: Run the content agents to produce your scripts, hooks, and visual prompts.
-5. **QA**: Run QA to verify all claims are backed by your source evidence.
-6. **Export**: Export the final approved packet to your local directory.`;
+    const request = String(message).trim();
+    const lower = request.toLowerCase();
+    let steps;
+    if (/runtime|health|cpu|memory|ram|status|monitor|telemetry/.test(lower)) {
+      steps = [
+        "Open **Monitor** from the WAKE navigation.",
+        "Inspect the runtime truth labels, current tasks, CPU/RAM/system state, and any visible blockers.",
+        "Open **Audit** when you need a durable snapshot or recovery evidence for the current state.",
+        "Use **Console** only if the runtime finding requires new source-backed work; Monitor itself is the inspection surface."
+      ];
+    } else if (/schedule|automation|recurring|cron|run now/.test(lower)) {
+      steps = [
+        "Open **Automations** and choose **New Automation**.",
+        "Set the source directory, five-field cron schedule, timezone, operator ask, approval mode, and export directory.",
+        "Save the automation, then use **Resume/Pause** or **Run Now** as needed.",
+        "Use **Review Queue** for Review Required runs and **Run History** to inspect completed, skipped, or failed executions."
+      ];
+    } else if (/import|folder|vault|source|document|file/.test(lower)) {
+      steps = [
+        "Open **Vault** to review or import an approved local folder, or use **Console** to paste source text directly.",
+        "Review candidates before import when scanning a drive or folder.",
+        "Load the selected source, then open **Agents** to run the Tier Zero content workflow.",
+        "Inspect the resulting evidence and QA before exporting."
+      ];
+    } else if (/publish|post to|social network|instagram api|tiktok api|linkedin api/.test(lower)) {
+      steps = [
+        "WAKE V6 does **not** currently publish directly to social networks.",
+        "Build and QA the content in **Console / Agents / Cluster**.",
+        "Export the approved local output.",
+        "Publish the exported material manually in the destination platform."
+      ];
+    } else {
+      steps = [
+        "Start in **Console** with pasted approved source, or use **Vault** to import approved local source files.",
+        "Use **Agents** to run the Tier Zero pipeline: Archivist → Strategist → Scriptwriter → Creative Director → QA → Export.",
+        "Inspect evidence, claim support, and QA results; use **Cluster** to review the completed content packet and output lanes.",
+        "Export only after QA permits it, then use **Library** to find saved work and **Audit** for a durable snapshot when needed."
+      ];
+    }
+    const staticRunbook = [`# WAKE V6 Runbook: ${request}`, "", ...steps.map((step, index) => `${index + 1}. ${step}`)].join("\n");
     res.json({ ok: true, instructions: staticRunbook, generated: false });
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
