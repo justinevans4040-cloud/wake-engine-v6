@@ -123,7 +123,17 @@ async function createAutomation(page, details) {
   await page.getByLabel("Export Directory", { exact: true }).fill(details.exportDir);
   await page.getByRole("button", { name: "Save Automation", exact: true }).click();
   await page.locator(".automations-panel").waitFor({ state: "visible", timeout: 10000 });
-  await automationRow(page, details.name).waitFor({ state: "visible", timeout: 10000 });
+  const stateAfterSave = await getState(page);
+  const persistedRecord = (stateAfterSave.automations || []).find((item) => item.name === details.name);
+  if (!persistedRecord) {
+    const visibleState = await page.locator(".content-flow").innerText();
+    throw new Error(`Automation save returned to the list but did not persist "${details.name}". Persisted names: ${(stateAfterSave.automations || []).map((item) => item.name).join(" | ")}. Visible state: ${visibleState}`);
+  }
+  const savedRow = automationRow(page, details.name);
+  if (!(await savedRow.isVisible({ timeout: 5000 }).catch(() => false))) {
+    const panelText = await page.locator(".automations-panel").innerText();
+    throw new Error(`Automation "${details.name}" persisted as ${persistedRecord.id} but the refreshed Automation list did not render it. Panel: ${panelText}`);
+  }
 }
 
 async function waitForAutomationOutcomes(page, ids, timeoutMs = 85000) {
