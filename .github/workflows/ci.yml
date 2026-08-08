@@ -34,13 +34,14 @@ jobs:
           from pathlib import Path
           path = Path('src/main.jsx')
           text = path.read_text(encoding='utf-8')
-          old = '              onRefresh={fetchState} '
-          new = '              onRefresh={refresh} '
+          old = '              onRefresh={fetchState}'
+          new = '              onRefresh={refresh}'
           if text.count(old) != 1:
               raise SystemExit(f'Expected exactly one fetchState Automations wiring, found {text.count(old)}')
           text = text.replace(old, new, 1)
           if 'fetchState' in text:
               raise SystemExit('fetchState reference still remains in src/main.jsx')
+          text = text.replace('              onRefresh={refresh} \n', '              onRefresh={refresh}\n')
           path.write_text(text, encoding='utf-8')
           PY
 
