@@ -242,12 +242,19 @@ async function main() {
 
     await instructionInput.fill("Publish directly to Instagram for me.");
     await page.getByRole("button", { name: "Get Instructions", exact: true }).click();
-    await page.locator(".instructions-result").waitFor({ state: "visible", timeout: 35000 });
-    await page.waitForFunction(() => {
-      const text = document.querySelector(".instructions-result")?.textContent || "";
-      return text.replace(/\*\*/g, "").toLowerCase().includes("does not currently publish directly");
-    }, null, { timeout: 35000 });
-    const unsupportedInstructions = await page.locator(".instructions-result").innerText();
+    const unsupportedStarted = Date.now();
+    let unsupportedInstructions = "";
+    while (Date.now() - unsupportedStarted < 35000) {
+      if (await page.locator(".instructions-result").count()) {
+        unsupportedInstructions = await page.locator(".instructions-result").innerText();
+        if (unsupportedInstructions && unsupportedInstructions !== runtimeInstructions) break;
+      }
+      await page.waitForTimeout(250);
+    }
+    if (!unsupportedInstructions || unsupportedInstructions === runtimeInstructions) {
+      const visibleState = await page.locator(".content-flow").innerText();
+      throw new Error(`Instructions second request did not produce a new result. Visible state: ${visibleState}`);
+    }
     const normalizedUnsupportedInstructions = unsupportedInstructions.replace(/\*\*/g, "").toLowerCase();
     if (!normalizedUnsupportedInstructions.includes("does not currently publish directly")) {
       throw new Error(`Instructions failed to refuse unsupported direct publishing: ${unsupportedInstructions}`);
