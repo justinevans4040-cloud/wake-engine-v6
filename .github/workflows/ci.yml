@@ -16,7 +16,7 @@ permissions:
 jobs:
   wak7-refresh-repair:
     name: WAK-7 one-time refresh repair
-    if: github.event_name == 'push' && github.ref == 'refs/heads/agent/wak-7-complete-fix'
+    if: github.event_name == 'pull_request' && github.head_ref == 'agent/wak-7-complete-fix'
     runs-on: ubuntu-latest
     permissions:
       contents: write
