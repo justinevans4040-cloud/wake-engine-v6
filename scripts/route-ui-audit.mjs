@@ -83,8 +83,14 @@ async function enterApplication(page) {
     }
   }
 
-  if (await page.locator(".boot").isVisible({ timeout: 3000 }).catch(() => false)) {
-    await page.getByRole("button", { name: /Skip Boot/i }).click({ timeout: 3000 });
+  const boot = page.locator(".boot");
+  if (await boot.isVisible({ timeout: 3000 }).catch(() => false)) {
+    try {
+      await page.getByRole("button", { name: /Skip Boot/i }).click({ timeout: 3000 });
+    } catch (error) {
+      const bootStillVisible = await boot.isVisible({ timeout: 500 }).catch(() => false);
+      if (bootStillVisible) throw error;
+    }
   }
   await appShell.waitFor({ state: "visible", timeout: 20000 });
 }
