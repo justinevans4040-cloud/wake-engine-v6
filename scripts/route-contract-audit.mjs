@@ -34,15 +34,37 @@ function hasKey(source, id) {
   return new RegExp(`(?:^|[,{\\n])\\s*${id}\\s*:\\s*`, "m").test(source);
 }
 
-const tabsBlock = configBlock("tabs", "export const abilityBlueprints");
+const primaryTabsBlock = configBlock("primaryTabs", "export const secondaryTabs");
+const secondaryTabsBlock = configBlock("secondaryTabs", "export const legacyTabs");
+const legacyTabsBlock = configBlock("legacyTabs", "export const tabs");
 const blueprintBlock = configBlock("abilityBlueprints", "export const abilityAgentDefaults");
 const defaultsBlock = configBlock("abilityAgentDefaults", "export const polishPrompts");
 const promptsBlock = configBlock("polishPrompts", "export const bootLines");
-const tabMatches = [...tabsBlock.matchAll(/id:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)"/g)];
-const tabIds = tabMatches.map((match) => match[1]);
+const primaryTabMatches = [...primaryTabsBlock.matchAll(/id:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)"/g)];
+const secondaryTabMatches = [...secondaryTabsBlock.matchAll(/id:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)"/g)];
+const legacyTabMatches = [...legacyTabsBlock.matchAll(/id:\s*"([^"]+)"\s*,\s*label:\s*"([^"]+)"/g)];
+const primaryTabIds = primaryTabMatches.map((match) => match[1]);
+const secondaryTabIds = secondaryTabMatches.map((match) => match[1]);
+const tabIds = [...primaryTabIds, ...secondaryTabIds, ...legacyTabMatches.map((match) => match[1])];
 
 if (!tabIds.length) throw new Error("No WAKE routes found in tabs.");
 if (new Set(tabIds).size !== tabIds.length) throw new Error(`Duplicate route IDs: ${tabIds.join(", ")}`);
+if (primaryTabIds.join(",") !== "project,sources,create,review,export") {
+  throw new Error(`WAK-8 primary navigation must be exactly Project -> Sources -> Create -> Review -> Export. Found: ${primaryTabIds.join(" -> ")}`);
+}
+if (secondaryTabIds.join(",") !== "library,system") {
+  throw new Error(`WAK-8 secondary navigation must be exactly Library | System. Found: ${secondaryTabIds.join(" | ")}`);
+}
+const primaryLabels = primaryTabMatches.map((match) => match[2]);
+if (primaryLabels.some((label) => /^(Agents|Cluster|Vault|Automations|Monitor|Audit|Instructions|Voice)$/i.test(label))) {
+  throw new Error(`Legacy/secondary destinations still compete inside primaryTabs: ${primaryLabels.join(", ")}`);
+}
+if (!main.includes("{primaryTabs.map") || !main.includes("{secondaryTabs.map")) {
+  throw new Error("Renderer does not use separate primary and secondary navigation.");
+}
+if (main.includes("{tabs.map(({ id, label, icon: Icon })")) {
+  throw new Error("Renderer still maps the combined route registry as primary navigation.");
+}
 
 const signalsBlock = sliceBetween(main, "  const signals = {", "\n  };\n  const routeSignals", "abilitySignals map");
 const readinessBlock = sliceBetween(main, "  const readyByAbility = {", "\n  };\n  const ready =", "readyByAbility map");
@@ -91,14 +113,11 @@ if (missingFailures.length) {
   throw new Error(`Missing fail-closed route protections:\n- ${missingFailures.join("\n- ")}`);
 }
 
-if (!main.includes('const standaloneRoutes = new Set(["instructions", "automations"]);')) {
-  throw new Error("Standalone route declaration is missing or changed.");
+if (!main.includes('active === "create" || active === "review" || active === "console" || active === "cluster" || active === "agent"')) {
+  throw new Error("Context agents are not limited to Create/Review-compatible work surfaces.");
 }
-if (!main.includes('active !== "console" && active !== "cluster" && !standaloneRoutes.has(active)')) {
-  throw new Error("Standalone routes are not excluded from the shared ability scaffold in React.");
-}
-if (!main.includes('standaloneRoutes.has(active) ? null : sectionAgentChat')) {
-  throw new Error("Standalone routes are not excluded from shared agent chat in React.");
+if (!main.includes('active === "system" || active === "automations"') || !main.includes('active === "system" || active === "tasks"') || !main.includes('active === "system" || active === "snapshot"') || !main.includes('active === "system" || active === "instructions"')) {
+  throw new Error("System route does not own automations, monitor, audit, and instructions.");
 }
 if (main.includes("fetchState")) {
   throw new Error("Undefined fetchState wiring remains in the WAKE renderer.");
@@ -139,4 +158,4 @@ if (config.includes("route-guards.css")) {
   throw new Error("app-config still imports the obsolete CSS concealment.");
 }
 
-console.log(`Hostile route contract audit passed for ${tabIds.length} routes: ${tabIds.join(", ")}`);
+console.log(`WAK-8 route contract audit passed for ${primaryTabIds.join(" -> ")} with secondary ${secondaryTabIds.join(" | ")}`);

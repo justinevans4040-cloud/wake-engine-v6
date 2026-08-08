@@ -500,6 +500,51 @@ async function main() {
     if (!intake.run || intake.run.scanned < 4 || intake.run.sourceAdded < 1 || intake.run.mediaAdded > 1 || intake.run.skippedOperational < 0) throw new Error("intake review apply failed content-based source eligibility");
     ok("ip/media intake review gate");
 
+    const seedUploadText = "# Brand SEED Voice\n\nKitchen Reset Service is plainspoken, proof-first, kind, and practical. The brand never invents results. It uses before-after proof, labeled zones, donation pickup coordination, and a simple maintenance plan as its core content pillars.";
+    const seedUploadReview = await fetchJson("/api/intake/upload-review", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        projectId: project.project.id,
+        seedName: "Brand SEED",
+        intent: "Brand seed folder for the home organizer campaign. Include voice notes, proof, source copy, and campaign visuals.",
+        files: [
+          {
+            name: "brand-seed.md",
+            relativePath: "Brand SEED/voice/brand-seed.md",
+            size: Buffer.byteLength(seedUploadText),
+            type: "text/markdown",
+            lastModified: Date.now(),
+            text: seedUploadText
+          },
+          {
+            name: "organizer-before-after-proof.png",
+            relativePath: "Brand SEED/proof/organizer-before-after-proof.png",
+            size: 2048,
+            type: "image/png",
+            lastModified: Date.now(),
+            text: ""
+          }
+        ]
+      })
+    });
+    const seedCandidates = seedUploadReview.review?.candidates || [];
+    const seedByName = Object.fromEntries(seedCandidates.map((candidate) => [candidate.name, candidate]));
+    if (seedByName["brand-seed.md"]?.decisionStatus !== "recommended") throw new Error("SEED upload did not recommend brand seed source text");
+    if (!seedByName["organizer-before-after-proof.png"]?.eligible) throw new Error("SEED upload did not keep campaign proof media eligible");
+    const seedApply = await fetchJson(`/api/intake/reviews/${encodeURIComponent(seedUploadReview.review.id)}/apply`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ candidateIds: [seedByName["brand-seed.md"].reviewId, seedByName["organizer-before-after-proof.png"].reviewId] })
+    });
+    if (seedApply.result?.sourceAdded < 1 || seedApply.result?.mediaAdded < 1) throw new Error("SEED upload apply did not import source text and media metadata");
+    const seedState = await fetchJson("/api/state");
+    const seedSource = (seedState.recentSources || []).find((item) => item.sourceType === "browser_seed_upload" && /brand-seed/i.test(item.title));
+    if (!seedSource?.id) throw new Error("SEED upload source did not persist with browser_seed_upload type");
+    const seedDocument = await fetchJson(`/api/sources/${encodeURIComponent(seedSource.id)}/content`);
+    if (!seedDocument.document?.content?.includes("plainspoken, proof-first, kind, and practical")) throw new Error("SEED upload source content was not preserved after import");
+    ok("browser SEED upload review gate");
+
     const cluster = await fetchJson("/api/content-cluster", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

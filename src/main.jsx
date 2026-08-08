@@ -20,6 +20,7 @@ import {
   Edit2,
   FileText,
   Filter,
+  FolderInput,
   Gauge,
   HardDrive,
   Heart,
@@ -67,6 +68,8 @@ import {
   bootLines,
   emblemSrc,
   polishPrompts,
+  primaryTabs,
+  secondaryTabs,
   statusTone,
   tabs,
   voicePresets
@@ -75,6 +78,14 @@ import "./styles.css";
 
 const BOOT_SEQUENCE_MS = 6500;
 const standaloneRoutes = new Set(["instructions", "automations"]);
+const createRoutes = new Set(["create", "console"]);
+const SEED_TEXT_EXTENSIONS = new Set([".txt", ".md", ".markdown", ".json", ".jsonl", ".csv", ".tsv", ".yaml", ".yml", ".html", ".htm", ".css", ".js", ".jsx", ".ts", ".tsx", ".rtf"]);
+const SEED_MAX_FILES = 500;
+const SEED_MAX_BYTES = 25 * 1024 * 1024;
+const SEED_MAX_TEXT_BYTES = 750 * 1024;
+const sourcesRoutes = new Set(["sources", "vault"]);
+const reviewRoutes = new Set(["review"]);
+const exportRoutes = new Set(["export"]);
 
 function Pill({ children, tone = "queued" }) {
   return <span className={`pill ${statusTone[tone] || tone}`}>{children}</span>;
@@ -108,6 +119,109 @@ function sourceDocumentBody(value) {
   const text = String(value || "");
   const marker = text.search(/^##\s+Extracted Content\s*$/im);
   return marker >= 0 ? text.slice(marker).replace(/^##\s+Extracted Content\s*$/im, "").trim() : text;
+}
+
+function seedExtension(name = "") {
+  const match = String(name).toLowerCase().match(/\.[^.\\/]+$/);
+  return match ? match[0] : "";
+}
+
+function seedRelativePath(file, fallbackName = "") {
+  return String(file?.webkitRelativePath || fallbackName || file?.name || "seed-file").replace(/\\/g, "/").replace(/^\/+/, "");
+}
+
+function readFileText(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(reader.error || new Error("Could not read SEED file."));
+    reader.readAsText(file);
+  });
+}
+
+function readDirectoryBatch(reader) {
+  return new Promise((resolve, reject) => {
+    reader.readEntries(resolve, reject);
+  });
+}
+
+async function collectSeedEntry(entry, prefix, collector, limits) {
+  if (!entry || collector.length >= SEED_MAX_FILES || limits.bytes >= SEED_MAX_BYTES) return;
+  if (entry.isFile) {
+    const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+    const nextBytes = limits.bytes + Number(file.size || 0);
+    if (nextBytes > SEED_MAX_BYTES) {
+      limits.limitHit = true;
+      return;
+    }
+    limits.bytes = nextBytes;
+    collector.push({ file, relativePath: `${prefix}${file.name}` });
+    if (collector.length >= SEED_MAX_FILES) limits.limitHit = true;
+    return;
+  }
+  if (entry.isDirectory) {
+    const reader = entry.createReader();
+    const nextPrefix = `${prefix}${entry.name}/`;
+    while (collector.length < SEED_MAX_FILES && limits.bytes < SEED_MAX_BYTES) {
+      const batch = await readDirectoryBatch(reader);
+      if (!batch.length) break;
+      for (const child of batch) {
+        await collectSeedEntry(child, nextPrefix, collector, limits);
+        if (collector.length >= SEED_MAX_FILES || limits.bytes >= SEED_MAX_BYTES) break;
+      }
+    }
+  }
+}
+
+async function readSeedDrop(dataTransfer) {
+  const collector = [];
+  const limits = { bytes: 0, limitHit: false };
+  const items = [...(dataTransfer?.items || [])];
+  const entries = items.map((item) => item.webkitGetAsEntry?.()).filter(Boolean);
+  if (entries.length) {
+    for (const entry of entries) {
+      await collectSeedEntry(entry, "", collector, limits);
+    }
+  } else {
+    for (const file of [...(dataTransfer?.files || [])]) {
+      const nextBytes = limits.bytes + Number(file.size || 0);
+      if (collector.length >= SEED_MAX_FILES || nextBytes > SEED_MAX_BYTES) {
+        limits.limitHit = true;
+        break;
+      }
+      limits.bytes = nextBytes;
+      collector.push({ file, relativePath: seedRelativePath(file) });
+    }
+  }
+  const seedName = entries[0]?.isDirectory ? entries[0].name : seedRelativePath(collector[0]?.file, collector[0]?.relativePath).split("/")[0] || "Dropped SEED Folder";
+  return { seedName, entries: collector, limitHit: limits.limitHit };
+}
+
+async function prepareSeedUpload(seedInput) {
+  const entries = Array.isArray(seedInput?.entries)
+    ? seedInput.entries
+    : [...(seedInput || [])].map((file) => ({ file, relativePath: seedRelativePath(file) }));
+  if (!entries.length) throw new Error("Drop a SEED folder or choose one before review.");
+  const seedName = seedInput?.seedName || seedRelativePath(entries[0].file, entries[0].relativePath).split("/")[0] || "SEED Folder";
+  let totalBytes = 0;
+  const files = [];
+  for (const entry of entries.slice(0, SEED_MAX_FILES)) {
+    const file = entry.file;
+    const relativePath = seedRelativePath(file, entry.relativePath);
+    totalBytes += Number(file.size || 0);
+    if (totalBytes > SEED_MAX_BYTES) throw new Error(`SEED upload is capped at ${Math.round(SEED_MAX_BYTES / 1024 / 1024)} MB per review.`);
+    const ext = seedExtension(relativePath || file.name);
+    const text = SEED_TEXT_EXTENSIONS.has(ext) && Number(file.size || 0) <= SEED_MAX_TEXT_BYTES ? await readFileText(file) : "";
+    files.push({
+      name: file.name || relativePath.split("/").pop() || "seed-file",
+      relativePath,
+      size: Number(file.size || text.length || 0),
+      type: file.type || "",
+      lastModified: file.lastModified || Date.now(),
+      text
+    });
+  }
+  return { seedName, files, limitHit: Boolean(seedInput?.limitHit || entries.length > SEED_MAX_FILES) };
 }
 
 function chatProviderLabel(chat, llmStatus) {
@@ -250,6 +364,36 @@ function abilitySignals({ active, state, source, output, cluster, system, llmSta
   const hasOutput = output ? "ready" : "none";
   const sourceChars = source?.length || 0;
   const signals = {
+    project: [
+      ["Projects", state.projects.length],
+      ["Sources", state.runtime.sources],
+      ["Pending", state.reviewQueue?.length || 0]
+    ],
+    sources: [
+      ["Sources", state.runtime.sources],
+      ["Media", state.mediaSummary?.total || 0],
+      ["Shown", filteredSources?.length || 0]
+    ],
+    create: [
+      ["Source", `${sourceChars.toLocaleString()} chars`],
+      ["Packet", hasOutput],
+      ["Agents", `${state.agentPipeline?.length || 0} live`]
+    ],
+    review: [
+      ["Pending", state.reviewQueue?.length || 0],
+      ["Packet", output ? "current" : "none"],
+      ["QA", output?.qaVerdict?.verdict || output?.tierZeroQa?.verdict || output?.qaGate?.verdict || "waiting"]
+    ],
+    export: [
+      ["Preview", output ? "ready" : "waiting"],
+      ["Exports", state.runtime.exports],
+      ["Saved", state.recentExports?.length || 0]
+    ],
+    system: [
+      ["Automations", state.automations?.length || 0],
+      ["Runs", state.automationRuns?.length || 0],
+      ["Runtime", system?.runtime ? `:${system.runtime.port}` : ":8786"]
+    ],
     console: [
       ["Source", `${sourceChars.toLocaleString()} chars`],
       ["Output", hasOutput],
@@ -307,6 +451,12 @@ function AbilityCommandHeader({ active, state, source, output, cluster, system, 
   const Icon = ability.icon;
   const signals = abilitySignals({ active, state, source, output, cluster, system, llmStatus, filteredSources });
   const readyByAbility = {
+    project: Boolean(state.projects?.length),
+    sources: Boolean(filteredSources?.length || state.runtime?.sources),
+    create: Boolean(source?.trim() || output),
+    review: Boolean(output || state.reviewQueue?.length),
+    export: Boolean(output || state.recentExports?.length),
+    system: Boolean(system || state.automations?.length || state.runtime?.snapshots),
     console: Boolean(output),
     agent: Boolean(latestChat?.answer || output),
     cluster: Boolean(cluster),
@@ -391,6 +541,36 @@ function AbilityActionRail({
   onOpenFolder
 }) {
   const actionSets = {
+    project: [
+      ["Open Sources", Vault, () => onGo("sources"), false],
+      ["Open Create", Workflow, () => onGo("create"), false],
+      ["Open Review", ListChecks, () => onGo("review"), false]
+    ],
+    sources: [
+      ["Review Intake", Images, onRunIntake, false],
+      ["Open Create", Workflow, () => onGo("create"), false],
+      ["Open Data", Database, () => onOpenFolder("data"), false]
+    ],
+    create: [
+      ["Save Source", Save, onSaveSource, false],
+      ["Run Tier Zero", Play, onRunAgent, !hasSource],
+      ["Build Cluster", Layers, onBuildCluster, false]
+    ],
+    review: [
+      ["Run Tier Zero", Play, onRunAgent, !hasSource],
+      ["Build Cluster", Layers, onBuildCluster, false],
+      ["Open Export", Download, () => onGo("export"), !output && !cluster]
+    ],
+    export: [
+      ["Export Packet", Download, onExport, !output],
+      ["Open Exports", Download, () => onOpenFolder("exports"), false],
+      ["Open Library", Library, () => onGo("library"), false]
+    ],
+    system: [
+      ["Open Data", Database, () => onOpenFolder("data"), false],
+      ["Save Snapshot", Camera, onSaveSnapshot, false],
+      ["Open Project", TerminalSquare, () => onGo("project"), false]
+    ],
     console: [
       ["Save Source", Save, onSaveSource, false],
       ["Generate Frame", Zap, onGenerateFrame, false],
@@ -495,7 +675,107 @@ function NextStepPanel({
   const page = tabs.find((item) => item.id === active);
   let step = null;
 
-  if (active === "console") {
+  if (active === "project") {
+    step = !state.runtime.sources
+      ? {
+          title: "Start with sources",
+          detail: "Create or choose a project, then bring in local source material before generating.",
+          button: "Open Sources",
+          action: () => onGo("sources"),
+          tone: "live"
+        }
+      : output
+      ? {
+          title: "Inspect the current packet",
+          detail: "There is generated work in memory. Review QA and evidence before exporting.",
+          button: "Open Review",
+          action: () => onGo("review"),
+          tone: "live"
+        }
+      : {
+          title: "Continue into creation",
+          detail: "Project sources are available. Load one into Create or paste fresh source material.",
+          button: "Open Create",
+          action: () => onGo("create"),
+          tone: "live"
+        };
+  } else if (active === "sources") {
+    step = {
+      title: state.runtime.sources ? "Load source into Create" : "Review intake before import",
+      detail: state.runtime.sources
+        ? "Search the project inventory, open a source, then load it into the creation workflow."
+        : "Use the intake review controls to stage local files, then import only the selected source material.",
+      button: state.runtime.sources ? "Open Create" : "Stay in Sources",
+      action: () => onGo("sources"),
+      tone: "live"
+    };
+  } else if (active === "create") {
+    if (!hasSource) {
+      step = {
+        title: "Choose or paste source material",
+        detail: "Create is source-first. Load from Sources or paste material before generating a packet.",
+        button: "Open Sources",
+        action: () => onGo("sources"),
+        tone: "partial"
+      };
+    } else if (!output) {
+      step = {
+        title: "Generate the packet",
+        detail: "Run campaign creation, Tier Zero agents, or cluster tools against the current source.",
+        button: "Run Tier Zero",
+        action: onRunAgent,
+        tone: "live"
+      };
+    } else {
+      step = {
+        title: "Move to review",
+        detail: "A generated packet exists. Inspect QA, evidence, platform variants, and review queue items before export.",
+        button: "Open Review",
+        action: () => onGo("review"),
+        tone: "live"
+      };
+    }
+  } else if (active === "review") {
+    step = output || cluster || state.reviewQueue?.length
+      ? {
+          title: "Inspect before export",
+          detail: "Review the current packet and pending Review Required queue items. Approval decisions are reserved for WAK-11.",
+          button: "Open Export",
+          action: () => onGo("export"),
+          tone: "live"
+        }
+      : {
+          title: "Create something reviewable",
+          detail: "Review surfaces generated packets and scheduler queue items. Create a packet first if the queue is empty.",
+          button: "Open Create",
+          action: () => onGo("create"),
+          tone: "partial"
+        };
+  } else if (active === "export") {
+    step = output || cluster
+      ? {
+          title: "Export Markdown and JSON",
+          detail: "Export writes the existing real bundle and records inspection. A review item is not treated as approved here.",
+          button: "Export Packet",
+          action: onExport,
+          tone: "live"
+        }
+      : {
+          title: "Load or create a packet",
+          detail: "Open Library for saved work or Create for a new generated packet before exporting.",
+          button: "Open Library",
+          action: () => onGo("library"),
+          tone: "partial"
+        };
+  } else if (active === "system") {
+    step = {
+      title: "System tools are secondary",
+      detail: "Automations, Monitor, Audit, Instructions, Voice, and data protection stay here so production work stays clean.",
+      button: "Open Project",
+      action: () => onGo("project"),
+      tone: "done"
+    };
+  } else if (active === "console") {
     if (!hasSource) {
       step = {
         title: "Paste the task or source",
@@ -1441,7 +1721,7 @@ function AgentSourcePanel({
   const currentTitle = selectedSource?.title?.replace(/^\[[^\]]+\]\s*/, "") || (hasSource ? "Unsaved pasted source" : "No source selected");
   const preview = hasSource
     ? (selectedSource?.excerpt || source).slice(0, 340)
-    : "Select a saved project source below or open Console to paste new source material. Agents will not run blind.";
+    : "Select a saved project source below or open Sources to import new source material. Agents will not run blind.";
   const visibleSources = projectSources.slice(0, 8);
   return (
     <Panel className={`agent-source-panel ${hasSource ? "source-ready" : "source-missing"}`}>
@@ -1489,8 +1769,8 @@ function AgentSourcePanel({
           <Play size={16} />
         </button>
         <button type="button" className="mini-action" onClick={onOpenConsole}>
-          Open Console
-          <TerminalSquare size={16} />
+          Open Sources
+          <Vault size={16} />
         </button>
       </div>
     </Panel>
@@ -1509,6 +1789,7 @@ function IntakePanel({
   onRefreshIntakeTargets,
   onRunIntake,
   onReviewIntake,
+  onReviewSeedUpload,
   intakeReview,
   intakeReviewSelection,
   onToggleReviewCandidate,
@@ -1522,13 +1803,82 @@ function IntakePanel({
   const removableDrives = driveTargets?.removableDrives || [];
   const fixedDrives = driveTargets?.fixedDrives || [];
   const allDriveRoots = fixedDrives.map((drive) => drive.root);
+  const seedInputRef = useRef(null);
+  const [seedDragActive, setSeedDragActive] = useState(false);
+  const [seedReadBusy, setSeedReadBusy] = useState(false);
+  const seedBusy = intakeBusy || seedReadBusy;
+
+  async function handleSeedInput(seedInput) {
+    setSeedReadBusy(true);
+    try {
+      const payload = await prepareSeedUpload(seedInput);
+      await onReviewSeedUpload(payload);
+    } catch (error) {
+      setModal({ title: "SEED Folder Review", body: error.message, error: true });
+    } finally {
+      setSeedReadBusy(false);
+    }
+  }
+
+  async function handleSeedDrop(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (seedBusy) return;
+    setSeedDragActive(false);
+    const seedInput = await readSeedDrop(event.dataTransfer);
+    await handleSeedInput(seedInput);
+  }
+
   return (
     <Panel className="intake-panel">
       <PanelTitle icon={Images} title="Import Project Sources" right={<Pill tone="live">{projectMedia.length} Media</Pill>} />
+      <div
+        className={`seed-drop-zone ${seedDragActive ? "dragging" : ""} ${seedBusy ? "busy" : ""}`}
+        onDragEnter={(event) => {
+          event.preventDefault();
+          if (!seedBusy) setSeedDragActive(true);
+        }}
+        onDragOver={(event) => {
+          event.preventDefault();
+          if (event.dataTransfer) event.dataTransfer.dropEffect = "copy";
+        }}
+        onDragLeave={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setSeedDragActive(false);
+        }}
+        onDrop={handleSeedDrop}
+      >
+        <input
+          ref={seedInputRef}
+          type="file"
+          multiple
+          webkitdirectory=""
+          directory=""
+          hidden
+          aria-label="Choose SEED folder"
+          onChange={(event) => {
+            const files = [...(event.target.files || [])];
+            event.target.value = "";
+            handleSeedInput(files);
+          }}
+        />
+        <div>
+          <small>SEED folder</small>
+          <strong>{seedBusy ? "Reading SEED..." : "Drop brand seed here"}</strong>
+          <span>Docs, copy, scripts, proof, references, prompts, and media.</span>
+        </div>
+        <button type="button" className="primary-action" disabled={seedBusy} onClick={() => seedInputRef.current?.click()}>
+          Choose SEED Folder
+          <FolderInput size={16} />
+        </button>
+      </div>
       <div className="intake-toolbar">
         <button type="button" className="primary-action intake-run" disabled={intakeBusy} onClick={() => onRunIntake()}>
           Import Listed Folders
           <Zap size={16} />
+        </button>
+        <button type="button" className="primary-action intake-run" disabled={intakeBusy} onClick={() => onReviewIntake()}>
+          Review Listed Folders
+          <ListChecks size={16} />
         </button>
         <button type="button" className="primary-action intake-run" disabled={intakeBusy || !contentRoots.length} onClick={() => onRunIntake(contentRoots, "user content folders")}>
           Scan My Content Folders
@@ -1611,7 +1961,7 @@ function IntakePanel({
       <div className="media-vault-list">
         {projectMedia.slice(0, 12).map((asset) => (
           <button key={asset.id} type="button" onClick={() => onOpenMediaAsset(asset)}>
-            {asset.kind === "image" ? (
+            {asset.kind === "image" && asset.previewAvailable !== false ? (
               <img className="media-card-thumb" src={`/api/media/${encodeURIComponent(asset.id)}/preview?v=${encodeURIComponent(asset.updatedAt || asset.importedAt || asset.modifiedAt || "")}`} alt="" loading="lazy" />
             ) : (
               <Pill tone="live">{asset.kind}</Pill>
@@ -1821,7 +2171,7 @@ function AutomationsPanel({ state, projectId, onRefresh, setModal, setOperationE
 }
 
 function App() {
-  const [active, setActive] = useState("console");
+  const [active, setActive] = useState("project");
   const [state, setState] = useState(null);
   const [projectId, setProjectId] = useState(() => localStorage.getItem("wake.projectId") || "wake-v6-main");
   const [projectName, setProjectName] = useState("");
@@ -2175,6 +2525,9 @@ function App() {
   const projectGenerations = useMemo(() => (state?.recentGenerations || []).filter((item) => item.projectId === projectId), [state, projectId]);
   const projectExports = useMemo(() => (state?.recentExports || []).filter((item) => item.projectId === projectId), [state, projectId]);
   const projectHistory = useMemo(() => (state?.recentHistory || []).filter((item) => item.payload?.projectId === projectId), [state, projectId]);
+  const activeProject = state?.projects?.find((project) => project.id === projectId) || state?.projects?.[0] || null;
+  const projectReviewQueue = useMemo(() => (state?.reviewQueue || []).filter((item) => !item.projectId || item.projectId === projectId || item.result?.projectId === projectId), [state, projectId]);
+  const currentPacket = output || cluster || campaign;
 
   const filteredSources = useMemo(() => {
     const query = sourceQuery.trim().toLowerCase();
@@ -2402,7 +2755,7 @@ function App() {
       });
       setExportPreview(buildExportPreview(cluster, data.export));
       setNotice(`Cluster export saved: ${data.export.relativeMdPath}`);
-      await loadState();
+      await refresh();
     });
   }
 
@@ -2419,7 +2772,7 @@ function App() {
       });
       setExportPreview(buildExportPreview(output, data.export));
       setNotice(`Export saved: ${data.export.relativeMdPath}`);
-      await loadState();
+      await refresh();
     });
   }
 
@@ -2441,8 +2794,15 @@ function App() {
       });
       setExportPreview(buildExportPreview(chatOutput, data.export));
       setNotice(`Answer export saved: ${data.export.relativeMdPath}`);
-      await loadState();
+      await refresh();
     });
+  }
+
+  async function exportCurrentPacket() {
+    if (output) return exportOutput();
+    if (cluster) return exportCluster();
+    if (campaign) return exportCampaign();
+    return exportOutput();
   }
 
   async function saveSnapshot() {
@@ -2625,7 +2985,7 @@ function App() {
     setInstructionsResult(null);
     setOperationError(null);
     try {
-      const response = await api("/api/instructions/generate", "POST", { message: instructionsQuery });
+      const response = await api("/instructions/generate", { message: instructionsQuery });
       if (!response.ok) throw new Error(response.error || "Failed to generate instructions.");
       setInstructionsResult(response.instructions);
     } catch (error) {
@@ -2785,6 +3145,24 @@ function App() {
     }
   }
 
+  async function reviewSeedUpload(payload) {
+    setIntakeBusy(true);
+    setNotice("");
+    try {
+      if (!payload?.files?.length) throw new Error("Drop a SEED folder or choose one before review.");
+      const data = await api("/intake/upload-review", { ...payload, projectId, intent: intakeIntent }, { timeoutMs: 600000 });
+      await refresh();
+      setIntakeReviewSelection([]);
+      navigateSection("sources");
+      setNotice(`SEED folder staged for review: ${data.review.eligible} eligible items from ${data.review.scanned} files. Nothing was imported yet.`);
+    } catch (error) {
+      setNotice(error.message);
+      throw error;
+    } finally {
+      setIntakeBusy(false);
+    }
+  }
+
   const latestIntakeReview = (state?.intakeReviews || []).find((review) => review.projectId === projectId) || null;
 
   function toggleReviewCandidate(candidateId) {
@@ -2823,7 +3201,7 @@ function App() {
     setSource(sourceDocumentBody(item.source));
     setSourceId(item.id);
     setProjectId(item.projectId);
-    navigateSection("console");
+    navigateSection("create");
     setNotice(`Loaded source: ${item.title}`);
   }
 
@@ -2836,13 +3214,13 @@ function App() {
       setSource(sourceDocumentBody(data.document.content));
       setSourceId(item.id);
       setProjectId(item.projectId);
-      navigateSection("agent");
+      navigateSection("create");
       setNotice(`Agent source loaded: ${data.document.title}`);
     } catch (error) {
       setSource(sourceDocumentBody(item.source));
       setSourceId(item.id);
       setProjectId(item.projectId);
-      navigateSection("agent");
+      navigateSection("create");
       setNotice(`Agent source loaded from saved preview: ${item.title}`);
     } finally {
       setBusy(false);
@@ -2867,7 +3245,7 @@ function App() {
   }
 
   function openMediaAsset(asset) {
-    const isImage = asset.kind === "image";
+    const isImage = asset.kind === "image" && asset.previewAvailable !== false;
     setModal({
       kind: "media",
       title: asset.title,
@@ -2924,12 +3302,12 @@ function App() {
       setCampaign(item.output);
       setCluster(item.output?.cluster || null);
       setSelectedPlatform("tiktok");
-      navigateSection("console");
+      navigateSection("create");
     } else if (item.kind === "content-cluster") {
       setCluster(item.output);
-      navigateSection("cluster");
+      navigateSection("review");
     } else {
-      navigateSection("agent");
+      navigateSection("review");
     }
     setNotice(`Loaded output: ${item.title}`);
   }
@@ -2943,29 +3321,28 @@ function App() {
 
   function taskRoute(task) {
     const text = `${task.title} ${task.owner} ${task.detail}`.toLowerCase();
-    if (/agent|tier zero|chat/.test(text)) return { route: "agent", agentId: "strategist" };
-    if (/cluster|campaign|platform|content/.test(text)) return { route: "cluster" };
-    if (/source|prompt|frame|console/.test(text)) return { route: "console" };
-    if (/snapshot|audit/.test(text)) return { route: "snapshot" };
-    if (/export|distribution|library|memory|ledger/.test(text)) return { route: "library" };
-    if (/intake|media|vault/.test(text)) return { route: "vault" };
-    return { route: "tasks" };
+    if (/agent|tier zero|chat|cluster|campaign|platform|content|prompt|frame/.test(text)) return { route: "create", agentId: "strategist" };
+    if (/snapshot|audit|automation|monitor|instruction/.test(text)) return { route: "system" };
+    if (/export|distribution/.test(text)) return { route: "export" };
+    if (/library|memory|ledger/.test(text)) return { route: "library" };
+    if (/intake|media|vault|source/.test(text)) return { route: "sources" };
+    return { route: "project" };
   }
 
   function capabilityRoute(capability) {
     const routes = {
-      ingest: { route: "console" },
-      "local-agent": { route: "agent", agentId: "strategist" },
-      "agent-chat": { route: "agent", agentId: "strategist" },
-      "ip-intake": { route: "vault" },
-      "content-cluster": { route: "cluster" },
-      snapshot: { route: "snapshot" },
-      script: { route: "agent", agentId: "scriptwriter" },
-      distribution: { route: "library" },
+      ingest: { route: "create" },
+      "local-agent": { route: "create", agentId: "strategist" },
+      "agent-chat": { route: "create", agentId: "strategist" },
+      "ip-intake": { route: "sources" },
+      "content-cluster": { route: "review" },
+      snapshot: { route: "system" },
+      script: { route: "create", agentId: "scriptwriter" },
+      distribution: { route: "export" },
       memory: { route: "library" },
-      monitor: { route: "tasks" }
+      monitor: { route: "system" }
     };
-    return routes[capability.id] || { route: "tasks" };
+    return routes[capability.id] || { route: "project" };
   }
 
   function openTaskCard(task) {
@@ -3048,7 +3425,7 @@ function App() {
     if (!latestChat?.answer) return;
     setSource(latestChat.answer);
     setSourceId(null);
-    navigateSection("console");
+    navigateSection("create");
     setNotice("Agent answer applied to Source Workspace.");
   }
 
@@ -3171,10 +3548,19 @@ function App() {
             </button>
           </div>
 
-          <nav className="tab-grid" aria-label="WAKE V6 sections">
-            {tabs.map(({ id, label, icon: Icon }) => (
+          <nav className="tab-grid workflow-tabs" aria-label="WAKE V6 production workflow">
+            {primaryTabs.map(({ id, label, icon: Icon }) => (
               <button key={id} type="button" className={active === id ? "selected" : ""} onClick={() => navigateSection(id)}>
                 <Icon size={30} />
+                <span>{label}</span>
+              </button>
+            ))}
+          </nav>
+
+          <nav className="secondary-nav" aria-label="WAKE V6 secondary workspaces">
+            {secondaryTabs.map(({ id, label, icon: Icon }) => (
+              <button key={id} type="button" className={active === id ? "selected" : ""} onClick={() => navigateSection(id)}>
+                <Icon size={16} />
                 <span>{label}</span>
               </button>
             ))}
@@ -3239,7 +3625,7 @@ function App() {
               <NextStepPanel
                 active={active}
                 source={source}
-                output={output}
+                output={currentPacket}
                 cluster={cluster}
                 state={state}
                 busy={busy || intakeBusy}
@@ -3247,7 +3633,7 @@ function App() {
                 onGenerateFrame={generateFrame}
                 onRunAgent={runAgent}
                 onBuildCluster={buildCluster}
-                onExport={exportOutput}
+                onExport={exportCurrentPacket}
                 onSaveSnapshot={saveSnapshot}
                 onRunIntake={runIntakeAgent}
               />
@@ -3256,7 +3642,7 @@ function App() {
                 active={active}
                 state={state}
                 source={source}
-                output={output}
+                output={currentPacket}
                 cluster={cluster}
                 system={system}
                 llmStatus={llmStatus}
@@ -3269,14 +3655,14 @@ function App() {
                 active={active}
                 busy={busy || intakeBusy}
                 hasSource={Boolean(source.trim())}
-                output={output}
+                output={currentPacket}
                 cluster={cluster}
                 onGo={navigateSection}
                 onSaveSource={saveSource}
                 onGenerateFrame={generateFrame}
                 onRunAgent={runAgent}
                 onBuildCluster={buildCluster}
-                onExport={exportOutput}
+                onExport={exportCurrentPacket}
                 onSaveSnapshot={saveSnapshot}
                 onRunIntake={runIntakeAgent}
                 onOpenFolder={openFolder}
@@ -3286,41 +3672,77 @@ function App() {
 
           <div id="active-section" ref={activeSectionRef} className="active-section-anchor" />
 
-          {active === "agent" ? (
+          {active === "project" && (
+            <div className="project-workspace">
+              <Panel>
+                <PanelTitle icon={TerminalSquare} title="Project Workspace" right={<Pill tone="live">{activeProject?.name || "Current Project"}</Pill>} />
+                <div className="project-command">
+                  <div>
+                    <small>Current project</small>
+                    <h2>{activeProject?.name || "WAKE Engine V6"}</h2>
+                    <span>{projectId}</span>
+                  </div>
+                  <div className="project-row">
+                    <input value={projectName} onChange={(event) => setProjectName(event.target.value)} placeholder={activeProject?.name || "Project name..."} aria-label="Project name" />
+                    <div className="project-actions">
+                      <button type="button" className="mini-action" disabled={busy || !projectName.trim()} onClick={saveProject}>Rename</button>
+                      <button type="button" className="mini-action" disabled={busy || !projectName.trim()} onClick={createProject}>Create</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="project-metric-grid">
+                  <button type="button" onClick={() => navigateSection("sources")}><span>Sources</span><strong>{projectSources.length}</strong></button>
+                  <button type="button" onClick={() => navigateSection("create")}><span>Generated</span><strong>{projectGenerations.length}</strong></button>
+                  <button type="button" onClick={() => navigateSection("review")}><span>Pending Review</span><strong>{projectReviewQueue.length}</strong></button>
+                  <button type="button" onClick={() => navigateSection("export")}><span>Exports</span><strong>{projectExports.length}</strong></button>
+                </div>
+                <div className="workflow-jump-row">
+                  <button type="button" className="primary-action" onClick={() => navigateSection("sources")}><Vault size={16} /> Sources</button>
+                  <button type="button" className="primary-action" onClick={() => navigateSection("create")}><Workflow size={16} /> Create</button>
+                  <button type="button" className="primary-action" onClick={() => navigateSection("review")}><ListChecks size={16} /> Review</button>
+                  <button type="button" className="primary-action" onClick={() => navigateSection("export")}><Download size={16} /> Export</button>
+                </div>
+              </Panel>
+            </div>
+          )}
+
+          {active === "create" || active === "agent" ? (
             <AgentSourcePanel
               source={source}
               sourceId={sourceId}
               projectSources={projectSources}
               busy={busy || intakeBusy}
               onSelectSource={selectSourceForAgent}
-              onOpenConsole={() => navigateSection("console")}
+              onOpenConsole={() => navigateSection("sources")}
               onRunAgent={runAgent}
             />
           ) : null}
 
-          {active === "console" || active === "cluster" ? (
-            <details className="context-agent-tools">
-              <summary>Ask content agents</summary>
-              {sectionAgentChat}
-            </details>
-          ) : standaloneRoutes.has(active) ? null : sectionAgentChat}
+          {(active === "create" || active === "review" || active === "console" || active === "cluster" || active === "agent") ? (
+            active === "agent" ? sectionAgentChat : (
+              <details className="context-agent-tools">
+                <summary>Context agents</summary>
+                {sectionAgentChat}
+              </details>
+            )
+          ) : null}
 
-          {exportPreview && active !== "console" && active !== "cluster" && !standaloneRoutes.has(active) && (
+          {exportPreview && active === "create" && (
             <ExportPreviewPanel preview={exportPreview} />
           )}
 
-          {active === "agent" && output && (
+          {(active === "create" || active === "review" || active === "agent") && output && (
             <Panel className="agent-output-panel">
               <PanelTitle
                 icon={WandSparkles}
-                title="Created Content"
-                right={<div className="inline-actions"><button type="button" className="mini-action" onClick={copyOutput}><Clipboard size={16} /> Copy</button><button type="button" className="mini-action" onClick={exportOutput}><Download size={16} /> Export</button></div>}
+                title={active === "review" ? "Current Generated Packet" : "Created Content"}
+                right={<div className="inline-actions"><button type="button" className="mini-action" onClick={copyOutput}><Clipboard size={16} /> Copy</button><button type="button" className="mini-action" onClick={() => navigateSection("review")}><ListChecks size={16} /> Review</button><button type="button" className="mini-action" onClick={exportCurrentPacket}><Download size={16} /> Export</button></div>}
               />
               <OutputStudio output={output} />
             </Panel>
           )}
 
-          {active === "console" && (
+          {(active === "create" || active === "console") && (
             <>
               {operationError?.ability === "console" ? <div className="ability-state error"><strong>Campaign action failed</strong><p>{operationError.message}</p></div> : null}
               <CampaignAutopilot
@@ -3364,7 +3786,7 @@ function App() {
             </>
           )}
 
-          {active === "cluster" && (
+          {(active === "create" || active === "review" || active === "cluster") && (
             <>
             {operationError?.ability === "cluster" ? <div className="ability-state error"><strong>Cluster action failed</strong><p>{operationError.message}</p></div> : null}
             <Panel className="cluster-panel">
@@ -3392,7 +3814,94 @@ function App() {
             </>
           )}
 
-          {active === "vault" && (
+          {active === "review" && (
+            <div className="review-workspace lower-grid">
+              <Panel>
+                <PanelTitle icon={ListChecks} title="Review Queue" right={<Pill tone={projectReviewQueue.length ? "partial" : "done"}>{projectReviewQueue.length} pending</Pill>} />
+                <div className="library-list">
+                  {projectReviewQueue.map((item) => (
+                    <div key={item.id} className="review-queue-row">
+                      <div>
+                        <strong>{item.title || `Run ${item.runId}`}</strong>
+                        <small>{item.status || "pending"} · {new Date(item.createdAt).toLocaleString()}</small>
+                      </div>
+                      <div className="inline-actions">
+                        <button type="button" className="mini-action" onClick={() => setModal({ title: item.title || "Review Content", kind: "document", body: JSON.stringify(item.result || item.packet || item, null, 2) })}>Inspect</button>
+                        <button type="button" className="mini-action" onClick={() => { setOutput(item.result || item.packet || item); setGenerationId(item.runId || item.id); setNotice("Pending review packet loaded for inspection."); }}>Load Packet</button>
+                      </div>
+                    </div>
+                  ))}
+                  {!projectReviewQueue.length && <p>No items pending review.</p>}
+                </div>
+              </Panel>
+              <Panel>
+                <PanelTitle icon={Shield} title="QA / Evidence" right={<Pill tone={currentPacket ? "live" : "queued"}>{currentPacket ? "packet loaded" : "waiting"}</Pill>} />
+                {currentPacket ? (
+                  <div className="review-inspection">
+                    <div className="project-metric-grid compact">
+                      <article><span>QA</span><strong>{currentPacket.qaVerdict?.verdict || currentPacket.tierZeroQa?.verdict || currentPacket.qaGate?.verdict || "available"}</strong></article>
+                      <article><span>Claims</span><strong>{currentPacket.claims?.length || currentPacket.evidenceMap?.claims?.length || 0}</strong></article>
+                      <article><span>Evidence</span><strong>{currentPacket.evidence?.length || currentPacket.evidenceMap?.sources?.length || currentPacket.citations?.length || 0}</strong></article>
+                      <article><span>Variants</span><strong>{currentPacket.platformVariants?.length || currentPacket.platforms?.length || currentPacket.campaignPacket?.platforms?.length || 0}</strong></article>
+                    </div>
+                    <details className="export-preview" open>
+                      <summary>Inspect Generated Packet</summary>
+                      <pre>{jsonBlock(currentPacket)}</pre>
+                    </details>
+                  </div>
+                ) : (
+                  <div className="cluster-empty">
+                    <ListChecks size={28} />
+                    <h2>No current packet loaded</h2>
+                    <button type="button" className="primary-action" onClick={() => navigateSection("create")}>Open Create</button>
+                  </div>
+                )}
+              </Panel>
+            </div>
+          )}
+
+          {active === "export" && (
+            <div className="export-workspace lower-grid">
+              <Panel>
+                <PanelTitle
+                  icon={Download}
+                  title="Export Packet"
+                  right={<button type="button" className="primary-action" disabled={busy || !currentPacket} onClick={exportCurrentPacket}><Download size={16} /> Export Markdown + JSON</button>}
+                />
+                {currentPacket ? (
+                  <ExportPreviewPanel preview={exportPreview || buildExportPreview(currentPacket)} />
+                ) : (
+                  <div className="cluster-empty">
+                    <Download size={28} />
+                    <h2>No packet ready to export</h2>
+                    <button type="button" className="primary-action" onClick={() => navigateSection("create")}>Open Create</button>
+                  </div>
+                )}
+              </Panel>
+              <Panel>
+                <PanelTitle icon={Archive} title="Saved Exports" right={<button type="button" className="mini-action" onClick={() => openFolder("exports")}><Download size={16} /> Open Folder</button>} />
+                <div className="library-list">
+                  {projectExports.map((item) => (
+                    <button key={item.id} type="button" onClick={() => setModal({
+                      title: item.title,
+                      body: [
+                        `Markdown: ${item.relativeMdPath}`,
+                        `JSON: ${item.relativeJsonPath}`,
+                        `Inspection: ${item.inspection?.ok ? "passed" : "blocked"}`,
+                        item.inspection?.missing?.length ? `Missing: ${item.inspection.missing.join(", ")}` : "Missing: none"
+                      ].join("\n")
+                    })}>
+                      <strong>{item.title}</strong>
+                      <small>{item.inspection?.ok ? "inspected" : "needs review"} · {item.relativeMdPath}</small>
+                    </button>
+                  ))}
+                  {!projectExports.length && <p>No exports saved for this project.</p>}
+                </div>
+              </Panel>
+            </div>
+          )}
+
+          {(active === "sources" || active === "vault") && (
             <>
               <IntakePanel
                 state={state}
@@ -3406,6 +3915,7 @@ function App() {
                 onRefreshIntakeTargets={refreshIntakeTargets}
                 onRunIntake={runIntakeAgent}
                 onReviewIntake={reviewIntakeAgent}
+                onReviewSeedUpload={reviewSeedUpload}
                 intakeReview={latestIntakeReview}
                 intakeReviewSelection={intakeReviewSelection}
                 onToggleReviewCandidate={toggleReviewCandidate}
@@ -3483,7 +3993,7 @@ function App() {
               </Panel>
             </div>
           )}
-          {active === "instructions" && (
+          {(active === "system" || active === "instructions") && (
             <Panel>
               <PanelTitle icon={BookOpen} title="Operations Guide" />
               <div className="instructions-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1rem' }}>
@@ -3515,7 +4025,7 @@ function App() {
             </Panel>
           )}
 
-          {active === "automations" && (
+          {(active === "system" || active === "automations") && (
             <AutomationsPanel 
               state={state} 
               projectId={projectId}
@@ -3525,7 +4035,7 @@ function App() {
             />
           )}
 
-          {active === "tasks" && (
+          {(active === "system" || active === "tasks") && (
             <>
             <Panel className="monitor-panel">
               <PanelTitle
@@ -3622,7 +4132,7 @@ function App() {
             </>
           )}
 
-          {active === "snapshot" && (
+          {(active === "system" || active === "snapshot") && (
             <Panel>
               <PanelTitle icon={Camera} title="Snapshot / Audit Trail" />
               <div className="snapshot-box">
@@ -3630,6 +4140,12 @@ function App() {
                 <h2>{state.runtime.snapshots} snapshots · {state.runtime.exports} exports</h2>
                 <p>Sources, generated outputs, exports, history, and snapshots are persistent files in Wake Engine local application data.</p>
                 <button type="button" className="primary-action" disabled={busy} onClick={saveSnapshot}>Save Snapshot</button>
+                <div className="data-protection-row" aria-label="Local data protection">
+                  <button type="button" className="mini-action" disabled={busy} onClick={createManualBackup} title="Create local backup"><Save size={15} /> Backup</button>
+                  <button type="button" className="mini-action" disabled={busy || !state.dataProtection?.bundles?.some((item) => item.kind === "manual")} onClick={restoreLatestBackup} title="Restore latest local backup"><RotateCcw size={15} /> Restore</button>
+                  <button type="button" className="mini-action" disabled={busy} onClick={exportAllData} title="Export all local data"><Download size={15} /> Export All</button>
+                  <button type="button" className="mini-action" disabled={busy} onClick={cleanupCache} title="Clean temporary cache"><HardDrive size={15} /> Clean Cache</button>
+                </div>
               </div>
             </Panel>
           )}
@@ -3643,9 +4159,9 @@ function App() {
         </footer>
 
         <div className="dock">
-          <button type="button" className="terminal-button" onClick={() => setActive("console")}><TerminalSquare size={28} /></button>
+          <button type="button" className="terminal-button" onClick={() => setActive("project")}><TerminalSquare size={28} /></button>
           <button type="button" className="run-button" aria-label="Run Agent" disabled={busy || !source.trim()} onClick={runAgent}><Play size={24} /> Run Agent <small>{source.trim() ? "Save output" : "Source required"}</small></button>
-          <button type="button" className="snapshot-button" aria-label="Export Output" disabled={busy || !output} onClick={exportOutput}><Download size={24} /> Export <small>MD + JSON</small></button>
+          <button type="button" className="snapshot-button" aria-label="Export Output" disabled={busy || !currentPacket} onClick={exportCurrentPacket}><Download size={24} /> Export <small>MD + JSON</small></button>
         </div>
       </main>
 
@@ -3669,7 +4185,7 @@ function App() {
             ) : null}
             <div className="modal-actions">
               {modal.sourceItem && !modal.loading ? (
-                <button type="button" className="primary-action" onClick={() => { const item = modal.sourceItem; setModal(null); loadSource(item); }}>Use In Creator</button>
+                <button type="button" className="primary-action" onClick={() => { const item = modal.sourceItem; setModal(null); loadSource(item); }}>Use In Create</button>
               ) : null}
               {modal.mediaItem ? (
                 <button type="button" className="primary-action" onClick={() => openMediaItem(modal.mediaItem)}>Open Item</button>
