@@ -1,0 +1,151 @@
+name: WAK-7 source refactor
+
+on:
+  push:
+    branches:
+      - agent/wak-7-complete-fix
+    paths:
+      - .github/workflows/wak7-source-refactor.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refactor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out corrective branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/wak-7-complete-fix
+          fetch-depth: 0
+
+      - name: Apply exact WAK-7 route isolation
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/main.jsx')
+          text = path.read_text(encoding='utf-8')
+
+          def replace_once(old, new, label):
+              global text
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected exactly 1 match, found {count}')
+              text = text.replace(old, new, 1)
+
+          replace_once(
+              'const BOOT_SEQUENCE_MS = 6500;\n',
+              'const BOOT_SEQUENCE_MS = 6500;\nconst standaloneRoutes = new Set(["instructions", "automations"]);\n',
+              'standalone route declaration'
+          )
+
+          replace_once(
+              '''    library: [\n      ["Saved", state.runtime.sources],\n      ["Generated", state.runtime.generations],\n      ["Exports", state.runtime.exports]\n    ],\n    tasks: [''',
+              '''    library: [\n      ["Saved", state.runtime.sources],\n      ["Generated", state.runtime.generations],\n      ["Exports", state.runtime.exports]\n    ],\n    instructions: [\n      ["Guide", "manual workflow"],\n      ["Input", "operator goal"],\n      ["Route", "standalone"]\n    ],\n    automations: [\n      ["Automations", state.automations?.length || 0],\n      ["Review", state.reviewQueue?.length || 0],\n      ["Runs", state.automationRuns?.length || 0]\n    ],\n    tasks: [''',
+              'explicit route signals'
+          )
+
+          replace_once(
+              '  return signals[active] || signals.console;\n}',
+              '  const routeSignals = signals[active];\n  if (!routeSignals) throw new Error(`Missing ability signals for route: ${active}`);\n  return routeSignals;\n}',
+              'signal fallback removal'
+          )
+
+          replace_once(
+              '  const ability = abilityBlueprints[active] || abilityBlueprints.console;\n  const Icon = ability.icon;',
+              '  const ability = abilityBlueprints[active];\n  if (!ability) throw new Error(`Missing ability blueprint for route: ${active}`);\n  const Icon = ability.icon;',
+              'blueprint fallback removal'
+          )
+
+          replace_once(
+              '''    library: Boolean(state.recentSources?.length || state.recentGenerations?.length || state.recentExports?.length),\n    tasks: Boolean(system),''',
+              '''    library: Boolean(state.recentSources?.length || state.recentGenerations?.length || state.recentExports?.length),\n    instructions: false,\n    automations: Boolean(state.automations?.length || state.reviewQueue?.length || state.automationRuns?.length),\n    tasks: Boolean(system),''',
+              'explicit readiness routes'
+          )
+
+          replace_once(
+              '''    library: [\n      ["Open Exports", Download, () => onOpenFolder("exports"), false],\n      ["Open Console", TerminalSquare, () => onGo("console"), false],\n      ["Save Snapshot", Camera, onSaveSnapshot, false]\n    ],\n    tasks: [''',
+              '''    library: [\n      ["Open Exports", Download, () => onOpenFolder("exports"), false],\n      ["Open Console", TerminalSquare, () => onGo("console"), false],\n      ["Save Snapshot", Camera, onSaveSnapshot, false]\n    ],\n    instructions: [\n      ["Use Operations Guide", BookOpen, () => onGo("instructions"), false]\n    ],\n    automations: [\n      ["Use Scheduler", Workflow, () => onGo("automations"), false]\n    ],\n    tasks: [''',
+              'explicit action routes'
+          )
+
+          replace_once(
+              '  const actions = actionSets[active] || actionSets.console;\n',
+              '  const actions = actionSets[active];\n  if (!actions) throw new Error(`Missing action set for route: ${active}`);\n',
+              'action fallback removal'
+          )
+
+          replace_once(
+              '''  let step = {\n    title: "Start with source",\n    detail: "Paste the ask, raw notes, transcript, code brief, or source material into Console.",\n    button: "Open Console",\n    action: () => onGo("console"),\n    tone: "queued"\n  };''',
+              '  let step = null;',
+              'next-step default fallback removal'
+          )
+
+          replace_once(
+              '''  } else if (active === "tasks") {\n    step = {''',
+              '''  } else if (active === "instructions") {\n    step = {\n      title: "Describe the operation",\n      detail: "Use the Operations Guide to get a workflow grounded only in capabilities that WAKE currently implements.",\n      button: "Use Operations Guide",\n      action: () => onGo("instructions"),\n      tone: "live"\n    };\n  } else if (active === "automations") {\n    step = {\n      title: "Configure or review an automation",\n      detail: "Use Scheduler & Automations to create, pause, run, or inspect scheduled local work.",\n      button: "Use Scheduler",\n      action: () => onGo("automations"),\n      tone: "live"\n    };\n  } else if (active === "tasks") {\n    step = {''',
+              'explicit next-step routes'
+          )
+
+          replace_once(
+              '''  return (\n    <Panel className="next-step-panel">''',
+              '''  if (!step) throw new Error(`Missing next-step contract for route: ${active}`);\n\n  return (\n    <Panel className="next-step-panel">''',
+              'next-step missing-route failure'
+          )
+
+          replace_once(
+              '{active !== "console" && active !== "cluster" ? (',
+              '{active !== "console" && active !== "cluster" && !standaloneRoutes.has(active) ? (',
+              'standalone scaffold render exclusion'
+          )
+
+          replace_once(
+              ''') : sectionAgentChat}\n\n          {exportPreview && active !== "console" && active !== "cluster" && (''',
+              ''') : standaloneRoutes.has(active) ? null : sectionAgentChat}\n\n          {exportPreview && active !== "console" && active !== "cluster" && !standaloneRoutes.has(active) && (''',
+              'standalone chat and stale export exclusion'
+          )
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Verify forbidden fallback paths are gone
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          text = Path('src/main.jsx').read_text(encoding='utf-8')
+          forbidden = [
+              'signals[active] || signals.console',
+              'abilityBlueprints[active] || abilityBlueprints.console',
+              'actionSets[active] || actionSets.console',
+              'title: "Start with source"'
+          ]
+          present = [item for item in forbidden if item in text]
+          if present:
+              raise SystemExit('Forbidden WAK-7 fallbacks remain: ' + ', '.join(present))
+          required = [
+              'standaloneRoutes.has(active)',
+              'Missing ability signals for route',
+              'Missing ability blueprint for route',
+              'Missing action set for route',
+              'Missing next-step contract for route'
+          ]
+          missing = [item for item in required if item not in text]
+          if missing:
+              raise SystemExit('Required WAK-7 protections missing: ' + ', '.join(missing))
+          print('WAK-7 source refactor checks passed.')
+          PY
+
+      - name: Remove one-time refactor workflow and commit source fix
+        shell: bash
+        run: |
+          rm .github/workflows/wak7-source-refactor.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/main.jsx .github/workflows/wak7-source-refactor.yml
+          git diff --cached --check
+          git commit -m "fix: complete WAK-7 route isolation"
+          git push origin HEAD:agent/wak-7-complete-fix
