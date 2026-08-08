@@ -1,0 +1,37 @@
+name: WAK-7 Automation API Hardening
+
+on:
+  push:
+    branches:
+      - agent/wak-7-claim-verification
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: ${{ !contains(github.event.head_commit.message, '[wak7-automation-api-hardening-done]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/wak-7-claim-verification
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/wak7-automation-api-hardening.mjs
+      - name: Validate hardened routes
+        run: |
+          git diff --check
+          grep -q 'function validateAutomationPayload' server/index.js
+          grep -q 'WAKE_AUTOMATION_INVALID' server/index.js
+          grep -q 'A manual run is already queued' server/index.js
+      - name: Commit hardening and remove one-shot machinery
+        run: |
+          git config user.name "wake-engine-ci"
+          git config user.email "actions@users.noreply.github.com"
+          git rm scripts/wak7-automation-api-hardening.mjs .github/workflows/wak7-automation-api-hardening.yml
+          git add server/index.js
+          git commit -m "WAK-7: harden Automation API contracts [wak7-automation-api-hardening-done]"
+          git push origin HEAD:agent/wak-7-claim-verification
