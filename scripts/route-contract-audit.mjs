@@ -118,6 +118,9 @@ if (!main.includes('projectId={projectId}')) {
 if (!main.includes('setEditor({ projectId: projectId || state?.projects?.[0]?.id || "wake-v6-main", campaignType: "Custom Prompt", scheduleCron: "0 19 * * 0", timeZone: "America/Los_Angeles", approvalMode: "Review Required" })')) {
   throw new Error("New Automation visible defaults are not initialized into submitted editor state.");
 }
+if (!main.includes("Promise.resolve(onRefresh()).catch") || !main.includes("}, 2500);")) {
+  throw new Error("Automations does not continuously refresh persisted scheduler/review state while idle.");
+}
 
 const requiredAutomationStateProjection = [
   "automations: store.automations.slice(0, 200)",
