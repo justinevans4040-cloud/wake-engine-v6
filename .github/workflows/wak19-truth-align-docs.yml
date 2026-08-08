@@ -1,0 +1,36 @@
+name: WAK-19 Truth Align Public Claims
+
+on:
+  push:
+    branches:
+      - agent/wak-19-claim-truth
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: ${{ !contains(github.event.head_commit.message, '[wak19-truth-align-done]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/wak-19-claim-truth
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply bounded documentation truth alignment
+        run: node scripts/wak19-truth-align-docs.mjs
+      - name: Prove new claim gate
+        run: |
+          git diff --check
+          npm run audit:claims
+      - name: Commit corrected public claims and remove one-shot machinery
+        run: |
+          git config user.name "wake-engine-ci"
+          git config user.email "actions@users.noreply.github.com"
+          git rm scripts/wak19-truth-align-docs.mjs .github/workflows/wak19-truth-align-docs.yml
+          git add README.md SUBMISSION.md DEMO_SCRIPT.md ARCHITECTURE.md docs/wake-engine/wake_engine_manual.md JUDGING_EVIDENCE.md KNOWN_LIMITATIONS.md
+          git commit -m "WAK-19: truth-align Review and export claims [wak19-truth-align-done]"
+          git push origin HEAD:agent/wak-19-claim-truth
