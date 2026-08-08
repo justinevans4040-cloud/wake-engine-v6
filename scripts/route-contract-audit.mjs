@@ -103,6 +103,9 @@ if (main.includes("fetchState")) {
 if (!main.includes("onRefresh={refresh}")) {
   throw new Error("Automations is not wired to the live refresh() state callback.");
 }
+if (!main.includes('select aria-label="Approval Mode"')) {
+  throw new Error("Automation Approval Mode select is missing its explicit accessible name.");
+}
 if (fs.existsSync(obsoleteGuardPath)) {
   throw new Error("Obsolete route-guards.css concealment still exists.");
 }
