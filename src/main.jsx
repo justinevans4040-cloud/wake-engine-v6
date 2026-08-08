@@ -4,6 +4,7 @@ import {
   Activity,
   Archive,
   Bot,
+  BookOpen,
   Box,
   Camera,
   CheckCircle2,
@@ -73,6 +74,7 @@ import {
 import "./styles.css";
 
 const BOOT_SEQUENCE_MS = 6500;
+const standaloneRoutes = new Set(["instructions", "automations"]);
 
 function Pill({ children, tone = "queued" }) {
   return <span className={`pill ${statusTone[tone] || tone}`}>{children}</span>;
@@ -273,6 +275,16 @@ function abilitySignals({ active, state, source, output, cluster, system, llmSta
       ["Generated", state.runtime.generations],
       ["Exports", state.runtime.exports]
     ],
+    instructions: [
+      ["Guide", "manual workflow"],
+      ["Input", "operator goal"],
+      ["Route", "standalone"]
+    ],
+    automations: [
+      ["Automations", state.automations?.length || 0],
+      ["Review", state.reviewQueue?.length || 0],
+      ["Runs", state.automationRuns?.length || 0]
+    ],
     tasks: [
       ["CPU", metricValue(system?.cpu?.percent)],
       ["RAM", metricValue(system?.memory?.percent)],
@@ -284,11 +296,14 @@ function abilitySignals({ active, state, source, output, cluster, system, llmSta
       ["History", state.recentHistory.length]
     ]
   };
-  return signals[active] || signals.console;
+  const routeSignals = signals[active];
+  if (!routeSignals) throw new Error(`Missing ability signals for route: ${active}`);
+  return routeSignals;
 }
 
 function AbilityCommandHeader({ active, state, source, output, cluster, system, llmStatus, filteredSources, latestChat, operationError }) {
-  const ability = abilityBlueprints[active] || abilityBlueprints.console;
+  const ability = abilityBlueprints[active];
+  if (!ability) throw new Error(`Missing ability blueprint for route: ${active}`);
   const Icon = ability.icon;
   const signals = abilitySignals({ active, state, source, output, cluster, system, llmStatus, filteredSources });
   const readyByAbility = {
@@ -297,6 +312,8 @@ function AbilityCommandHeader({ active, state, source, output, cluster, system, 
     cluster: Boolean(cluster),
     vault: Boolean(filteredSources?.length),
     library: Boolean(state.recentSources?.length || state.recentGenerations?.length || state.recentExports?.length),
+    instructions: false,
+    automations: Boolean(state.automations?.length || state.reviewQueue?.length || state.automationRuns?.length),
     tasks: Boolean(system),
     snapshot: Boolean(state.runtime?.snapshots)
   };
@@ -399,6 +416,12 @@ function AbilityActionRail({
       ["Open Console", TerminalSquare, () => onGo("console"), false],
       ["Save Snapshot", Camera, onSaveSnapshot, false]
     ],
+    instructions: [
+      ["Use Operations Guide", BookOpen, () => onGo("instructions"), false]
+    ],
+    automations: [
+      ["Use Scheduler", Workflow, () => onGo("automations"), false]
+    ],
     tasks: [
       ["Open Data", Database, () => onOpenFolder("data"), false],
       ["Save Snapshot", Camera, onSaveSnapshot, false],
@@ -410,7 +433,8 @@ function AbilityActionRail({
       ["Open Library", Library, () => onGo("library"), false]
     ]
   };
-  const actions = actionSets[active] || actionSets.console;
+  const actions = actionSets[active];
+  if (!actions) throw new Error(`Missing action set for route: ${active}`);
   return (
     <div className="ability-action-rail" aria-label="Ability actions">
       {actions.map(([label, Icon, action, disabled], index) => (
@@ -469,13 +493,7 @@ function NextStepPanel({
   const qa = output?.tierZeroQa || output?.qaVerdict || null;
   const qaBlocked = qa?.verdict === "blocked" || qa?.passed === false || qa?.score?.passed === false;
   const page = tabs.find((item) => item.id === active);
-  let step = {
-    title: "Start with source",
-    detail: "Paste the ask, raw notes, transcript, code brief, or source material into Console.",
-    button: "Open Console",
-    action: () => onGo("console"),
-    tone: "queued"
-  };
+  let step = null;
 
   if (active === "console") {
     if (!hasSource) {
@@ -577,6 +595,22 @@ function NextStepPanel({
       action: () => onGo("console"),
       tone: "live"
     };
+  } else if (active === "instructions") {
+    step = {
+      title: "Describe the operation",
+      detail: "Use the Operations Guide to get a workflow grounded only in capabilities that WAKE currently implements.",
+      button: "Use Operations Guide",
+      action: () => onGo("instructions"),
+      tone: "live"
+    };
+  } else if (active === "automations") {
+    step = {
+      title: "Configure or review an automation",
+      detail: "Use Scheduler & Automations to create, pause, run, or inspect scheduled local work.",
+      button: "Use Scheduler",
+      action: () => onGo("automations"),
+      tone: "live"
+    };
   } else if (active === "tasks") {
     step = {
       title: "Return to the workbench",
@@ -594,6 +628,8 @@ function NextStepPanel({
       tone: "live"
     };
   }
+
+  if (!step) throw new Error(`Missing next-step contract for route: ${active}`);
 
   return (
     <Panel className="next-step-panel">
@@ -1250,8 +1286,10 @@ function AgentChatConsole({
   ttsStatus,
   chatError
 }) {
-  const ability = abilityBlueprints[active] || abilityBlueprints.agent;
-  const prompts = polishPrompts[active] || polishPrompts.agent;
+  const ability = abilityBlueprints[active];
+  if (!ability) throw new Error(`Missing chat blueprint for route: ${active}`);
+  const prompts = polishPrompts[active];
+  if (!prompts) throw new Error(`Missing polish prompts for route: ${active}`);
   const selected = (state.agentPipeline || []).find((agent) => agent.id === selectedAgent);
   const isAgentPage = active === "agent";
   const hasSource = Boolean(source?.trim());
@@ -2552,7 +2590,8 @@ function App() {
   }
 
   function contextualAgentMessage() {
-    const ability = abilityBlueprints[active] || abilityBlueprints.agent;
+    const ability = abilityBlueprints[active];
+    if (!ability) throw new Error(`Missing contextual-agent blueprint for route: ${active}`);
     const raw = chatMessage.trim();
     const sourceExcerpt = source.trim().slice(0, 900);
     const outputExcerpt = output ? jsonBlock(output).slice(0, 900) : "";
@@ -3174,7 +3213,7 @@ function App() {
         </header>
 
         <section className="content-flow">
-          {active !== "console" && active !== "cluster" ? (
+          {active !== "console" && active !== "cluster" && !standaloneRoutes.has(active) ? (
             <>
               <ActiveTaskSpine
                 task={state.activeTask}
@@ -3250,9 +3289,9 @@ function App() {
               <summary>Ask content agents</summary>
               {sectionAgentChat}
             </details>
-          ) : sectionAgentChat}
+          ) : standaloneRoutes.has(active) ? null : sectionAgentChat}
 
-          {exportPreview && active !== "console" && active !== "cluster" && (
+          {exportPreview && active !== "console" && active !== "cluster" && !standaloneRoutes.has(active) && (
             <ExportPreviewPanel preview={exportPreview} />
           )}
 
@@ -3465,7 +3504,7 @@ function App() {
           {active === "automations" && (
             <AutomationsPanel 
               state={state} 
-              onRefresh={fetchState} 
+              onRefresh={refresh}
               setModal={setModal} 
               setOperationError={setOperationError} 
             />

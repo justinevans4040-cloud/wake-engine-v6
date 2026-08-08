@@ -9,7 +9,6 @@ import {
   BookOpen,
   Workflow
 } from "lucide-react";
-import "./route-guards.css";
 
 export const emblemSrc = "/assets/forgefront-systems-emblem.png";
 
