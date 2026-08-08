@@ -243,9 +243,13 @@ async function main() {
     await instructionInput.fill("Publish directly to Instagram for me.");
     await page.getByRole("button", { name: "Get Instructions", exact: true }).click();
     await page.locator(".instructions-result").waitFor({ state: "visible", timeout: 35000 });
-    await page.waitForFunction(() => document.querySelector(".instructions-result")?.textContent?.includes("does not currently publish directly"), null, { timeout: 35000 });
+    await page.waitForFunction(() => {
+      const text = document.querySelector(".instructions-result")?.textContent || "";
+      return text.replace(/\*\*/g, "").toLowerCase().includes("does not currently publish directly");
+    }, null, { timeout: 35000 });
     const unsupportedInstructions = await page.locator(".instructions-result").innerText();
-    if (!unsupportedInstructions.includes("does not currently publish directly")) {
+    const normalizedUnsupportedInstructions = unsupportedInstructions.replace(/\*\*/g, "").toLowerCase();
+    if (!normalizedUnsupportedInstructions.includes("does not currently publish directly")) {
       throw new Error(`Instructions failed to refuse unsupported direct publishing: ${unsupportedInstructions}`);
     }
     await assertStandaloneIsolation(page, "instructions");
