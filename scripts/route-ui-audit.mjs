@@ -129,10 +129,21 @@ async function main() {
     }
 
     for (const route of routes) {
+      const errorCountBefore = errors.length;
       await page.getByRole("button", { name: route.label, exact: true }).click();
-      await page.locator(`nav[aria-label="WAKE V6 sections"] > button.selected`).filter({ hasText: route.label }).waitFor({ timeout: 10000 });
-      await page.locator(expectedSurface[route.id]).waitFor({ state: "visible", timeout: 10000 });
+      await page.locator(expectedSurface[route.id]).waitFor({ state: "visible", timeout: 10000 }).catch((error) => {
+        const newErrors = errors.slice(errorCountBefore);
+        throw new Error(`Route ${route.id} did not render ${expectedSurface[route.id]}. Runtime errors: ${newErrors.join(" | ") || "none captured"}. ${error.message}`);
+      });
 
+      const selected = page.locator('nav[aria-label="WAKE V6 sections"] > button.selected');
+      if (await selected.count() !== 1) throw new Error(`Route ${route.id} does not have exactly one selected navigation button.`);
+      const selectedText = (await selected.innerText()).trim();
+      if (!selectedText.includes(route.label)) throw new Error(`Route ${route.id} rendered but navigation selected ${selectedText} instead of ${route.label}.`);
+
+      if (errors.length > errorCountBefore) {
+        throw new Error(`Route ${route.id} emitted runtime errors:\n- ${errors.slice(errorCountBefore).join("\n- ")}`);
+      }
       if (standaloneRouteIds.has(route.id)) {
         await assertStandaloneIsolation(page, route.id);
       }
