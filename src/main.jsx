@@ -1704,7 +1704,7 @@ function AutomationsPanel({ state, onRefresh, setModal, setOperationError }) {
           <label>Schedule Cron<input required placeholder="0 19 * * 0" pattern="^(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)\s+(\*|[0-9,\-\/]+)$" title="Must be a valid 5-part cron expression" value={editor.scheduleCron || ""} onChange={e => setEditor({...editor, scheduleCron: e.target.value})} className="chat-input" /></label>
           <label>Time Zone<input required placeholder="America/Los_Angeles" value={editor.timeZone || "America/Los_Angeles"} onChange={e => setEditor({...editor, timeZone: e.target.value})} className="chat-input" /></label>
           <label>Approval Mode
-            <select value={editor.approvalMode || "Review Required"} onChange={e => setEditor({...editor, approvalMode: e.target.value})} className="chat-input">
+            <select aria-label="Approval Mode" value={editor.approvalMode || "Review Required"} onChange={e => setEditor({...editor, approvalMode: e.target.value})} className="chat-input">
               <option>Review Required</option>
               <option>Auto Export</option>
             </select>
