@@ -1,0 +1,137 @@
+{
+  "phase": "phase-08-truth-baseline",
+  "status": "pass",
+  "startedAt": "2026-08-15T19:07:05.055Z",
+  "finishedAt": "2026-08-15T19:07:05.101Z",
+  "checks": [
+    {
+      "id": "authorized-local-repo",
+      "passed": true,
+      "actual": "C:\\Users\\justi\\.gemini\\antigravity\\scratch\\wake-engine-v6",
+      "expected": "C:\\Users\\justi\\.gemini\\antigravity\\scratch\\wake-engine-v6"
+    },
+    {
+      "id": "dependency-lock-alignment",
+      "passed": true,
+      "electron": {
+        "requested": "^43.1.0",
+        "locked": "43.1.0",
+        "installed": "43.1.0"
+      },
+      "electronBuilder": {
+        "requested": "^26.15.3",
+        "locked": "26.15.3",
+        "installed": "26.15.3"
+      }
+    },
+    {
+      "id": "old-school-login-contract",
+      "passed": true,
+      "requiredTokens": [
+        "OperatorGate",
+        "WAKE ENGINE V6",
+        "Operator",
+        "aria-label=\"Operator callsign\""
+      ],
+      "requiredSelectors": [
+        ".operator-gate"
+      ]
+    },
+    {
+      "id": "current-run-visual-baselines",
+      "passed": true,
+      "lockedVisual": true,
+      "screenshots": []
+    },
+    {
+      "id": "versioned-content-baselines",
+      "passed": true,
+      "fixtureIds": [
+        "restaurant",
+        "fitness-coach",
+        "saas-product",
+        "construction-company",
+        "childrens-book",
+        "local-service",
+        "wake-engine",
+        "aurora-storytime",
+        "weak-source"
+      ]
+    },
+    {
+      "id": "required-connectors-used",
+      "passed": true,
+      "connectorEvidence": {
+        "googleDrive": {
+          "authenticated": true,
+          "verifiedSources": [
+            "src1",
+            "src2",
+            "src3",
+            "src4"
+          ]
+        },
+        "huggingFace": {
+          "authenticated": true,
+          "baselineCandidates": [
+            "cand1",
+            "cand2"
+          ]
+        },
+        "productDesign": {
+          "preflight": "passed"
+        }
+      }
+    },
+    {
+      "id": "live-data-contamination",
+      "passed": true,
+      "contamination": []
+    },
+    {
+      "id": "aurora-name-lock",
+      "passed": true,
+      "matches": []
+    },
+    {
+      "id": "project-reference-integrity",
+      "passed": true,
+      "missingProjectReferences": []
+    },
+    {
+      "id": "source-content-not-path-only",
+      "passed": true,
+      "offenders": []
+    },
+    {
+      "id": "forbidden-runtime-drift-gate-present",
+      "passed": true,
+      "scope": "agent IDs, routes, modules, runtime capabilities, and product claims"
+    }
+  ],
+  "failedChecks": [],
+  "carryForward": [
+    {
+      "id": "atomic-persistence-and-recovery",
+      "phase": 9,
+      "evidence": "Persistence still uses synchronous direct writes without a journaled recovery contract."
+    },
+    {
+      "id": "post-login-workspace-simplification",
+      "phase": 12,
+      "evidence": "The current first viewport is dominated by branding and diagnostics before creation."
+    },
+    {
+      "id": "real-model-evaluation-gate",
+      "phase": 14,
+      "evidence": "The current Hugging Face gate records a pass without running a real model evaluation."
+    }
+  ],
+  "evidence": [
+    "baseline-manifest.json",
+    "connector-evidence.json",
+    "PRODUCT_DESIGN_BASELINE.md",
+    "phase8-inventory.json",
+    "phase8-ledger.json"
+  ]
+}

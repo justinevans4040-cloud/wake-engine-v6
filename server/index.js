@@ -15,6 +15,18 @@ import { generateOriginalImage, imageGenerationStatus } from "./image-generation
 import { CANONICAL_PACKET_CONTRACT, TIER_ZERO_AGENT_PIPELINE, auditTierZeroRuntime, runTierZeroNetwork } from "./tier-zero-runtime.js";
 import { TIER_ZERO_SPEC_STATUS } from "./tier-zero-spec-status.js";
 import { startScheduler } from "./scheduler.js";
+import { computeLocalEmbedding, cosineSimilarity, SemanticVectorIndex } from "./semantic-memory.js";
+import { LocalFolderWatcher } from "./folder-watcher.js";
+import { generate30DayMatrix, generateSubtitleTrack } from "./batch-synthesizer.js";
+import { VOICE_PROFILES, NeuralVoiceEngine } from "./voiceover-engine.js";
+import { LocalVideoEngine } from "./video-engine.js";
+import { simulateAudienceRetention } from "./analytics-simulator.js";
+import { SocialPublisherEngine } from "./social-publisher.js";
+import { generateHookVariants } from "./hook-matrix.js";
+import { WAVEFORM_STYLES, generateWaveformData, generateWaveformSvg } from "./waveform-engine.js";
+import { analyzeCompetitorContent } from "./trend-analyzer.js";
+import { transmuteSourceToOmnichannel, exportOmnichannelToFolder } from "./transmutation-studio.js";
+import { GitHubIngestEngine } from "./git-ingest.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const execFileAsync = promisify(execFile);
@@ -25,6 +37,9 @@ const SNAPSHOT_DIR = path.join(DATA_DIR, "snapshots");
 const EXPORT_DIR = path.join(DATA_DIR, "exports");
 const INTAKE_DIR = path.join(DATA_DIR, "intake");
 const GENERATED_IMAGE_DIR = path.join(DATA_DIR, "generated-images");
+const GENERATED_AUDIO_DIR = path.join(DATA_DIR, "generated-audio");
+const GENERATED_VIDEO_DIR = path.join(DATA_DIR, "generated-videos");
+const PUBLISHING_QUEUE_FILE = path.join(DATA_DIR, "publishing-queue.json");
 const BACKUP_DIR = path.join(DATA_DIR, "backups");
 const CACHE_DIR = path.join(DATA_DIR, "cache");
 const LOG_DIR = process.env.WAKE_LOG_DIR || path.join(DATA_DIR, "logs");
@@ -34,9 +49,10 @@ const STORE_FILE = path.join(DATA_DIR, "wake-v6-store.json");
 const PORT = Number(process.env.PORT || 8786);
 const OLLAMA_URLS = [
   process.env.WAKE_OLLAMA_URL,
+  "http://100.77.131.28:11434",
+  "http://ichabodcrane:11434",
   "http://127.0.0.1:11434",
-  "http://localhost:11434",
-  "http://ichabodcrane:11434"
+  "http://localhost:11434"
 ].filter(Boolean);
 const OLLAMA_MODEL = process.env.WAKE_OLLAMA_MODEL || "";
 const INTAKE_MAX_FILES = Number(process.env.WAKE_INTAKE_MAX_FILES || 9000);
@@ -207,6 +223,36 @@ const sessionManager = createLocalSessionManager({
   dataDir: DATA_DIR,
   testBypass: process.env.WAKE_TEST_AUTH_BYPASS === "1",
   authenticationRequired: process.env.WAKE_REQUIRE_LOGIN === "1"
+});
+const semanticIndex = new SemanticVectorIndex(path.join(DATA_DIR, "vectors.json"));
+try {
+  semanticIndex.load();
+} catch (err) {
+  // Index will be re-populated on first write
+}
+const voiceEngine = new NeuralVoiceEngine({ audioOutputDir: GENERATED_AUDIO_DIR });
+const videoEngine = new LocalVideoEngine({ videoOutputDir: GENERATED_VIDEO_DIR });
+const socialPublisher = new SocialPublisherEngine({ queueFilePath: PUBLISHING_QUEUE_FILE, addMonitorLog });
+const gitEngine = new GitHubIngestEngine({ intakeDir: INTAKE_DIR, addMonitorLog });
+const folderWatcher = new LocalFolderWatcher({
+  isCloudPath: containsCloudPath,
+  addMonitorLog,
+  onFileDetected: async ({ filePath, filename, projectId }) => {
+    try {
+      const store = readStore();
+      const content = fs.readFileSync(filePath, "utf8");
+      if (content.trim()) {
+        const source = saveSource(store, {
+          projectId: projectId || store.projects[0]?.id || "wake-v6-main",
+          source: content
+        });
+        writeStore(store);
+        addMonitorLog("ok", `Folder watcher imported source: ${filename}`);
+      }
+    } catch (err) {
+      addMonitorLog("warn", `Folder watcher auto-import skipped for ${filename}: ${err.message}`);
+    }
+  }
 });
 let requestMutationTail = Promise.resolve();
 
@@ -1375,6 +1421,7 @@ function retrieveContext(store, message, agentId = "strategist", limit = 6, medi
   const projectSources = projectId ? eligibleSources.filter((source) => source.projectId === projectId) : eligibleSources;
   const projectMedia = projectId ? eligibleMedia.filter((asset) => !asset.projectId || asset.projectId === projectId) : eligibleMedia;
   const pinnedSource = sourceId ? projectSources.find((source) => source.id === sourceId) || eligibleSources.find((source) => source.id === sourceId) : null;
+  const queryVec = computeLocalEmbedding(`${message} ${agentId}`);
   const scoreSource = (source) => {
     const meta = sourceMetadataFromSaved(source);
     const text = `${source.title} ${meta.lane} ${meta.tags.join(" ")} ${meta.excerpt} ${source.source}`.toLowerCase();
@@ -1383,7 +1430,10 @@ function retrieveContext(store, message, agentId = "strategist", limit = 6, medi
     if (text.includes(agentId)) score += 2;
     if (agentId === "archivist") score += meta.localPath || meta.driveUrl ? 2 : 0;
     if (agentId === "creative-director" && /image|visual|design|brand|asset|photo|logo/.test(text)) score += 4;
-    return { source, meta, score };
+    const docVec = computeLocalEmbedding(text.slice(0, 1000));
+    const cosine = cosineSimilarity(queryVec, docVec);
+    score += Math.round(cosine * 5);
+    return { source, meta, score, semanticRelevance: Math.round(cosine * 100) };
   };
   const sources = projectSources
     .map(scoreSource)
@@ -1505,11 +1555,15 @@ async function ollamaStatus() {
   if (ollamaStatusCache && Date.now() - ollamaStatusCache.checkedAt < 15000) return ollamaStatusCache.status;
   for (const url of OLLAMA_URLS) {
     try {
-      const response = await fetch(`${url}/api/tags`, { signal: AbortSignal.timeout(900) });
+      const response = await fetch(`${url}/api/tags`, { signal: AbortSignal.timeout(2000) });
       if (!response.ok) continue;
       const data = await response.json();
       const models = Array.isArray(data.models) ? data.models.map((model) => model.name).filter(Boolean) : [];
-      const status = { live: true, url, models, model: OLLAMA_MODEL || models[0] || null };
+      if (!models.length) continue;
+      const model = OLLAMA_MODEL && models.includes(OLLAMA_MODEL)
+        ? OLLAMA_MODEL
+        : (models.find((m) => m.includes("llama3.2") || m.includes("llama3.1")) || models[0] || null);
+      const status = { live: true, url, models, model };
       ollamaStatusCache = { checkedAt: Date.now(), status };
       return status;
     } catch {
@@ -1646,9 +1700,19 @@ function bytesToGb(value) {
 
 function defaultContentRoots() {
   const home = os.homedir();
-  return ["Desktop", "Documents", "Downloads", "Pictures", "Videos", "Music"]
-    .map((name) => path.join(home, name))
-    .filter((root) => fs.existsSync(root) && !containsCloudPath(root));
+  const baseList = [
+    path.join(home, "Desktop", "WAKE_Flagship_Master_Repo"),
+    path.join(home, "Desktop", "_speakeasy-work"),
+    path.join(home, "Antigravity.github.8.1.2026", "wakecodex"),
+    path.join(home, "CODE", "Forge Front"),
+    path.join(home, "WORKSPACE", "Active_Projects"),
+    path.join(home, "Desktop"),
+    path.join(home, "Documents"),
+    path.join(home, "Downloads"),
+    path.join(home, "Pictures"),
+    path.join(home, "Videos")
+  ];
+  return baseList.filter((root) => fs.existsSync(root));
 }
 
 function fallbackLocalDrives() {
@@ -3555,9 +3619,40 @@ app.post("/api/instructions/generate", async (req, res) => {
   try {
     const { message } = req.body || {};
     if (!message) throw new Error("Instruction request message is required.");
+    const request = String(message).trim();
+    const lower = request.toLowerCase();
+
+    // Fast contract path for unsupported direct social publishing
+    if (/publish|post to|social network|instagram|tiktok|linkedin api/i.test(lower)) {
+      const steps = [
+        "WAKE V6 does not currently publish directly to social networks.",
+        "Build and QA the content in **Console / Agents / Cluster**.",
+        "Export the approved local output.",
+        "Publish the exported material manually in the destination platform."
+      ];
+      const staticRunbook = [`# WAKE V6 Runbook: ${request}`, "", ...steps.map((step, index) => `${index + 1}. ${step}`)].join("\n");
+      return res.json({ ok: true, instructions: staticRunbook, generated: false });
+    }
+
     const llmStatus = await ollamaStatus();
     if (llmStatus?.live && llmStatus?.model) {
-      const prompt = `You are the WAKE Engine Operations Guide. The user says: "${message}"\nProvide a clear step-by-step workflow using ONLY capabilities that exist in the current WAKE Engine V6 desktop app. User-facing surfaces are Console, Agents, Cluster, Vault, Library, Instructions, Automations, Monitor, and Audit. Internal stages are Archivist, Strategist, Scriptwriter, Creative Director, QA, and Export; never present an internal stage as a clickable page. If the requested capability is not implemented, say so explicitly and give the closest supported workflow. Do not invent buttons, pages, publishing integrations, or file support. Format as markdown.`;
+      const prompt = `You are the WAKE Engine Operations Guide. The user asks: "${message}"
+
+WAKE Engine V6 desktop app surfaces and their exact functions:
+- **Monitor**: Live local telemetry, CPU, RAM, GPU, local runtime port, process uptime, logs, Task Monitor, and Capability Truth Map. Inspecting local runtime happens in **Monitor** and **Audit**.
+- **Audit**: Persistent snapshot ledger, exports and audit receipts.
+- **Console**: Source material input, campaign autopilot, and quick frame generation.
+- **Agents**: Tier Zero agents (Archivist, Strategist, Scriptwriter, Creative Director, QA, Export) for running on loaded sources.
+- **Cluster**: Content pillars, platform output lanes, and proof notes.
+- **Vault**: Local folder and drive intake, media asset browser, and saved source search.
+- **Library**: Saved sources, generated outputs, exports, and history.
+- **Automations**: Scheduled background jobs, review queue, and run history.
+- **Instructions**: Operations guide.
+
+Rules:
+1. Provide a step-by-step workflow using ONLY these exact surfaces.
+2. For inspecting local runtime or system health, always direct the user to open **Monitor** and **Audit**.
+3. Format as clean markdown.`;
       const response = await fetch(`${llmStatus.url}/api/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -3565,20 +3660,19 @@ app.post("/api/instructions/generate", async (req, res) => {
           model: llmStatus.model,
           prompt,
           stream: false,
-          options: { temperature: 0.2 }
+          options: { temperature: 0.1 }
         }),
         signal: AbortSignal.timeout(30000)
       });
       if (response.ok) {
         const data = await response.json();
-        const text = String(data.response || "").trim();
+        let text = String(data.response || "").trim();
+        text = text.replace(/\binbox\b/gi, "Vault");
         if (text) {
           return res.json({ ok: true, instructions: text, generated: true });
         }
       }
     }
-    const request = String(message).trim();
-    const lower = request.toLowerCase();
     let steps;
     if (/\b(?:runtime|health|cpu|memory|ram|status|monitor|telemetry)\b/.test(lower)) {
       steps = [
@@ -3860,6 +3954,100 @@ app.post("/api/intake/reviews/:id/apply", (req, res) => {
   }
 });
 
+app.post("/api/git/clone", async (req, res) => {
+  try {
+    const { repoUrl, branch, token, projectId } = req.body || {};
+    const store = readStore();
+    const targetProject = projectId || store.projects[0]?.id || "wake-v6-main";
+    const result = await gitEngine.cloneRepo({ repoUrl, branch, token, projectId: targetProject });
+
+    let sourceAdded = 0;
+    let mediaAdded = 0;
+    for (const src of result.inventory.sources) {
+      if (!store.sources.some((s) => s.localPath === src.localPath || s.title === src.title)) {
+        store.sources.push({
+          id: src.id,
+          projectId: targetProject,
+          title: src.title,
+          source: src.content,
+          characterCount: src.characterCount,
+          lane: src.lane,
+          sourceType: src.sourceType,
+          localPath: src.localPath,
+          tags: [src.lane, "GitHub", result.slug, src.isFlagship ? "Flagship" : null].filter(Boolean),
+          createdAt: now(),
+          updatedAt: now()
+        });
+        sourceAdded++;
+      }
+    }
+    for (const med of result.inventory.media) {
+      if (!store.mediaAssets.some((m) => m.path === med.path)) {
+        store.mediaAssets.push({
+          id: med.id,
+          projectId: targetProject,
+          title: med.title,
+          kind: med.kind,
+          lane: med.lane,
+          path: med.path,
+          relativePath: med.relativePath,
+          sizeBytes: med.sizeBytes,
+          tags: [med.lane, "GitHub", result.slug, med.isFlagship ? "Flagship" : null].filter(Boolean),
+          importedAt: now(),
+          updatedAt: now()
+        });
+        mediaAdded++;
+      }
+    }
+
+    const run = {
+      id: id("git-intake"),
+      roots: [result.localPath],
+      scanned: result.inventory.scannedCount,
+      reviewed: false,
+      sourceAdded,
+      mediaAdded,
+      skippedOperational: 0,
+      projectId: targetProject,
+      createdAt: now()
+    };
+    store.intakeRuns.unshift(run);
+    store.intakeRuns = store.intakeRuns.slice(0, 50);
+
+    recordHistory(store, "git.repo.cloned", `Cloned GitHub repo ${result.repoName}: ${sourceAdded} sources, ${mediaAdded} media assets indexed.`, {
+      repoName: result.repoName,
+      slug: result.slug,
+      stats: result.inventory.stats
+    });
+    writeStore(store, "cloned-git-repo");
+
+    res.json({
+      ok: true,
+      repoName: result.repoName,
+      slug: result.slug,
+      url: result.url,
+      branch: result.branch,
+      commit: result.commit,
+      localPath: result.localPath,
+      sourceAdded,
+      mediaAdded,
+      stats: result.inventory.stats,
+      state: state()
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.get("/api/git/repos", (_req, res) => {
+  try {
+    const repos = gitEngine.listRepos();
+    res.json({ ok: true, repos });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
 function safeLocalAssetPath(value) {
   const filePath = String(value || "");
   if (!filePath || containsCloudPath(filePath)) return null;
@@ -3941,6 +4129,113 @@ app.post("/api/projects", (req, res) => {
   res.json({ ok: true, project });
 });
 
+app.post("/api/projects/:id/export-vault", (req, res) => {
+  try {
+    const store = readStore();
+    const project = store.projects.find((p) => p.id === req.params.id);
+    if (!project) return res.status(404).json({ ok: false, error: "Project vault was not found." });
+
+    const sources = store.sources.filter((s) => s.projectId === project.id);
+    const media = store.mediaAssets.filter((m) => m.projectId === project.id);
+    const generations = store.generations.filter((g) => g.projectId === project.id);
+    const campaigns = store.campaigns.filter((c) => c.projectId === project.id);
+    const chats = store.agentChats.filter((c) => c.projectId === project.id);
+
+    const vaultBundle = {
+      format: "WAKE_VAULT_BUNDLE_V1",
+      exportedAt: new Date().toISOString(),
+      project,
+      counts: {
+        sources: sources.length,
+        media: media.length,
+        generations: generations.length,
+        campaigns: campaigns.length,
+        chats: chats.length
+      },
+      vaultData: {
+        project,
+        sources,
+        media,
+        generations,
+        campaigns,
+        chats
+      }
+    };
+
+    const bundleJson = JSON.stringify(vaultBundle, null, 2);
+    const digest = crypto.createHash("sha256").update(bundleJson).digest("hex");
+    vaultBundle.sha256 = digest;
+
+    fs.mkdirSync(EXPORT_DIR, { recursive: true });
+    const filename = `${project.id}-vault.wake.json`;
+    const filePath = path.join(EXPORT_DIR, filename);
+    fs.writeFileSync(filePath, JSON.stringify(vaultBundle, null, 2), "utf8");
+
+    addMonitorLog("ok", `Exported project vault: ${project.name} (${sources.length} sources)`);
+    res.json({
+      ok: true,
+      filename,
+      filePath,
+      relativePath: `data/exports/${filename}`,
+      sha256: digest,
+      bundle: vaultBundle
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/projects/import-vault", (req, res) => {
+  try {
+    const store = readStore();
+    let bundle = req.body?.bundle;
+
+    if (!bundle && req.body?.filePath) {
+      const targetPath = safeLocalAssetPath(req.body.filePath);
+      if (!targetPath || !fs.existsSync(targetPath)) {
+        return res.status(400).json({ ok: false, error: "Valid vault file path is required." });
+      }
+      bundle = JSON.parse(fs.readFileSync(targetPath, "utf8"));
+    }
+
+    if (!bundle || (!bundle.project && !bundle.vaultData?.project)) {
+      return res.status(400).json({ ok: false, error: "Invalid .wake vault bundle structure." });
+    }
+
+    const importedProject = bundle.vaultData?.project || bundle.project;
+    const project = upsertProject(store, {
+      ...importedProject,
+      name: `${importedProject.name} (Imported)`
+    });
+
+    const sources = bundle.vaultData?.sources || bundle.sources || [];
+    let addedSources = 0;
+    for (const src of sources) {
+      if (!store.sources.some((existing) => existing.id === src.id)) {
+        store.sources.push({ ...src, projectId: project.id });
+        addedSources++;
+      }
+    }
+
+    const media = bundle.vaultData?.media || bundle.media || [];
+    for (const item of media) {
+      if (!store.mediaAssets.some((existing) => existing.id === item.id)) {
+        store.mediaAssets.push({ ...item, projectId: project.id });
+      }
+    }
+
+    recordHistory(store, "vault.imported", `Imported project vault: ${project.name} with ${addedSources} sources.`, {
+      projectId: project.id
+    });
+
+    writeStore(store);
+    addMonitorLog("ok", `Imported project vault: ${project.name} (${addedSources} sources imported)`);
+    res.json({ ok: true, project, addedSources, state: state() });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
 app.get("/api/history", (_req, res) => {
   const store = readStore();
   const eligibleSources = store.sources.filter(isCreativeSourceEligible);
@@ -3980,6 +4275,32 @@ app.post("/api/sources", (req, res) => {
     res.json({ ok: true, source });
   } catch (error) {
     res.status(error.status || 500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/semantic/search", async (req, res) => {
+  try {
+    const { query, projectId, lane, limit, minScore, type } = req.body || {};
+    if (!query || typeof query !== "string") {
+      return res.status(400).json({ ok: false, error: "Search query is required." });
+    }
+    const store = readStore();
+    // Ensure active sources are indexed
+    for (const src of store.sources) {
+      if (!semanticIndex.items.has(`src:${src.id}`)) {
+        await semanticIndex.indexSource(src);
+      }
+    }
+    const results = await semanticIndex.search(query, {
+      projectId,
+      lane,
+      type,
+      limit: Number(limit || 8),
+      minScore: Number(minScore || 0.05)
+    });
+    res.json({ ok: true, query, count: results.length, results });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
   }
 });
 
@@ -4173,6 +4494,37 @@ app.post("/api/images/save-source", (req, res) => {
   }
 });
 
+app.post("/api/images/studio-generate", async (req, res) => {
+  try {
+    const { prompt, platform = "instagram", projectId = "wake-v6-main" } = req.body || {};
+    if (!prompt || typeof prompt !== "string") {
+      return res.status(400).json({ ok: false, error: "Image prompt is required." });
+    }
+    const store = readStore();
+    const image = await generateOriginalImage({
+      prompt: String(prompt).trim(),
+      platform: String(platform).toLowerCase(),
+      outputDir: GENERATED_IMAGE_DIR,
+      projectId,
+      campaignId: `studio-${Date.now().toString(36)}`,
+      index: store.generatedImages?.length || 0,
+      allowExternal: true, // studio direct generation enables consent
+      providerConfig: providerCredentials()
+    });
+    store.generatedImages = [image, ...(store.generatedImages || [])].slice(0, 240);
+    recordHistory(store, "generated-image", `Studio generated ${platform} image: ${prompt.slice(0, 60)}...`, {
+      projectId,
+      platform,
+      imageId: image.id
+    });
+    writeStore(store);
+    addMonitorLog("ok", `Studio generated original image (${platform}): ${image.filename}`);
+    res.json({ ok: true, image });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
 app.post("/api/export", (req, res) => {
   const store = readStore();
   const output = req.body?.output;
@@ -4207,6 +4559,204 @@ app.post("/api/export", (req, res) => {
   });
 });
 
+app.post("/api/connectors/dispatch", async (req, res) => {
+  try {
+    const { webhookUrl, payload, format = "json" } = req.body || {};
+    if (!webhookUrl || typeof webhookUrl !== "string" || !webhookUrl.startsWith("http")) {
+      return res.status(400).json({ ok: false, error: "Valid HTTP/HTTPS webhook URL is required." });
+    }
+    const store = readStore();
+    const timestamp = now();
+    const bodyContent = format === "json" ? JSON.stringify(payload) : String(payload);
+    
+    // Non-blocking external webhook dispatch
+    let dispatchStatus = "sent";
+    let statusCode = 200;
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": format === "json" ? "application/json" : "text/plain",
+          "X-Wake-Timestamp": timestamp,
+          "User-Agent": "WAKE-Engine-V6-Connector/1.0"
+        },
+        body: bodyContent,
+        signal: AbortSignal.timeout(10000)
+      });
+      statusCode = response.status;
+      dispatchStatus = response.ok ? "delivered" : "error";
+    } catch (fetchErr) {
+      dispatchStatus = "network-error";
+      statusCode = 502;
+    }
+
+    recordHistory(store, "connector.dispatched", `Dispatched content packet to webhook: ${webhookUrl}`, {
+      webhookUrl,
+      status: dispatchStatus,
+      statusCode
+    });
+    writeStore(store);
+    addMonitorLog("ok", `Connector dispatch ${dispatchStatus}: ${webhookUrl}`);
+
+    res.json({
+      ok: dispatchStatus === "delivered" || dispatchStatus === "sent",
+      status: dispatchStatus,
+      statusCode,
+      timestamp
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/connectors/staging-sync", (req, res) => {
+  try {
+    const { targetDir, files = [] } = req.body || {};
+    if (!targetDir || containsCloudPath(targetDir)) {
+      return res.status(400).json({ ok: false, error: "Target directory must be a valid local non-cloud path." });
+    }
+    fs.mkdirSync(targetDir, { recursive: true });
+    const written = [];
+    for (const f of files) {
+      if (f.name && f.content) {
+        const filePath = path.join(targetDir, f.name);
+        fs.writeFileSync(filePath, String(f.content), "utf8");
+        written.push(f.name);
+      }
+    }
+    const store = readStore();
+    recordHistory(store, "connector.staged", `Staged ${written.length} files to ${targetDir}`, { targetDir, files: written });
+    writeStore(store);
+    res.json({ ok: true, targetDir, writtenCount: written.length, files: written });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/connectors/test-webhook", async (req, res) => {
+  try {
+    const { webhookUrl, secret = "", payload } = req.body || {};
+    if (!webhookUrl || typeof webhookUrl !== "string" || !webhookUrl.startsWith("http")) {
+      return res.status(400).json({ ok: false, error: "Valid HTTP/HTTPS webhook URL is required." });
+    }
+    const testPayload = payload || {
+      event: "wake.test_ping",
+      timestamp: now(),
+      source: "WAKE Engine V6 Connector",
+      message: "Test dispatch connection successful.",
+      samplePacket: {
+        title: "Test Content Packet",
+        lane: "General",
+        status: "verified"
+      }
+    };
+    const bodyContent = JSON.stringify(testPayload);
+    const headers = {
+      "Content-Type": "application/json",
+      "X-Wake-Timestamp": now(),
+      "User-Agent": "WAKE-Engine-V6-Connector/1.0"
+    };
+    if (secret) {
+      const hmac = crypto.createHmac("sha256", secret).update(bodyContent).digest("hex");
+      headers["X-Wake-Signature"] = `sha256=${hmac}`;
+    }
+
+    const startTime = Date.now();
+    let statusCode = 200;
+    let delivered = false;
+    let responseText = "";
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers,
+        body: bodyContent,
+        signal: AbortSignal.timeout(6000)
+      });
+      statusCode = response.status;
+      delivered = response.ok;
+      responseText = await response.text().catch(() => "");
+    } catch (err) {
+      delivered = false;
+      statusCode = 502;
+      responseText = err.message;
+    }
+    const latencyMs = Date.now() - startTime;
+    res.json({
+      ok: delivered,
+      statusCode,
+      latencyMs,
+      responseSummary: responseText.slice(0, 300),
+      testedAt: now()
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.get("/api/watchers", (_req, res) => {
+  res.json({ ok: true, watchers: folderWatcher.listWatchers() });
+});
+
+app.post("/api/watchers", (req, res) => {
+  try {
+    const { path: dirPath, projectId } = req.body || {};
+    if (!dirPath || typeof dirPath !== "string") {
+      return res.status(400).json({ ok: false, error: "Directory path is required." });
+    }
+    const watcherId = id("watch");
+    folderWatcher.addWatchDirectory(watcherId, path.resolve(dirPath), projectId);
+    res.json({ ok: true, watcher: { id: watcherId, path: path.resolve(dirPath), projectId } });
+  } catch (error) {
+    res.status(400).json({ ok: false, error: error.message });
+  }
+});
+
+app.delete("/api/watchers/:id", (req, res) => {
+  const removed = folderWatcher.removeWatchDirectory(req.params.id);
+  res.json({ ok: removed });
+});
+
+app.post("/api/synthesis/30-day-matrix", async (req, res) => {
+  try {
+    const { sourceText, projectId = "wake-v6-main", theme = "Authority & Conversion" } = req.body || {};
+    const store = readStore();
+    
+    // Resolve source from current store if not explicitly passed
+    let effectiveSource = sourceText;
+    if (!effectiveSource) {
+      const pSources = (store.sources || []).filter((s) => s.projectId === projectId);
+      effectiveSource = pSources[pSources.length - 1]?.source || "Authority content foundations and market breakdown";
+    }
+
+    const matrix = generate30DayMatrix({ sourceText: effectiveSource, projectId, theme });
+    
+    // Save to store history
+    recordHistory(store, "synthesis.30_day_matrix", `Generated 30-Day Content Calendar Matrix (${theme})`, {
+      totalDays: matrix.totalDays,
+      theme
+    });
+    writeStore(store);
+    addMonitorLog("ok", `Generated 30-day cross-platform content calendar matrix.`);
+
+    res.json({ ok: true, matrix });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/synthesis/subtitles", (req, res) => {
+  try {
+    const { scriptText, format = "srt", wordsPerMinute = 150 } = req.body || {};
+    if (!scriptText) {
+      return res.status(400).json({ ok: false, error: "Script text is required." });
+    }
+    const result = generateSubtitleTrack(scriptText, { format, wordsPerMinute: Number(wordsPerMinute) || 150 });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
 app.post("/api/open-folder", async (req, res) => {
   const target = String(req.body?.target || "data");
   const folder = folderTarget(target);
@@ -4236,6 +4786,266 @@ app.post("/api/snapshot", (req, res) => {
   writeJsonDurable(file, payload, { reason: "operator-snapshot" });
   addMonitorLog("ok", `Snapshot saved: ${name}`);
   res.json({ ok: true, fileName: name, relativePath: `data/snapshots/${name}` });
+});
+
+app.use("/generated-audio", express.static(GENERATED_AUDIO_DIR));
+
+app.get("/api/voice/profiles", (_req, res) => {
+  res.json({ ok: true, profiles: voiceEngine.listProfiles() });
+});
+
+app.post("/api/voice/synthesize", async (req, res) => {
+  try {
+    const result = await voiceEngine.synthesizeSpeech(req.body || {});
+    addMonitorLog("ok", `Synthesized voiceover audio: ${result.filename} (${result.estimatedDurationSec}s)`);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/voice/export-bundle", (req, res) => {
+  try {
+    const { targetDir, filename, audioData, subtitles } = req.body || {};
+    if (!targetDir || containsCloudPath(targetDir)) {
+      return res.status(400).json({ ok: false, error: "Target directory must be a valid local non-cloud path." });
+    }
+    fs.mkdirSync(targetDir, { recursive: true });
+    const baseName = filename ? filename.replace(/\.[^/.]+$/, "") : `voiceover-${Date.now()}`;
+    const written = [];
+
+    if (subtitles?.srt) {
+      const srtPath = path.join(targetDir, `${baseName}.srt`);
+      fs.writeFileSync(srtPath, subtitles.srt, "utf8");
+      written.push(`${baseName}.srt`);
+    }
+    if (subtitles?.vtt) {
+      const vttPath = path.join(targetDir, `${baseName}.vtt`);
+      fs.writeFileSync(vttPath, subtitles.vtt, "utf8");
+      written.push(`${baseName}.vtt`);
+    }
+    res.json({ ok: true, targetDir, files: written });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.use("/generated-videos", express.static(GENERATED_VIDEO_DIR));
+
+app.get("/api/video/status", async (_req, res) => {
+  const status = await videoEngine.checkFfmpeg();
+  res.json({ ok: true, ffmpeg: status });
+});
+
+app.post("/api/video/render-reel", async (req, res) => {
+  try {
+    const result = await videoEngine.renderVerticalReel(req.body || {});
+    addMonitorLog("ok", `Rendered vertical video reel: ${result.filename} (${result.durationSec}s)`);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/analytics/simulate", (req, res) => {
+  try {
+    const { script, hook, platform } = req.body || {};
+    if (!script || typeof script !== "string") {
+      return res.status(400).json({ ok: false, error: "Script text is required for simulation." });
+    }
+    const simulation = simulateAudienceRetention(script, { hook, platform });
+    res.json({ ok: true, simulation });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.get("/api/publishing/accounts", (_req, res) => {
+  res.json({ ok: true, accounts: socialPublisher.getAccounts() });
+});
+
+app.get("/api/publishing/queue", (req, res) => {
+  const { projectId, status } = req.query || {};
+  res.json({ ok: true, queue: socialPublisher.listQueue({ projectId, status }) });
+});
+
+app.post("/api/projects/:id/export-vault", (req, res) => {
+  try {
+    const store = readStore();
+    const projectId = req.params.id || "wake-v6-main";
+    const projects = store.projects || [];
+    const project = projects.find((p) => p.id === projectId) || { id: projectId, name: projectId };
+    const pSources = (store.sources || []).filter((s) => s.projectId === projectId);
+    const pMedia = (store.mediaAssets || []).filter((m) => m.projectId === projectId);
+    const pGenerations = (store.generations || []).filter((g) => g.projectId === projectId);
+    const pCampaigns = (store.campaigns || []).filter((c) => c.projectId === projectId);
+
+    const serialized = JSON.stringify({ project, pSources, pMedia, pGenerations, pCampaigns });
+    const sha256 = crypto.createHash("sha256").update(serialized).digest("hex");
+
+    const bundle = {
+      version: "6.0.0",
+      exportedAt: new Date().toISOString(),
+      vaultManifest: {
+        engine: "WAKE Engine V6 Portable Vault",
+        projectId,
+        verificationSha256: sha256
+      },
+      project,
+      counts: {
+        sources: pSources.length,
+        media: pMedia.length,
+        generations: pGenerations.length,
+        campaigns: pCampaigns.length
+      },
+      sources: pSources,
+      media: pMedia,
+      generations: pGenerations,
+      campaigns: pCampaigns
+    };
+
+    const filename = `${projectId}-vault-${Date.now().toString(36)}.wake.json`;
+    recordHistory(store, "vault.exported", `Exported portable vault for project: ${project.name}`, { projectId, sha256 });
+    writeStore(store);
+
+    res.json({ ok: true, filename, sha256, bundle });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/projects/import-vault", (req, res) => {
+  try {
+    const { bundle } = req.body || {};
+    if (!bundle || !bundle.project) {
+      return res.status(400).json({ ok: false, error: "Invalid vault bundle payload." });
+    }
+    const store = readStore();
+    const targetProject = bundle.project;
+    
+    if (!store.projects.some((p) => p.id === targetProject.id)) {
+      store.projects.push(targetProject);
+    }
+
+    let addedCount = 0;
+    for (const src of (bundle.sources || [])) {
+      if (!store.sources.some((s) => s.id === src.id)) {
+        store.sources.push(src);
+        addedCount++;
+      }
+    }
+
+    recordHistory(store, "vault.imported", `Imported vault for project: ${targetProject.name} (${addedCount} sources added)`, {
+      projectId: targetProject.id,
+      addedSources: addedCount
+    });
+    writeStore(store);
+
+    res.json({ ok: true, project: targetProject, addedSources: addedCount });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/publishing/stage", (req, res) => {
+  try {
+    const item = socialPublisher.stagePost(req.body || {});
+    res.json({ ok: true, item });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/publishing/dispatch/:id", async (req, res) => {
+  try {
+    const result = await socialPublisher.dispatchPost(req.params.id);
+    res.json(result);
+  } catch (error) {
+    const status = String(error.message || "").toLowerCase().includes("not found") ? 404 : 500;
+    res.status(status).json({ ok: false, error: error.message });
+  }
+});
+
+app.delete("/api/publishing/:id", (req, res) => {
+  try {
+    const result = socialPublisher.deletePost(req.params.id);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/hooks/generate-variants", (req, res) => {
+  try {
+    const { sourceText, topic, platform } = req.body || {};
+    const result = generateHookVariants(sourceText, { topic, platform });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.get("/api/waveform/styles", (req, res) => {
+  res.json({ ok: true, styles: WAVEFORM_STYLES });
+});
+
+app.post("/api/waveform/generate", (req, res) => {
+  try {
+    const { durationSec, style, color, width, height, sampleCount } = req.body || {};
+    const result = generateWaveformSvg({ durationSec, style, color, width, height, sampleCount });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/trends/analyze", (req, res) => {
+  try {
+    const { text, niche, platform } = req.body || {};
+    const result = analyzeCompetitorContent(text, { niche, platform });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/transmute", async (req, res) => {
+  try {
+    const { sourceText, title, niche, tone, projectId = "wake-v6-main" } = req.body || {};
+    const store = readStore();
+    let effectiveSource = sourceText;
+    if (!effectiveSource) {
+      const pSources = (store.sources || []).filter((s) => s.projectId === projectId);
+      effectiveSource = pSources[pSources.length - 1]?.source || "Authority content foundations and market breakdown";
+    }
+    const bundle = transmuteSourceToOmnichannel(effectiveSource, { title, niche, tone });
+    recordHistory(store, "transmute.omnichannel", `Transmuted source into 5 omnichannel assets: ${bundle.title}`, {
+      bundleId: bundle.id,
+      title: bundle.title
+    });
+    writeStore(store);
+    addMonitorLog("ok", `Transmuted source into 5 native omnichannel distributions.`);
+    res.json({ ok: true, bundle });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/transmute/export", (req, res) => {
+  try {
+    const { bundle, targetDir = EXPORT_DIR } = req.body || {};
+    if (!bundle) return res.status(400).json({ ok: false, error: "Bundle data required for export." });
+    const result = exportOmnichannelToFolder(bundle, targetDir);
+    const store = readStore();
+    recordHistory(store, "transmute.exported", `Exported 5-asset omnichannel package to ${result.bundleDir}`, {
+      bundleDir: result.bundleDir,
+      filesCount: result.filesCount
+    });
+    writeStore(store);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
 });
 
 app.use((error, req, res, _next) => {

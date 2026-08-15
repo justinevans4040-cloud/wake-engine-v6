@@ -1,0 +1,33 @@
+{
+  "format": "WAKE_VAULT_BUNDLE_V1",
+  "exportedAt": "2026-08-15T15:13:34.042Z",
+  "project": {
+    "id": "wake-v6-main",
+    "name": "WAKE Engine V6 (Imported) (Imported) (Imported)",
+    "status": "active",
+    "createdAt": "2026-07-05T00:00:00.000Z",
+    "updatedAt": "2026-08-15T13:21:26.075Z"
+  },
+  "counts": {
+    "sources": 0,
+    "media": 0,
+    "generations": 0,
+    "campaigns": 0,
+    "chats": 0
+  },
+  "vaultData": {
+    "project": {
+      "id": "wake-v6-main",
+      "name": "WAKE Engine V6 (Imported) (Imported) (Imported)",
+      "status": "active",
+      "createdAt": "2026-07-05T00:00:00.000Z",
+      "updatedAt": "2026-08-15T13:21:26.075Z"
+    },
+    "sources": [],
+    "media": [],
+    "generations": [],
+    "campaigns": [],
+    "chats": []
+  },
+  "sha256": "716ff865d82c7e438ce70e744c467c18adb241bcaf9743ab7cfcfb43e70c0a05"
+}

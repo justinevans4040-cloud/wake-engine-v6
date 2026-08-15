@@ -13,6 +13,8 @@
     "dev:client": "npm run guard:local && vite --host 127.0.0.1 --port 5177",
     "build": "npm run guard:local && vite build",
     "desktop": "npm run build && electron .",
+    "cli": "npm run guard:local && node scripts/wake-cli.mjs",
+    "daemon": "npm run guard:local && node scripts/wake-cli.mjs schedule-daemon",
     "package:win": "npm run build && electron-builder --win dir --x64 --publish never",
     "package:installer": "npm run build && electron-builder --win nsis --x64 --publish never",
     "install:local": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-wake-v6-local.ps1",
@@ -29,13 +31,15 @@
     "smoke": "npm run guard:local && node scripts/smoke-wake-v6.mjs",
     "audit:routes": "npm run build && node scripts/route-contract-audit.mjs && node scripts/route-ui-audit.mjs",
     "audit:ui": "npm run audit:routes && npm run audit:automation-api && node scripts/ui-button-audit.mjs",
+    "audit:chaos": "node scripts/chaos-ringer-audit.mjs",
     "gate": "npm run guard:local && node scripts/wake-gatekeeper.mjs phase-00-gatekeeper"
   },
   "dependencies": {
     "express": "^4.21.2",
     "lucide-react": "^0.468.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",

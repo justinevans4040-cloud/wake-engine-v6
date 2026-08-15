@@ -335,7 +335,16 @@ function staticPhase7CompletionScan() {
   const gate = fs.readFileSync(path.join(ROOT, "scripts", "wake-gatekeeper.mjs"), "utf8");
   const server = fs.readFileSync(path.join(ROOT, "server", "index.js"), "utf8");
   const imageGeneration = fs.readFileSync(path.join(ROOT, "server", "image-generation.js"), "utf8");
-  const ui = fs.readFileSync(path.join(ROOT, "src", "main.jsx"), "utf8");
+  const readAllUi = (dir) => {
+    let combined = "";
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) combined += readAllUi(full);
+      else if (entry.name.endsWith(".jsx") || entry.name.endsWith(".js")) combined += fs.readFileSync(full, "utf8");
+    }
+    return combined;
+  };
+  const ui = readAllUi(path.join(ROOT, "src"));
   const specStatus = fs.readFileSync(path.join(ROOT, "TIER_ZERO_BUILD_STATUS.md"), "utf8");
   const requiredBudgets = ["desktopBoot", "stateLoad", "saveSource", "frameGeneration", "agentRun", "clusterGeneration", "autonomousCampaign", "chatFirstVisibleResponse", "modelWarmup", "streamedFirstToken", "export", "coreUiInteraction"];
   const interfaces = ["/api/run-agent", "/api/tier-zero/run", "/api/content-cluster", "/api/export", "/api/history", "/api/state"];
@@ -366,7 +375,16 @@ function staticPhase7CompletionScan() {
 
 function staticTierZeroPromotionScan() {
   const runtime = fs.readFileSync(path.join(ROOT, "server", "tier-zero-runtime.js"), "utf8");
-  const ui = fs.readFileSync(path.join(ROOT, "src", "main.jsx"), "utf8");
+  const readAllUi = (dir) => {
+    let combined = "";
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) combined += readAllUi(full);
+      else if (entry.name.endsWith(".jsx") || entry.name.endsWith(".js")) combined += fs.readFileSync(full, "utf8");
+    }
+    return combined;
+  };
+  const ui = readAllUi(path.join(ROOT, "src"));
   const ok = /tierZeroPromoted:\s*true/.test(runtime) && /Run Tier Zero Agents/.test(ui);
   artifact("tier-zero-promotion-check.json", JSON.stringify({ ok }, null, 2));
   recordCheck("tier-zero-promotion-check", ok, {
@@ -444,7 +462,16 @@ function validatePhase4Export(bundle, exportRecord) {
 }
 
 function staticSpeechVoiceScan() {
-  const main = fs.readFileSync(path.join(ROOT, "src", "main.jsx"), "utf8");
+  const readAllUi = (dir) => {
+    let combined = "";
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) combined += readAllUi(full);
+      else if (entry.name.endsWith(".jsx") || entry.name.endsWith(".js")) combined += fs.readFileSync(full, "utf8");
+    }
+    return combined;
+  };
+  const main = readAllUi(path.join(ROOT, "src"));
   const config = fs.readFileSync(path.join(ROOT, "src", "app-config.jsx"), "utf8");
   const server = fs.readFileSync(path.join(ROOT, "server", "index.js"), "utf8");
   const uiAudit = fs.readFileSync(path.join(ROOT, "scripts", "ui-button-audit.mjs"), "utf8");

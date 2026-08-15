@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "checkedAt": "2026-08-15T12:02:46.115Z",
+  "summary": {
+    "capabilities": 10,
+    "agents": 6,
+    "violations": 0,
+    "warnings": 0,
+    "runtimeEvidence": 5
+  },
+  "violations": [],
+  "warnings": []
+}

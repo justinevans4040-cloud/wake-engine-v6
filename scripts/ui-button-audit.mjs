@@ -29,11 +29,18 @@ async function click(locator, label, options = {}) {
 }
 
 async function closeModal(page) {
-  const close = page.getByRole("button", { name: /^Close$/ });
+  const close = page.getByRole("button", { name: /^Close$/i }).first();
   if (await close.isVisible().catch(() => false)) {
     await close.click();
     logClick("modal close");
+  } else if (await page.locator(".modal-backdrop").isVisible().catch(() => false)) {
+    await page.evaluate(() => {
+      const backdrop = document.querySelector(".modal-backdrop");
+      if (backdrop) backdrop.click();
+    });
+    logClick("modal close");
   }
+  await page.locator(".modal-backdrop").waitFor({ state: "detached", timeout: 5000 }).catch(() => {});
 }
 
 async function assertNoTextOverflow(page) {
@@ -261,6 +268,7 @@ async function main() {
 
     await click(page.getByRole("button", { name: "Vault", exact: true }), "ip vault tab");
     await click(page.getByText("Drive / folder intake", { exact: true }), "open drive intake settings");
+    await closeModal(page);
     await page.getByLabel("Intake review mission").fill("Home organizer service notes, proof, source copy, platform assets, and campaign visuals. Random screenshots are not wanted.");
     logClick("intake review mission");
     await page.getByRole("button", { name: /Refresh Drives/i }).waitFor();
@@ -297,8 +305,10 @@ async function main() {
     const agentSourceButtons = await page.locator(".agent-source-list button").count();
     if (agentSourceButtons < 1) throw new Error("Agent page has no saved source selector buttons.");
     await click(page.locator(".agent-source-list button").first(), "agent source selector load");
-    const agentRunDisabled = await page.getByRole("button", { name: /Run Tier Zero Agents/i }).first().isDisabled();
-    if (agentRunDisabled) throw new Error("Agent run action is disabled after loading source.");
+    await page.waitForFunction(() => {
+      const btn = document.querySelector(".agent-source-actions button.primary-action");
+      return btn && !btn.disabled;
+    }, { timeout: 6000 });
     await click(page.getByRole("button", { name: "Vault", exact: true }), "return ip vault");
 
     await click(page.getByRole("button", { name: "Monitor", exact: true }), "task monitor tab");

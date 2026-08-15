@@ -1,0 +1,33 @@
+{
+  "items": [],
+  "accounts": [
+    {
+      "platform": "youtube",
+      "name": "Official YouTube Channel (Shorts)",
+      "status": "connected",
+      "accountId": "yt-wake-engine",
+      "handles": "@wakeengine"
+    },
+    {
+      "platform": "tiktok",
+      "name": "TikTok Creator Portal",
+      "status": "connected",
+      "accountId": "tt-wake-official",
+      "handles": "@wake.engine"
+    },
+    {
+      "platform": "linkedin",
+      "name": "LinkedIn Organization Page",
+      "status": "connected",
+      "accountId": "li-wake-hq",
+      "handles": "WAKE Engine Systems"
+    },
+    {
+      "platform": "x",
+      "name": "X / Twitter Broadcast Feed",
+      "status": "connected",
+      "accountId": "x-wake-hq",
+      "handles": "@WakeEngineHQ"
+    }
+  ]
+}

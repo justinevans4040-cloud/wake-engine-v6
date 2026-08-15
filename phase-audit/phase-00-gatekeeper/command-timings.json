@@ -1,0 +1,44 @@
+[
+  {
+    "name": "phase8-truth-baseline",
+    "command": "npm run audit:phase8",
+    "code": 0,
+    "durationMs": 881,
+    "timedOut": false
+  },
+  {
+    "name": "phase9-durability-security",
+    "command": "npm run audit:phase9",
+    "code": 0,
+    "durationMs": 139658,
+    "timedOut": false
+  },
+  {
+    "name": "build",
+    "command": "npm run build",
+    "code": 0,
+    "durationMs": 2972,
+    "timedOut": false
+  },
+  {
+    "name": "smoke",
+    "command": "npm run smoke",
+    "code": 0,
+    "durationMs": 32886,
+    "timedOut": false
+  },
+  {
+    "name": "performance-benchmark",
+    "command": "npm run benchmark",
+    "code": 0,
+    "durationMs": 11030,
+    "timedOut": false
+  },
+  {
+    "name": "playwright-ui-audit",
+    "command": "npm run audit:ui",
+    "code": 0,
+    "durationMs": 111527,
+    "timedOut": false
+  }
+]

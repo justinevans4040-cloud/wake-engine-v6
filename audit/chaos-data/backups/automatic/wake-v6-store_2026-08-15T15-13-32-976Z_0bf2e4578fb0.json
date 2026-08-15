@@ -1,0 +1,1303 @@
+{
+  "projects": [
+    {
+      "id": "wake-v6-main",
+      "name": "WAKE Engine V6 (Imported) (Imported) (Imported)",
+      "status": "active",
+      "createdAt": "2026-07-05T00:00:00.000Z",
+      "updatedAt": "2026-08-15T13:21:26.075Z"
+    }
+  ],
+  "sources": [],
+  "mediaAssets": [],
+  "activeTask": {
+    "id": "task-wake-v6-main",
+    "title": "Build WAKE Engine V6 into an elite operator app",
+    "objective": "Turn source, chat, agents, clusters, and exports into one coherent task-completion system.",
+    "status": "active",
+    "nextAction": "Use Console or section chat to advance the current ask.",
+    "blockers": [],
+    "completed": [],
+    "updatedAt": "2026-07-14T00:00:00.000Z"
+  },
+  "agentChats": [],
+  "intakeRuns": [],
+  "intakeReviews": [],
+  "generations": [],
+  "campaigns": [],
+  "generatedImages": [],
+  "runRecords": [],
+  "a2aMessages": [],
+  "replayableHandoffs": [],
+  "toolReceipts": [],
+  "memoryReceipts": [],
+  "exportInspections": [],
+  "exports": [],
+  "history": [
+    {
+      "id": "hist-msuin4ko-zgsupt",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-6e0798a383ab",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T15:13:32.904Z"
+    },
+    {
+      "id": "hist-msuin4im-u3p4eu",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-f346b489730b",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T15:13:32.830Z"
+    },
+    {
+      "id": "hist-msuin4gv-7xuvzr",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-64dacf4b8e3c",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T15:13:32.767Z"
+    },
+    {
+      "id": "hist-msuin4f6-5yd9yk",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-ddcddcac7c81",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T15:13:32.706Z"
+    },
+    {
+      "id": "hist-msuin4d8-w8jdia",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-69cf12d703c5",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T15:13:32.636Z"
+    },
+    {
+      "id": "hist-msuemy4b-azeueg",
+      "type": "vault.imported",
+      "detail": "Imported project vault: WAKE Engine V6 (Imported) (Imported) (Imported) with 0 sources.",
+      "payload": {
+        "projectId": "wake-v6-main"
+      },
+      "createdAt": "2026-08-15T13:21:26.075Z"
+    },
+    {
+      "id": "hist-msuemy4b-byl9tl",
+      "type": "project.updated",
+      "detail": "Updated project: WAKE Engine V6 (Imported) (Imported) (Imported)",
+      "payload": {
+        "projectId": "wake-v6-main"
+      },
+      "createdAt": "2026-08-15T13:21:26.075Z"
+    },
+    {
+      "id": "hist-msuemy15-lih0yx",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-43d60a19a46a",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.961Z"
+    },
+    {
+      "id": "hist-msuemxyj-t3ks5n",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-18a39426130b",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.867Z"
+    },
+    {
+      "id": "hist-msuemxvx-zhz7xf",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-dd4187484f19",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.773Z"
+    },
+    {
+      "id": "hist-msuemxt0-myceiy",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-4848ff58d7da",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.668Z"
+    },
+    {
+      "id": "hist-msuemxpn-7sv028",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-cd5ca855b34f",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.547Z"
+    },
+    {
+      "id": "hist-msuemxn6-bmk234",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-244cb20cabe2",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.458Z"
+    },
+    {
+      "id": "hist-msuemxku-3527vg",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-18d34c03d2e8",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.374Z"
+    },
+    {
+      "id": "hist-msuemxi3-vfbvg7",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-9371f8b9acd1",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.275Z"
+    },
+    {
+      "id": "hist-msuemxfh-cg7hsa",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-795fc015b968",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.181Z"
+    },
+    {
+      "id": "hist-msuemxcd-9ty6h6",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-0e9e663496fb",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:25.069Z"
+    },
+    {
+      "id": "hist-msuemx6y-ymghit",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-e67a99802e2a",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:24.874Z"
+    },
+    {
+      "id": "hist-msuemx5d-cb0ba4",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-7e2a1987a1a4",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:24.817Z"
+    },
+    {
+      "id": "hist-msuemx3d-y7q7rx",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-be77a0a0441c",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:24.745Z"
+    },
+    {
+      "id": "hist-msuemx1p-rbjglu",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-c8c20b6f75e3",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:24.685Z"
+    },
+    {
+      "id": "hist-msuemwzx-kj6aju",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-32035d33cccf",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:24.621Z"
+    },
+    {
+      "id": "hist-msuemwy3-i4p4uv",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-6871bd2eb4e1",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T13:21:24.555Z"
+    },
+    {
+      "id": "hist-msubpymq-217ygk",
+      "type": "vault.imported",
+      "detail": "Imported project vault: WAKE Engine V6 (Imported) (Imported) with 0 sources.",
+      "payload": {
+        "projectId": "wake-v6-main"
+      },
+      "createdAt": "2026-08-15T11:59:47.858Z"
+    },
+    {
+      "id": "hist-msubpymq-ugjnwn",
+      "type": "project.updated",
+      "detail": "Updated project: WAKE Engine V6 (Imported) (Imported)",
+      "payload": {
+        "projectId": "wake-v6-main"
+      },
+      "createdAt": "2026-08-15T11:59:47.858Z"
+    },
+    {
+      "id": "hist-msubpyk2-44ah3j",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-3d35131ee7a5",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.762Z"
+    },
+    {
+      "id": "hist-msubpyhr-gfh3aa",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-673fb3258512",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.679Z"
+    },
+    {
+      "id": "hist-msubpyff-3agrj3",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-6fe0721ad13b",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.595Z"
+    },
+    {
+      "id": "hist-msubpyd4-nwpyq9",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-e7bf9e645573",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.512Z"
+    },
+    {
+      "id": "hist-msubpyar-ot7szj",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-817f843c2ff9",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.427Z"
+    },
+    {
+      "id": "hist-msubpy8h-dw4rea",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-c6df02faa294",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.345Z"
+    },
+    {
+      "id": "hist-msubpy66-hogljm",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-c99ea5d6daae",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.262Z"
+    },
+    {
+      "id": "hist-msubpy3w-7cw413",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-eb6c38675e43",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.180Z"
+    },
+    {
+      "id": "hist-msubpy1n-bvubnp",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-7bf0647afd2a",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.099Z"
+    },
+    {
+      "id": "hist-msubpxz7-mununp",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-9f6bbd1c9604",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:47.011Z"
+    },
+    {
+      "id": "hist-msubpxu3-j3wsd1",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-75f141d99769",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:46.827Z"
+    },
+    {
+      "id": "hist-msubpxsi-9aaejl",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-72f6f2dd212a",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:46.770Z"
+    },
+    {
+      "id": "hist-msubpxqk-ynkcr6",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-fef15a32040d",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:46.700Z"
+    },
+    {
+      "id": "hist-msubpxov-olgbke",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-9e98b28ef553",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:46.639Z"
+    },
+    {
+      "id": "hist-msubpxn8-dq3c79",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-8b10253b546e",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:46.580Z"
+    },
+    {
+      "id": "hist-msubpxlj-bps5o4",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-33221725939e",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:59:46.519Z"
+    },
+    {
+      "id": "hist-msubet7i-wt0yr8",
+      "type": "vault.imported",
+      "detail": "Imported project vault: WAKE Engine V6 (Imported) with 0 sources.",
+      "payload": {
+        "projectId": "wake-v6-main"
+      },
+      "createdAt": "2026-08-15T11:51:07.614Z"
+    },
+    {
+      "id": "hist-msubet7i-8bzkns",
+      "type": "project.updated",
+      "detail": "Updated project: WAKE Engine V6 (Imported)",
+      "payload": {
+        "projectId": "wake-v6-main"
+      },
+      "createdAt": "2026-08-15T11:51:07.614Z"
+    },
+    {
+      "id": "hist-msubet4m-2ntazq",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-692390b10a8b",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:07.510Z"
+    },
+    {
+      "id": "hist-msubet2c-pbzliu",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-3a98db425383",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:07.428Z"
+    },
+    {
+      "id": "hist-msubet03-tzxri3",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-a08dcdc3b4d7",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:07.347Z"
+    },
+    {
+      "id": "hist-msubesxt-cygnh4",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-afac4cbebf0f",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:07.265Z"
+    },
+    {
+      "id": "hist-msubesvl-r806we",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-07586869cc29",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:07.185Z"
+    },
+    {
+      "id": "hist-msubestb-hkcvis",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-db4abe33a764",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:07.103Z"
+    },
+    {
+      "id": "hist-msubesr1-li73ub",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-371ad58f6e7d",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:07.021Z"
+    },
+    {
+      "id": "hist-msubesot-7tzcud",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-02d8d67039bf",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.941Z"
+    },
+    {
+      "id": "hist-msubesmi-w51myv",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-759fcf601e3c",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.858Z"
+    },
+    {
+      "id": "hist-msubesk4-vpajnn",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-040228d94c49",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.772Z"
+    },
+    {
+      "id": "hist-msubesf2-terjyd",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-3c712fe5418d",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.590Z"
+    },
+    {
+      "id": "hist-msubesdm-zrewqc",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-45b3a8547c21",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.538Z"
+    },
+    {
+      "id": "hist-msubesbt-pukdgd",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-9cc0dceca2b6",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.473Z"
+    },
+    {
+      "id": "hist-msubesac-wyzu26",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-788134e1796f",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.420Z"
+    },
+    {
+      "id": "hist-msubes8n-hp85nk",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-28904f155b18",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.359Z"
+    },
+    {
+      "id": "hist-msubes72-ttxldx",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-1d6b16b14ac9",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:51:06.302Z"
+    },
+    {
+      "id": "hist-msubelrj-kgx9ox",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-cbb70b0c8c49",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.967Z"
+    },
+    {
+      "id": "hist-msubelpb-gdy7jf",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-ff4403fc87a5",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.887Z"
+    },
+    {
+      "id": "hist-msubeln3-l7nw26",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-aa6dd6641e3a",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.807Z"
+    },
+    {
+      "id": "hist-msubelkt-hdojqz",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-51247e334f93",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.725Z"
+    },
+    {
+      "id": "hist-msubelif-ffvso1",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-34ce3d14c253",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.639Z"
+    },
+    {
+      "id": "hist-msubelg6-cijnzk",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-4cae9fa12144",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.558Z"
+    },
+    {
+      "id": "hist-msubeldw-1fjnb8",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-5ec61e3f8b97",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.476Z"
+    },
+    {
+      "id": "hist-msubelbo-8lyeue",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-56c4def7f4ec",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.396Z"
+    },
+    {
+      "id": "hist-msubel96-cfkwtk",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-f34b81abbb7f",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.306Z"
+    },
+    {
+      "id": "hist-msubel6m-c8lfrf",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-74294be5d090",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.214Z"
+    },
+    {
+      "id": "hist-msubel1m-fxpf21",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-f8430be56404",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:57.034Z"
+    },
+    {
+      "id": "hist-msubel01-gw8hek",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-5bc475e2dfda",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:56.977Z"
+    },
+    {
+      "id": "hist-msubeky9-5qrfca",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-99d482ff0204",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:56.913Z"
+    },
+    {
+      "id": "hist-msubekwo-8mpj3x",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-eb468fdc693f",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:56.856Z"
+    },
+    {
+      "id": "hist-msubekv5-7c5xmm",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-c4baf95801f6",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:56.801Z"
+    },
+    {
+      "id": "hist-msubektg-3h0fy5",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-d1a1ab401f2f",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:56.740Z"
+    },
+    {
+      "id": "hist-msubebwn-tal4r4",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-29673a427c2b",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:45.191Z"
+    },
+    {
+      "id": "hist-msubebul-ivhrir",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-0a503db5b97f",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:45.117Z"
+    },
+    {
+      "id": "hist-msubebsf-8ifl3o",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-2fdd4c3f5cf4",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:45.039Z"
+    },
+    {
+      "id": "hist-msubebq8-x7ee4k",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-06dd3325e5b7",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.960Z"
+    },
+    {
+      "id": "hist-msubebo6-615p40",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-eaf7acbf19b1",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.886Z"
+    },
+    {
+      "id": "hist-msubebm2-5v1wbf",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-fd29f408eba3",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.810Z"
+    },
+    {
+      "id": "hist-msubebk1-ifmofw",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-d8d036ea5ca4",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.737Z"
+    },
+    {
+      "id": "hist-msubebhv-1csnyu",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-1217f1125890",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.659Z"
+    },
+    {
+      "id": "hist-msubebfm-xq5l45",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-c719400759a8",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.578Z"
+    },
+    {
+      "id": "hist-msubebd6-i10u26",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-69878a5dc811",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.490Z"
+    },
+    {
+      "id": "hist-msubeb8f-mj2xcj",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-c68a77c9dd19",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.319Z"
+    },
+    {
+      "id": "hist-msubeb6z-7m4h9r",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-ee50ca50f909",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.267Z"
+    },
+    {
+      "id": "hist-msubeb5b-5nfn3x",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-7e3b1a1c1232",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.207Z"
+    },
+    {
+      "id": "hist-msubeb3w-spit72",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-154d4411a7c8",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.156Z"
+    },
+    {
+      "id": "hist-msubeb2j-15b2yz",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-edc54ecd7add",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.107Z"
+    },
+    {
+      "id": "hist-msubeb12-ehw4po",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-353de79a6008",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:44.054Z"
+    },
+    {
+      "id": "hist-msubdvil-o4xb67",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-9936d9238c71",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.949Z"
+    },
+    {
+      "id": "hist-msubdvgi-5jpx3h",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-6f790094141e",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.874Z"
+    },
+    {
+      "id": "hist-msubdvef-j6w0xx",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-342dc893124a",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.799Z"
+    },
+    {
+      "id": "hist-msubdvca-qxq54g",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-1b3fc950c03d",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.722Z"
+    },
+    {
+      "id": "hist-msubdv9z-p902kd",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-063ce3014f57",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.639Z"
+    },
+    {
+      "id": "hist-msubdv7t-ssxwre",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-3b1b70bee198",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.561Z"
+    },
+    {
+      "id": "hist-msubdv5p-cxp2da",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-226ae421dbcf",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.485Z"
+    },
+    {
+      "id": "hist-msubdv3e-xf1xct",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-64f60faba113",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.402Z"
+    },
+    {
+      "id": "hist-msubdv16-u1y2e4",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-ffa8ba3edb5d",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.322Z"
+    },
+    {
+      "id": "hist-msubduyh-rv6byi",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-8b7d0cfb8ec7",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.225Z"
+    },
+    {
+      "id": "hist-msubdutj-1o1d9o",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-55009e4c2db8",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:23.047Z"
+    },
+    {
+      "id": "hist-msubdus2-3ygaxk",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-e0f1d1bc4aba",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:22.994Z"
+    },
+    {
+      "id": "hist-msubduqd-rnihq6",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-afa0d21eef48",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:22.933Z"
+    },
+    {
+      "id": "hist-msubdup0-2xxseq",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-e9a6c1748839",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:22.884Z"
+    },
+    {
+      "id": "hist-msubdune-xuwjwq",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-d19034aa735f",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:22.826Z"
+    },
+    {
+      "id": "hist-msubduly-0qv69t",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-eaf11b9d5910",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:50:22.774Z"
+    },
+    {
+      "id": "hist-msubcrr0-kain68",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-088bbd89f8bb",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:32.412Z"
+    },
+    {
+      "id": "hist-msubcrou-rmj4sk",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-bfbc5a346db8",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:32.334Z"
+    },
+    {
+      "id": "hist-msubcrmr-6v58h6",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-e7b799a70cd0",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:32.259Z"
+    },
+    {
+      "id": "hist-msubcrkj-wal8ii",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-fa19308d0a38",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:32.179Z"
+    },
+    {
+      "id": "hist-msubcrih-4t313c",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-ef747e7cab61",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:32.105Z"
+    },
+    {
+      "id": "hist-msubcrgf-tgrxgc",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-5184ee4d9c9b",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:32.031Z"
+    },
+    {
+      "id": "hist-msubcree-cpnzbc",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-9cf166283cd5",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.958Z"
+    },
+    {
+      "id": "hist-msubcrca-v0pp87",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-16678eb228b7",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.882Z"
+    },
+    {
+      "id": "hist-msubcra9-vm2v6r",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-8836012eccd8",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.809Z"
+    },
+    {
+      "id": "hist-msubcr7z-w7dye5",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-3dc52f567a8e",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.727Z"
+    },
+    {
+      "id": "hist-msubcr3c-py3rkv",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-710856172021",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.560Z"
+    },
+    {
+      "id": "hist-msubcr20-vg1otp",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-28e6a913b60c",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.512Z"
+    },
+    {
+      "id": "hist-msubcr0d-0a3dap",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-c4ffff08b47d",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.453Z"
+    },
+    {
+      "id": "hist-msubcqz2-ku47r5",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-21aa424481e3",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.406Z"
+    },
+    {
+      "id": "hist-msubcqxr-upqnv8",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-9f7b7cb64d6d",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.359Z"
+    },
+    {
+      "id": "hist-msubcqwe-trhpc9",
+      "type": "transmute.omnichannel",
+      "detail": "Transmuted source into 5 omnichannel assets: Omnichannel Authority Campaign",
+      "payload": {
+        "bundleId": "omni-5048e3954a86",
+        "title": "Omnichannel Authority Campaign"
+      },
+      "createdAt": "2026-08-15T11:49:31.310Z"
+    }
+  ],
+  "automations": [
+    {
+      "id": "auto-tsg-weekly",
+      "name": "The Sixth Gate Weekly Campaign",
+      "projectId": "wake-v6-main",
+      "sourceDir": "C:\\WakeSource\\TheSixthGate",
+      "campaignType": "Custom Prompt",
+      "operatorAsk": "You are generating a weekly content package for The Sixth Gate fantasy series. Produce: three short-video scripts (TikTok/Reels/Shorts); two image-post concepts with midjourney prompts; one excerpt post highlighting dialogue; one revision-log post for patreon; captions; and visual prompts. Ensure all claims map back to the source text provided.",
+      "scheduleCron": "0 19 * * 0",
+      "timeZone": "America/Los_Angeles",
+      "approvalMode": "Review Required",
+      "exportDir": "C:\\WakeExport\\TheSixthGate",
+      "enabled": false,
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    },
+    {
+      "id": "auto-ar-weekly",
+      "name": "Architects Renaissance Weekly Campaign",
+      "projectId": "wake-v6-main",
+      "sourceDir": "C:\\WakeSource\\ArchitectsRenaissance",
+      "campaignType": "Custom Prompt",
+      "operatorAsk": "You are generating a weekly content package for the Architects Renaissance series. Produce: three short-video scripts; two image-post concepts; one excerpt post; one revision-log post; captions; and visual prompts. Ensure all claims map strictly to the source text.",
+      "scheduleCron": "0 20 * * 0",
+      "timeZone": "America/Los_Angeles",
+      "approvalMode": "Review Required",
+      "exportDir": "C:\\WakeExport\\ArchitectsRenaissance",
+      "enabled": false,
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "updatedAt": "2026-08-01T00:00:00.000Z"
+    }
+  ],
+  "automationRuns": [],
+  "reviewQueue": [],
+  "quarantine": {
+    "sources": 0,
+    "mediaAssets": 0,
+    "agentChats": 0,
+    "generations": 0,
+    "history": 0
+  }
+}

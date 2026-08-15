@@ -14,8 +14,24 @@ function readNormalized(filePath) {
   return fs.readFileSync(filePath, "utf8").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
+function getAllJsxFiles(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach((file) => {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getAllJsxFiles(filePath));
+    } else if (file.endsWith(".jsx") || file.endsWith(".js")) {
+      results.push(filePath);
+    }
+  });
+  return results;
+}
+
 const config = readNormalized(configPath);
-const main = readNormalized(mainPath);
+const allJsxFiles = getAllJsxFiles(path.join(ROOT, "src"));
+const main = allJsxFiles.map((file) => readNormalized(file)).join("\n\n");
 const server = readNormalized(serverPath);
 
 function sliceBetween(source, startMarker, endMarker, label) {
@@ -44,10 +60,13 @@ const tabIds = tabMatches.map((match) => match[1]);
 if (!tabIds.length) throw new Error("No WAKE routes found in tabs.");
 if (new Set(tabIds).size !== tabIds.length) throw new Error(`Duplicate route IDs: ${tabIds.join(", ")}`);
 
-const signalsBlock = sliceBetween(main, "  const signals = {", "\n  };\n  const routeSignals", "abilitySignals map");
-const readinessBlock = sliceBetween(main, "  const readyByAbility = {", "\n  };\n  const ready =", "readyByAbility map");
-const actionSetsBlock = sliceBetween(main, "  const actionSets = {", "\n  };\n  const actions =", "actionSets map");
-const nextStepBlock = sliceBetween(main, "function NextStepPanel(", "\nfunction StudioCard(", "NextStepPanel");
+const scaffoldPath = path.join(ROOT, "src", "components", "common", "AbilityScaffold.jsx");
+const scaffold = fs.existsSync(scaffoldPath) ? readNormalized(scaffoldPath) : main;
+
+const signalsBlock = sliceBetween(scaffold, "  const signals = {", "\n  };\n  const routeSignals", "abilitySignals map");
+const readinessBlock = sliceBetween(scaffold, "  const readyByAbility = {", "\n  };\n  const ready =", "readyByAbility map");
+const actionSetsBlock = sliceBetween(scaffold, "  const actionSets = {", "\n  };\n  const actions =", "actionSets map");
+const nextStepBlock = sliceBetween(scaffold, "export function NextStepPanel(", "\nexport function ExportPreviewPanel(", "NextStepPanel");
 const stateBlock = sliceBetween(server, "function state() {", "\nconst app = express();", "server state projection");
 
 const missing = [];

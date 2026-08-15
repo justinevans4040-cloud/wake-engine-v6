@@ -1,0 +1,1427 @@
+{
+  "audit": "wal-elite-production",
+  "status": "pass",
+  "generatedAt": "2026-08-15T19:04:22.019Z",
+  "checks": 115,
+  "passed": 115,
+  "failed": [],
+  "results": [
+    {
+      "name": "external-write:stage:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:stage:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1,
+      "accepted": [
+        1
+      ]
+    },
+    {
+      "name": "external-write:stage:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:stage:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1,
+      "accepted": [
+        1
+      ]
+    },
+    {
+      "name": "external-write:stage:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:stage:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1,
+      "accepted": [
+        1
+      ]
+    },
+    {
+      "name": "external-write:stage:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:stage:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1,
+      "accepted": [
+        1
+      ]
+    },
+    {
+      "name": "external-write:backup:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:backup:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1,
+      "accepted": [
+        1
+      ]
+    },
+    {
+      "name": "external-write:backup:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:backup:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1,
+      "accepted": [
+        1
+      ]
+    },
+    {
+      "name": "external-write:backup:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:backup:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1,
+      "accepted": [
+        1
+      ]
+    },
+    {
+      "name": "external-write:backup:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:backup:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1,
+      "accepted": [
+        1
+      ]
+    },
+    {
+      "name": "external-write:journal-pending:after-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-pending:after-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        1,
+        2
+      ]
+    },
+    {
+      "name": "external-write:journal-pending:after-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-pending:after-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:primary:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:primary:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:primary:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:primary:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:primary:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:primary:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:primary:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:primary:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:primary:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:primary:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:hash:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:hash:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:hash:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:hash:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:hash:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:hash:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:hash:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:hash:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:hash:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:hash:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:metadata:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:metadata:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:metadata:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:metadata:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:metadata:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:metadata:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:metadata:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:metadata:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:metadata:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:metadata:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:journal-committed:after-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-committed:after-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-write:journal-committed:after-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-committed:after-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "accepted": [
+        2
+      ]
+    },
+    {
+      "name": "external-replay:recovery-primary:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-primary:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-primary:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-primary:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-primary:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-primary:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-primary:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-primary:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-primary:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-primary:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-hash:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-hash:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-hash:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-hash:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-hash:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-hash:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-hash:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-hash:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-hash:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-hash:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-metadata:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-metadata:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-metadata:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-metadata:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-metadata:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-metadata:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-metadata:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-metadata:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:recovery-metadata:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:recovery-metadata:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:journal-recovered-commit:after-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-recovered-commit:after-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-replay:journal-recovered-commit:after-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-recovered-commit:after-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2
+    },
+    {
+      "name": "external-rollback:rollback-primary:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-primary:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-primary:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-primary:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-primary:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-primary:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-primary:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-primary:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-primary:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-primary:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-hash:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-hash:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-hash:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-hash:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-hash:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-hash:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-hash:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-hash:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-hash:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-hash:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-metadata:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-metadata:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-metadata:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-metadata:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-metadata:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-metadata:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-metadata:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-metadata:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:rollback-metadata:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:rollback-metadata:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:journal-rolled-back:after-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-rolled-back:after-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "external-rollback:journal-rolled-back:after-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-rolled-back:after-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "compaction-crash:journal-compaction:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-compaction:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "journalHealth": {
+        "status": "clean",
+        "records": 6,
+        "tornTailRecovered": false,
+        "tornTailRecoveries": 0,
+        "corruption": null
+      }
+    },
+    {
+      "name": "compaction-crash:journal-compaction:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-compaction:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "journalHealth": {
+        "status": "clean",
+        "records": 6,
+        "tornTailRecovered": false,
+        "tornTailRecoveries": 0,
+        "corruption": null
+      }
+    },
+    {
+      "name": "compaction-crash:journal-compaction:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-compaction:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "journalHealth": {
+        "status": "clean",
+        "records": 6,
+        "tornTailRecovered": false,
+        "tornTailRecoveries": 0,
+        "corruption": null
+      }
+    },
+    {
+      "name": "compaction-crash:journal-compaction:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-compaction:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "journalHealth": {
+        "status": "clean",
+        "records": 3,
+        "tornTailRecovered": false,
+        "tornTailRecoveries": 0,
+        "corruption": null
+      }
+    },
+    {
+      "name": "compaction-crash:journal-compaction:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-compaction:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 2,
+      "journalHealth": {
+        "status": "clean",
+        "records": 3,
+        "tornTailRecovered": false,
+        "tornTailRecoveries": 0,
+        "corruption": null
+      }
+    },
+    {
+      "name": "tail-repair-crash:journal-tail-repair:after-temp-write",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-tail-repair:after-temp-write\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "tail-repair-crash:journal-tail-repair:after-temp-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-tail-repair:after-temp-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "tail-repair-crash:journal-tail-repair:after-previous-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-tail-repair:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "tail-repair-crash:journal-tail-repair:after-final-rename",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-tail-repair:after-final-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "tail-repair-crash:journal-tail-repair:after-final-fsync",
+      "passed": true,
+      "killed": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:journal-tail-repair:after-final-fsync\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "revision": 1
+    },
+    {
+      "name": "io-disk-full:stage:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-disk-full:backup:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-disk-full:journal-pending:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-disk-full:primary:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:hash:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:metadata:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:journal-committed:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:recovery-primary:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:recovery-hash:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:recovery-metadata:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:journal-recovered-commit:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:rollback-primary:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-disk-full:rollback-hash:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-disk-full:rollback-metadata:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-disk-full:journal-rolled-back:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-disk-full:journal-compaction:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-disk-full:journal-tail-repair:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-permission:stage:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-permission:backup:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-permission:journal-pending:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-permission:primary:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:hash:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:metadata:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:journal-committed:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:recovery-primary:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:recovery-hash:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:recovery-metadata:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:journal-recovered-commit:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:rollback-primary:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-permission:rollback-hash:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-permission:rollback-metadata:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-permission:journal-rolled-back:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "io-permission:journal-compaction:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 2,
+      "expectedRevision": 2
+    },
+    {
+      "name": "io-permission:journal-tail-repair:before-write",
+      "passed": true,
+      "failureExit": 1,
+      "revision": 1,
+      "expectedRevision": 1
+    },
+    {
+      "name": "hash-chain-middle-corruption-blocked",
+      "passed": true,
+      "exit": 1,
+      "stderr": "file:///C:/Users/justi/.gemini/antigravity/scratch/wake-engine-v6/server/durable-storage.js:408\r\n          const error = new Error(`Write-ahead log hash-chain verification failed at record ${index + 1}.`);\r\n                        ^\r\n\r\nError: Write-ahead log hash-chain verification failed at record 2.\r\n    at DurableJsonStore.readJournalRecords (file:///C:/Users/justi/.gemini/antigravity/scratch/wake-engine-v6/server/durable-storage.js:408:25)\r\n    at DurableJsonStore.walState (file:///C:/Users/"
+    },
+    {
+      "name": "hash-chain-downgrade-blocked",
+      "passed": true,
+      "exit": 1,
+      "stderr": "file:///C:/Users/justi/.gemini/antigravity/scratch/wake-engine-v6/server/durable-storage.js:415\r\n        const error = new Error(`Legacy write-ahead record appeared after the protected hash chain at record ${index + 1}.`);\r\n                      ^\r\n\r\nError: Legacy write-ahead record appeared after the protected hash chain at record 5.\r\n    at DurableJsonStore.readJournalRecords (file:///C:/Users/justi/.gemini/antigravity/scratch/wake-engine-v6/server/durable-storage.js:415:23)\r\n    at DurableJso"
+    },
+    {
+      "name": "torn-tail-repaired",
+      "passed": true,
+      "journalHealth": {
+        "status": "clean",
+        "records": 4,
+        "tornTailRecovered": false,
+        "tornTailRecoveries": 1,
+        "corruption": null
+      }
+    },
+    {
+      "name": "short-stage-write-rolls-back",
+      "passed": true,
+      "revision": 1
+    },
+    {
+      "name": "unrecoverable-wal-blocks-fallback",
+      "passed": true,
+      "exit": 1,
+      "stderr": "file:///C:/Users/justi/.gemini/antigravity/scratch/wake-engine-v6/server/durable-storage.js:575\r\n      const error = new Error(`Write-ahead recovery could not verify replay or rollback data for ${unresolved.length} transaction(s).`);\r\n                    ^\r\n\r\nError: Write-ahead recovery could not verify replay or rollback data for 1 transaction(s).\r\n    at DurableJsonStore._recoverWal (file:///C:/Users/justi/.gemini/antigravity/scratch/wake-engine-v6/server/durable-storage.js:575:21)\r\n    at Dur"
+    },
+    {
+      "name": "checkpoint-compaction-stress",
+      "passed": true,
+      "exit": 0,
+      "records": 7,
+      "counter": 500
+    },
+    {
+      "name": "stale-process-lock-recovered",
+      "passed": true,
+      "killedLockOwner": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "LOCKED\n",
+        "stderr": "",
+        "terminated": true
+      }
+    },
+    {
+      "name": "multi-process-thousand-mutation-stress",
+      "passed": true,
+      "writers": [
+        {
+          "code": 0,
+          "stderr": ""
+        },
+        {
+          "code": 0,
+          "stderr": ""
+        },
+        {
+          "code": 0,
+          "stderr": ""
+        },
+        {
+          "code": 0,
+          "stderr": ""
+        },
+        {
+          "code": 0,
+          "stderr": ""
+        }
+      ],
+      "counter": 1000
+    },
+    {
+      "name": "production-scale-large-state-replay",
+      "passed": true,
+      "killedLargeWrite": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:primary:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "value": {
+        "revision": 2,
+        "marker": "large-durable-after-replay",
+        "payloadLength": 2500000
+      }
+    },
+    {
+      "name": "durable-json-artifact-tree-replay",
+      "passed": true,
+      "seedExit": 0,
+      "killedArtifactWrite": {
+        "reached": true,
+        "code": null,
+        "signal": "SIGKILL",
+        "stdout": "BOUNDARY:primary:after-previous-rename\n",
+        "stderr": "",
+        "terminated": true
+      },
+      "recovery": {
+        "value": {
+          "revision": 2,
+          "marker": "artifact-after-replay"
+        },
+        "status": {
+          "file": "C:\\Users\\justi\\.gemini\\antigravity\\scratch\\wake-engine-v6\\.wal-elite-audit\\artifact-json-scope\\exports\\campaign.json",
+          "metadata": "C:\\Users\\justi\\.gemini\\antigravity\\scratch\\wake-engine-v6\\.wal-elite-audit\\artifact-json-scope\\exports\\.wake-wal\\sidecars\\Y2FtcGFpZ24uanNvbg.meta.json",
+          "journal": "C:\\Users\\justi\\.gemini\\antigravity\\scratch\\wake-engine-v6\\.wal-elite-audit\\artifact-json-scope\\exports\\.wake-wal\\json-Y2FtcGFpZ24uanNvbg.ndjson",
+          "transactionDir": "C:\\Users\\justi\\.gemini\\antigravity\\scratch\\wake-engine-v6\\.wal-elite-audit\\artifact-json-scope\\exports\\.wake-wal\\transactions\\Y2FtcGFpZ24uanNvbg",
+          "walSchemaVersion": 3,
+          "pendingTransactions": 0,
+          "lockPath": "C:\\Users\\justi\\.gemini\\antigravity\\scratch\\wake-engine-v6\\.wal-elite-audit\\artifact-json-scope\\exports\\.wake-wal\\sidecars\\Y2FtcGFpZ24uanNvbg.lock",
+          "lockHeldByCurrentProcess": true,
+          "journalHealth": {
+            "status": "clean",
+            "records": 4,
+            "tornTailRecovered": false,
+            "tornTailRecoveries": 0,
+            "corruption": null
+          },
+          "backupDir": "C:\\Users\\justi\\.gemini\\antigravity\\scratch\\wake-engine-v6\\.wal-elite-audit\\artifact-json-scope\\exports\\.wake-backups\\Y2FtcGFpZ24uanNvbg",
+          "automaticBackups": 1,
+          "retention": 24,
+          "recovery": null
+        },
+        "recovered": 1,
+        "integrity": true
+      }
+    }
+  ]
+}

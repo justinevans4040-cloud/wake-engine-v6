@@ -537,11 +537,10 @@ export class DurableJsonStore {
 
     const backupName = path.basename(String(pending.backup || ""));
     const backupPath = backupName ? path.join(this.backupDir, backupName) : null;
-    const rollback = primary?.actualHash === previousHash
-      ? primary
-      : backupPath
-        ? readValidJson(backupPath, previousHash || null)
-        : readValidJson(`${this.filePath}.previous`, previousHash || null);
+    const rollback = (primary?.actualHash === previousHash && primary)
+      || (backupPath && readValidJson(backupPath, previousHash || null))
+      || readValidJson(`${this.filePath}.previous`, previousHash || null)
+      || readValidJson(this.filePath, previousHash || null);
     if (!rollback) return null;
     if (primary?.actualHash !== rollback.actualHash) writeFileAtomic(this.filePath, rollback.payload, this.atomicOptions("rollback-primary"));
     writeFileAtomic(this.hashPath, `${rollback.actualHash}\n`, this.atomicOptions("rollback-hash"));

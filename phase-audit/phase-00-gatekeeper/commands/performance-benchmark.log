@@ -1,0 +1,100 @@
+$ npm run benchmark
+
+STDOUT:
+
+> wake-engine@0.6.0 benchmark
+> npm run guard:local && node scripts/benchmark-wake-v6.mjs
+
+
+> wake-engine@0.6.0 guard:local
+> node scripts/guard-local-workspace.mjs
+
+LOCAL-ONLY GATE PASSED: C:\Users\justi\.gemini\antigravity\scratch\wake-engine-v6
+WAKE Engine deterministic background scheduler started.
+WAKE Command Console V6 -> http://127.0.0.1:9281/
+{
+  "ok": true,
+  "results": [
+    {
+      "name": "serverBoot",
+      "durationMs": 6,
+      "budgetMs": 2500,
+      "passed": true
+    },
+    {
+      "name": "stateLoad",
+      "durationMs": 78,
+      "budgetMs": 900,
+      "passed": true
+    },
+    {
+      "name": "saveSource",
+      "durationMs": 57,
+      "budgetMs": 900,
+      "passed": true
+    },
+    {
+      "name": "frameGeneration",
+      "durationMs": 59,
+      "budgetMs": 1300,
+      "passed": true
+    },
+    {
+      "name": "agentRun",
+      "durationMs": 87,
+      "budgetMs": 1800,
+      "passed": true
+    },
+    {
+      "name": "clusterGeneration",
+      "durationMs": 92,
+      "budgetMs": 1600,
+      "passed": true
+    },
+    {
+      "name": "autonomousCampaign",
+      "durationMs": 316,
+      "budgetMs": 2500,
+      "passed": true
+    },
+    {
+      "name": "chatFirstVisibleResponse",
+      "durationMs": 125,
+      "budgetMs": 1600,
+      "passed": true
+    },
+    {
+      "name": "modelWarmup",
+      "durationMs": 641,
+      "budgetMs": 90000,
+      "passed": true
+    },
+    {
+      "name": "streamedFirstToken",
+      "durationMs": 670,
+      "budgetMs": 7000,
+      "passed": true
+    },
+    {
+      "name": "export",
+      "durationMs": 263,
+      "budgetMs": 1300,
+      "passed": true
+    },
+    {
+      "name": "desktopBoot",
+      "durationMs": 1551,
+      "budgetMs": 6500,
+      "passed": true
+    },
+    {
+      "name": "coreUiInteraction",
+      "durationMs": 119,
+      "budgetMs": 750,
+      "passed": true
+    }
+  ]
+}
+
+
+STDERR:

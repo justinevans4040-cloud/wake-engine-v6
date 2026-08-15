@@ -1,0 +1,125 @@
+{
+  "items": [
+    {
+      "id": "pub-625ccf05ebf2",
+      "projectId": "wake-v6-main",
+      "platform": "unknown",
+      "title": "",
+      "content": "",
+      "mediaPath": null,
+      "scheduledAt": "2026-08-15T15:13:33.130Z",
+      "hashtags": [],
+      "status": "staged",
+      "receipt": null,
+      "createdAt": "2026-08-15T15:13:33.130Z"
+    },
+    {
+      "id": "pub-281412eed8d1",
+      "projectId": "wake-v6-main",
+      "platform": "unknown",
+      "title": "",
+      "content": "",
+      "mediaPath": null,
+      "scheduledAt": "2026-08-15T13:21:25.040Z",
+      "hashtags": [],
+      "status": "staged",
+      "receipt": null,
+      "createdAt": "2026-08-15T13:21:25.040Z"
+    },
+    {
+      "id": "pub-d47b9fe5c3e2",
+      "projectId": "wake-v6-main",
+      "platform": "unknown",
+      "title": "",
+      "content": "",
+      "mediaPath": null,
+      "scheduledAt": "2026-08-15T11:59:46.987Z",
+      "hashtags": [],
+      "status": "staged",
+      "receipt": null,
+      "createdAt": "2026-08-15T11:59:46.987Z"
+    },
+    {
+      "id": "pub-47e2d4adbb45",
+      "projectId": "wake-v6-main",
+      "platform": "unknown",
+      "title": "",
+      "content": "",
+      "mediaPath": null,
+      "scheduledAt": "2026-08-15T11:51:06.750Z",
+      "hashtags": [],
+      "status": "staged",
+      "receipt": null,
+      "createdAt": "2026-08-15T11:51:06.750Z"
+    },
+    {
+      "id": "pub-4e713bc2dd04",
+      "projectId": "wake-v6-main",
+      "platform": "unknown",
+      "title": "",
+      "content": "",
+      "mediaPath": null,
+      "scheduledAt": "2026-08-15T11:50:57.191Z",
+      "hashtags": [],
+      "status": "staged",
+      "receipt": null,
+      "createdAt": "2026-08-15T11:50:57.191Z"
+    },
+    {
+      "id": "pub-c0c38cdf0fe5",
+      "projectId": "wake-v6-main",
+      "platform": "unknown",
+      "title": "",
+      "content": "",
+      "mediaPath": null,
+      "scheduledAt": "2026-08-15T11:50:44.469Z",
+      "hashtags": [],
+      "status": "staged",
+      "receipt": null,
+      "createdAt": "2026-08-15T11:50:44.469Z"
+    },
+    {
+      "id": "pub-9189b5e6e73b",
+      "projectId": "wake-v6-main",
+      "platform": "unknown",
+      "title": "",
+      "content": "",
+      "mediaPath": null,
+      "scheduledAt": "2026-08-15T11:50:23.201Z",
+      "hashtags": [],
+      "status": "staged",
+      "receipt": null,
+      "createdAt": "2026-08-15T11:50:23.201Z"
+    }
+  ],
+  "accounts": [
+    {
+      "platform": "youtube",
+      "name": "Official YouTube Channel (Shorts)",
+      "status": "connected",
+      "accountId": "yt-wake-engine",
+      "handles": "@wakeengine"
+    },
+    {
+      "platform": "tiktok",
+      "name": "TikTok Creator Portal",
+      "status": "connected",
+      "accountId": "tt-wake-official",
+      "handles": "@wake.engine"
+    },
+    {
+      "platform": "linkedin",
+      "name": "LinkedIn Organization Page",
+      "status": "connected",
+      "accountId": "li-wake-hq",
+      "handles": "WAKE Engine Systems"
+    },
+    {
+      "platform": "x",
+      "name": "X / Twitter Broadcast Feed",
+      "status": "connected",
+      "accountId": "x-wake-hq",
+      "handles": "@WakeEngineHQ"
+    }
+  ]
+}

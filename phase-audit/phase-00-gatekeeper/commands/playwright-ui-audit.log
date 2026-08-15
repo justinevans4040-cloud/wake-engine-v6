@@ -1,0 +1,231 @@
+$ npm run audit:ui
+
+STDOUT:
+
+> wake-engine@0.6.0 audit:ui
+> npm run audit:routes && npm run audit:automation-api && node scripts/ui-button-audit.mjs
+
+
+> wake-engine@0.6.0 audit:routes
+> npm run build && node scripts/route-contract-audit.mjs && node scripts/route-ui-audit.mjs
+
+
+> wake-engine@0.6.0 build
+> npm run guard:local && vite build
+
+
+> wake-engine@0.6.0 guard:local
+> node scripts/guard-local-workspace.mjs
+
+LOCAL-ONLY GATE PASSED: C:\Users\justi\.gemini\antigravity\scratch\wake-engine-v6
+[36mvite v6.4.3 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 1591 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                [39m[1m[2m  0.48 kB[22m[1m[22m[2m │ gzip:   0.31 kB[22m
+[2mdist/[22m[36massets/index-BruniXLG.js  [39m[1m[2m360.59 kB[22m[1m[22m[2m │ gzip: 100.88 kB[22m
+[32m✓ built in 1.87s[39m
+Hostile route contract audit passed for 9 routes: console, agent, cluster, vault, library, instructions, automations, tasks, snapshot
+  OK route console -> Console
+  OK route agent -> Agents
+  OK route cluster -> Cluster
+  OK route vault -> Vault
+  OK route library -> Library
+  OK route instructions -> Instructions
+  OK route automations -> Automations
+  OK route tasks -> Monitor
+  OK route snapshot -> Audit
+  OK Instructions end-to-end implemented-capability and unsupported-capability contracts
+  OK Automations end-to-end CRUD, persistence, scheduler, review, export, failure, history, and delete contracts
+Route UI audit passed for all 9 configured routes with hostile Instructions/Automations behavior coverage.
+
+> wake-engine@0.6.0 audit:automation-api
+> npm run guard:local && node scripts/automation-api-audit.mjs
+
+
+> wake-engine@0.6.0 guard:local
+> node scripts/guard-local-workspace.mjs
+
+LOCAL-ONLY GATE PASSED: C:\Users\justi\.gemini\antigravity\scratch\wake-engine-v6
+WAKE Engine deterministic background scheduler started.
+WAKE Command Console V6 -> http://127.0.0.1:9714/
+{
+  "status": "pass",
+  "checks": [
+    "instructions-runtime-guidance",
+    "instructions-unsupported-capability-refusal",
+    "instructions-word-boundary-regression",
+    "required-fields",
+    "cron-validation",
+    "timezone-validation",
+    "project-validation",
+    "cloud-path-rejection",
+    "public-automation-state-contract",
+    "create-persistence",
+    "create-history-receipt",
+    "update-persistence",
+    "update-history-receipt",
+    "typed-toggle-validation",
+    "toggle-history-receipt",
+    "run-queue-deduplication",
+    "not-found-delete",
+    "delete-persistence",
+    "delete-history-receipt"
+  ]
+}
+  OK operator login gate bypassed
+  OK skip non-blocking boot
+  OK emblem loaded
+  OK runtime inspect
+  OK modal close
+  OK truth rule info
+  OK modal close
+  OK open installed system TTS
+  OK persist system voice mute
+  OK persist system voice unmute
+  OK close installed system TTS
+  OK replay boot sequence
+  OK skip replayed boot
+  OK library quick action route
+  OK open exports
+  OK snapshot quick action route
+  OK open snapshots
+  OK vault quick action route
+  OK open data
+  OK console quick action return
+  OK tab Console
+  OK open Console section chat
+  OK close Console section chat
+  OK Console autonomous creator contract
+  OK tab Agents
+  OK Agents complete ability contract
+  OK tab Cluster
+  OK open Cluster section chat
+  OK close Cluster section chat
+  OK empty cluster validation
+  OK Cluster empty/error contract
+  OK tab Vault
+  OK Vault complete ability contract
+  OK tab Library
+  OK Library complete ability contract
+  OK tab Monitor
+  OK Monitor complete ability contract
+  OK tab Audit
+  OK Audit complete ability contract
+  OK return console
+  OK open project settings
+  OK create project
+  OK rename project
+  OK create manual local backup
+  OK export all local data
+  OK clean temporary cache
+  OK restore latest local backup
+  OK open creator source controls
+  OK save source
+  OK create autonomous campaign
+  OK TikTok native preview
+  OK Instagram native preview
+  OK X native preview
+  OK LinkedIn native preview
+  OK honest original image consent state
+  OK copy campaign platform output
+  OK export campaign
+  OK export preview visible
+  OK campaign next-step steering visible
+  OK console after export
+  OK open agents for content run
+  OK run tier zero content agents
+  OK agent chat send
+  OK chat answer persisted from llama3.2:3b
+  OK promote latest answer
+  OK export latest answer
+  OK agent answer export preview visible
+  OK open autonomous campaign cluster
+  OK phase4 platform lane 1
+  OK phase4 platform lane 2
+  OK phase4 platform lane 3
+  OK phase4 platform lane 4
+  OK export cluster
+  OK cluster export preview visible
+  OK library tab
+  OK library saved source
+  OK modal close
+  OK return library after library saved source
+  OK library generated output
+  OK return library after library generated output
+  OK library export
+  OK modal close
+  OK return library after library export
+  OK library history
+  OK modal close
+  OK return library after library history
+  OK ip vault tab
+  OK open drive intake settings
+  OK intake review mission
+  OK drive refresh control visible
+  OK run intake agent
+  OK media card detail
+  OK media rename option visible
+  OK modal close
+  OK ip vault search
+  OK ip vault lane filter
+  OK open source document
+  OK source document content visible
+  OK use document in creator
+  OK agent tab after source load
+  OK agent source panel visible
+  OK agent current source visible
+  OK agent source selector load
+  OK return ip vault
+  OK task monitor tab
+  OK system monitor info
+  OK modal close
+  OK monitor tile info
+  OK modal close
+  OK telemetry trace info
+  OK modal close
+  OK task monitor filter info
+  OK modal close
+  OK capability truth info
+  OK modal close
+  OK task search
+  OK task filter all
+  OK task filter running
+  OK task filter done
+  OK task row info
+  OK modal close
+  OK capability 1
+  OK modal close
+  OK capability 2
+  OK modal close
+  OK capability 3
+  OK modal close
+  OK capability 4
+  OK modal close
+  OK capability 5
+  OK modal close
+  OK capability 6
+  OK modal close
+  OK capability 7
+  OK modal close
+  OK capability 8
+  OK modal close
+  OK capability 9
+  OK modal close
+  OK capability 10
+  OK modal close
+  OK console capabilities complete
+  OK snapshot tab
+  OK save snapshot
+  OK dock run agent
+  OK dock export output
+  OK dock console
+  OK final ip vault verification
+  OK final console screenshot state
+
+149 controls/actions verified
+Screenshot: C:\Users\justi\.gemini\antigravity\scratch\wake-engine-v6\audit\ui-button-audit\wake-v6-electron-button-audit.png
+
+
+STDERR:

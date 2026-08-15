@@ -12,6 +12,8 @@ import {
 
 export const emblemSrc = "/assets/forgefront-systems-emblem.png";
 
+export const standaloneRoutes = new Set(["instructions", "automations"]);
+
 export const tabs = [
   { id: "console", label: "Console", icon: TerminalSquare },
   { id: "agent", label: "Agents", icon: Bot },
@@ -194,6 +196,8 @@ export const polishPrompts = {
     "Write a clean audit note for this state."
   ]
 };
+
+export const BOOT_SEQUENCE_MS = 1800;
 
 export const bootLines = [
   "WAKE BIOS 6.0 :: cold start handshake",
