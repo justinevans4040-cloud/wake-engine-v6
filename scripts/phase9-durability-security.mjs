@@ -149,7 +149,7 @@ function auditStaticContracts() {
   check("loopback-bind-and-origin-session-guards", /app\.listen\(port, "127\.0\.0\.1"/.test(server) && /isAllowedOrigin/.test(server) && /sessionManager\.require/.test(server), {});
   check("credentials-never-env-json-log-export", !/WAKE_IMAGE_API_KEY|HF_TOKEN|OPENAI_API_KEY/.test(imageGeneration) && /safeStorage/.test(electronMain) && !/apiKey/.test(server.match(/function state\(\)[\s\S]*?const app = express\(\)/)?.[0] || ""), {});
   check("packaged-launch-has-no-dev-runtime-path", !/node_modules\\electron|C:\\Users\\justi|Arguments\s*=\s*.*root/i.test(installScript) && !/C:\\Users\\justi|OneDrive|node_modules\\electron/i.test(electronMain), {});
-  check("installer-shortcut-contract", packageJson.scripts?.["package:installer"] && packageJson.build?.nsis?.createDesktopShortcut === true && /WAKE Engine V6\.lnk/.test(installScript), {});
+  check("installer-shortcut-contract", packageJson.scripts?.["package:installer"] && packageJson.build?.nsis?.createDesktopShortcut === true && /WAKE Engine Omega\.lnk/.test(installScript), {});
   check("production-json-writes-use-durable-wal-contract", /writeJsonDurable\(IMAGE_SETTINGS_FILE/.test(server) && /writeJsonDurable\(jsonPath/.test(server) && /writeJsonDurable\(file, payload/.test(server) && /writeJsonDurable\(verifierPath/.test(localSession) && /writeJsonDurable\(markerPath/.test(runtimePaths) && /createWakeStateStore\(target/.test(runtimePaths), {});
 }
 

@@ -6,7 +6,7 @@
 export const WAKE_OMEGA = Object.freeze({
   id: "wake-omega",
   name: "WAKE Engine Omega",
-  version: "V6",
+  version: "Omega",
   role: "Local command console and orchestrator",
   pitch:
     "One local Omega workbench that turns approved source into evidence-linked content packets, then hands work to specialized tools without cloud lock-in.",

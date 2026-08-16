@@ -19,6 +19,7 @@ let secureVault = null;
 if (process.env.WAKE_AUDIT_USER_DATA) {
   app.setPath("userData", process.env.WAKE_AUDIT_USER_DATA);
 } else {
+  // Keep legacy AppData folder so existing local stores keep working after the Omega rename.
   app.setPath("userData", path.join(app.getPath("appData"), "Wake Engine V6"));
 }
 
@@ -34,7 +35,7 @@ async function waitForHealth(timeoutMs = 12000) {
       await new Promise((resolve) => setTimeout(resolve, 250));
     }
   }
-  throw new Error("WAKE Engine V6 server did not become healthy.");
+  throw new Error("WAKE Engine Omega server did not become healthy.");
 }
 
 async function ensureServer() {
@@ -59,7 +60,7 @@ async function createWindow() {
     height: 900,
     minWidth: 980,
     minHeight: 720,
-    title: "WAKE Engine V6",
+    title: "WAKE Engine Omega",
     icon: ICON_PATH,
     backgroundColor: "#080b12",
     show: false,
@@ -98,7 +99,7 @@ app.on("second-instance", async () => {
 });
 
 app.whenReady().then(async () => {
-  app.setName("WAKE Engine V6");
+  app.setName("WAKE Engine Omega");
   try {
     await ensureServer();
     if (!isBackground) {

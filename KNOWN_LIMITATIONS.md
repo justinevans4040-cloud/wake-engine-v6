@@ -1,4 +1,4 @@
-# WAKE Engine V6 — Known Limitations
+# WAKE Engine — Known Limitations
 
 This document defines the current boundary of the product so judges and users can distinguish implemented behavior from roadmap ideas.
 
@@ -52,7 +52,7 @@ This document defines the current boundary of the product so judges and users ca
 
 ### Release and support
 
-- The current release line is `0.6.x`.
+- The current release line is branded **WAKE Engine Omega** (no version number in the product UI). Doc stamps live in [`docs/VERSION.md`](docs/VERSION.md).
 - Historical files under `archive/` are retained for provenance and are not supported production versions.
 - The repository is source-available for evaluation under a proprietary license; it is not open source.
 

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WAKE Engine Omega — Professional Sales & Operator Brief</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0c1117;
+      --panel: #141b24;
+      --line: #2a3544;
+      --mist: #9aa8b8;
+      --paper: #e8eef4;
+      --teal: #2dd4bf;
+      --amber: #f0b429;
+      --steel: #5b8def;
+      --ok: #3ecf8e;
+      --warn: #e8a054;
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background: var(--ink);
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      align-items: end;
+      padding: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(45, 212, 191, 0.12), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 90% 80%, rgba(91, 141, 239, 0.1), transparent 50%),
+        var(--ink);
+    }
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+      filter: saturate(0.85) contrast(1.05);
+    }
+    .hero-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(12, 17, 23, 0.35) 0%, rgba(12, 17, 23, 0.55) 40%, rgba(12, 17, 23, 0.96) 100%);
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(100% - 3rem, var(--max));
+      margin: 0 auto;
+      padding: 4.5rem 0 3.5rem;
+    }
+    .brand-lock {
+      font-family: Syne, sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.2rem, 9vw, 6.2rem);
+      letter-spacing: -0.04em;
+      line-height: 0.92;
+      margin: 0 0 0.75rem;
+    }
+    .brand-lock span {
+      display: block;
+      color: var(--teal);
+      font-size: 0.38em;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.85rem;
+    }
+    .hero-line {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(1.45rem, 3.2vw, 2.15rem);
+      font-weight: 400;
+      max-width: 28ch;
+      margin: 0 0 1.25rem;
+      color: var(--paper);
+    }
+    .hero-sub {
+      max-width: 42ch;
+      color: var(--mist);
+      margin: 0 0 2rem;
+      font-size: 1.05rem;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      border-radius: 2px;
+      text-decoration: none;
+      font-family: Syne, sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+      border: 1px solid transparent;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--teal);
+      color: var(--ink);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--paper);
+      border-color: var(--line);
+    }
+    .pill {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mist);
+      border: 1px solid var(--line);
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+    }
+
+    main {
+      width: min(100% - 3rem, var(--max));
+      margin: 0 auto;
+      padding: 3rem 0 5rem;
+    }
+
+    section { margin: 0 0 4.25rem; }
+    .eyebrow {
+      font-family: Syne, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin: 0 0 0.85rem;
+    }
+    h2 {
+      font-family: Syne, sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.75rem, 3.5vw, 2.45rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+    h3 {
+      font-family: Syne, sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin: 0 0 0.4rem;
+    }
+    .lede {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 1.45rem;
+      max-width: 36ch;
+      color: var(--paper);
+      margin: 0 0 1.5rem;
+    }
+    p { margin: 0 0 1rem; color: var(--mist); }
+    strong { color: var(--paper); font-weight: 600; }
+
+    .split {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+    @media (max-width: 820px) {
+      .split { grid-template-columns: 1fr; }
+    }
+
+    .contrast {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 1.5rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 700px) {
+      .contrast { grid-template-columns: 1fr; }
+    }
+    .contrast .col h3 { color: var(--paper); }
+    .them { border-right: 1px solid var(--line); padding-right: 1.25rem; }
+    @media (max-width: 700px) {
+      .them { border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 1.25rem; }
+    }
+    .contrast ul {
+      margin: 0.75rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .contrast li {
+      position: relative;
+      padding: 0.35rem 0 0.35rem 1.1rem;
+      color: var(--mist);
+      font-size: 0.95rem;
+    }
+    .contrast li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.85rem;
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 1px;
+      background: var(--line);
+    }
+    .us li::before { background: var(--teal); }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border: 1px solid var(--line);
+    }
+    @media (max-width: 700px) {
+      .tool-grid { grid-template-columns: 1fr; }
+    }
+    .tool {
+      padding: 1.35rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .tool:nth-child(2n) { border-right: 0; }
+    @media (max-width: 700px) {
+      .tool { border-right: 0; }
+    }
+    .tool .sku {
+      font-family: Syne, sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 0.35rem;
+    }
+    .tool p { margin: 0; font-size: 0.92rem; }
+    .tool .bound {
+      margin-top: 0.65rem;
+      font-size: 0.8rem;
+      color: var(--amber);
+    }
+
+    .flow {
+      display: grid;
+      gap: 0;
+      border-left: 2px solid var(--teal);
+      padding-left: 1.25rem;
+    }
+    .step {
+      padding: 0.85rem 0 1.1rem;
+      position: relative;
+    }
+    .step .n {
+      font-family: Syne, sans-serif;
+      font-weight: 800;
+      color: var(--teal);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.25rem;
+    }
+
+    .talk {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 1.5rem 1.4rem;
+    }
+    .talk blockquote {
+      margin: 0;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 1.35rem;
+      color: var(--paper);
+      line-height: 1.35;
+    }
+    .talk .aside {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--mist);
+    }
+
+    .objections {
+      display: grid;
+      gap: 1rem;
+    }
+    .obj {
+      display: grid;
+      gap: 0.35rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .obj:last-child { border-bottom: 0; }
+    .obj .q { color: var(--paper); font-weight: 600; }
+    .obj .a { margin: 0; font-size: 0.95rem; }
+
+    .close-band {
+      background:
+        linear-gradient(135deg, rgba(45, 212, 191, 0.12), transparent 45%),
+        var(--panel);
+      border: 1px solid var(--line);
+      padding: 2rem 1.5rem;
+    }
+    .close-band h2 { margin-bottom: 0.5rem; }
+    .close-band p { max-width: 48ch; }
+
+    footer {
+      width: min(100% - 3rem, var(--max));
+      margin: 0 auto 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+      color: var(--mist);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--teal); }
+
+    @media print {
+      .hero { min-height: auto; page-break-after: always; }
+      .btn { display: none; }
+      body { background: #fff; color: #111; }
+      p, .hero-sub, .contrast li, .tool p, .obj .a { color: #333; }
+      .brand-lock, h2, h3, .hero-line, strong, .obj .q { color: #111; }
+      .tool, .talk, .close-band { background: #f4f6f8; border-color: #ccc; }
+      .hero-media { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <img class="hero-media" src="./assets/wake-omega-sales-hero.png" alt="" />
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="pill">ForgeFront Systems · Local Content Operations OS</p>
+      <h1 class="brand-lock"><span>WAKE Engine</span>Omega</h1>
+      <p class="hero-line">The command console that turns approved source into evidence-linked content — without renting your IP to the cloud.</p>
+      <p class="hero-sub">
+        One workbench. Discrete tools underneath. Provenance on every claim.
+        Authority stays with the operator on every publish.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#demo">90-second talk track</a>
+        <a class="btn btn-ghost" href="#tools">Tool lineup</a>
+        <a class="btn btn-ghost" href="./INSTRUCTION_MANUAL.md">Operator path</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="pitch">
+      <p class="eyebrow">Positioning</p>
+      <h2>Sell the machine that keeps the receipts.</h2>
+      <p class="lede">Cloud chat toys spit words. Omega ships packets you can defend.</p>
+      <div class="split">
+        <div>
+          <p>
+            Creators and small studios are drowning in notes, calls, and drafts —
+            then pasting them into generic generators that invent claims, erase provenance,
+            and lock work behind someone else’s account.
+          </p>
+          <p>
+            <strong>WAKE Engine Omega</strong> is the local command console:
+            ingest approved source, run Tier Zero agents, build a content cluster,
+            export Markdown and JSON, stage publish work for the human who owns the brand.
+          </p>
+          <p>
+            That last part is the close — not a weakness.
+            Buyers who got burned by “autopilot posting” will lean in when you say:
+            <strong>you keep the publish key.</strong>
+          </p>
+        </div>
+        <div class="talk">
+          <blockquote>
+            “One local Omega console. Source in. Evidence-linked packet out. You post. We don’t pretend to be your social account.”
+          </blockquote>
+          <p class="aside">Use this line. Memorize it. It ends the wrong demo before it starts.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contrast">
+      <p class="eyebrow">Competitive contrast</p>
+      <h2>Them vs Omega</h2>
+      <div class="contrast">
+        <div class="col them">
+          <h3>Typical cloud generator</h3>
+          <ul>
+            <li>Uploads your IP to a black box</li>
+            <li>“Sounds good” copy with no evidence map</li>
+            <li>Fake virality scores and autopilot theater</li>
+            <li>No durable local recovery story</li>
+            <li>Vendor lock-in the moment the tab closes</li>
+          </ul>
+        </div>
+        <div class="col us">
+          <h3>WAKE Engine Omega</h3>
+          <ul>
+            <li>Runs on the operator’s Windows machine</li>
+            <li>Claims mapped back to supplied source</li>
+            <li>Honest tools with named boundaries</li>
+            <li>Atomic store + WAL + backup bundles</li>
+            <li>Export files you still own tomorrow</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="buyer">
+      <p class="eyebrow">Who buys</p>
+      <h2>Ideal buyer profile</h2>
+      <p class="lede">People who have something real to protect — and a cadence to keep.</p>
+      <p>
+        <strong>Creators &amp; operators</strong> with transcripts, briefs, and SOPs already on disk.
+        <strong>Small studios</strong> that need repeatable packets, not one-off chat sessions.
+        <strong>Brand owners</strong> who refuse unattended posting to live channels.
+      </p>
+      <p>
+        Pain they already feel: scattered source, unsupported claims, “the AI made it up,”
+        lost drafts after a crash, and tools that over-promise social autopilot.
+      </p>
+    </section>
+
+    <section id="tools">
+      <p class="eyebrow">Product SKUs under Omega</p>
+      <h2>The tool lineup (sell each one)</h2>
+      <p>
+        Omega is the console. Tools are the catalog. Pitch the tool that matches the pain —
+        then show the honesty line so trust compounds.
+      </p>
+      <div class="tool-grid">
+        <article class="tool">
+          <div class="sku">Core · Tier Zero</div>
+          <h3>Tier Zero Agent Runtime</h3>
+          <p>Six-stage local pipeline with handoffs, memory, tool receipts, and QA gates.</p>
+          <p class="bound">Boundary: deterministic orchestration (+ optional Ollama) — not six cloud LLMs.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">Ingest · Vault</div>
+          <h3>Vault Intake</h3>
+          <p>Review folders and SEED uploads before anything enters the creative vault.</p>
+          <p class="bound">Boundary: text/docs/media metadata — not universal binary OCR.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">Production · Cluster</div>
+          <h3>Content Cluster</h3>
+          <p>One source → pillars, lanes, hooks, captions, export-ready packets.</p>
+          <p class="bound">Boundary: local packet builder — not guaranteed virality.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">Creative · Hooks</div>
+          <h3>Hook Angle Matrix</h3>
+          <p>Five psychological angles for A/B copy exploration before you shoot.</p>
+          <p class="bound">Boundary: heuristic creative comparison — not live retention data.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">Media · Voice</div>
+          <h3>Local Voiceover</h3>
+          <p>Real on-device voice + subtitle tracks for reel packs.</p>
+          <p class="bound">Boundary: Windows SAPI (optional remote TTS) — playable files only.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">Media · Reel</div>
+          <h3>Vertical Reel Renderer</h3>
+          <p>Real 9:16 MP4 via FFmpeg from real audio.</p>
+          <p class="bound">Boundary: needs FFmpeg + audio — no JSON-as-MP4 theater.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">QA · Retention</div>
+          <h3>Retention Simulator</h3>
+          <p>Pre-export scoring for hook density, pacing, CTA strength.</p>
+          <p class="bound">Boundary: creative QA heuristic — not platform analytics.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">Ops · Schedule</div>
+          <h3>Automation Scheduler</h3>
+          <p>Local cron on folders into review queue or auto-export when QA passes.</p>
+          <p class="bound">Boundary: does not post to social networks.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">Ops · Publish</div>
+          <h3>Manual Publish Stage</h3>
+          <p>Stage packets for human publication. The brand owner hits send.</p>
+          <p class="bound">Boundary: direct social APIs are not implemented — by design for authority.</p>
+        </article>
+        <article class="tool">
+          <div class="sku">Platform · Store</div>
+          <h3>Durable Local Store</h3>
+          <p>Atomic writes, WAL, crash recovery, backup bundles.</p>
+          <p class="bound">Boundary: local disk resilience — still back up offsite.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="demo">
+      <p class="eyebrow">Live demo</p>
+      <h2>90-second talk track</h2>
+      <div class="flow">
+        <div class="step">
+          <div class="n">00:00 — OPEN</div>
+          <h3>“This is Omega — local command console.”</h3>
+          <p>Point at the window. Say it never leaves the machine unless they choose a remote tool.</p>
+        </div>
+        <div class="step">
+          <div class="n">00:15 — SOURCE</div>
+          <h3>Console → paste brief → Save Source → Generate Frame</h3>
+          <p>“Messy note becomes a structured frame. That’s the intake.”</p>
+        </div>
+        <div class="step">
+          <div class="n">00:35 — AGENTS</div>
+          <h3>Agents → Run Tier Zero Agents</h3>
+          <p>“Archivist through QA. Evidence maps. Unsupported claims get blocked.”</p>
+        </div>
+        <div class="step">
+          <div class="n">00:55 — PACKET</div>
+          <h3>Cluster → Build Cluster → Export</h3>
+          <p>“Pillars, lanes, hooks. Files on disk they still own.”</p>
+        </div>
+        <div class="step">
+          <div class="n">01:15 — CLOSE</div>
+          <h3>Automations → Manual Publish Stage</h3>
+          <p>“We stage. They publish. Authority never leaves the operator.”</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="objections">
+      <p class="eyebrow">Objection handling</p>
+      <h2>Answers that win trust</h2>
+      <div class="objections">
+        <div class="obj">
+          <div class="q">“Does it auto-post to TikTok / YouTube / LinkedIn?”</div>
+          <p class="a"><strong>No — and that is the product.</strong> Manual Publish Stage prepares the packet; the operator posts. Buyers who want unattended posting are buying a different risk profile.</p>
+        </div>
+        <div class="obj">
+          <div class="q">“Is this six real AI agents in the cloud?”</div>
+          <p class="a"><strong>No.</strong> Tier Zero is deterministic local orchestration with optional Ollama. Sell auditability, not theater.</p>
+        </div>
+        <div class="obj">
+          <div class="q">“Will it make me go viral?”</div>
+          <p class="a"><strong>We don’t sell that.</strong> Hook Matrix and Retention Simulator help creative decisions. Platforms decide reach.</p>
+        </div>
+        <div class="obj">
+          <div class="q">“What if the machine crashes mid-run?”</div>
+          <p class="a"><strong>Durable Local Store</strong> — atomic writes, WAL, recovery, backups for documented cases. Still recommend offsite backups.</p>
+        </div>
+        <div class="obj">
+          <div class="q">“Can I drop PDFs and video into the scheduler?”</div>
+          <p class="a"><strong>Scheduler today:</strong> <code>.txt</code>, <code>.md</code>, <code>.json</code>. Vault handles broader intake review; don’t oversell binary OCR.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="close" class="close-band">
+      <p class="eyebrow">The close</p>
+      <h2>Leave them with one sentence.</h2>
+      <p>
+        <strong>WAKE Engine Omega</strong> is the local content operations OS:
+        source-bound agents, exportable packets, crash-resilient state,
+        and a publish stage that keeps the human in command.
+      </p>
+      <div class="cta-row" style="margin-top: 1.25rem;">
+        <a class="btn btn-primary" href="./INSTRUCTION_MANUAL.md">Open Instruction Manual</a>
+        <a class="btn btn-ghost" href="../KNOWN_LIMITATIONS.md">Known limitations</a>
+        <a class="btn btn-ghost" href="../README.md">Product README</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      ForgeFront Systems · WAKE Engine Omega · Professional Sales &amp; Operator Brief<br />
+      Capability truth: <a href="../KNOWN_LIMITATIONS.md">KNOWN_LIMITATIONS.md</a> ·
+      Day-to-day clicks: <a href="./INSTRUCTION_MANUAL.md">INSTRUCTION_MANUAL.md</a> ·
+      Doc stamps: <a href="./VERSION.md">VERSION.md</a><br />
+      Print this page (Ctrl+P) for a leave-behind. Product UI has no version number.
+    </p>
+  </footer>
+</body>
+</html>

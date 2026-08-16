@@ -244,7 +244,7 @@ async function main() {
   if (fs.existsSync(SMOKE_DIR)) fs.rmSync(SMOKE_DIR, { recursive: true, force: true });
   fs.mkdirSync(SMOKE_DIR, { recursive: true });
   fs.writeFileSync(path.join(SMOKE_DIR, "wake-v6-store.json"), JSON.stringify({
-    projects: [{ id: "wake-v6-main", name: "WAKE Engine V6", status: "active", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }],
+    projects: [{ id: "wake-v6-main", name: "WAKE Engine Omega", status: "active", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }],
     sources: [
       { id: "src-valid-local", projectId: "wake-v6-main", title: "Valid Local Source", source: "A valid local restaurant source offers a Friday family dinner menu with online reservations.", characterCount: 94, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
       { id: "src-creative-misnamed", projectId: "wake-v6-main", title: "STATUS.md", sourcePath: "C:\\Work\\Writing\\STATUS.md", sourceType: "local_disk", source: "A handwritten reflection on courage: We do not become brave before the storm; courage is the choice to move while the sky is still loud.", characterCount: 128, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
@@ -263,7 +263,7 @@ async function main() {
   try {
     await start();
     const health = await fetchJson("/api/health");
-    if (!health.ok || health.version !== "V6" || !health.noTheater) throw new Error("health contract failed");
+    if (!health.ok || health.version !== "Omega" || !health.noTheater) throw new Error("health contract failed");
     ok("health");
 
     const state = await fetchJson("/api/state");

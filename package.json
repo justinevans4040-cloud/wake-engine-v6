@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "main": "electron/main.js",
-  "description": "Wake Engine local command console V6",
+  "description": "WAKE Engine Omega — local command console",
   "scripts": {
     "guard:local": "node scripts/guard-local-workspace.mjs",
     "dev": "npm run guard:local && concurrently \"npm run dev:server\" \"npm run dev:client\"",
@@ -50,8 +50,8 @@
     "vite": "^6.0.3"
   },
   "build": {
-    "appId": "com.wake.engine.v6",
-    "productName": "WAKE Engine V6",
+    "appId": "com.wake.engine",
+    "productName": "WAKE Engine Omega",
     "directories": {
       "output": "release"
     },

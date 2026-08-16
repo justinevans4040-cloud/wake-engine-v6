@@ -203,7 +203,7 @@ async function main() {
       break;
     default:
       console.log(`
-WAKE Engine V6 Headless CLI
+WAKE Engine Omega Headless CLI
 ===========================
 Usage:
   node scripts/wake-cli.mjs run-agents --source "..." [--export-dir <path>]

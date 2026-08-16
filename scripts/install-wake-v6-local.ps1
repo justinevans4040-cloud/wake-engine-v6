@@ -3,15 +3,32 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $icon = Join-Path $root "build\icon.ico"
 $packagedSource = Join-Path $root "release\win-unpacked"
-$installRoot = Join-Path $env:LOCALAPPDATA "Programs\Wake Engine V6"
-$target = Join-Path $installRoot "WAKE Engine V6.exe"
-$desktopShortcut = Join-Path ([Environment]::GetFolderPath("Desktop")) "WAKE Engine V6.lnk"
-$publicDesktopShortcut = Join-Path ([Environment]::GetFolderPath("CommonDesktopDirectory")) "WAKE Engine V6.lnk"
+$installRoot = Join-Path $env:LOCALAPPDATA "Programs\WAKE Engine Omega"
+$target = Join-Path $installRoot "WAKE Engine Omega.exe"
+$desktopShortcut = Join-Path ([Environment]::GetFolderPath("Desktop")) "WAKE Engine Omega.lnk"
+$publicDesktopShortcut = Join-Path ([Environment]::GetFolderPath("CommonDesktopDirectory")) "WAKE Engine Omega.lnk"
 $startMenuDir = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\WAKE Engine"
-$startMenuShortcut = Join-Path $startMenuDir "WAKE Engine V6.lnk"
+$startMenuShortcut = Join-Path $startMenuDir "WAKE Engine Omega.lnk"
+
+# Remove legacy V6 shortcuts so the Desktop is not double-branded.
+$legacyShortcuts = @(
+  (Join-Path ([Environment]::GetFolderPath("Desktop")) "WAKE Engine V6.lnk"),
+  (Join-Path ([Environment]::GetFolderPath("CommonDesktopDirectory")) "WAKE Engine V6.lnk"),
+  (Join-Path $startMenuDir "WAKE Engine V6.lnk"),
+  (Join-Path ([Environment]::GetFolderPath("Startup")) "WAKE Engine V6 Background.lnk")
+)
+foreach ($legacy in $legacyShortcuts) {
+  if (Test-Path -LiteralPath $legacy) {
+    try { Remove-Item -LiteralPath $legacy -Force } catch { Write-Warning "Could not remove legacy shortcut: $legacy" }
+  }
+}
+$legacyInstall = Join-Path $env:LOCALAPPDATA "Programs\Wake Engine V6"
+if (Test-Path -LiteralPath $legacyInstall) {
+  try { Remove-Item -LiteralPath $legacyInstall -Recurse -Force } catch { Write-Warning "Could not remove legacy install folder." }
+}
 
 New-Item -ItemType Directory -Force -Path $startMenuDir | Out-Null
-if (-not (Test-Path -LiteralPath (Join-Path $packagedSource "WAKE Engine V6.exe"))) {
+if (-not (Test-Path -LiteralPath (Join-Path $packagedSource "WAKE Engine Omega.exe"))) {
   & npm run package:win
   if ($LASTEXITCODE -ne 0) { throw "Wake packaged build failed." }
 }
@@ -42,7 +59,7 @@ foreach ($shortcutPath in $shortcutPaths) {
     $shortcut.TargetPath = $target
     $shortcut.Arguments = $arguments
     $shortcut.WorkingDirectory = $workingDirectory
-    $shortcut.Description = "Launch WAKE Engine V6 desktop app"
+    $shortcut.Description = "Launch WAKE Engine Omega desktop app"
     if (Test-Path -LiteralPath $icon) {
       $shortcut.IconLocation = $icon
     } else {
@@ -58,18 +75,18 @@ foreach ($shortcutPath in $shortcutPaths) {
   }
 }
 
-Write-Host "WAKE Engine V6 shortcuts installed:"
+Write-Host "WAKE Engine Omega shortcuts installed:"
 foreach ($shortcutPath in $installedShortcuts) {
   Write-Host "  $shortcutPath"
 }
 
 try {
-  $startupShortcut = Join-Path ([Environment]::GetFolderPath("Startup")) "WAKE Engine V6 Background.lnk"
+  $startupShortcut = Join-Path ([Environment]::GetFolderPath("Startup")) "WAKE Engine Omega Background.lnk"
   $shortcut = $shell.CreateShortcut($startupShortcut)
   $shortcut.TargetPath = $target
   $shortcut.Arguments = "--background"
   $shortcut.WorkingDirectory = $workingDirectory
-  $shortcut.Description = "Launch WAKE Engine V6 Background Scheduler"
+  $shortcut.Description = "Launch WAKE Engine Omega Background Scheduler"
   if (Test-Path -LiteralPath $icon) {
     $shortcut.IconLocation = $icon
   } else {
@@ -78,5 +95,5 @@ try {
   $shortcut.Save()
   Write-Host "  $startupShortcut (Background mode)"
 } catch {
-  Write-Warning "Failed to install startup shortcut."
+  Write-Warning "Could not create startup shortcut: $($_.Exception.Message)"
 }

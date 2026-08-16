@@ -492,7 +492,7 @@ export function App() {
 
   async function saveProject() {
     await runAction("project", async () => {
-      const data = await api("/projects", { id: projectId, name: projectName || "Wake Engine V6", status: "active" });
+      const data = await api("/projects", { id: projectId, name: projectName || "WAKE Engine Omega", status: "active" });
       switchProject(data.project.id);
       setProjectName("");
       setNotice(`Project saved: ${data.project.name}`);
@@ -1451,7 +1451,7 @@ export function App() {
         <div className="crt-frame">
           <div className="wake-mark">W</div>
           <div className="boot-copy">
-            <small>WAKE ENGINE V6 / LOCAL DESKTOP RUNTIME</small>
+            <small>WAKE ENGINE OMEGA / LOCAL DESKTOP RUNTIME</small>
             <h1>INITIALIZING SYSTEM</h1>
             <div className="boot-lines">
               {bootLines.slice(0, activeLineCount).map((line, index) => (
@@ -1490,7 +1490,7 @@ export function App() {
         <div className="identity-rail">
           <img src={emblemSrc} alt="ForgeFront Systems" />
           <span>ForgeFront Systems</span>
-          <strong>WAKE Engine V6</strong>
+          <strong>WAKE Engine Omega</strong>
           <Pill tone="live">Desktop Live</Pill>
         </div>
 

@@ -151,7 +151,7 @@ const defaultStore = {
   projects: [
     {
       id: "wake-v6-main",
-      name: "WAKE Engine V6",
+      name: "WAKE Engine Omega",
       status: "active",
       createdAt: "2026-07-05T00:00:00.000Z",
       updatedAt: "2026-07-05T00:00:00.000Z"
@@ -161,7 +161,7 @@ const defaultStore = {
   mediaAssets: [],
   activeTask: {
     id: "task-wake-v6-main",
-    title: "Build WAKE Engine V6 into an elite operator app",
+    title: "Build WAKE Engine Omega into an elite operator app",
     objective: "Turn source, chat, agents, clusters, and exports into one coherent task-completion system.",
     status: "active",
     nextAction: "Use Console or section chat to advance the current ask.",
@@ -885,7 +885,7 @@ function inspectExportOutput(output = {}) {
 }
 
 function exportMarkdown(payload) {
-  const title = payload?.manifest?.title || payload?.title || payload?.frame?.title || payload?.sourceInbox?.title || "WAKE V6 Export";
+  const title = payload?.manifest?.title || payload?.title || payload?.frame?.title || payload?.sourceInbox?.title || "WAKE Omega Export";
   return [
     `# ${title}`,
     "",
@@ -959,7 +959,7 @@ function sourceRecordForExport(store, input, output) {
 
 function buildExportBundle(store, input, paths) {
   const output = input?.output ?? {};
-  const title = String(input?.title || output.title || output?.frame?.title || output?.sourceInbox?.title || "WAKE V6 Export").trim();
+  const title = String(input?.title || output.title || output?.frame?.title || output?.sourceInbox?.title || "WAKE Omega Export").trim();
   const source = sourceRecordForExport(store, input, output);
   const creativeDirection = output.creativeDirection || {
     visualDirection: output.productionNotes?.visualDirection || output.creativeSystem?.visualDirection || output.visualDirection || "",
@@ -1014,7 +1014,7 @@ function buildExportBundle(store, input, paths) {
 
 function saveExport(store, input) {
   const output = input?.output ?? {};
-  const title = String(input?.title || output.title || output?.frame?.title || "WAKE V6 Export").trim();
+  const title = String(input?.title || output.title || output?.frame?.title || "WAKE Omega Export").trim();
   const safeTitle = title.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").slice(0, 48) || "wake-v6-export";
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
   const base = `${stamp}_${safeTitle}`;
@@ -1653,7 +1653,7 @@ async function askOllama({ status, agent, message, context, profile, requestedMo
     : "Answer Justin directly. Use the retrieved IP. Do not invent capabilities or facts. Cite source titles inline when useful.";
 
   const prompt = [
-    `You are ${agent.label}, a WAKE Engine V6 autonomous agent.`,
+    `You are ${agent.label}, a WAKE Engine Omega autonomous agent.`,
     agent.persona,
     engineerInstructions,
     "",
@@ -1700,7 +1700,7 @@ async function streamOllama({ status, agent, message, context, profile, requeste
     : "Answer Justin directly. Use retrieved IP. Do not invent facts. Be concrete. End with the next action.";
 
   const prompt = [
-    `You are ${agent.label}, a WAKE Engine V6 autonomous agent.`,
+    `You are ${agent.label}, a WAKE Engine Omega autonomous agent.`,
     agent.persona,
     engineerInstructions,
     "",
@@ -2583,7 +2583,7 @@ function makeContentCluster(source, packetInput = null) {
     auditNotes: [
       "Cluster generation is deterministic and local.",
       "Dispatch cards create local handoff packages.",
-      "No outside app is claimed as active inside V6."
+      "No outside app is claimed as active inside Omega."
     ]
   };
   const clusterInspection = inspectContentCluster(cluster);
@@ -3239,7 +3239,7 @@ function makePack(source) {
   return {
     ok: true,
     generatedAt: new Date().toISOString(),
-    engine: "WAKE V6 local deterministic agent",
+    engine: "WAKE Omega local deterministic agent",
     frame,
     sourceProfile: {
       title: subject,
@@ -3359,8 +3359,8 @@ function state() {
   return {
     ok: true,
     product: "Wake Engine",
-    console: "WAKE Command Console V6",
-    version: "V6",
+    console: "WAKE Command Console Omega",
+    version: "Omega",
     omega: WAKE_OMEGA,
     status: "active",
     url: `http://127.0.0.1:${PORT}/`,
@@ -3524,9 +3524,9 @@ app.get("/api/health", (_req, res) => {
     ok: true,
     product: "Wake Engine",
     omega: WAKE_OMEGA.name,
-    console: "WAKE Command Console V6",
-    version: "V6",
-    build: "wake-command-console-v6-local",
+    console: "WAKE Command Console Omega",
+    version: "Omega",
+    build: "wake-command-console-omega-local",
     status: "active",
     port: PORT,
     noTheater: noTheater.ok,
@@ -3932,12 +3932,12 @@ app.post("/api/instructions/generate", async (req, res) => {
     // Fast contract path for unsupported direct social publishing
     if (/publish|post to|social network|instagram|tiktok|linkedin api/i.test(lower)) {
       const steps = [
-        "WAKE V6 does not currently publish directly to social networks.",
+        "WAKE Omega does not currently publish directly to social networks.",
         "Build and QA the content in **Console / Agents / Cluster**.",
         "Export the approved local output.",
         "Publish the exported material manually in the destination platform."
       ];
-      const staticRunbook = [`# WAKE V6 Runbook: ${request}`, "", ...steps.map((step, index) => `${index + 1}. ${step}`)].join("\n");
+      const staticRunbook = [`# WAKE Omega Runbook: ${request}`, "", ...steps.map((step, index) => `${index + 1}. ${step}`)].join("\n");
       return res.json({ ok: true, instructions: staticRunbook, generated: false });
     }
 
@@ -3945,7 +3945,7 @@ app.post("/api/instructions/generate", async (req, res) => {
     if (llmStatus?.live && llmStatus?.model) {
       const prompt = `You are the WAKE Engine Operations Guide. The user asks: "${message}"
 
-WAKE Engine V6 desktop app surfaces and their exact functions:
+WAKE Engine Omega desktop app surfaces and their exact functions:
 - **Monitor**: Live local telemetry, CPU, RAM, GPU, local runtime port, process uptime, logs, Task Monitor, and Capability Truth Map. Inspecting local runtime happens in **Monitor** and **Audit**.
 - **Audit**: Persistent snapshot ledger, exports and audit receipts.
 - **Console**: Source material input, campaign autopilot, and quick frame generation.
@@ -4004,7 +4004,7 @@ Rules:
       ];
     } else if (/publish|post to|social network|instagram api|tiktok api|linkedin api/.test(lower)) {
       steps = [
-        "WAKE V6 does **not** currently publish directly to social networks.",
+        "WAKE Omega does **not** currently publish directly to social networks.",
         "Build and QA the content in **Console / Agents / Cluster**.",
         "Export the approved local output.",
         "Publish the exported material manually in the destination platform."
@@ -4017,7 +4017,7 @@ Rules:
         "Export only after QA permits it, then use **Library** to find saved work and **Audit** for a durable snapshot when needed."
       ];
     }
-    const staticRunbook = [`# WAKE V6 Runbook: ${request}`, "", ...steps.map((step, index) => `${index + 1}. ${step}`)].join("\n");
+    const staticRunbook = [`# WAKE Omega Runbook: ${request}`, "", ...steps.map((step, index) => `${index + 1}. ${step}`)].join("\n");
     res.json({ ok: true, instructions: staticRunbook, generated: false });
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
@@ -4899,7 +4899,7 @@ app.post("/api/connectors/dispatch", async (req, res) => {
         headers: {
           "Content-Type": format === "json" ? "application/json" : "text/plain",
           "X-Wake-Timestamp": timestamp,
-          "User-Agent": "WAKE-Engine-V6-Connector/1.0"
+          "User-Agent": "WAKE-Engine-Omega-Connector/1.0"
         },
         body: bodyContent,
         signal: AbortSignal.timeout(10000)
@@ -4963,7 +4963,7 @@ app.post("/api/connectors/test-webhook", async (req, res) => {
     const testPayload = payload || {
       event: "wake.test_ping",
       timestamp: now(),
-      source: "WAKE Engine V6 Connector",
+      source: "WAKE Engine Omega Connector",
       message: "Test dispatch connection successful.",
       samplePacket: {
         title: "Test Content Packet",
@@ -4975,7 +4975,7 @@ app.post("/api/connectors/test-webhook", async (req, res) => {
     const headers = {
       "Content-Type": "application/json",
       "X-Wake-Timestamp": now(),
-      "User-Agent": "WAKE-Engine-V6-Connector/1.0"
+      "User-Agent": "WAKE-Engine-Omega-Connector/1.0"
     };
     if (secret) {
       const hmac = crypto.createHmac("sha256", secret).update(bodyContent).digest("hex");
@@ -5323,7 +5323,7 @@ export function startWakeServer({ port = PORT, credentialBroker = null } = {}) {
 
   return new Promise((resolve, reject) => {
     const server = app.listen(port, "127.0.0.1", () => {
-      console.log(`WAKE Command Console V6 -> http://127.0.0.1:${port}/`);
+      console.log(`WAKE Command Console Omega -> http://127.0.0.1:${port}/`);
       resolve(server);
     });
     server.on("error", reject);

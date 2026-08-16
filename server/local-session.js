@@ -169,7 +169,7 @@ export function createLocalSessionManager({ dataDir, testBypass = false, authent
       const challenge = issueBiometricChallenge("register", { operator: session.operator, rpId, sessionToken: session.token });
       return {
         challenge,
-        rp: { id: rpId, name: "Wake Engine V6" },
+        rp: { id: rpId, name: "WAKE Engine Omega" },
         user: { id: crypto.createHash("sha256").update(session.operator).digest().subarray(0, 32).toString("base64url"), name: session.operator, displayName: `${session.operator} / Wake Operator` },
         pubKeyCredParams: [{ type: "public-key", alg: -7 }],
         authenticatorSelection: { authenticatorAttachment: "platform", residentKey: "preferred", requireResidentKey: false, userVerification: "required" },

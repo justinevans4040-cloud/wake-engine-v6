@@ -1,5 +1,5 @@
 /**
- * WAKE Engine V6 Audience Retention & Viral Velocity Analytics Simulator
+ * WAKE Engine Omega — Audience Retention & Viral Velocity Analytics Simulator
  * Models platform retention curves (0-3s hook, 3-15s proof, 15-45s pacing, 45-60s CTA)
  * and evaluates virality, readability, and algorithmic distribution benchmarks.
  */

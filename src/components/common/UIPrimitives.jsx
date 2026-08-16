@@ -167,7 +167,7 @@ export function OperatorGate({ operator, phrase, status, onOperatorChange, onPhr
           <img src="/assets/forgefront-systems-emblem.png" alt="ForgeFront Systems" />
         </div>
         <small>ForgeFront Systems :: Session Authorization</small>
-        <h1>WAKE ENGINE V6</h1>
+        <h1>WAKE ENGINE OMEGA</h1>
         <p>Enter operator credentials for this local desktop runtime. All actions remain on this device.</p>
         <div className="operator-fields">
           <label className="operator-field">

@@ -96,7 +96,7 @@ export function Header({
           <div className="forge-wordmark">ForgeFront Systems</div>
           <div className="title-line">
             <h1>WAKE Engine</h1>
-            <span className="version">V6</span>
+            <span className="version">Omega</span>
           </div>
           <div className="engine-status">
             <span className="status-dot" />
@@ -108,7 +108,7 @@ export function Header({
               onClick={() =>
                 setModal({
                   title: "Runtime",
-                  body: "WAKE Engine V6 is running locally with persistent packets, traces, exports, snapshots, and history. Tier Zero claims refer to the user-promoted local build parameters; no separate canonical Tier Zero specification exists in this repo."
+                  body: "WAKE Engine Omega is running locally with persistent packets, traces, exports, snapshots, and history. Tier Zero claims refer to the user-promoted local build parameters; no separate canonical Tier Zero specification exists in this repo."
                 })
               }
             >
@@ -136,7 +136,7 @@ export function Header({
           onClick={() =>
             setModal({
               title: "No Theater Rule",
-              body: "WAKE V6 shows only the local desktop functions that are active in this app. Local functions are persisted and auditable."
+              body: "WAKE Omega shows only the local desktop functions that are active in this app. Local functions are persisted and auditable."
             })
           }
         >
@@ -144,7 +144,7 @@ export function Header({
         </button>
       </div>
 
-      <nav className="tab-grid" aria-label="WAKE V6 sections">
+      <nav className="tab-grid" aria-label="WAKE Engine Omega sections">
         {tabs.map(({ id, label, icon: Icon }) => (
           <button
             key={id}

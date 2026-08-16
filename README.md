@@ -62,6 +62,8 @@ WAKE Omega provides one local workflow:
 - [Two-minute demonstration script](DEMO_SCRIPT.md)
 - [Judging evidence matrix](JUDGING_EVIDENCE.md)
 - [Architecture and trust boundaries](ARCHITECTURE.md)
+- [Instruction Manual (operator path)](docs/INSTRUCTION_MANUAL.md)
+- [Document version stamps](docs/VERSION.md)
 - [Known limitations](KNOWN_LIMITATIONS.md)
 - [Security policy](SECURITY.md)
 
@@ -71,6 +73,14 @@ Every successful `master` build creates a Windows NSIS installer and `SHA256SUMS
 
 - [Latest CI runs and installer artifacts](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/ci.yml)
 - [Tagged releases](https://github.com/justinevans4040-cloud/wake-engine-v6/releases)
+
+## Instruction Manual
+
+**Day-to-day clicks:** [docs/INSTRUCTION_MANUAL.md](docs/INSTRUCTION_MANUAL.md)
+
+**Sales / leave-behind (striking brief):** open [docs/WAKE_OMEGA_PROFESSIONAL.html](docs/WAKE_OMEGA_PROFESSIONAL.html) in a browser (Ctrl+P to print/PDF).
+
+Older manuals under `docs/` are retired stubs that only redirect to the Instruction Manual.
 
 ## Quick start
 
@@ -173,7 +183,7 @@ GitHub Actions runs the portable build, runtime-contract audit, and scheduler au
 - `docs/current/PHASE_9_LOCAL_DURABILITY_SECURITY.md`
 - `docs/current/TIER_ZERO_BUILD_STATUS.md`
 - `docs/current/WAKE_ENGINE_MAP.md`
-- `docs/wake-engine/wake_engine_manual.md`
+- `docs/INSTRUCTION_MANUAL.md`
 - `archive/iterations/`
 
 The Phase 9 evidence includes atomic storage, crash recovery, backup and restore, package-data exclusion, credential handling, loopback binding, authentication, and CSRF checks. Historical evidence is retained separately from current product claims.
@@ -217,4 +227,4 @@ Useful measurements include source files processed, evidence passages extracted,
 
 ## License
 
-WAKE Engine V6 is source-available for evaluation under the repository's [proprietary license](LICENSE). Copyright © 2026 ForgeFront Systems and Justin Evans. All rights reserved.
+WAKE Engine Omega is source-available for evaluation under the repository's [proprietary license](LICENSE). Copyright © 2026 ForgeFront Systems and Justin Evans. All rights reserved.
