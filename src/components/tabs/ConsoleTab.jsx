@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Pill, SpeechToTextButton, jsonBlock } from "../common/UIPrimitives.jsx";
 import { ExportPreviewPanel, PlatformPreview } from "../common/AbilityScaffold.jsx";
+import { WakeDarkMatterCore } from "./CoreTab.jsx";
 
 const campaignPlatforms = [
   { id: "tiktok", label: "TikTok" },
@@ -276,6 +277,7 @@ export function ConsoleTab({
 }) {
   return (
     <>
+      <WakeDarkMatterCore state={state} setModal={setModal} />
       {operationError?.ability === "console" ? (
         <div className="ability-state error">
           <strong>Campaign action failed</strong>
