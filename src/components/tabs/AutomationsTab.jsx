@@ -35,7 +35,7 @@ export function AutomationsPanel({ state, projectId, onRefresh, setModal, setOpe
   const [watchers, setWatchers] = useState([]);
   const [newWatchPath, setNewWatchPath] = useState("");
 
-  // Social Publishing Queue State
+  // Manual Publish Stage State
   const [publishingAccounts, setPublishingAccounts] = useState([]);
   const [publishingQueue, setPublishingQueue] = useState([]);
   const [dispatchingId, setDispatchingId] = useState(null);
@@ -239,7 +239,7 @@ export function AutomationsPanel({ state, projectId, onRefresh, setModal, setOpe
           className={tab === "publishing" ? "primary-action" : "mini-action"}
           onClick={() => setTab("publishing")}
         >
-          <Share2 size={14} style={{ marginRight: "4px" }} /> Social Publishing Queue ({publishingQueue.length})
+          <Share2 size={14} style={{ marginRight: "4px" }} /> Manual Publish Stage ({publishingQueue.length})
         </button>
         <button
           className={tab === "webhooks" ? "primary-action" : "mini-action"}
@@ -328,106 +328,74 @@ export function AutomationsPanel({ state, projectId, onRefresh, setModal, setOpe
           </div>
         )}
 
-        {/* Social Publishing Queue Tab */}
         {tab === "publishing" && (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
               <div>
-                <h3 style={{ margin: 0 }}>Direct Social Publishing & Staging Queue</h3>
+                <h3 style={{ margin: 0 }}>Manual Publish Stage</h3>
                 <p style={{ margin: "4px 0 0 0", fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                  Review, approve, and dispatch scheduled posts and video reels directly to connected platform channels.
+                  Stage export-ready packets here, then publish manually on each platform. WAKE does not post directly to social networks.
                 </p>
               </div>
             </div>
 
-            {/* Connected Accounts Status Strip */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
               {publishingAccounts.map((acc) => (
                 <div key={acc.accountId} style={{ padding: "0.75rem", border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--surface)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
                     <strong style={{ fontSize: "0.85rem", textTransform: "capitalize" }}>{acc.platform}</strong>
-                    <span style={{ fontSize: "0.7rem", color: "var(--live)", display: "flex", alignItems: "center", gap: "3px" }}>
-                      <CheckCircle2 size={12} /> Connected
-                    </span>
+                    <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>Not configured</span>
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>{acc.handles}</div>
+                  <div style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>{acc.name || "Manual channel"}</div>
                 </div>
               ))}
             </div>
 
-            {/* Staging Queue List */}
             <div className="library-list">
-              {publishingQueue.map((item) => {
-                const isDelivered = item.status === "published";
-                return (
-                  <div
-                    key={item.id}
-                    style={{
-                      padding: "1rem",
-                      border: "1px solid var(--border)",
-                      borderRadius: "var(--radius)",
-                      marginBottom: "0.75rem",
-                      background: "var(--surface)",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start"
-                    }}
-                  >
-                    <div style={{ flex: 1, marginRight: "1rem" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                        <span className="badge" style={{ background: "rgba(0,255,200,0.1)", color: "var(--live)", border: "1px solid var(--live)", padding: "1px 6px", borderRadius: "8px", fontSize: "0.7rem", textTransform: "uppercase" }}>
-                          {item.platform}
-                        </span>
-                        <strong style={{ fontSize: "1rem" }}>{item.title}</strong>
-                        <span style={{ fontSize: "0.75rem", color: isDelivered ? "var(--live)" : "var(--text-muted)" }}>
-                          • {item.status.toUpperCase()}
-                        </span>
-                      </div>
-
-                      <p style={{ margin: "4px 0 6px 0", fontSize: "0.85rem", color: "var(--text-muted)", maxHeight: "60px", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {item.content}
-                      </p>
-
-                      {item.receipt && (
-                        <div style={{ fontSize: "0.75rem", color: "var(--live)", background: "rgba(0,255,200,0.05)", padding: "4px 8px", borderRadius: "4px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                          <span>Delivered:</span>
-                          <a href={item.receipt.postUrl} target="_blank" rel="noreferrer" style={{ color: "var(--live)", textDecoration: "underline", display: "flex", alignItems: "center", gap: "3px" }}>
-                            {item.receipt.postUrl} <ExternalLink size={11} />
-                          </a>
-                          <span>({item.receipt.latencyMs}ms)</span>
-                        </div>
-                      )}
+              {publishingQueue.map((item) => (
+                <div
+                  key={item.id}
+                  style={{
+                    padding: "1rem",
+                    border: "1px solid var(--border)",
+                    borderRadius: "var(--radius)",
+                    marginBottom: "0.75rem",
+                    background: "var(--surface)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start"
+                  }}
+                >
+                  <div style={{ flex: 1, marginRight: "1rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                      <span className="badge" style={{ background: "rgba(0,255,200,0.1)", color: "var(--live)", border: "1px solid var(--live)", padding: "1px 6px", borderRadius: "8px", fontSize: "0.7rem", textTransform: "uppercase" }}>
+                        {item.platform}
+                      </span>
+                      <strong style={{ fontSize: "1rem" }}>{item.title}</strong>
+                      <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>• {String(item.status || "staged").toUpperCase()}</span>
                     </div>
-
-                    <div style={{ display: "flex", gap: "6px" }}>
-                      {!isDelivered && (
-                        <button
-                          className="primary-action"
-                          type="button"
-                          disabled={dispatchingId === item.id}
-                          onClick={() => handleDispatchSocialPost(item.id)}
-                          style={{ fontSize: "0.8rem", padding: "4px 8px", display: "flex", alignItems: "center", gap: "4px" }}
-                        >
-                          <Send size={13} /> {dispatchingId === item.id ? "Publishing..." : "Publish Now"}
-                        </button>
-                      )}
-                      <button
-                        className="mini-action"
-                        type="button"
-                        onClick={() => handleDeleteSocialPost(item.id)}
-                        style={{ fontSize: "0.8rem", padding: "4px 6px" }}
-                        title="Delete from Queue"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
+                    <p style={{ margin: "4px 0 6px 0", fontSize: "0.85rem", color: "var(--text-muted)" }}>{item.content}</p>
+                    {item.receipt?.error ? <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>{item.receipt.error}</div> : null}
                   </div>
-                );
-              })}
-
+                  <div style={{ display: "flex", gap: "6px" }}>
+                    <button
+                      className="mini-action"
+                      type="button"
+                      disabled={dispatchingId === item.id}
+                      onClick={() => handleDispatchSocialPost(item.id)}
+                      title="Direct social dispatch is not implemented"
+                    >
+                      <Send size={13} /> {dispatchingId === item.id ? "Checking..." : "Confirm Manual-Only"}
+                    </button>
+                    <button className="mini-action" type="button" onClick={() => handleDeleteSocialPost(item.id)} title="Remove from stage">
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                </div>
+              ))}
               {!publishingQueue.length && (
                 <div style={{ textAlign: "center", padding: "2rem", border: "1px dashed var(--border)", borderRadius: "var(--radius)", color: "var(--text-muted)" }}>
-                  No posts currently staged in the publishing queue. Stage days from the 30-Day Matrix or Creator Tab to queue direct dispatch.
+                  No staged packets yet. Export from Cluster, then stage here for manual posting.
                 </div>
               )}
             </div>
@@ -610,7 +578,7 @@ export function AutomationsPanel({ state, projectId, onRefresh, setModal, setOpe
                   <div style={{ marginTop: "0.5rem", display: "flex", gap: "0.5rem" }}>
                     <button
                       className="primary-action"
-                      onClick={() => setModal({ type: "review", data: r })}
+                      onClick={() => setModal({ kind: "document", title: r.title || "Review Packet", body: typeof r.packet === "string" ? r.packet : JSON.stringify(r.packet || r, null, 2), meta: r.status || "inspection-only" })}
                     >
                       View Generated Packet
                     </button>

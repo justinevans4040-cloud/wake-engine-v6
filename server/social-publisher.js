@@ -3,9 +3,9 @@ import fs from "node:fs";
 import path from "node:path";
 
 /**
- * WAKE Engine V6 Direct Social Publisher & Staging Queue Engine
- * Handles post staging, scheduled dispatch, and publishing receipts across
- * YouTube Shorts, TikTok, LinkedIn, and X.
+ * WAKE Engine V6 Local Publishing Stage Queue
+ * Stages export-ready packets for manual publication.
+ * Direct social network delivery is not implemented.
  */
 
 export class SocialPublisherEngine {
@@ -13,6 +13,7 @@ export class SocialPublisherEngine {
     this.queueFilePath = queueFilePath;
     this.addMonitorLog = addMonitorLog || (() => {});
     this.ensureQueueFile();
+    this.normalizeAccounts();
   }
 
   ensureQueueFile() {
@@ -25,11 +26,28 @@ export class SocialPublisherEngine {
 
   getDefaultAccounts() {
     return [
-      { platform: "youtube", name: "Official YouTube Channel (Shorts)", status: "connected", accountId: "yt-wake-engine", handles: "@wakeengine" },
-      { platform: "tiktok", name: "TikTok Creator Portal", status: "connected", accountId: "tt-wake-official", handles: "@wake.engine" },
-      { platform: "linkedin", name: "LinkedIn Organization Page", status: "connected", accountId: "li-wake-hq", handles: "WAKE Engine Systems" },
-      { platform: "x", name: "X / Twitter Broadcast Feed", status: "connected", accountId: "x-wake-hq", handles: "@WakeEngineHQ" }
+      { platform: "youtube", name: "YouTube Shorts (manual)", status: "not_configured", accountId: "yt-manual", handles: null },
+      { platform: "tiktok", name: "TikTok (manual)", status: "not_configured", accountId: "tt-manual", handles: null },
+      { platform: "linkedin", name: "LinkedIn (manual)", status: "not_configured", accountId: "li-manual", handles: null },
+      { platform: "x", name: "X / Twitter (manual)", status: "not_configured", accountId: "x-manual", handles: null }
     ];
+  }
+
+  normalizeAccounts() {
+    const queue = this.readQueue();
+    const defaults = this.getDefaultAccounts();
+    const nextAccounts = defaults.map((account) => {
+      const existing = (queue.accounts || []).find((item) => item.platform === account.platform);
+      if (!existing) return account;
+      return {
+        ...account,
+        ...existing,
+        status: existing.status === "connected" ? "not_configured" : (existing.status || "not_configured"),
+        handles: existing.status === "connected" ? null : existing.handles
+      };
+    });
+    queue.accounts = nextAccounts;
+    this.writeQueue(queue);
   }
 
   readQueue() {
@@ -79,14 +97,15 @@ export class SocialPublisherEngine {
       mediaPath,
       scheduledAt: scheduledAt || new Date().toISOString(),
       hashtags: Array.isArray(hashtags) ? hashtags : [],
-      status: "staged", // "staged" | "scheduled" | "publishing" | "published" | "failed"
+      status: "staged",
       receipt: null,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      note: "Staged for manual publish. WAKE does not post to social networks."
     };
 
     queue.items = [newItem, ...(queue.items || [])];
     this.writeQueue(queue);
-    this.addMonitorLog("ok", `Staged post for ${platform.toUpperCase()}: "${title}" [${id}]`);
+    this.addMonitorLog("ok", `Staged manual-publish packet for ${platform.toUpperCase()}: "${title}" [${id}]`);
     return newItem;
   }
 
@@ -95,40 +114,26 @@ export class SocialPublisherEngine {
     const item = (queue.items || []).find((i) => i.id === postId);
     if (!item) throw new Error(`Staged post ${postId} not found.`);
 
-    item.status = "publishing";
-    this.writeQueue(queue);
-
-    const platform = item.platform.toLowerCase();
-    const startTime = Date.now();
-
-    // Simulate direct platform API dispatch with signature receipt
-    const digest = crypto.createHash("sha256").update(`${item.id}-${Date.now()}`).digest("hex");
-    const externalId = `${platform.slice(0, 2)}-${digest.slice(0, 12)}`;
-    const latencyMs = Math.floor(Math.random() * 80) + 45;
-
-    let postUrl = "";
-    if (platform.includes("tiktok")) postUrl = `https://www.tiktok.com/@wake.engine/video/${externalId}`;
-    else if (platform.includes("youtube")) postUrl = `https://youtube.com/shorts/${externalId}`;
-    else if (platform.includes("linkedin")) postUrl = `https://www.linkedin.com/feed/update/urn:li:share:${externalId}`;
-    else postUrl = `https://x.com/WakeEngineHQ/status/${externalId}`;
-
-    const receipt = {
-      publishedAt: new Date().toISOString(),
-      externalId,
-      postUrl,
+    item.status = "failed";
+    item.receipt = {
+      publishedAt: null,
+      externalId: null,
+      postUrl: null,
       platform: item.platform,
-      latencyMs,
-      mediaDelivered: Boolean(item.mediaPath),
-      status: "delivered",
-      signature: digest.slice(0, 32)
+      latencyMs: 0,
+      mediaDelivered: false,
+      status: "not_implemented",
+      signature: null,
+      error: "Direct social publishing is not implemented. Export locally and publish manually."
     };
-
-    item.status = "published";
-    item.receipt = receipt;
     this.writeQueue(queue);
-
-    this.addMonitorLog("ok", `Direct dispatch SUCCESS to ${item.platform.toUpperCase()} -> ${postUrl}`);
-    return { ok: true, item, receipt };
+    this.addMonitorLog("warn", `Direct dispatch blocked for ${item.platform.toUpperCase()} [${postId}]: not implemented`);
+    return {
+      ok: false,
+      error: "Direct social publishing is not implemented. Export locally and publish manually.",
+      item,
+      receipt: item.receipt
+    };
   }
 
   deletePost(postId) {

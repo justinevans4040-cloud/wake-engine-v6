@@ -1,8 +1,9 @@
 import crypto from "node:crypto";
 
 /**
- * WAKE Engine V6 Real-Time A/B Hook Variant Experimentation Engine
- * Synthesizes 5 distinct psychological angle variants with comparative virality and 0-3s retention scoring.
+ * WAKE Omega Tool — Hook Angle Matrix
+ * Synthesizes 5 psychological hook angles for creative A/B exploration.
+ * Scores are heuristic templates for comparison, not live platform retention metrics.
  */
 
 export const HOOK_PSYCHOLOGICAL_ANGLES = Object.freeze([

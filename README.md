@@ -1,12 +1,29 @@
 <div align="center">
-  <h1>WAKE Engine V6</h1>
-  <p><strong>A crash-resilient local workbench for evidence-linked content production.</strong></p>
+  <h1>WAKE Engine Omega</h1>
+  <p><strong>The local command console. Specialized tools underneath — not a fake all-in-one autopilot.</strong></p>
 </div>
 
 [![WAKE Engine CI](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/ci.yml/badge.svg)](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/ci.yml)
 [![Windows Installer](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/release.yml/badge.svg)](https://github.com/justinevans4040-cloud/wake-engine-v6/actions/workflows/release.yml)
 
-WAKE Engine turns approved local notes, transcripts, briefs, and documents into structured content packages while preserving source provenance, blocking unsupported claims, and recording an inspectable audit trail.
+**Omega** is Justin’s WAKE command console: one local workbench that turns approved notes, transcripts, and docs into evidence-linked content packets with durable state and an inspectable audit trail.
+
+Tools are parsed out under Omega — each with an honest boundary:
+
+| Tool | What you sell | Honest limit |
+|---|---|---|
+| Tier Zero Agent Runtime | Source-bound multi-agent packet production | Deterministic orchestration + optional Ollama — not six cloud LLMs |
+| Vault Intake | Folder + SEED review before import | Text/docs/media metadata — not universal binary OCR |
+| Content Cluster | Pillars, lanes, hooks, export packs | Local packets — not guaranteed virality |
+| Hook Angle Matrix | Five psychological hook angles | Heuristic creative comparison — not live retention data |
+| Local Voiceover | Real on-device voice + subtitles | Windows SAPI (optional remote neural endpoint) |
+| Vertical Reel Renderer | Real 9:16 MP4 via FFmpeg | Needs FFmpeg + real audio — no JSON-as-MP4 |
+| Retention Simulator | Pre-export script scoring | Heuristic QA — not live platform analytics |
+| Automation Scheduler | Local cron → review/export | Does not post to social networks |
+| Manual Publish Stage | Stage packets for human posting | Direct social APIs are not implemented |
+| Durable Local Store | Atomic writes + WAL + backups | Local disk resilience — still back up offsite |
+
+Manifest: `GET /api/omega` and `GET /api/omega/tools`.
 
 ![WAKE Engine interface](docs/wake-engine/wake-ui-screenshot.png)
 
@@ -14,7 +31,7 @@ WAKE Engine turns approved local notes, transcripts, briefs, and documents into 
 
 Creators and small teams often have valuable source material scattered across local folders. Generic generation tools can produce copy quickly, but they may lose provenance, invent claims, require cloud uploads, and provide no reliable recovery path when a process is interrupted.
 
-WAKE provides one local workflow:
+WAKE Omega provides one local workflow:
 
 1. Load or paste approved source material.
 2. Extract evidence and citations.
@@ -23,6 +40,7 @@ WAKE provides one local workflow:
 5. Block unsupported claims at the QA gate.
 6. Place scheduled output into a pending review queue or, when configured for Auto Export and QA passes, write Markdown and JSON.
 7. Preserve receipts, history, snapshots, and durable local state.
+8. Hand media/export tools real files when the operator wants voice or reels — then publish manually.
 
 ## What is implemented
 

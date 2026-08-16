@@ -730,7 +730,9 @@ export function IntakePanel({
           </div>
           <div className="intake-review-list">
             {(intakeReview.candidates || []).map((candidate) => {
-              const selected = intakeReviewSelection.has(candidate.reviewId);
+              const selected = Array.isArray(intakeReviewSelection)
+                ? intakeReviewSelection.includes(candidate.reviewId)
+                : Boolean(intakeReviewSelection?.has?.(candidate.reviewId));
               const disabled = candidate.decisionStatus === "blocked";
               return (
                 <label

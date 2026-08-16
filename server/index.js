@@ -27,6 +27,7 @@ import { WAVEFORM_STYLES, generateWaveformData, generateWaveformSvg } from "./wa
 import { analyzeCompetitorContent } from "./trend-analyzer.js";
 import { transmuteSourceToOmnichannel, exportOmnichannelToFolder } from "./transmutation-studio.js";
 import { GitHubIngestEngine } from "./git-ingest.js";
+import { WAKE_OMEGA, getOmegaManifest, capabilitiesFromOmegaTools } from "./omega-tools.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const execFileAsync = promisify(execFile);
@@ -58,6 +59,9 @@ const OLLAMA_MODEL = process.env.WAKE_OLLAMA_MODEL || "";
 const INTAKE_MAX_FILES = Number(process.env.WAKE_INTAKE_MAX_FILES || 9000);
 const INTAKE_MAX_DIRECTORIES = Number(process.env.WAKE_INTAKE_MAX_DIRECTORIES || 25000);
 const INTAKE_REVIEW_MAX_CANDIDATES = Number(process.env.WAKE_INTAKE_REVIEW_MAX_CANDIDATES || 1000);
+const UPLOAD_REVIEW_MAX_FILES = Number(process.env.WAKE_UPLOAD_REVIEW_MAX_FILES || 500);
+const UPLOAD_REVIEW_MAX_BYTES = Number(process.env.WAKE_UPLOAD_REVIEW_MAX_BYTES || 25 * 1024 * 1024);
+const UPLOAD_REVIEW_MAX_TEXT_CHARS = Number(process.env.WAKE_UPLOAD_REVIEW_MAX_TEXT_CHARS || 80000);
 let ollamaStatusCache = null;
 let providerCredentialBroker = null;
 
@@ -1075,33 +1079,37 @@ function saveExport(store, input) {
   return saved;
 }
 
-const tasks = [
-  { id: "WAKE-001", title: "Source prompt builder", owner: "Console", status: "running", updated: "2m ago", detail: "Turns pasted source into a structured WAKE frame with role, objective, scenes, hooks, constraints, and output contract." },
-  { id: "WAKE-002", title: "Tier Zero content agents", owner: "Agent", status: "running", updated: "4m ago", detail: "Runs source-driven agent tools, A2A handoffs, local memory, quality gates, and optional local Ollama generation." },
-  { id: "WAKE-003", title: "Snapshot storage", owner: "Runtime", status: "done", updated: "12m ago", detail: "Saves the current source, output, runtime status, and capability map to local application data." },
-  { id: "WAKE-004", title: "Task monitor scaling", owner: "Console", status: "done", updated: "20m ago", detail: "Bounded, searchable, filterable task surface so the list does not grow forever." },
-  { id: "WAKE-005", title: "Content Cluster creation network", owner: "Cluster", status: "running", updated: "now", detail: "Creates campaign packets, platform lanes, scripts, visual prompts, evidence packs, distribution plans, and export bundles." },
-  { id: "WAKE-006", title: "Local export writer", owner: "Distribution", status: "done", updated: "now", detail: "Writes markdown and JSON exports under local application data." },
-  { id: "WAKE-007", title: "Local memory ledger", owner: "Runtime", status: "done", updated: "now", detail: "Persists projects, sources, generations, exports, and history in the local WAKE store." },
-  { id: "WAKE-008", title: "System monitor", owner: "Runtime", status: "running", updated: "live", detail: "Samples CPU, RAM, GPU, runtime, and local action logs." }
-];
+function buildLiveTasks() {
+  const logs = Array.isArray(monitorLog) ? monitorLog.slice(0, 12) : [];
+  if (logs.length) {
+    return logs.map((log, index) => ({
+      id: log.id || `EVT-${index + 1}`,
+      title: String(log.message || "Runtime event").slice(0, 96),
+      owner: "Runtime",
+      status: log.level === "error" || log.level === "warn" ? "attention" : "done",
+      updated: log.createdAt || new Date().toISOString(),
+      detail: String(log.message || "")
+    }));
+  }
+  return [
+    {
+      id: "CAP-READY",
+      title: "Local runtime idle",
+      owner: "Runtime",
+      status: "ready",
+      updated: new Date().toISOString(),
+      detail: "No recent monitor events yet. Run Console, Agents, voice synthesis, or video render to populate live task history."
+    }
+  ];
+}
 
-const capabilities = [
-  { id: "ingest", label: "Ingest & Parse", status: "live", detail: "Accepts pasted source text and turns it into structured frame fields.", evidence: ["/api/sources", "/api/frame"] },
-  { id: "local-agent", label: "Tier Zero Content Agent Runtime", status: "live", tierZeroVerified: true, detail: "Runs the promoted Wake Engine Tier Zero content agents with contracts, local tools, A2A handoffs, memory receipts, and QA output.", evidence: ["/api/run-agent", "/api/tier-zero/run"], runtimeProof: "/api/tier-zero/audit" },
-  { id: "agent-chat", label: "Agent Chat Console", status: "live", tierZeroVerified: true, detail: "Chats with verified content agents, retrieves local context, streams fast deterministic draft first, then upgrades with Ollama when reachable.", evidence: ["/api/agent-chat", "/api/agent-chat/stream", "/api/tier-zero/agents"], runtimeProof: "/api/tier-zero/audit" },
-  { id: "ip-intake", label: "IP / Media Intake Agent", status: "live", detail: "Scans configured local folders for text, docs, images, audio, video, and source metadata.", evidence: ["/api/intake/run"] },
-  { id: "content-cluster", label: "Content Cluster Builder", status: "live", detail: "Locally groups any source into pillars, output lanes, proof notes, and handoff drafts.", evidence: ["/api/content-cluster"] },
-  { id: "snapshot", label: "Snapshot Storage", status: "live", detail: "Writes auditable JSON snapshots to the local repo runtime folder.", evidence: ["/api/snapshot"] },
-  { id: "script", label: "Script & Structure Agent", status: "live", tierZeroVerified: true, detail: "Frames scenes, hooks, captions, titles, platform blocks, CTAs, claim maps, and edit rules from source.", evidence: ["/api/run-agent", "/api/tier-zero/run"], runtimeProof: "/api/tier-zero/audit" },
-  { id: "distribution", label: "Local Distribution Pack", status: "live", detail: "Exports reviewed outputs as local markdown and JSON files.", evidence: ["/api/export"] },
-  { id: "memory", label: "Local Memory Ledger", status: "live", detail: "Persists projects, sources, generations, exports, snapshots, and action history in Electron userData.", evidence: ["atomic store", "write-ahead journal", "integrity hash"] },
-  { id: "monitor", label: "GPU / System Monitor", status: "live", detail: "Samples CPU, RAM, GPU counters, process uptime, port, and local action logs.", evidence: ["/api/system"] }
-];
+const capabilities = capabilitiesFromOmegaTools();
 
 const externalOperators = [];
 
-const agentPipeline = TIER_ZERO_AGENT_PIPELINE;
+export const ENGINEER_AGENT = TIER_ZERO_AGENT_PIPELINE.find((a) => a.id === "engineer");
+
+const agentPipeline = [...TIER_ZERO_AGENT_PIPELINE];
 
 const INTAKE_ROOTS = [INTAKE_DIR];
 
@@ -1551,41 +1559,105 @@ function fallbackAgentReply({ agent, message, context, llmStatus }) {
   return `${answer}${providerTruth}`;
 }
 
-async function ollamaStatus() {
-  if (ollamaStatusCache && Date.now() - ollamaStatusCache.checkedAt < 15000) return ollamaStatusCache.status;
+let selectedActiveModel = null;
+
+async function ollamaStatus(forceRefresh = false) {
+  if (!forceRefresh && ollamaStatusCache && Date.now() - ollamaStatusCache.checkedAt < 8000) return ollamaStatusCache.status;
   for (const url of OLLAMA_URLS) {
     try {
-      const response = await fetch(`${url}/api/tags`, { signal: AbortSignal.timeout(2000) });
+      const response = await fetch(`${url}/api/tags`, { signal: AbortSignal.timeout(1500) });
       if (!response.ok) continue;
       const data = await response.json();
-      const models = Array.isArray(data.models) ? data.models.map((model) => model.name).filter(Boolean) : [];
-      if (!models.length) continue;
-      const model = OLLAMA_MODEL && models.includes(OLLAMA_MODEL)
+      const rawModels = Array.isArray(data.models) ? data.models.map((model) => model.name).filter(Boolean) : [];
+      if (!rawModels.length) continue;
+
+      const models = rawModels.map((name) => {
+        let label = name;
+        let role = "General Purpose AI";
+        let tier = "Standard";
+        if (name.includes("qwen2.5-coder") || name.includes("coder")) {
+          label = `Qwen 2.5 Coder (${name.split(":")[1] || "latest"})`;
+          role = "Autonomous Code & Architecture";
+          tier = "Code Specialist";
+        } else if (name.includes("llama3.1:8b")) {
+          label = "Llama 3.1 (8B)";
+          role = "Deep Strategy & Research";
+          tier = "High Reasoning";
+        } else if (name.includes("llama3.2:3b")) {
+          label = "Llama 3.2 (3B)";
+          role = "Rapid Copy & Real-Time Stream";
+          tier = "Ultra Fast";
+        } else if (name.includes("deepseek")) {
+          label = "DeepSeek Coder";
+          role = "Code Review & Refactor";
+          tier = "Code Specialist";
+        }
+        return { id: name, name: label, role, tier };
+      });
+
+      const modelNames = models.map((m) => m.id);
+      const activeModel = (selectedActiveModel && modelNames.includes(selectedActiveModel))
+        ? selectedActiveModel
+        : (OLLAMA_MODEL && modelNames.includes(OLLAMA_MODEL))
         ? OLLAMA_MODEL
-        : (models.find((m) => m.includes("llama3.2") || m.includes("llama3.1")) || models[0] || null);
-      const status = { live: true, url, models, model };
+        : (modelNames.find((m) => m.includes("qwen2.5-coder")) || modelNames.find((m) => m.includes("llama3.1")) || modelNames.find((m) => m.includes("llama3.2")) || modelNames[0]);
+
+      const runtimeHost = url.includes("100.77.131.28") ? "ichabodcrane (Tailscale)" : (url.includes("127.0.0.1") || url.includes("localhost")) ? "Local Laptop" : url;
+
+      const status = {
+        live: true,
+        url,
+        models: modelNames,
+        modelDetails: models,
+        model: activeModel,
+        selectedModel: selectedActiveModel || activeModel,
+        runtimeHost
+      };
       ollamaStatusCache = { checkedAt: Date.now(), status };
       return status;
     } catch {
       // Try next configured runtime.
     }
   }
-  const status = { live: false, url: OLLAMA_URLS[0] || null, models: [], model: OLLAMA_MODEL || null };
+  const status = { live: false, url: OLLAMA_URLS[0] || null, models: [], modelDetails: [], model: OLLAMA_MODEL || null, selectedModel: null, runtimeHost: null };
   ollamaStatusCache = { checkedAt: Date.now(), status };
   return status;
 }
 
-async function askOllama({ status, agent, message, context, profile }) {
+function resolveModelForAgent(agent, requestedModel, status) {
+  if (requestedModel && status.models?.includes(requestedModel)) return requestedModel;
+  if (status.selectedModel && status.models?.includes(status.selectedModel)) return status.selectedModel;
+  if (agent?.id === "engineer" || agent?.category === "Code & Architecture") {
+    const coder = status.models?.find((m) => m.includes("coder") || m.includes("qwen") || m.includes("deepseek"));
+    if (coder) return coder;
+  }
+  if (agent?.id === "strategist") {
+    const deepModel = status.models?.find((m) => m.includes("8b") || m.includes("llama3.1"));
+    if (deepModel) return deepModel;
+  }
+  return status.model || status.models?.[0] || null;
+}
+
+async function askOllama({ status, agent, message, context, profile, requestedModel }) {
   if (!status.live || !status.model) return null;
   if (!profile?.timeoutMs) return null;
+  const targetModel = resolveModelForAgent(agent, requestedModel, status);
+  if (!targetModel) return null;
+
   const citations = context.sources.map((item, index) => `[${index + 1}] ${item.title} (${item.lane}): ${item.excerpt}`).join("\n");
   const media = context.media.map((item, index) => `[M${index + 1}] ${item.title} (${item.kind}): ${item.path}`).join("\n");
+  
+  const isEngineer = agent.id === "engineer" || agent.category === "Code & Architecture";
+  const engineerInstructions = isEngineer
+    ? "You are the Lead Software Engineer. Provide complete, working, production-ready code with exact file names, clean imports, error handling, and zero placeholder comments."
+    : "Answer Justin directly. Use the retrieved IP. Do not invent capabilities or facts. Cite source titles inline when useful.";
+
   const prompt = [
-    `You are ${agent.label}, a WAKE Engine V6 local agent.`,
+    `You are ${agent.label}, a WAKE Engine V6 autonomous agent.`,
     agent.persona,
-    "Answer Justin directly. Use the retrieved IP. Do not invent capabilities or facts. Cite source titles inline when useful.",
+    engineerInstructions,
     "",
-    "Retrieved IP:",
+    "Retrieved IP / Project Context:",
     citations || "No matching text source.",
     "",
     "Retrieved media:",
@@ -1593,12 +1665,13 @@ async function askOllama({ status, agent, message, context, profile }) {
     "",
     `Justin: ${message}`
   ].join("\n");
+
   try {
     const response = await fetch(`${status.url}/api/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: status.model,
+        model: targetModel,
         prompt,
         stream: false,
         options: { num_predict: profile.numPredict, temperature: profile.temperature }
@@ -1613,16 +1686,25 @@ async function askOllama({ status, agent, message, context, profile }) {
   }
 }
 
-async function streamOllama({ status, agent, message, context, profile, onToken }) {
+async function streamOllama({ status, agent, message, context, profile, requestedModel, onToken }) {
   if (!status.live || !status.model || !profile?.timeoutMs) return "";
+  const targetModel = resolveModelForAgent(agent, requestedModel, status);
+  if (!targetModel) return "";
+
   const citations = context.sources.map((item, index) => `[${index + 1}] ${item.title} (${item.lane}): ${item.excerpt}`).join("\n");
   const media = context.media.map((item, index) => `[M${index + 1}] ${item.title} (${item.kind}): ${item.path}`).join("\n");
+
+  const isEngineer = agent.id === "engineer" || agent.category === "Code & Architecture";
+  const engineerInstructions = isEngineer
+    ? "You are the Lead Software Engineer. Provide complete, working, production-ready code with exact file names, clean imports, error handling, and zero placeholder comments."
+    : "Answer Justin directly. Use retrieved IP. Do not invent facts. Be concrete. End with the next action.";
+
   const prompt = [
-    `You are ${agent.label}, a WAKE Engine V6 local agent.`,
+    `You are ${agent.label}, a WAKE Engine V6 autonomous agent.`,
     agent.persona,
-    "Answer Justin directly. Use retrieved IP. Do not invent facts. Be concrete. End with the next action.",
+    engineerInstructions,
     "",
-    "Retrieved IP:",
+    "Retrieved IP / Project Context:",
     citations || "No matching text source.",
     "",
     "Retrieved media:",
@@ -1630,6 +1712,7 @@ async function streamOllama({ status, agent, message, context, profile, onToken 
     "",
     `Justin: ${message}`
   ].join("\n");
+
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), profile.timeoutMs);
   let answer = "";
@@ -1638,7 +1721,7 @@ async function streamOllama({ status, agent, message, context, profile, onToken 
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: status.model,
+        model: targetModel,
         prompt,
         stream: true,
         options: { num_predict: profile.numPredict, temperature: profile.temperature }
@@ -1965,6 +2048,140 @@ function intakeEntryFromFile(filePath, stat, contextText = "") {
   };
 }
 
+function makeUploadedIntakeSource(entry) {
+  return [
+    `# ${entry.name}`,
+    "",
+    `Lane: ${entry.lane}`,
+    "Source type: browser_seed_upload",
+    `Seed path: ${entry.path}`,
+    `MIME type: ${entry.mimeType || "unknown"}`,
+    `Extraction: ${entry.extractStatus}`,
+    `Tags: ${(entry.tags || []).join(", ")}`,
+    "",
+    "## Extracted Content",
+    "",
+    entry.sourceText || entry.excerpt || `Metadata-only entry for ${entry.kind} file from dropped SEED folder: ${entry.path}.`
+  ].join("\n");
+}
+
+function intakeEntryFromUploadedFile(file, contextText = "") {
+  const relativePath = String(file?.relativePath || file?.webkitRelativePath || file?.name || "").replace(/\\/g, "/").replace(/^\/+/, "");
+  const name = path.basename(relativePath || String(file?.name || "seed-file"));
+  const ext = path.extname(name).toLowerCase();
+  if (!INTAKE_EXTENSIONS.has(ext)) return null;
+  const kind = fileKind(ext);
+  const rawText = typeof file?.text === "string" ? file.text : "";
+  const cleanedText = TEXT_EXTENSIONS.has(ext) ? rawText.trim() : "";
+  const excerpt = cleanedText.replace(/\s+/g, " ").trim().slice(0, 2400);
+  const seedPath = `seed-upload://${relativePath || name}`;
+  const laneMatch = matchLane(`${relativePath}\n${excerpt}\n${contextText}`) || { lane: { name: "General Source", category: "general_source" }, hits: [] };
+  const importKey = `seed-upload:${stableId(`${relativePath}:${Number(file?.size || 0)}:${rawText.slice(0, 256)}`)}`;
+  const entry = {
+    id: `asset-${stableId(seedPath)}`,
+    reviewId: `candidate-${stableId(seedPath)}`,
+    title: name,
+    name,
+    path: seedPath,
+    extension: ext,
+    kind,
+    lane: laneMatch.lane.name,
+    tags: [...new Set([...laneMatch.hits, "seed-upload"])],
+    sizeBytes: Number(file?.size || rawText.length || 0),
+    modifiedAt: file?.lastModified ? new Date(file.lastModified).toISOString() : now(),
+    mimeType: file?.type || "",
+    excerpt,
+    sourceText: cleanedText.slice(0, UPLOAD_REVIEW_MAX_TEXT_CHARS),
+    extractStatus: excerpt ? "text_extracted" : kind === "document" ? "metadata_only_document" : "metadata_only_media",
+    importKey,
+    importedAt: now()
+  };
+  const eligibility = creativeEligibility({ ...entry, sourcePath: seedPath, source: excerpt });
+  const decision = classifyIntakeEntry(entry, eligibility, contextText);
+  return {
+    ...entry,
+    eligible: eligibility.eligible && decision.status !== "excluded",
+    reason: decision.reason || eligibility.reason,
+    decision,
+    decisionStatus: decision.status,
+    decisionReason: decision.reason,
+    decisionConfidence: decision.confidence,
+    recommended: decision.recommended,
+    importAs: kind === "text" || (kind === "document" && excerpt) ? "source" : "media",
+    uploadSource: true
+  };
+}
+
+function buildUploadedIntakeReview(store, input = {}) {
+  const files = Array.isArray(input.files) ? input.files : [];
+  const totalBytes = files.reduce((sum, file) => sum + Number(file?.size || 0), 0);
+  if (!files.length) {
+    const error = new Error("Drop a SEED folder or choose files before review.");
+    error.status = 400;
+    throw error;
+  }
+  if (files.length > UPLOAD_REVIEW_MAX_FILES) {
+    const error = new Error(`SEED review accepts up to ${UPLOAD_REVIEW_MAX_FILES} files at a time.`);
+    error.status = 413;
+    throw error;
+  }
+  if (totalBytes > UPLOAD_REVIEW_MAX_BYTES) {
+    const error = new Error(`SEED review accepts up to ${Math.round(UPLOAD_REVIEW_MAX_BYTES / 1024 / 1024)} MB at a time.`);
+    error.status = 413;
+    throw error;
+  }
+  const projectId = String(input.projectId || store.projects[0]?.id || "wake-v6-main");
+  const contextText = intakeContextText(store, input, projectId);
+  const existingSourceKeys = new Set(store.sources.map((source) => source.importKey).filter(Boolean));
+  const existingMediaKeys = new Set(store.mediaAssets.map((asset) => asset.importKey).filter(Boolean));
+  const candidates = [];
+  let eligible = 0;
+  let alreadyImported = 0;
+  let skippedOperational = 0;
+  let recommended = 0;
+  let reviewNeeded = 0;
+  for (const file of files) {
+    const entry = intakeEntryFromUploadedFile(file, contextText);
+    if (!entry) {
+      skippedOperational += 1;
+      continue;
+    }
+    const exists = entry.importAs === "source" ? existingSourceKeys.has(entry.importKey) : existingMediaKeys.has(entry.importKey);
+    if (exists) alreadyImported += 1;
+    if (entry.decisionStatus === "excluded") skippedOperational += 1;
+    if (entry.decisionStatus === "recommended" && !exists) recommended += 1;
+    if (entry.decisionStatus === "review" && !exists) reviewNeeded += 1;
+    if (entry.eligible && !exists) eligible += 1;
+    if (candidates.length < INTAKE_REVIEW_MAX_CANDIDATES) {
+      candidates.push({
+        ...entry,
+        alreadyImported: exists,
+        excerpt: entry.excerpt ? entry.excerpt.slice(0, 600) : "",
+        approved: false
+      });
+    }
+  }
+  return {
+    id: id("intake-review"),
+    status: "awaiting-review",
+    roots: [`seed-upload:${String(input.seedName || "Dropped SEED Folder")}`],
+    projectId,
+    sourceType: "browser_seed_upload",
+    scanned: files.length,
+    visitedDirectories: 0,
+    directoryLimitHit: false,
+    candidateLimitHit: candidates.length < files.length,
+    candidateLimit: INTAKE_REVIEW_MAX_CANDIDATES,
+    eligible,
+    recommended,
+    reviewNeeded,
+    alreadyImported,
+    skippedOperational,
+    candidates,
+    createdAt: now()
+  };
+}
+
 async function buildIntakeReview(store, input = {}) {
   const roots = Array.isArray(input.roots) && input.roots.length ? input.roots.map((root) => path.resolve(String(root))) : INTAKE_ROOTS;
   const scan = await walkIntakeRoots(roots);
@@ -2043,7 +2260,7 @@ function importReviewedCandidates(store, review, candidateIds = []) {
         skipped += 1;
         continue;
       }
-      const sourceText = makeIntakeSource(candidate);
+      const sourceText = candidate.uploadSource ? makeUploadedIntakeSource(candidate) : makeIntakeSource(candidate);
       store.sources.unshift({
         id: id("src"),
         projectId: review.projectId,
@@ -2051,7 +2268,7 @@ function importReviewedCandidates(store, review, candidateIds = []) {
         source: sourceText,
         characterCount: sourceText.length,
         importKey: candidate.importKey,
-        sourceType: "local_disk",
+        sourceType: candidate.uploadSource ? "browser_seed_upload" : "local_disk",
         sourcePath: candidate.path,
         lane: candidate.lane,
         tags: candidate.tags,
@@ -2066,7 +2283,15 @@ function importReviewedCandidates(store, review, candidateIds = []) {
         skipped += 1;
         continue;
       }
-      store.mediaAssets.unshift({ ...candidate, id: `asset-${stableId(candidate.path)}`, projectId: review.projectId, importedAt: now(), intakeDecision: candidate.decision });
+      store.mediaAssets.unshift({
+        ...candidate,
+        id: `asset-${stableId(candidate.path)}`,
+        projectId: review.projectId,
+        sourceType: candidate.uploadSource ? "browser_seed_upload" : "local_disk",
+        previewAvailable: !candidate.uploadSource,
+        importedAt: now(),
+        intakeDecision: candidate.decision
+      });
       existingMediaKeys.add(candidate.importKey);
       mediaAdded += 1;
     }
@@ -3130,11 +3355,13 @@ function state() {
   const eligibleSources = store.sources.filter(isCreativeSourceEligible);
   const eligibleMedia = store.mediaAssets.filter((asset) => creativeEligibility(asset).eligible);
   const noTheater = auditNoTheater({ capabilities, agentPipeline, runtimeEvidence: runtimeTruthEvidence() });
+  const tasks = buildLiveTasks();
   return {
     ok: true,
     product: "Wake Engine",
     console: "WAKE Command Console V6",
     version: "V6",
+    omega: WAKE_OMEGA,
     status: "active",
     url: `http://127.0.0.1:${PORT}/`,
     activeTask: store.activeTask,
@@ -3195,7 +3422,7 @@ function state() {
     },
     runtime: {
       cpuLabel: "local",
-      queue: tasks.filter((task) => task.status === "running").length,
+      queue: tasks.filter((task) => task.status === "attention" || task.status === "running").length,
       snapshots: fs.readdirSync(SNAPSHOT_DIR).filter((name) => name.endsWith(".json")).length,
       exports: store.exports.length,
       sources: eligibleSources.length,
@@ -3296,6 +3523,7 @@ app.get("/api/health", (_req, res) => {
   res.json({
     ok: true,
     product: "Wake Engine",
+    omega: WAKE_OMEGA.name,
     console: "WAKE Command Console V6",
     version: "V6",
     build: "wake-command-console-v6-local",
@@ -3305,6 +3533,15 @@ app.get("/api/health", (_req, res) => {
     noTheaterSummary: noTheater.summary,
     externalOperators
   });
+});
+
+app.get("/api/omega", (_req, res) => {
+  res.json({ ok: true, ...getOmegaManifest() });
+});
+
+app.get("/api/omega/tools", (_req, res) => {
+  const manifest = getOmegaManifest();
+  res.json({ ok: true, omega: manifest.omega, tools: manifest.tools, toolCount: manifest.toolCount });
 });
 
 app.use("/api", sessionManager.require, serializeMutatingRequest);
@@ -3326,6 +3563,71 @@ app.get("/api/system", async (_req, res) => {
 app.get("/api/agent-chat/status", async (_req, res) => {
   const status = await ollamaStatus();
   res.json({ ok: true, ...status, bridge: "ollama", fallback: "Instant Local Draft" });
+});
+
+app.get("/api/models", async (_req, res) => {
+  try {
+    const status = await ollamaStatus(true);
+    res.json({
+      ok: true,
+      models: status.modelDetails || [],
+      rawModels: status.models || [],
+      activeModel: status.model,
+      selectedModel: status.selectedModel,
+      runtime: { host: status.runtimeHost, url: status.url, live: status.live }
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/models/select", async (req, res) => {
+  try {
+    const model = String(req.body?.model || "").trim();
+    if (!model) return res.status(400).json({ ok: false, error: "Model identifier is required." });
+    selectedActiveModel = model === "auto" ? null : model;
+    const status = await ollamaStatus(true);
+    res.json({ ok: true, selectedModel: selectedActiveModel, activeModel: status.model, runtimeHost: status.runtimeHost });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/engineer/code", async (req, res) => {
+  try {
+    const prompt = String(req.body?.prompt || req.body?.message || "").trim();
+    if (!prompt) return res.status(400).json({ ok: false, error: "Code prompt or requirement is required." });
+    const targetModel = String(req.body?.model || "").trim() || null;
+    const store = readStore();
+    const engineer = agentPipeline.find((a) => a.id === "engineer") || ENGINEER_AGENT;
+    const profile = chatProfileFor("engineer", req.body?.mode || "elite");
+    const context = retrieveContext(store, prompt, "engineer", profile.contextLimit, profile.mediaLimit, req.body?.projectId);
+    const llmStatus = await ollamaStatus();
+
+    let codeReply = null;
+    if (llmStatus.live) {
+      codeReply = await askOllama({
+        status: llmStatus,
+        agent: engineer,
+        message: prompt,
+        context,
+        profile,
+        requestedModel: targetModel || "qwen2.5-coder:3b"
+      });
+    }
+
+    const answer = codeReply || `// WAKE Autonomous Engineer — Offline Scaffold\n// Task: ${prompt}\n\nexport function executeTask() {\n  console.log("Connect to ichabodcrane Ollama for live generation.");\n}\n`;
+    
+    res.json({
+      ok: true,
+      code: answer,
+      model: targetModel || llmStatus.model || "qwen2.5-coder:3b",
+      provider: codeReply ? "ollama" : "local-deterministic",
+      runtimeHost: llmStatus.runtimeHost
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
 });
 
 app.get("/api/image-generation/status", (_req, res) => {
@@ -3472,14 +3774,16 @@ app.post("/api/agent-chat", async (req, res) => {
     const profile = chatProfileFor(ability, mode);
     const store = readStore();
     const context = retrieveContext(store, message, agent.id, profile.contextLimit, profile.mediaLimit, req.body?.projectId, req.body?.sourceId);
+    const requestedModel = String(req.body?.model || "").trim() || null;
     const llmStatus = profile.timeoutMs ? await ollamaStatus() : { live: false, url: OLLAMA_URLS[0] || null, models: [], model: OLLAMA_MODEL || null };
-    const llmReply = await askOllama({ status: llmStatus, agent, message, context, profile });
+    const llmReply = await askOllama({ status: llmStatus, agent, message, context, profile, requestedModel });
     const answer = llmReply || fallbackAgentReply({ agent, message, context, llmStatus });
     const quality = scoreChatAnswer(answer, context);
     if (!llmReply) {
       quality.marketReady = false;
       quality.fallbackDraft = true;
     }
+    const targetModel = resolveModelForAgent(agent, requestedModel, llmStatus);
     const chat = {
       id: id("chat"),
       projectId: String(req.body?.projectId || store.projects[0]?.id || "wake-v6-main"),
@@ -3488,8 +3792,8 @@ app.post("/api/agent-chat", async (req, res) => {
       message,
       answer,
       provider: llmReply ? "ollama" : "local-deterministic",
-      providerLabel: llmReply ? llmStatus.model || "Ollama" : "Instant Local Draft",
-      model: llmReply ? llmStatus.model : null,
+      providerLabel: llmReply ? targetModel || llmStatus.model || "Ollama" : "Instant Local Draft",
+      model: llmReply ? targetModel || llmStatus.model : null,
       llmLive: llmStatus.live,
       ability,
       mode,
@@ -3548,18 +3852,21 @@ app.post("/api/agent-chat/stream", async (req, res) => {
     send({ type: "meta", agentId: agent.id, agentLabel: agent.label, ability, mode, profile: profile.label, responseBudgetMs: profile.timeoutMs, providerLabel: "Instant Local Draft" });
     send({ type: "draft", answer: draft, provider: "local-deterministic", providerLabel: "Instant Local Draft", quality: scoreChatAnswer(draft, context) });
 
+    const requestedModel = String(req.body?.model || "").trim() || null;
     const llmStatus = profile.timeoutMs ? await ollamaStatus() : { live: false, url: OLLAMA_URLS[0] || null, models: [], model: OLLAMA_MODEL || null };
-    send({ type: "provider-status", llmLive: llmStatus.live, model: llmStatus.model, providerLabel: llmStatus.live ? llmStatus.model || "Ollama" : "Instant Local Draft" });
+    const targetModel = resolveModelForAgent(agent, requestedModel, llmStatus);
+    send({ type: "provider-status", llmLive: llmStatus.live, model: targetModel || llmStatus.model, providerLabel: llmStatus.live ? targetModel || llmStatus.model || "Ollama" : "Instant Local Draft" });
 
     let answer = "";
     if (llmStatus.live && profile.timeoutMs) {
-      send({ type: "upgrade-start", provider: "ollama", model: llmStatus.model, providerLabel: llmStatus.model || "Ollama" });
+      send({ type: "upgrade-start", provider: "ollama", model: targetModel || llmStatus.model, providerLabel: targetModel || llmStatus.model || "Ollama" });
       answer = await streamOllama({
         status: llmStatus,
         agent,
         message,
         context,
         profile,
+        requestedModel,
         onToken: (token) => send({ type: "token", token })
       });
     }
@@ -3578,8 +3885,8 @@ app.post("/api/agent-chat/stream", async (req, res) => {
       message,
       answer: finalAnswer,
       provider,
-      providerLabel: answer ? llmStatus.model || "Ollama" : "Instant Local Draft",
-      model: answer ? llmStatus.model : null,
+      providerLabel: answer ? targetModel || llmStatus.model || "Ollama" : "Instant Local Draft",
+      model: answer ? targetModel || llmStatus.model : null,
       llmLive: llmStatus.live,
       ability,
       mode,
@@ -3918,6 +4225,20 @@ app.post("/api/intake/review", async (req, res) => {
     res.json({ ok: true, review, state: state() });
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+app.post("/api/intake/upload-review", (req, res) => {
+  try {
+    const store = readStore();
+    const review = buildUploadedIntakeReview(store, req.body || {});
+    store.intakeReviews.unshift(review);
+    store.intakeReviews = store.intakeReviews.slice(0, 12);
+    recordHistory(store, "intake.seed-review.created", `SEED folder staged ${review.eligible} eligible items from ${review.scanned} uploaded files.`, { reviewId: review.id, projectId: review.projectId });
+    writeStore(store);
+    res.json({ ok: true, review, state: state() });
+  } catch (error) {
+    res.status(error.status || 500).json({ ok: false, error: error.message });
   }
 });
 
@@ -4788,7 +5109,7 @@ app.post("/api/snapshot", (req, res) => {
   res.json({ ok: true, fileName: name, relativePath: `data/snapshots/${name}` });
 });
 
-app.use("/generated-audio", express.static(GENERATED_AUDIO_DIR));
+app.use("/generated-audio", sessionManager.require, express.static(GENERATED_AUDIO_DIR, { fallthrough: false, maxAge: "1h" }));
 
 app.get("/api/voice/profiles", (_req, res) => {
   res.json({ ok: true, profiles: voiceEngine.listProfiles() });
@@ -4797,7 +5118,10 @@ app.get("/api/voice/profiles", (_req, res) => {
 app.post("/api/voice/synthesize", async (req, res) => {
   try {
     const result = await voiceEngine.synthesizeSpeech(req.body || {});
-    addMonitorLog("ok", `Synthesized voiceover audio: ${result.filename} (${result.estimatedDurationSec}s)`);
+    if (!result?.ok || !result?.playable) {
+      return res.status(500).json(result || { ok: false, error: "Voice synthesis failed." });
+    }
+    addMonitorLog("ok", `Synthesized voiceover audio: ${result.filename} (${result.bytes || 0} bytes, ${result.synthesizedVia})`);
     res.json(result);
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
@@ -4830,7 +5154,7 @@ app.post("/api/voice/export-bundle", (req, res) => {
   }
 });
 
-app.use("/generated-videos", express.static(GENERATED_VIDEO_DIR));
+app.use("/generated-videos", sessionManager.require, express.static(GENERATED_VIDEO_DIR, { fallthrough: false, maxAge: "1h" }));
 
 app.get("/api/video/status", async (_req, res) => {
   const status = await videoEngine.checkFfmpeg();
@@ -4840,7 +5164,11 @@ app.get("/api/video/status", async (_req, res) => {
 app.post("/api/video/render-reel", async (req, res) => {
   try {
     const result = await videoEngine.renderVerticalReel(req.body || {});
-    addMonitorLog("ok", `Rendered vertical video reel: ${result.filename} (${result.durationSec}s)`);
+    if (!result?.ok || !result?.playable) {
+      addMonitorLog("warn", `Video render blocked: ${result?.error || "not playable"}`);
+      return res.status(400).json(result || { ok: false, error: "Video render failed." });
+    }
+    addMonitorLog("ok", `Rendered vertical video reel: ${result.filename} (${result.bytes || 0} bytes)`);
     res.json(result);
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
@@ -4869,84 +5197,6 @@ app.get("/api/publishing/queue", (req, res) => {
   res.json({ ok: true, queue: socialPublisher.listQueue({ projectId, status }) });
 });
 
-app.post("/api/projects/:id/export-vault", (req, res) => {
-  try {
-    const store = readStore();
-    const projectId = req.params.id || "wake-v6-main";
-    const projects = store.projects || [];
-    const project = projects.find((p) => p.id === projectId) || { id: projectId, name: projectId };
-    const pSources = (store.sources || []).filter((s) => s.projectId === projectId);
-    const pMedia = (store.mediaAssets || []).filter((m) => m.projectId === projectId);
-    const pGenerations = (store.generations || []).filter((g) => g.projectId === projectId);
-    const pCampaigns = (store.campaigns || []).filter((c) => c.projectId === projectId);
-
-    const serialized = JSON.stringify({ project, pSources, pMedia, pGenerations, pCampaigns });
-    const sha256 = crypto.createHash("sha256").update(serialized).digest("hex");
-
-    const bundle = {
-      version: "6.0.0",
-      exportedAt: new Date().toISOString(),
-      vaultManifest: {
-        engine: "WAKE Engine V6 Portable Vault",
-        projectId,
-        verificationSha256: sha256
-      },
-      project,
-      counts: {
-        sources: pSources.length,
-        media: pMedia.length,
-        generations: pGenerations.length,
-        campaigns: pCampaigns.length
-      },
-      sources: pSources,
-      media: pMedia,
-      generations: pGenerations,
-      campaigns: pCampaigns
-    };
-
-    const filename = `${projectId}-vault-${Date.now().toString(36)}.wake.json`;
-    recordHistory(store, "vault.exported", `Exported portable vault for project: ${project.name}`, { projectId, sha256 });
-    writeStore(store);
-
-    res.json({ ok: true, filename, sha256, bundle });
-  } catch (error) {
-    res.status(500).json({ ok: false, error: error.message });
-  }
-});
-
-app.post("/api/projects/import-vault", (req, res) => {
-  try {
-    const { bundle } = req.body || {};
-    if (!bundle || !bundle.project) {
-      return res.status(400).json({ ok: false, error: "Invalid vault bundle payload." });
-    }
-    const store = readStore();
-    const targetProject = bundle.project;
-    
-    if (!store.projects.some((p) => p.id === targetProject.id)) {
-      store.projects.push(targetProject);
-    }
-
-    let addedCount = 0;
-    for (const src of (bundle.sources || [])) {
-      if (!store.sources.some((s) => s.id === src.id)) {
-        store.sources.push(src);
-        addedCount++;
-      }
-    }
-
-    recordHistory(store, "vault.imported", `Imported vault for project: ${targetProject.name} (${addedCount} sources added)`, {
-      projectId: targetProject.id,
-      addedSources: addedCount
-    });
-    writeStore(store);
-
-    res.json({ ok: true, project: targetProject, addedSources: addedCount });
-  } catch (error) {
-    res.status(500).json({ ok: false, error: error.message });
-  }
-});
-
 app.post("/api/publishing/stage", (req, res) => {
   try {
     const item = socialPublisher.stagePost(req.body || {});
@@ -4959,6 +5209,9 @@ app.post("/api/publishing/stage", (req, res) => {
 app.post("/api/publishing/dispatch/:id", async (req, res) => {
   try {
     const result = await socialPublisher.dispatchPost(req.params.id);
+    if (!result?.ok) {
+      return res.status(501).json(result);
+    }
     res.json(result);
   } catch (error) {
     const status = String(error.message || "").toLowerCase().includes("not found") ? 404 : 500;

@@ -5,7 +5,8 @@ export const CHAT_PROFILES = {
   vault: { label: "fast archivist", timeoutMs: 12000, numPredict: 250, contextLimit: 4, mediaLimit: 2, temperature: 0.1 },
   library: { label: "fast export", timeoutMs: 12000, numPredict: 280, contextLimit: 4, mediaLimit: 2, temperature: 0.12 },
   tasks: { label: "fast qa", timeoutMs: 12000, numPredict: 250, contextLimit: 3, mediaLimit: 1, temperature: 0.1 },
-  snapshot: { label: "audit qa", timeoutMs: 12000, numPredict: 280, contextLimit: 3, mediaLimit: 1, temperature: 0.1 }
+  snapshot: { label: "audit qa", timeoutMs: 12000, numPredict: 280, contextLimit: 3, mediaLimit: 1, temperature: 0.1 },
+  engineer: { label: "scaffold engineer", timeoutMs: 20000, numPredict: 600, contextLimit: 6, mediaLimit: 2, temperature: 0.1 }
 };
 
 export function chatProfileFor(ability, mode) {
