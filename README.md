@@ -228,3 +228,6 @@ Useful measurements include source files processed, evidence passages extracted,
 ## License
 
 WAKE Engine Omega is source-available for evaluation under the repository's [proprietary license](LICENSE). Copyright © 2026 ForgeFront Systems and Justin Evans. All rights reserved.
+
+## Repository Operations Template
+This repository follows the standard operating files: STATUS.md, ROADMAP.md, CHANGELOG.md, CONTRIBUTING.md, SECURITY.md, GOVERNANCE.md, and REPO_TEMPLATE.md.
